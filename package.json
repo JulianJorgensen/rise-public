@@ -17,7 +17,7 @@
     "build": "better-npm-run build",
     "build:dev": "better-npm-run build:dev",
     "build:prod": "better-npm-run build:prod",
-    "heroku-postbuild": "build:prod"
+    "heroku-postbuild": "better-npm-run build:prod"
   },
   "betterScripts": {
     "compile": {
