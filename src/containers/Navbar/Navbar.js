@@ -1,29 +1,16 @@
 import React, { Component, PropTypes } from 'react'
-import classes from './Navbar.scss'
+import classes from './Navbar.css'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
-import {
-  firebaseConnect,
-  pathToJS,
-  isLoaded,
-  isEmpty
-} from 'react-redux-firebase'
-import {
-  LIST_PATH,
-  ACCOUNT_PATH,
-  LOGIN_PATH,
-  SIGNUP_PATH
-} from 'constants'
+import { firebaseConnect, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase'
+import { LIST_PATH, ACCOUNT_PATH, LOGIN_PATH, SIGNUP_PATH, ABOUT_PATH } from 'constants'
 
 // Components
-import AppBar from 'material-ui/AppBar'
-import IconMenu from 'material-ui/IconMenu'
-import IconButton from 'material-ui/IconButton'
-import MenuItem from 'material-ui/MenuItem'
-import FlatButton from 'material-ui/FlatButton'
-import DownArrow from 'material-ui/svg-icons/hardware/keyboard-arrow-down'
-import Avatar from 'material-ui/Avatar'
 import defaultUserImage from 'static/User.png'
+import {IconMenu, MenuItem, MenuDivider } from 'react-toolbox/lib/menu';
+import Avatar from 'react-toolbox/lib/avatar';
+import Navigation from 'react-toolbox/lib/navigation';
+import Logo from 'components/Logo/Logo'
 
 const buttonStyle = {
   color: 'white',
@@ -64,71 +51,42 @@ export default class Navbar extends Component {
     const { account } = this.props
     const accountExists = isLoaded(account) && !isEmpty(account)
 
-    const iconButton = (
-      <IconButton style={avatarStyles.button} disableTouchRipple>
-        <div className={classes.avatar}>
-          <div className='hidden-mobile'>
-            <Avatar
-              src={accountExists && account.avatarUrl ? account.avatarUrl : defaultUserImage}
-            />
-          </div>
-          <div className={classes['avatar-text']}>
-            <span className={`${classes['avatar-text-name']} hidden-mobile`}>
-              { accountExists && account.displayName ? account.displayName : 'User' }
-            </span>
-            <DownArrow color='white' />
-          </div>
-        </div>
-      </IconButton>
-    )
-
     const mainMenu = (
-      <div className={classes.menu}>
-        <Link to={SIGNUP_PATH}>
-          <FlatButton
-            label='Sign Up'
-            style={buttonStyle}
-          />
-        </Link>
-        <Link to={LOGIN_PATH}>
-          <FlatButton
-            label='Login'
-            style={buttonStyle}
-          />
-        </Link>
+      <div className={classes.navCta}>
+        <Link to={SIGNUP_PATH} className={classes.join}>Join now</Link>
+        <Link to={LOGIN_PATH} className={classes.signin}>Sign In</Link>
       </div>
     )
 
     const rightMenu = accountExists ? (
-      <IconMenu
-        iconButtonElement={iconButton}
-        targetOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-        anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-        animated={false}
-      >
-        <MenuItem
-          primaryText='Account'
-          onTouchTap={() => this.context.router.push(ACCOUNT_PATH)}
-        />
-        <MenuItem
-          primaryText='Sign out'
-          onTouchTap={this.handleLogout}
-        />
-      </IconMenu>
+      <div className={classes.rightNav}>
+        <div className={classes.rightNavName}>Hello {account.displayName}!</div>
+        <Avatar className={classes.rightNavAvatar} image={defaultUserImage} cover />
+        <IconMenu className={classes.rightNavMenu} icon={<i className="fa fa-chevron-down" />} position='topRight' menuRipple>
+          <MenuItem
+            caption='Account'
+            onTouchTap={() => this.context.router.push(ACCOUNT_PATH)}
+          />
+          <MenuItem
+            caption='Sign out'
+            onTouchTap={this.handleLogout}
+          />
+        </IconMenu>
+      </div>
     ) : mainMenu
 
     return (
-      <AppBar
-        title={
-          <Link to={accountExists ? `${LIST_PATH}` : '/'} className={classes.brand}>
-            material example
-          </Link>
-        }
-        showMenuIconButton={false}
-        iconElementRight={rightMenu}
-        iconStyleRight={accountExists ? avatarStyles.wrapper : {}}
-        className={classes.appBar}
-      />
+      <header className={`${classes.header} ${account ? account.showLeftNavigation ? classes.withLeftNav : '' : ''}`}>
+        <Link to={accountExists ? `${LIST_PATH}` : '/'} className={classes.logo}><Logo width="80" /></Link>
+
+        <div className={classes.nav}>
+          <Link to={ABOUT_PATH}>About</Link>
+          <Link to='/features'>Features</Link>
+          <Link to='/pricing'>Pricing</Link>
+        </div>
+
+        {rightMenu}
+      </header>
     )
   }
 }

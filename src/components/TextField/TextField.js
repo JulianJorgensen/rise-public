@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react'
-import MaterialTextField from 'material-ui/TextField'
+import Input from 'react-toolbox/lib/input';
 
-export const TextField = ({ input, label, meta: { touched, error }, ...custom }) => (
-  <MaterialTextField
-    hintText={label}
-    floatingLabelText={label}
-    errorText={touched && error}
+export const TextField = ({ input, type, required, label, meta: { touched, error }, ...custom }) => (
+  <Input
+    label={label}
+    type={type}
+    required={required}
     {...input}
     {...custom}
   />

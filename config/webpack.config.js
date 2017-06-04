@@ -1,5 +1,4 @@
 const webpack = require('webpack')
-const cssnano = require('cssnano')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
@@ -131,7 +130,7 @@ const BASE_CSS_LOADER = 'css?sourceMap&-minimize'
 // Add any packge names here whose styles need to be treated as CSS modules.
 // These paths will be combined into a single regex.
 const PATHS_TO_TREAT_AS_CSS_MODULES = [
-  // 'react-toolbox', (example)
+  'react-toolbox'
 ]
 
 // If config has CSS modules enabled, treat this project's styles as CSS modules.
@@ -153,17 +152,6 @@ if (isUsingCSSModules) {
   ].join('&')
 
   webpackConfig.module.loaders.push({
-    test: /\.scss$/,
-    include: cssModulesRegex,
-    loaders: [
-      'style',
-      cssModulesLoader,
-      'postcss',
-      'sass?sourceMap'
-    ]
-  })
-
-  webpackConfig.module.loaders.push({
     test: /\.css$/,
     include: cssModulesRegex,
     loaders: [
@@ -177,16 +165,6 @@ if (isUsingCSSModules) {
 // Loaders for files that should not be treated as CSS modules.
 const excludeCSSModules = isUsingCSSModules ? cssModulesRegex : false
 webpackConfig.module.loaders.push({
-  test: /\.scss$/,
-  exclude: excludeCSSModules,
-  loaders: [
-    'style',
-    BASE_CSS_LOADER,
-    'postcss',
-    'sass?sourceMap'
-  ]
-})
-webpackConfig.module.loaders.push({
   test: /\.css$/,
   exclude: excludeCSSModules,
   loaders: [
@@ -196,27 +174,6 @@ webpackConfig.module.loaders.push({
   ]
 })
 
-webpackConfig.sassLoader = {
-  includePaths: project.paths.client('styles')
-}
-
-webpackConfig.postcss = [
-  cssnano({
-    autoprefixer: {
-      add: true,
-      remove: true,
-      browsers: ['last 2 versions']
-    },
-    discardComments: {
-      removeAll: true
-    },
-    discardUnused: false,
-    mergeIdents: false,
-    reduceIdents: false,
-    safe: true,
-    sourcemap: true
-  })
-]
 
 // File loaders
 /* eslint-disable */

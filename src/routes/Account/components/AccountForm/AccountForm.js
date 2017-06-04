@@ -4,7 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'components/TextField'
 import { ACCOUNT_FORM_NAME } from 'constants'
 import ProviderDataForm from '../ProviderDataForm'
-import classes from './AccountForm.scss'
+import classes from './AccountForm.css'
 
 export const AccountForm = ({ account, handleSubmit, submitting }) => (
   <form className={classes.container} onSubmit={handleSubmit}>

@@ -5,7 +5,7 @@ import Subheader from 'material-ui/Subheader'
 import TextField from 'components/TextField'
 import { required } from 'utils/forms'
 import { RECOVER_CODE_FORM_NAME } from 'constants'
-import classes from './RecoverForm.scss'
+import classes from './RecoverForm.css'
 
 export const RecoverForm = ({ account, handleSubmit, onRecoverClick, submitting, pristine, valid }) => (
   <form className={classes.container} onSubmit={handleSubmit}>

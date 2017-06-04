@@ -10,7 +10,7 @@ import zIndex from 'material-ui/styles/zIndex'
 export default {
   spacing,
   zIndex: zIndex,
-  fontFamily: 'Roboto, sans-serif',
+  fontFamily: 'Poppins, Roboto, sans-serif',
   palette: {
     primary1Color: blueGrey500,
     primary2Color: blueGrey700,

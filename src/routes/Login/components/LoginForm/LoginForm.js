@@ -6,7 +6,7 @@ import Checkbox from 'material-ui/Checkbox'
 import { RECOVER_PATH, LOGIN_FORM_NAME } from 'constants'
 import TextField from 'components/TextField'
 import { required, validateEmail } from 'utils/forms'
-import classes from './LoginForm.scss'
+import classes from './LoginForm.css'
 
 export const LoginForm = ({ handleSubmit, submitting }) => (
   <form className={classes.container} onSubmit={handleSubmit}>
@@ -14,14 +14,14 @@ export const LoginForm = ({ handleSubmit, submitting }) => (
       name='email'
       component={TextField}
       label='Email'
-      validate={[required, validateEmail]}
+      required
     />
     <Field
       name='password'
       component={TextField}
       label='Password'
       type='password'
-      validate={[required]}
+      required
     />
     <div className={classes.submit}>
       <RaisedButton

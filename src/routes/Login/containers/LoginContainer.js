@@ -13,7 +13,9 @@ import Snackbar from 'material-ui/Snackbar'
 import { UserIsNotAuthenticated } from 'utils/router'
 import { SIGNUP_PATH } from 'constants'
 import LoginForm from '../components/LoginForm'
-import classes from './LoginContainer.scss'
+import classes from './LoginContainer.css'
+
+import { Card } from 'react-toolbox/lib/card';
 
 @UserIsNotAuthenticated // redirect to list page if logged in
 @firebaseConnect() // add this.props.firebase
@@ -51,9 +53,9 @@ export default class Login extends Component {
 
     return (
       <div className={classes.container}>
-        <Paper className={classes.panel}>
+        <Card className={classes.panel}>
           <LoginForm onSubmit={this.handleLogin} />
-        </Paper>
+        </Card>
         <div className={classes.or}>
           or
         </div>

@@ -1,0 +1,96 @@
+@import "../../styles/variables.css";
+
+.header{
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  display: flex;
+  width: 100%;
+  background-color: white;
+  box-shadow: 0 1px 0 gray(50%, 50%);
+  font-family: System-UI, Roboto, Helvetica;
+  justify-content: space-between;
+  &.withLeftNav{
+    width: calc(100% - 200px);
+  }
+
+  & a{
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  & .logo{
+    margin-left: rem(20);
+  }
+}
+
+.nav{
+  align-items: center;
+  flex-grow: 1;
+  padding: 0;
+  & a{
+    margin-left: rem(30);
+    color: var(--blue);
+    &:first-child{
+      margin-left: 0;
+    }
+  }
+}
+
+.navCta{
+  align-items: stretch;
+  justify-content: flex-end;
+  padding: 0;
+
+  & a{
+    display: flex;
+    align-items: center;
+    color: white;
+    padding: 0 rem(30);
+  }
+}
+.join{
+  background-color: gray(40%);
+}
+.signin{
+  background-color: gray(60%);
+}
+
+.nav,
+.navCta{
+  display: none;
+  @media (--medium-and-up) {
+    display: flex;
+  }
+}
+
+.rightNav{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  & .rightNavAvatar{
+    margin: 0 20px;
+  }
+
+  & .rightNavMenu{
+    border-left: 2px solid gray(80%);
+    padding: 20px;
+  }
+}
+
+
+.brand {
+}
+.appBar{
+}
+.wrapper {
+}
+.avatar {
+}
+.menu {
+}
+.link {
+}
+.title {
+}

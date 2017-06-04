@@ -1,7 +1,7 @@
 {
   "projects": {
-    "dev": "redux-firebasev3",
-    "stage": "redux-firebasev3",
-    "prod": "redux-firebasev3"
+    "dev": "rise-1602c",
+    "stage": "rise-1602c",
+    "prod": "rise-1602c"
   }
 }

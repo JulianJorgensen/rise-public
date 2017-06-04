@@ -1,0 +1,33 @@
+.container{
+  composes: container from "../../../styles/layout.css";
+  padding: rem(20);
+}
+.pane {
+  justify-content: space-around;
+  flex-basis: 60%;
+}
+.settings {
+  width: 100%;
+  align-items: center;
+}
+.avatar {
+  & .avatarCurrent {
+    width: 100%;
+    max-width: 13rem;
+    height: auto;
+    cursor: pointer;
+  }
+}
+.ImageManager {
+  & .preview {
+    width: 10rem;
+    height: auto;
+  }
+}
+.meta {
+  display: flex;
+  justify-content: center;
+  flex-basis: 60%;
+  margin-bottom: 3rem;
+  margin-top: 2rem;
+}

@@ -7,7 +7,7 @@ import { UserIsAuthenticated } from 'utils/router'
 import defaultUserImageUrl from 'static/User.png'
 import LoadingSpinner from 'components/LoadingSpinner'
 import AccountForm from '../components/AccountForm/AccountForm'
-import classes from './AccountContainer.scss'
+import classes from './AccountContainer.css'
 
 @UserIsAuthenticated // redirect to /login if user is not authenticated
 @firebaseConnect() // add this.props.firebase

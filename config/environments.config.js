@@ -11,10 +11,10 @@ module.exports = {
   development : (config) => ({
     compiler_public_path : `http://${config.server_host}:${config.server_port}/`,
     firebase: {
-      apiKey: 'AIzaSyCTUERDM-Pchn_UDTsfhVPiwM4TtNIxots',
-      authDomain: 'redux-firebasev3.firebaseapp.com',
-      databaseURL: 'https://redux-firebasev3.firebaseio.com',
-      storageBucket: 'redux-firebasev3.appspot.com'
+      apiKey: 'AIzaSyDpuf3lnAJgGYn46QrZJ2fk9me5lZoy4fA',
+      authDomain: 'rise-1602c.firebaseapp.com',
+      databaseURL: 'https://rise-1602c.firebaseio.com',
+      storageBucket: 'rise-1602c.appspot.com'
     },
     reduxFirebase: {
       userProfile: 'users', // root that user profiles are written to
