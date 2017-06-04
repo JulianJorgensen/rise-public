@@ -1,17 +1,17 @@
-# react-redux-firebase Complete Material Example
+# RISE App
 
 [![License][license-image]][license-url]
 [![Code Style][code-style-image]][code-style-url]
 
-This is a "real-world" example and is deployed to [demo.react-redux-firebase.com](https://demo.react-redux-firebase.com). Project was based on the output of [`generator-react-firebase`](https://github.com/prescottprue/generator-react-firebase), which generates a full project starter with `react-redux-firebase` included.
+This is the RISE App.
 
 ## Getting Started
 
-1. Install dependencies: `npm install`
+1. Install dependencies: `yarn install`
 
-2. Start Development server: `npm start`
+2. Start Development server: `yarn start`
 
-While developing, you will probably rely mostly on `npm start`; however, there are additional scripts at your disposal:
+While developing, you will probably rely mostly on `yarn start`; however, there are additional scripts at your disposal:
 
 |`npm run <script>`|Description|
 |------------------|-----------|
@@ -21,12 +21,7 @@ While developing, you will probably rely mostly on `npm start`; however, there a
 |`lint`|Lint all `.js` files.|
 |`lint:fix`|Lint and fix all `.js` files. [Read more on this](http://eslint.org/docs/user-guide/command-line-interface.html#fix).|
 
-## What is Shown
-* Route protection using `redux-auth-wrapper`
-* Data input/validation using `redux-form`
-* Async & Sync route loading
-* Real CI and Deployment settings (including `prod` and `stage` environments)
-* Using different instances of Firebase based on environment
+## Technologies
 
 ## Application Structure
 
@@ -66,23 +61,17 @@ The application structure presented in this boilerplate is **fractal**, where fu
 
 ### Production
 
-Build code before deployment by running `npm run build:prod`.
+Build code before deployment by running `yarn run build:prod`.
 
 ### Deployment
 1. Login to [Firebase](firebase.google.com) (or Signup if you don't have an account) and create a new project
-2. Install cli: `npm i -g firebase-tools`
+2. Install cli: `yarn add -global firebase-tools`
 3. Login: `firebase login`
 
 #### CI
 **Note:** The next steps automatically through config set in the `.travis.yml`. Use `firebase login:ci` to generate a token and set it to `FIREBASE_TOKEN` within your travis config.
 
 #### Local
-1. Build Project: `npm run build`
+1. Build Project: `yarn run build`
 2. Confirm Firebase config by running locally: `firebase serve`
 3. Deploy to firebase: `firebase deploy`
-
-[license-image]: https://img.shields.io/npm/l/material.svg?style=flat-square
-[license-url]: https://github.com/prescottprue/material/blob/master/LICENSE
-[code-style-image]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square
-[code-style-url]: http://standardjs.com/
-# react-redux-firebase-boilerplate
