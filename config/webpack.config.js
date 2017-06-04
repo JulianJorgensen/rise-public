@@ -1,6 +1,7 @@
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const project = require('./project.config')
 const debug = require('debug')('app:webpack:config')
@@ -64,6 +65,12 @@ webpackConfig.plugins = [
     })
   },
   new webpack.DefinePlugin(project.globals),
+  new CopyWebpackPlugin([
+    {
+      context: 'src',
+      from: 'static'
+    }
+  ]),
   new HtmlWebpackPlugin({
     template: project.paths.client('index.html'),
     hash: false,
@@ -185,6 +192,19 @@ webpackConfig.module.loaders.push(
   { test: /\.eot(\?.*)?$/,   loader: 'file?prefix=fonts/&name=[path][name].[ext]' },
   { test: /\.svg(\?.*)?$/,   loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=image/svg+xml' },
   { test: /\.(png|jpg)$/,    loader: 'url?limit=8192' }
+)
+/* eslint-enable */
+
+// Image loaders
+/* eslint-disable */
+webpackConfig.module.loaders.push(
+  {
+    test: /\.(jpe?g|png|gif)$/i,
+    loaders: [
+      'file?name=/images/[name].[ext]',
+      'image-webpack-loader'
+    ]
+  }
 )
 /* eslint-enable */
 

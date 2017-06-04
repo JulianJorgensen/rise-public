@@ -6,7 +6,6 @@ import { firebaseConnect, pathToJS, isLoaded, isEmpty } from 'react-redux-fireba
 import { LIST_PATH, ACCOUNT_PATH, LOGIN_PATH, SIGNUP_PATH, ABOUT_PATH } from 'constants'
 
 // Components
-import defaultUserImage from 'static/User.png'
 import {IconMenu, MenuItem, MenuDivider } from 'react-toolbox/lib/menu';
 import Avatar from 'react-toolbox/lib/avatar';
 import Navigation from 'react-toolbox/lib/navigation';
@@ -61,7 +60,7 @@ export default class Navbar extends Component {
     const rightMenu = accountExists ? (
       <div className={classes.rightNav}>
         <div className={classes.rightNavName}>Hello {account.displayName}!</div>
-        <Avatar className={classes.rightNavAvatar} image={defaultUserImage} cover />
+        <Avatar className={classes.rightNavAvatar} image='/images/User.png' cover />
         <IconMenu className={classes.rightNavMenu} icon={<i className="fa fa-chevron-down" />} position='topRight' menuRipple>
           <MenuItem
             caption='Account'

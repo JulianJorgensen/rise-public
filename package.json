@@ -59,6 +59,8 @@
   "author": "prescottprue (https://github.com/prescottprue)",
   "license": "MIT",
   "dependencies": {
+    "copy-webpack-plugin": "^4.0.1",
+    "image-webpack-loader": "^3.3.1",
     "lodash": "^4.17.2",
     "material-ui": "0.16.0",
     "normalize.css": "^4.1.1",
