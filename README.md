@@ -75,3 +75,8 @@ Build code before deployment by running `yarn run build:prod`.
 1. Build Project: `yarn run build`
 2. Confirm Firebase config by running locally: `firebase serve`
 3. Deploy to firebase: `firebase deploy`
+
+[license-image]: https://img.shields.io/npm/l/material.svg?style=flat-square
+[license-url]: https://github.com/prescottprue/material/blob/master/LICENSE
+[code-style-image]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square
+[code-style-url]: http://standardjs.com/
