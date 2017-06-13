@@ -1,4 +1,6 @@
 .container {
+  padding: rem(15) rem(30) rem(40);
+  width: rem(400);
 }
 
 .submit {

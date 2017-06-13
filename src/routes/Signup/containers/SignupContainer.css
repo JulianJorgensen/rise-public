@@ -2,12 +2,6 @@
   width: rem(400);
 }
 
-.progress {
-}
-
-.panel {
-}
-
 .or {
   padding: rem(20);
   text-align: center;
@@ -21,4 +15,8 @@
 .providers {
   display: flex;
   justify-content: center;
+}
+
+.loginLink{
+  margin-left: rem(10);
 }

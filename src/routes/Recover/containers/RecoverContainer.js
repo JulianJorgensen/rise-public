@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import { firebaseConnect } from 'react-redux-firebase'
-import Snackbar from 'material-ui/Snackbar'
-import Paper from 'material-ui/Paper'
-import RecoverForm from '../components/RecoverForm'
+import { Snackbar } from 'react-toolbox'
+import { Card } from 'react-toolbox/lib/card'
 import EmailForm from '../components/EmailForm'
+import classes from './RecoverContainer.css'
 
 @firebaseConnect() // adds this.props.firebase
 export default class RecoverContainer extends Component {
@@ -30,38 +30,20 @@ export default class RecoverContainer extends Component {
         return Promise.reject(err)
       })
 
-  recoverAccount = ({ code, password }) => {
-    const {
-      verifyPasswordResetCode,
-      confirmPasswordReset
-    } = this.props.firebase
-
-    return verifyPasswordResetCode(code)
-      .then(() => confirmPasswordReset(code, password))
-      .then((res) => {
-        this.setState({ message: 'Password Changed Successfully' })
-      })
-      .catch((err) => {
-        console.error('Error updating account', err) // eslint-disable-line no-console
-        this.setState({ message: err.message }) // show error snackbar
-        return Promise.reject(err)
-      })
-  }
-
   render () {
     return (
-      <div className='flex-column-center'>
-        <Paper style={{ marginTop: '3rem' }}>
+      <div className={classes.container}>
+        <Card>
           <EmailForm onSubmit={this.sendRecoveryEmail} />
-        </Paper>
-        <Paper style={{ marginTop: '3rem' }}>
-          <RecoverForm onSubmit={this.recoverAccount} />
-        </Paper>
+        </Card>
         <Snackbar
-          open={!!this.state.message}
-          message={this.state.message || 'Error'}
-          autoHideDuration={4000}
-          onRequestClose={() => this.setState({ message: null })}
+          active={this.state.open}
+          type='warning'
+          action='OK'
+          label={this.state.message || 'Error'}
+          onClick={this.handleSnackbarClick}
+          timeout={4000}
+          onTimeout={this.handleSnackbarClick}
         />
       </div>
     )

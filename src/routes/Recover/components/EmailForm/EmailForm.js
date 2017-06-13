@@ -8,16 +8,16 @@ import classes from './EmailForm.css'
 
 export const EmailForm = ({ account, handleSubmit, submitting, pristine, valid }) => (
   <form className={classes.container} onSubmit={handleSubmit}>
-    <h4>Send Recovery Code To Email</h4>
+    <h4>Reset password</h4>
     <Field
       name='email'
       component={TextField}
       label='Email'
-      validate={[required, email]}
+      required
     />
     <div className={classes.submit}>
       <RaisedButton
-        label='Send'
+        label='Reset'
         primary
         type='submit'
         disabled={submitting}

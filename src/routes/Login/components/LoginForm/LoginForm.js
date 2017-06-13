@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import { Field, reduxForm } from 'redux-form'
 import RaisedButton from 'material-ui/RaisedButton'
-import Checkbox from 'material-ui/Checkbox'
+import Checkbox from 'react-toolbox/lib/checkbox';
 import { RECOVER_PATH, LOGIN_FORM_NAME } from 'constants'
 import TextField from 'components/TextField'
 import { required, validateEmail } from 'utils/forms'
@@ -34,10 +34,9 @@ export const LoginForm = ({ handleSubmit, submitting }) => (
     <div className={classes.options}>
       <div className={classes.remember}>
         <Checkbox
-          name='remember'
-          value='remember'
-          label='Remember'
-          labelStyle={{ fontSize: '.8rem' }}
+          checked={true}
+          disabled
+          label="Remember"
         />
       </div>
       <Link className={classes.recover} to={RECOVER_PATH}>

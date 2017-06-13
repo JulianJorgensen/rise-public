@@ -2,20 +2,14 @@ import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
 import GoogleButton from 'react-google-button'
 import { connect } from 'react-redux'
-import {
-  firebaseConnect,
-  isLoaded,
-  isEmpty,
-  pathToJS
-} from 'react-redux-firebase'
+import { firebaseConnect, isLoaded, isEmpty, pathToJS } from 'react-redux-firebase'
 import Paper from 'material-ui/Paper'
-import Snackbar from 'material-ui/Snackbar'
+import Snackbar from 'components/Snackbar'
+import { Card } from 'react-toolbox/lib/card';
 import { UserIsNotAuthenticated } from 'utils/router'
 import { SIGNUP_PATH } from 'constants'
 import LoginForm from '../components/LoginForm'
 import classes from './LoginContainer.css'
-
-import { Card } from 'react-toolbox/lib/card';
 
 @UserIsNotAuthenticated // redirect to list page if logged in
 @firebaseConnect() // add this.props.firebase
@@ -38,6 +32,12 @@ export default class Login extends Component {
     // state of snackbar so it can be closed
     snackCanOpen: false
   }
+
+  handleSnackbarClick = () => {
+    this.setState({
+      snackCanOpen: false
+    });
+  };
 
   handleLogin = loginData => {
     this.setState({ snackCanOpen: true })
@@ -70,15 +70,15 @@ export default class Login extends Component {
             Sign Up
           </Link>
         </div>
-        {
-          isLoaded(authError) && !isEmpty(authError) && snackCanOpen &&
-            <Snackbar
-              open={isLoaded(authError) && !isEmpty(authError) && snackCanOpen}
-              message={authError ? authError.message : 'Signup error'}
-              action='close'
-              autoHideDuration={3000}
-            />
-        }
+        <Snackbar
+          active={isLoaded(authError) && !isEmpty(authError) && snackCanOpen}
+          type='warning'
+          action='close'
+          label={authError ? authError.message : 'Signup error'}
+          onClick={this.handleSnackbarClick}
+          timeout={3000}
+          onTimeout={this.handleSnackbarClick}
+        />
       </div>
     )
   }
