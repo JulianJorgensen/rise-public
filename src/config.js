@@ -13,7 +13,17 @@ export const firebase = {
 export const reduxFirebase = {
   userProfile: 'users', // root that user profiles are written to
   enableLogging: false, // enable/disable Firebase Database Logging
-  updateProfileOnLogin: false // enable/disable updating of profile on login
+  updateProfileOnLogin: false, // enable/disable updating of profile on login
+  profileParamsToPopulate: [
+    { child: 'role', root: 'roles' }, // populates user's role with matching role object from roles
+  ],
+  profileFactory: user => ({
+    email: user.email || user.providerData[0].email,
+    role: 'user',
+    displayName: user.providerData[0].displayName || user.email,
+    avatarUrl: user.providerData[0].photoURL,
+    providerData: user.providerData,
+  })
   // profileDecorator: (userData) => ({ email: userData.email }) // customize format of user profile
 }
 

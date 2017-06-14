@@ -1,7 +1,7 @@
 {
-  "name": "react-redux-firebase-material-example",
+  "name": "rise-athletes-app",
   "version": "0.0.1",
-  "description": "Complete react-redux-firebase Material-UI app.",
+  "description": "RISE Atheletes app",
   "main": "index.js",
   "engines": {
     "node": ">=4.2.0",
