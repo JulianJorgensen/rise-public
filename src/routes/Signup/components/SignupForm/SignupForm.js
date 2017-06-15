@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import RaisedButton from 'material-ui/RaisedButton'
+import Button from 'components/Button'
 import { Field, reduxForm } from 'redux-form'
 import TextField from 'components/TextField'
 import { required, validateEmail } from 'utils/forms'
@@ -9,13 +9,6 @@ import classes from './SignupForm.css'
 const SignupForm = ({ handleSubmit, submitting }) => {
   return (
     <form className={classes.container} onSubmit={handleSubmit}>
-      <Field
-        name='username'
-        type='text'
-        component={TextField}
-        label='Username'
-        required
-      />
       <Field
         name='email'
         type='text'
@@ -31,7 +24,7 @@ const SignupForm = ({ handleSubmit, submitting }) => {
         required
       />
       <div className={classes.submit}>
-        <RaisedButton
+        <Button
           label='Signup'
           primary
           type='submit'

@@ -1,19 +1,13 @@
-import React, { Component, PropTypes } from 'react'
-import { Link } from 'react-router'
-import GoogleButton from 'react-google-button'
-import { connect } from 'react-redux'
-import {
-  firebaseConnect,
-  isLoaded,
-  isEmpty,
-  pathToJS
-} from 'react-redux-firebase'
-import Paper from 'material-ui/Paper'
-import Snackbar from 'material-ui/Snackbar'
-import { LOGIN_PATH } from 'constants'
-import { UserIsNotAuthenticated } from 'utils/router'
-import SignupForm from '../components/SignupForm'
-import classes from './SignupContainer.css'
+import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router';
+import GoogleButton from 'react-google-button';
+import { connect } from 'react-redux';
+import { firebaseConnect, isLoaded, isEmpty, pathToJS } from 'react-redux-firebase';
+import Snackbar from 'components/Snackbar';
+import { LOGIN_PATH } from 'constants';
+import { UserIsNotAuthenticated } from 'utils/router';
+import SignupForm from '../components/SignupForm';
+import classes from './SignupContainer.css';
 
 import { Card } from 'react-toolbox/lib/card';
 
@@ -35,14 +29,19 @@ export default class Signup extends Component {
     snackCanOpen: false
   }
 
-  handleSignup = (creds) => {
-    const { createUser, login } = this.props.firebase
-    const { email, username } = creds
-    this.setState({ snackCanOpen: true })
+  handleSignup = ({ email, password }) => {
+    const { createUser, login } = this.props.firebase;
+    this.setState({ snackCanOpen: true });
     // create new user then login (redirect handled by decorator)
-    return createUser(creds, { email, username })
-      .then(() => login(creds))
+    return createUser({ email, password }, { email })
+      .then(() => login({ email, password }));
   }
+
+  handleSnackbarClick = () => {
+    this.setState({
+      snackCanOpen: false
+    });
+  };
 
   providerLogin = (provider) => {
     this.setState({ snackCanOpen: true })
@@ -74,14 +73,15 @@ export default class Signup extends Component {
           </Link>
         </div>
         {
-          isLoaded(authError) && !isEmpty(authError) && snackCanOpen &&
-            <Snackbar
-              open={isLoaded(authError) && !isEmpty(authError) && snackCanOpen}
-              message={authError ? authError.message : 'Signup error'}
-              action='close'
-              autoHideDuration={3000}
-              onRequestClose={() => this.setState({ snackCanOpen: false })}
-            />
+          <Snackbar
+            active={isLoaded(authError) && !isEmpty(authError) && snackCanOpen}
+            type='warning'
+            action='close'
+            label={authError ? authError.message : 'Signup error'}
+            onClick={this.handleSnackbarClick}
+            timeout={3000}
+            onTimeout={this.handleSnackbarClick}
+          />
         }
       </div>
     )

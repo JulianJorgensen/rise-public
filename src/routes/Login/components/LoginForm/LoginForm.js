@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import { Field, reduxForm } from 'redux-form'
-import RaisedButton from 'material-ui/RaisedButton'
+import Button from 'components/Button'
 import Checkbox from 'react-toolbox/lib/checkbox';
 import { RECOVER_PATH, LOGIN_FORM_NAME } from 'constants'
 import TextField from 'components/TextField'
@@ -24,7 +24,7 @@ export const LoginForm = ({ handleSubmit, submitting }) => (
       required
     />
     <div className={classes.submit}>
-      <RaisedButton
+      <Button
         label='Login'
         primary
         type='submit'

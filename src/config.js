@@ -1,6 +1,3 @@
-// EXAMPLE ONLY! THIS FILE IS USUALLY NOT PART OF GIT TRACKING
-// .gitignore skips this at the project level, but it is added for example here
-
 export const firebase = {
   apiKey: 'AIzaSyDpuf3lnAJgGYn46QrZJ2fk9me5lZoy4fA',
   authDomain: 'rise-1602c.firebaseapp.com',
@@ -14,17 +11,14 @@ export const reduxFirebase = {
   userProfile: 'users', // root that user profiles are written to
   enableLogging: false, // enable/disable Firebase Database Logging
   updateProfileOnLogin: false, // enable/disable updating of profile on login
-  profileParamsToPopulate: [
-    { child: 'role', root: 'roles' }, // populates user's role with matching role object from roles
-  ],
-  profileFactory: user => ({
-    email: user.email || user.providerData[0].email,
-    role: 'user',
-    displayName: user.providerData[0].displayName || user.email,
-    avatarUrl: user.providerData[0].photoURL,
-    providerData: user.providerData,
-  })
-  // profileDecorator: (userData) => ({ email: userData.email }) // customize format of user profile
+  profileFactory: (user) => {
+    return ({
+      displayName: user.providerData[0].displayName || user.email,
+      email: user.email || user.providerData[0].email,
+      role: user.role || 'unassigned',
+      showLeftNavigation: true
+    })
+  }
 }
 
 export const env = 'development'

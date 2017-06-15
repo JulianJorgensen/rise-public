@@ -1,17 +1,13 @@
 import React, { PropTypes } from 'react'
-import CircularProgress from 'material-ui/CircularProgress'
+import ProgressBar from 'react-toolbox/lib/progress_bar';
 import classes from './LoadingSpinner.css'
 
-export const LoadingSpinner = ({ size }) => (
+export const LoadingSpinner = () => (
   <div className={classes.container}>
     <div className={classes.progress}>
-      <CircularProgress mode='indeterminate' size={size || 80} />
+      <ProgressBar type="circular" mode="indeterminate" />
     </div>
   </div>
 )
-
-LoadingSpinner.propTypes = {
-  size: PropTypes.number
-}
 
 export default LoadingSpinner

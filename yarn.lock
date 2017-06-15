@@ -5588,9 +5588,9 @@ react-google-button@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/react-google-button/-/react-google-button-0.1.0.tgz#dc586526f2bfd5c502088d91f338b9b437b85cd5"
 
-react-redux-firebase@^1.4.0-rc.1:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/react-redux-firebase/-/react-redux-firebase-1.4.0.tgz#e3225622bdb4ecfbddfca5ac5df17d2366ab0384"
+react-redux-firebase@^1.5.0-beta.3:
+  version "1.5.0-beta.3"
+  resolved "https://registry.yarnpkg.com/react-redux-firebase/-/react-redux-firebase-1.5.0-beta.3.tgz#9e5400a823c19988f85170ea035e9fac7ddd6571"
   dependencies:
     es6-promise "^4.1.0"
     firebase "^3.9.0"
@@ -5598,6 +5598,7 @@ react-redux-firebase@^1.4.0-rc.1:
     immutable "^3.8.1"
     jwt-decode "^2.2.0"
     lodash "^4.17.4"
+    prop-types "^15.5.8"
 
 react-redux@^4.4.5:
   version "4.4.8"

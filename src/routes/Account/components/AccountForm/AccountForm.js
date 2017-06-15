@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { Field, reduxForm } from 'redux-form'
-import RaisedButton from 'material-ui/RaisedButton'
+import Button from 'components/Button'
 import TextField from 'components/TextField'
 import { ACCOUNT_FORM_NAME } from 'constants'
 import ProviderDataForm from '../ProviderDataForm'
@@ -13,6 +13,11 @@ export const AccountForm = ({ account, handleSubmit, submitting }) => (
       name='displayName'
       component={TextField}
       label='Display Name'
+    />
+    <Field
+      name='role'
+      component={TextField}
+      label='Role'
     />
     <Field
       name='email'
@@ -28,7 +33,7 @@ export const AccountForm = ({ account, handleSubmit, submitting }) => (
           />
         </div>
     }
-    <RaisedButton
+    <Button
       primary
       label='Save'
       type='submit'

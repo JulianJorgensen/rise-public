@@ -1,0 +1,14 @@
+{
+  "athlete-pending": {
+    "name": "athlete-pending",
+    "dashboard": true,
+    "getting-started": true,
+    "account": false
+  },
+  "athlete": {
+    "name": "athlete",
+    "dashboard": true,
+    "getting-started": true,
+    "account": true
+  }
+}

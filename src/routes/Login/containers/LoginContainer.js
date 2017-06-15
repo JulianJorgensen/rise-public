@@ -1,15 +1,14 @@
-import React, { Component, PropTypes } from 'react'
-import { Link } from 'react-router'
-import GoogleButton from 'react-google-button'
-import { connect } from 'react-redux'
-import { firebaseConnect, isLoaded, isEmpty, pathToJS } from 'react-redux-firebase'
-import Paper from 'material-ui/Paper'
-import Snackbar from 'components/Snackbar'
+import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router';
+import GoogleButton from 'react-google-button';
+import { connect } from 'react-redux';
+import { firebaseConnect, isLoaded, isEmpty, pathToJS } from 'react-redux-firebase';
+import Snackbar from 'components/Snackbar';
 import { Card } from 'react-toolbox/lib/card';
-import { UserIsNotAuthenticated } from 'utils/router'
-import { SIGNUP_PATH } from 'constants'
-import LoginForm from '../components/LoginForm'
-import classes from './LoginContainer.css'
+import { UserIsNotAuthenticated } from 'utils/router';
+import { SIGNUP_PATH } from 'constants';
+import LoginForm from '../components/LoginForm';
+import classes from './LoginContainer.css';
 
 @UserIsNotAuthenticated // redirect to list page if logged in
 @firebaseConnect() // add this.props.firebase

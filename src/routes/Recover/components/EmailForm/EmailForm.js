@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { Field, reduxForm } from 'redux-form'
-import RaisedButton from 'material-ui/RaisedButton'
+import Button from 'components/Button'
 import TextField from 'components/TextField'
 import { required, email } from 'utils/forms'
 import { RECOVER_EMAIL_FORM_NAME } from 'constants'
@@ -16,7 +16,7 @@ export const EmailForm = ({ account, handleSubmit, submitting, pristine, valid }
       required
     />
     <div className={classes.submit}>
-      <RaisedButton
+      <Button
         label='Reset'
         primary
         type='submit'

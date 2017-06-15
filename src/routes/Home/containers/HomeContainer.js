@@ -4,7 +4,7 @@ let {connect} = require('react-redux');
 
 import Slider from 'react-slick';
 import Layout from 'react-toolbox/lib/layout/Layout';
-import Button from 'components/Button/Button';
+import Button from 'components/Button';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import styles from './HomeContainer.css';
 import InstagramFeed from 'containers/InstagramFeed/InstagramFeed'

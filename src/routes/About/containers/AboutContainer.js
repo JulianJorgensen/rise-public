@@ -3,7 +3,7 @@ import {Link} from 'react-router';
 let {connect} = require('react-redux');
 
 import Layout from 'react-toolbox/lib/layout/Layout';
-import Button from 'components/Button/Button';
+import Button from 'components/Button';
 import styles from './AboutContainer.css';
 import InstagramFeed from 'containers/InstagramFeed/InstagramFeed'
 

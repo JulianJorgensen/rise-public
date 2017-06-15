@@ -1,13 +1,13 @@
-import React, { Component, PropTypes } from 'react'
-import Paper from 'material-ui/Paper'
-import { connect } from 'react-redux'
-import { firebaseConnect, pathToJS, isLoaded } from 'react-redux-firebase'
-import { reduxFirebase as rfConfig } from 'config'
-import { UserIsAuthenticated } from 'utils/router'
-import defaultUserImageUrl from 'static/User.png'
-import LoadingSpinner from 'components/LoadingSpinner'
-import AccountForm from '../components/AccountForm/AccountForm'
-import classes from './AccountContainer.css'
+import React, { Component, PropTypes } from 'react';
+import { Card } from 'react-toolbox/lib/card';
+import { connect } from 'react-redux';
+import { firebaseConnect, pathToJS, isLoaded } from 'react-redux-firebase';
+import { reduxFirebase as rfConfig } from 'config';
+import { UserIsAuthenticated } from 'utils/router';
+import defaultUserImageUrl from 'static/User.png';
+import LoadingSpinner from 'components/LoadingSpinner';
+import AccountForm from '../components/AccountForm/AccountForm';
+import classes from './AccountContainer.css';
 
 @UserIsAuthenticated // redirect to /login if user is not authenticated
 @firebaseConnect() // add this.props.firebase
@@ -39,14 +39,14 @@ export default class Account extends Component {
     })
   }
 
-  updateAccount = (newData) =>
+  updateAccount = (newData) => {
+    console.log('newData: ', newData);
     this.props.firebase
       .update(`${rfConfig.userProfile}/${this.props.auth.uid}`, newData)
       .catch((err) => {
         console.error('Error updating account', err) // eslint-disable-line no-console
-        // TODO: Display error to user
       })
-
+    }
   render () {
     const { account } = this.props
 
@@ -56,7 +56,7 @@ export default class Account extends Component {
 
     return (
       <div className={classes.container}>
-        <Paper className={classes.pane}>
+        <Card className={classes.pane}>
           <div className={classes.settings}>
             <div className={classes.avatar}>
               <img
@@ -73,7 +73,7 @@ export default class Account extends Component {
               />
             </div>
           </div>
-        </Paper>
+        </Card>
       </div>
     )
   }
