@@ -1,3 +1,7 @@
+.tab{
+  background-color: gray(98%);
+}
+
 .container{
   width: rem(400);
 }

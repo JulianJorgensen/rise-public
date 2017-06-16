@@ -9,13 +9,15 @@ export const firebase = {
 // For more details, visit https://prescottprue.gitbooks.io/react-redux-firebase/content/config.html
 export const reduxFirebase = {
   userProfile: 'users', // root that user profiles are written to
-  enableLogging: false, // enable/disable Firebase Database Logging
-  updateProfileOnLogin: false, // enable/disable updating of profile on login
+  profileParamsToPopulate: [
+    { child: 'role', root: 'roles' }, // populates user's role with matching role object from roles
+  ],
+  // enableLogging: false, // enable/disable Firebase Database Logging
+  // updateProfileOnLogin: false, // enable/disable updating of profile on login
   profileFactory: (user) => {
     return ({
-      displayName: user.providerData[0].displayName || user.email,
       email: user.email || user.providerData[0].email,
-      role: user.role || 'unassigned',
+      roles: 'athlete',
       showLeftNavigation: true
     })
   }

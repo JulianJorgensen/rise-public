@@ -1,14 +1,16 @@
-import React, { PropTypes } from 'react'
-import Button from 'components/Button'
-import { Field, reduxForm } from 'redux-form'
-import TextField from 'components/TextField'
-import { required, validateEmail } from 'utils/forms'
-import { SIGNUP_FORM_NAME } from 'constants'
-import classes from './SignupForm.css'
+import React, { PropTypes } from 'react';
+import { Field, reduxForm } from 'redux-form';
+import { required, validateEmail } from 'utils/forms';
+import { MENTOR_SIGNUP_FORM_NAME } from 'constants';
+import { RadioGroup, RadioButton } from 'react-toolbox/lib/radio';
+import Button from 'components/Button';
+import TextField from 'components/TextField';
+import classes from './MentorSignupForm.css';
 
-const SignupForm = ({ handleSubmit, submitting }) => {
+const MentorSignupForm = ({ handleSubmit, submitting }) => {
   return (
     <form className={classes.container} onSubmit={handleSubmit}>
+      <h4>Mentor</h4>
       <Field
         name='email'
         type='text'
@@ -35,11 +37,11 @@ const SignupForm = ({ handleSubmit, submitting }) => {
   )
 }
 
-SignupForm.propTypes = {
+MentorSignupForm.propTypes = {
   handleSubmit: PropTypes.func,
   submitting: PropTypes.bool
 }
 
 export default reduxForm({
-  form: SIGNUP_FORM_NAME
-})(SignupForm)
+  form: MENTOR_SIGNUP_FORM_NAME
+})(MentorSignupForm)

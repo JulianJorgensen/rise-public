@@ -48,7 +48,7 @@ export default class Navbar extends Component {
 
   render () {
     const { account } = this.props
-    const accountExists = isLoaded(account) && !isEmpty(account)
+    const accountExists = isLoaded(account) && !isEmpty(account)    
 
     const mainMenu = (
       <div className={classes.navCta}>
