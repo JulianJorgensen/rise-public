@@ -1,11 +1,13 @@
-import { UserAuthWrapper } from 'redux-auth-wrapper'
-import { browserHistory } from 'react-router'
-import { LIST_PATH } from 'constants'
-import { pathToJS } from 'react-redux-firebase'
-import LoadingSpinner from 'components/LoadingSpinner'
+import React from 'react';
+import { get } from 'lodash';
+import { UserAuthWrapper } from 'redux-auth-wrapper';
+import { browserHistory } from 'react-router';
+import { LIST_PATH } from 'constants';
+import { pathToJS } from 'react-redux-firebase';
+import LoadingSpinner from 'components/LoadingSpinner';
 
-const AUTHED_REDIRECT = 'AUTHED_REDIRECT'
-const UNAUTHED_REDIRECT = 'UNAUTHED_REDIRECT'
+const AUTHED_REDIRECT = 'AUTHED_REDIRECT';
+const UNAUTHED_REDIRECT = 'UNAUTHED_REDIRECT';
 
 /**
  * @description Higher Order Component that redirects to `/login` instead
@@ -56,7 +58,40 @@ export const UserIsNotAuthenticated = UserAuthWrapper({ // eslint-disable-line n
   }
 })
 
+
+/**
+ * @description Higher Order Component that redirects to the homepage if
+ * the user does not have the required permission. This HOC requires that the user
+ * profile be loaded and the role property populated
+ * @param {Component} componentToWrap - Component to wrap
+ * @return {Component} wrappedComponent
+ */
+export const UserHasPermission = permission => UserAuthWrapper({ // eslint-disable-line new-cap
+  authSelector: ({ firebase }) => {
+    const user = pathToJS(firebase, 'profile');
+    if (user) {
+      return { ...pathToJS(firebase, 'auth'), user }; // attach profile for use in predicate
+    }
+    return pathToJS(firebase, 'auth');
+  },
+  authenticatingSelector: ({ firebase }) =>
+      (pathToJS(firebase, 'auth') === undefined)
+      || (pathToJS(firebase, 'profile') === undefined)
+      || (pathToJS(firebase, 'isInitializing') === true),
+  redirectAction: newLoc => (dispatch) => {
+    browserHistory.replace(newLoc);
+    dispatch({ type: UNAUTHED_REDIRECT });
+  },
+  failureRedirectPath: '/notAuthorized',
+  wrapperDisplayName: 'UserHasPermission',
+  predicate: auth => get(auth, `user.role.${permission}`, false),
+  allowRedirectBack: false,
+  LoadingComponent: <LoadingSpinner />,
+});
+
+
 export default {
   UserIsAuthenticated,
-  UserIsNotAuthenticated
+  UserIsNotAuthenticated,
+  UserHasPermission
 }

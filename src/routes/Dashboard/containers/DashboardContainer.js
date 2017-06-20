@@ -9,7 +9,7 @@ import {
   isEmpty
 } from 'react-redux-firebase'
 import { LIST_PATH } from 'constants'
-import { UserIsAuthenticated } from 'utils/router'
+import { UserIsAuthenticated, UserHasPermission } from 'utils/router'
 import LoadingSpinner from 'components/LoadingSpinner'
 import classes from './DashboardContainer.css'
 
@@ -18,6 +18,7 @@ const populates = [
 ]
 
 @UserIsAuthenticated
+@UserHasPermission('dashboard')
 @firebaseConnect([
   { path: 'projects', populates }
   // 'projects#populate=owner:users' // string equivalent
