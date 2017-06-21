@@ -47,6 +47,10 @@ export default class GettingStarted extends Component {
   render () {
     const { account } = this.props
 
+    this.props.firebase.database().ref('/users/').once('value').then(function(snapshot) {
+      console.log('snapshot: ', snapshot.val());
+    });
+
     if (!isLoaded(account)) {
       return <LoadingSpinner />
     }

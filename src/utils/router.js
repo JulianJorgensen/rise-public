@@ -70,7 +70,6 @@ export const UserHasPermission = permission => UserAuthWrapper({ // eslint-disab
   authSelector: ({ firebase }) => {
     const user = pathToJS(firebase, 'profile');
     if (user) {
-      console.log('****** user: ', user);
       return { ...pathToJS(firebase, 'auth'), user }; // attach profile for use in predicate
     }
     return pathToJS(firebase, 'auth');

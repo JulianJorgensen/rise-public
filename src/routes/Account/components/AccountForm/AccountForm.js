@@ -15,11 +15,6 @@ export const AccountForm = ({ account, handleSubmit, submitting }) => (
       label='Display Name'
     />
     <Field
-      name='role'
-      component={TextField}
-      label='Role'
-    />
-    <Field
       name='email'
       component={TextField}
       label='Email'

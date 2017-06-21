@@ -37,4 +37,109 @@ export const paths = {
   notAuthorized: NOT_AUTHORIZED_PATH
 }
 
+export const leftNav = [
+  {
+    url: 'dashboard',
+    anchor: 'Dashboard',
+    children: [
+      {
+        url: 'getting-started',
+        anchor: 'Getting started'
+      },
+      {
+        url: 'profile',
+        anchor: 'Profile'
+      },
+      {
+        url: 'settings',
+        anchor: 'Settings'
+      }
+    ]
+  },
+  {
+    url: 'chat',
+    anchor: 'Chat',
+    children: [
+      {
+        url: 'inbox',
+        anchor: 'Inbox'
+      },
+      {
+        url: 'sent',
+        anchor: 'Sent'
+      }
+    ]
+  },
+  {
+    url: 'video',
+    anchor: 'Video',
+    children: [
+      {
+        url: 'contacts',
+        anchor: 'Contacts'
+      },
+      {
+        url: 'log',
+        anchor: 'Call log'
+      }
+    ]
+  },
+  {
+    url: 'library',
+    anchor: 'Exercise Library',
+    children: [
+      {
+        url: 'sport1',
+        anchor: 'Sport 1'
+      },
+      {
+        url: 'sport2',
+        anchor: 'Sport 2'
+      }
+    ]
+  },
+  {
+    url: 'schedule',
+    anchor: 'Schedule',
+    children: [
+      {
+        url: 'calendar',
+        anchor: 'Calendar'
+      },
+      {
+        url: 'alerts',
+        anchor: 'Alerts'
+      }
+    ]
+  },
+  {
+    url: 'activity',
+    anchor: 'Account Activity',
+    children: [
+      {
+        url: 'login-time',
+        anchor: 'Login Time'
+      },
+      {
+        url: 'payments',
+        anchor: 'Payments'
+      },
+      {
+        url: 'overview',
+        anchor: 'Overview'
+      }
+    ]
+  },
+  {
+    url: 'my-athletes',
+    anchor: 'My Athletes',
+    children: [
+      {
+        url: 'profiles',
+        anchor: 'Profiles'
+      }
+    ]
+  }
+];
+
 export default { ...paths, ...formNames }

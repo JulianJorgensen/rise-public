@@ -39,8 +39,8 @@ export default (initialState = {}, history) => {
     makeRootReducer(),
     initialState,
     compose(
-      applyMiddleware(...middleware),
       reactReduxFirebase(fbConfig, reduxConfig),
+      applyMiddleware(...middleware),
       ...enhancers
     )
   )
