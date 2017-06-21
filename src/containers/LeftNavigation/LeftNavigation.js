@@ -1,10 +1,12 @@
-import React, { Component, PropTypes } from 'react'
-import classes from './LeftNavigation.css'
-import { Link } from 'react-router'
-import { connect } from 'react-redux'
-import { reduxFirebase as rfConfig } from 'config'
-import { firebaseConnect, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase'
-import { LIST_PATH, ACCOUNT_PATH, LOGIN_PATH, SIGNUP_PATH, ABOUT_PATH } from 'constants'
+import React, { Component, PropTypes } from 'react';
+import { get } from 'lodash';
+import classes from './LeftNavigation.css';
+import { Link } from 'react-router';
+import { connect } from 'react-redux';
+import { UserAuthWrapper } from 'redux-auth-wrapper';
+import { reduxFirebase as rfConfig } from 'config';
+import { firebaseConnect, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase';
+import { LIST_PATH, ACCOUNT_PATH, LOGIN_PATH, SIGNUP_PATH, ABOUT_PATH } from 'constants';
 
 
 @firebaseConnect()
@@ -40,8 +42,10 @@ export default class Navbar extends Component {
   }
 
   render () {
-    const { account } = this.props
-    const accountExists = isLoaded(account) && !isEmpty(account)
+    const { account, auth } = this.props;
+    const accountExists = isLoaded(account) && !isEmpty(account);
+
+    console.log('profile/account: ', account);
 
     if (accountExists){
       return (
@@ -52,6 +56,7 @@ export default class Navbar extends Component {
             }}></div>
             <div className={classes.navItems}>
               <div className={classes.navItemsGroup}>
+                <div>Link:</div>
                 <h2 className={classes.navItemsGroupHeadline}>Dashboard</h2>
                 <Link to='getting-started' className={classes.navItem}>Getting Started</Link>
                 <Link to='account' className={classes.navItem}>Profile</Link>

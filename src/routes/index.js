@@ -10,6 +10,7 @@ import DashboardRoute from './Dashboard'
 import AccountRoute from './Account'
 import GettingStartedRoute from './GettingStarted'
 import RecoverRoute from './Recover'
+import NotAuthorized from './NotAuthorized'
 
 /*  Note: Instead of using JSX, we recommend using react-router
     PlainRoute objects to build route definitions.   */
@@ -26,6 +27,7 @@ export const createRoutes = (store) => ({
     PricingRoute,
     LoginRoute,
     SignupRoute,
+    NotAuthorized,
     DashboardRoute(store), // async route definitions recieve store
     RecoverRoute(store) // async route definitions recieve store
   ]

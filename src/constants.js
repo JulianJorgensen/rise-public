@@ -8,6 +8,7 @@ export const GETTING_STARTED_PATH = '/getting-started'
 export const LOGIN_PATH = '/login'
 export const SIGNUP_PATH = '/signup'
 export const RECOVER_PATH = '/forgot'
+export const NOT_AUTHORIZED_PATH = '/notAuthorized'
 
 export const ACCOUNT_FORM_NAME = 'account'
 export const LOGIN_FORM_NAME = 'login'
@@ -32,7 +33,8 @@ export const paths = {
   account: ACCOUNT_PATH,
   detail: DETAIL_PATH,
   login: LOGIN_PATH,
-  signup: SIGNUP_PATH
+  signup: SIGNUP_PATH,
+  notAuthorized: NOT_AUTHORIZED_PATH
 }
 
 export default { ...paths, ...formNames }

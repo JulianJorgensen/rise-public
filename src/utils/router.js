@@ -2,7 +2,7 @@ import React from 'react';
 import { get } from 'lodash';
 import { UserAuthWrapper } from 'redux-auth-wrapper';
 import { browserHistory } from 'react-router';
-import { LIST_PATH } from 'constants';
+import { LIST_PATH, NOT_AUTHORIZED_PATH } from 'constants';
 import { pathToJS } from 'react-redux-firebase';
 import LoadingSpinner from 'components/LoadingSpinner';
 
@@ -70,6 +70,7 @@ export const UserHasPermission = permission => UserAuthWrapper({ // eslint-disab
   authSelector: ({ firebase }) => {
     const user = pathToJS(firebase, 'profile');
     if (user) {
+      console.log('****** user: ', user);
       return { ...pathToJS(firebase, 'auth'), user }; // attach profile for use in predicate
     }
     return pathToJS(firebase, 'auth');
@@ -82,11 +83,11 @@ export const UserHasPermission = permission => UserAuthWrapper({ // eslint-disab
     browserHistory.replace(newLoc);
     dispatch({ type: UNAUTHED_REDIRECT });
   },
-  failureRedirectPath: '/notAuthorized',
+  failureRedirectPath: `${NOT_AUTHORIZED_PATH}`,
   wrapperDisplayName: 'UserHasPermission',
   predicate: auth => get(auth, `user.role.${permission}`, false),
   allowRedirectBack: false,
-  LoadingComponent: <LoadingSpinner />,
+  LoadingComponent: 'loading'
 });
 
 
