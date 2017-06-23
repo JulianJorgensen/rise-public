@@ -1,10 +1,23 @@
-const express = require('express')
-const debug = require('debug')('app:server')
-const webpack = require('webpack')
-const webpackConfig = require('../config/webpack.config')
-const project = require('../config/project.config')
+const express = require('express');
+const debug = require('debug')('app:server');
+let logger = require('morgan');
+const webpack = require('webpack');
+const webpackConfig = require('../config/webpack.config');
+const project = require('../config/project.config');
 
-const app = express()
+const app = express();
+let bodyParser = require('body-parser');
+
+// Setting up basic middleware for all Express requests
+app.use(logger('dev')); // Log requests to API using morgan
+
+// create application/x-www-form-urlencoded parser
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// routes
+let email = require('./routes/email');
+app.use('/email', email);
 
 // This rewrites all routes requests to the root /index.html file
 // (ignoring file requests). If you want to implement universal

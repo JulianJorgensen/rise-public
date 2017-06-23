@@ -17,7 +17,7 @@ import { LIST_PATH, ACCOUNT_PATH, LOGIN_PATH, SIGNUP_PATH, ABOUT_PATH, leftNav }
     account: pathToJS(firebase, 'profile')
   })
 )
-export default class Navbar extends Component {
+export default class LefNavigation extends Component {
   static contextTypes = {
     router: PropTypes.object.isRequired
   }
@@ -46,13 +46,13 @@ export default class Navbar extends Component {
     const accountExists = isLoaded(account) && !isEmpty(account);
 
     let renderNavItems = () => {
-      return leftNav.map((navGroup) => {
+      return leftNav.map((navGroup, index) => {
         return (
-          <div className={classes.navItemsGroup}>
+          <div key={index} className={classes.navItemsGroup}>
             <Link to={`/${navGroup.url}`}><h2 className={`${classes.navItemsGroupHeadline} ${account.role[navGroup.url] ? '' : classes.disabled}`}>{navGroup.anchor}</h2></Link>
-            {navGroup.children.map((navItem) => {
+            {navGroup.children.map((navItem, navItemIndex) => {
               return (
-                <Link to={`/${navItem.url}`} className={`${classes.navItem} ${account.role[navItem.url] ? '' : classes.disabled}`}>{navItem.anchor}</Link>
+                <Link key={navItemIndex} to={`/${navItem.url}`} className={`${classes.navItem} ${account.role[navItem.url] ? '' : classes.disabled}`}>{navItem.anchor}</Link>
               )
             })}
           </div>

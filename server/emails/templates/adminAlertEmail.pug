@@ -1,0 +1,25 @@
+extends layout.pug
+
+block content
+  tr
+    td.alert(class='alert-primary') #{title}
+  tr
+    td.content-wrap
+      table(width='100%', cellpadding='0', cellspacing='0')
+        tr
+          td.content-block #{message}
+        tr
+          td.content-block
+            table(width='100%', cellpadding='0', cellspacing='0')
+              tr
+                td First name:
+                td #{firstName}
+              tr
+                td Last name:
+                td #{lastName}
+              tr
+                td Email:
+                td #{email}
+        tr
+          td.content-block You can 
+            a(href='https://console.firebase.google.com/project/rise-1602c/database/data/users/'+uid) edit the user here.

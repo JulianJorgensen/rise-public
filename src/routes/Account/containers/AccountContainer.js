@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { firebaseConnect, pathToJS, isLoaded } from 'react-redux-firebase';
 import { reduxFirebase as rfConfig } from 'config';
 import { UserIsAuthenticated, UserHasPermission } from 'utils/router'
-import defaultUserImageUrl from 'static/User.png';
+import defaultUserImageUrl from 'static/images/User.png';
 import LoadingSpinner from 'components/LoadingSpinner';
 import AccountForm from '../components/AccountForm/AccountForm';
 import classes from './AccountContainer.css';

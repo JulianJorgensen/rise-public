@@ -86,7 +86,7 @@ export const UserHasPermission = permission => UserAuthWrapper({ // eslint-disab
   wrapperDisplayName: 'UserHasPermission',
   predicate: auth => get(auth, `user.role.${permission}`, false),
   allowRedirectBack: false,
-  LoadingComponent: 'loading'
+  LoadingComponent: LoadingSpinner
 });
 
 

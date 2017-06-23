@@ -31,7 +31,7 @@ const config = {
   // ----------------------------------
   compiler_babel : {
     cacheDirectory : true,
-    plugins        : ['transform-runtime', 'lodash', 'transform-decorators-legacy'],
+    plugins        : ['transform-runtime', 'lodash', 'transform-decorators-legacy', 'transform-object-rest-spread'],
     presets        : ['es2015', 'react', 'stage-0']
   },
   compiler_devtool         : 'eval',

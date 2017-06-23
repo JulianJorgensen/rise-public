@@ -1,12 +1,9 @@
-.container {
+.container{
+  width: rem(500);
+  padding: rem(20);
 }
-.pane {
-}
-.settings {
-}
-.avatar {
-}
-.ImageManager {
-}
-.meta {
+
+.tab{
+  flex-grow: 1;
+  text-align: center;
 }

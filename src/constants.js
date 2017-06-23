@@ -11,6 +11,8 @@ export const RECOVER_PATH = '/forgot'
 export const NOT_AUTHORIZED_PATH = '/notAuthorized'
 
 export const ACCOUNT_FORM_NAME = 'account'
+export const SPORTS_FORM_NAME = 'sports'
+export const BANKING_FORM_NAME = 'banking'
 export const LOGIN_FORM_NAME = 'login'
 export const ATHLETE_SIGNUP_FORM_NAME = 'athleteSignup'
 export const MENTOR_SIGNUP_FORM_NAME = 'mentorSignup'

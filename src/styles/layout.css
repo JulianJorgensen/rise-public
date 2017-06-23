@@ -1,9 +1,15 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,600');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
 :global {
   & body{
     margin: 0;
     background: white;
+    font-family: 'Poppins';
+  }
+
+  & input,
+  & textarea{
     font-family: 'Poppins';
   }
 

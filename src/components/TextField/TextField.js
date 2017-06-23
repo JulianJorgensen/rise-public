@@ -3,7 +3,7 @@ import cn from 'classnames';
 import Input from 'react-toolbox/lib/input';
 import classes from './TextField.css';
 
-export const TextField = ({ className, input, type, required, label, meta: { touched, error }, ...custom }) => {
+export const TextField = ({ className, type, required, label, input }) => {
   const _className = cn(className, classes.default);
 
   return (
@@ -12,16 +12,9 @@ export const TextField = ({ className, input, type, required, label, meta: { tou
       label={label}
       type={type}
       required={required}
-      {...input}
-      {...custom}
+      value={input.value}
     />
   )
-}
-
-TextField.propTypes = {
-  input: PropTypes.object,
-  label: PropTypes.string,
-  meta: PropTypes.object
 }
 
 export default TextField
