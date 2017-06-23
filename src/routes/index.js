@@ -7,7 +7,7 @@ import PricingRoute from './Pricing'
 import LoginRoute from './Login'
 import SignupRoute from './Signup'
 import DashboardRoute from './Dashboard'
-import AccountRoute from './Account'
+import ProfileRoute from './Profile'
 import GettingStartedRoute from './GettingStarted'
 import RecoverRoute from './Recover'
 import NotAuthorized from './NotAuthorized'
@@ -20,7 +20,7 @@ export const createRoutes = (store) => ({
   component: CoreLayout,
   indexRoute: Home,
   childRoutes: [
-    AccountRoute,
+    ProfileRoute,
     GettingStartedRoute,
     AboutRoute,
     FeaturesRoute,

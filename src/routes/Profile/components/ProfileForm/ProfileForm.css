@@ -1,4 +1,5 @@
 .container {
+  width: rem(300);
 }
 
 .submit {

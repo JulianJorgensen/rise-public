@@ -27,7 +27,7 @@ export default class CountryPicker extends Component {
       <Dropdown
         className={_className}
         auto
-        onChange={this.handleChange}
+        onChange={() => this.handleChange}
         source={countries}
         value={this.state.value}
       />

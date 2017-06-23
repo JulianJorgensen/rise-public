@@ -41,7 +41,7 @@ export default class RecoverContainer extends Component {
           type='warning'
           action='OK'
           label={this.state.message || 'Error'}
-          onClick={this.handleSnackbarClick}
+          onClick={() => this.handleSnackbarClick}
           timeout={4000}
           onTimeout={this.handleSnackbarClick}
         />

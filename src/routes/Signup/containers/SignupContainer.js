@@ -15,7 +15,7 @@ import classes from './SignupContainer.css';
 import { Card } from 'react-toolbox/lib/card';
 
 
-@UserIsNotAuthenticated // redirect to list page if logged in
+@UserIsNotAuthenticated // redirect to dashboard if logged in
 @firebaseConnect() // add this.props.firebase
 @connect( // map redux state to props
   ({firebase}) => ({
@@ -24,18 +24,18 @@ import { Card } from 'react-toolbox/lib/card';
   })
 )
 export default class Signup extends Component {
+  state = {
+    snackCanOpen: false,
+    roleIndex: 0,
+    role: 'athlete-pending'
+  }
+
   static propTypes = {
     auth: PropTypes.shape({
       uid: PropTypes.string
     }),
     firebase: PropTypes.object,
     authError: PropTypes.object
-  }
-
-  state = {
-    snackCanOpen: false,
-    roleIndex: 0,
-    role: 'athlete-pending'
   }
 
   handleSignup = ({ email, password }) => {
@@ -77,7 +77,7 @@ export default class Signup extends Component {
 
     return (
       <div className={classes.container}>
-        <Tabs theme={classes} index={this.state.roleIndex} onChange={this.handleRoleChange} inverse>
+        <Tabs theme={classes} index={this.state.roleIndex} onChange={() => this.handleRoleChange} inverse>
           <Tab label='Athlete'>
             <AthleteSignupForm onSubmit={this.handleSignup} />
           </Tab>
@@ -105,9 +105,9 @@ export default class Signup extends Component {
             type='warning'
             action='close'
             label={authError ? authError.message : 'Signup error'}
-            onClick={this.handleSnackbarClick}
+            onClick={() => this.handleSnackbarClick}
+            onTimeout={() => this.handleSnackbarClick}
             timeout={3000}
-            onTimeout={this.handleSnackbarClick}
           />
         }
       </div>

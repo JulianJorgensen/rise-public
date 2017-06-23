@@ -3,7 +3,7 @@ import classes from './Navbar.css'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { firebaseConnect, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase'
-import { LIST_PATH, ACCOUNT_PATH, LOGIN_PATH, SIGNUP_PATH, ABOUT_PATH } from 'constants'
+import { DASHBOARD_PATH, PROFILE_PATH, LOGIN_PATH, SIGNUP_PATH, ABOUT_PATH } from 'constants'
 
 // Components
 import {IconMenu, MenuItem, MenuDivider } from 'react-toolbox/lib/menu';
@@ -42,13 +42,13 @@ export default class Navbar extends Component {
   }
 
   handleLogout = () => {
-    this.props.firebase.logout()
-    this.context.router.push('/')
+    this.props.firebase.logout();
+    this.context.router.push('/');
   }
 
   render () {
-    const { account } = this.props
-    const accountExists = isLoaded(account) && !isEmpty(account)
+    const { account } = this.props;
+    const accountExists = isLoaded(account) && !isEmpty(account);
 
     const mainMenu = (
       <div className={classes.navCta}>
@@ -59,12 +59,12 @@ export default class Navbar extends Component {
 
     const rightMenu = accountExists ? (
       <div className={classes.rightNav}>
-        <div className={classes.rightNavName}>Hello {account.displayName}!</div>
+        <div className={classes.rightNavName}>Hello {account.firstName}!</div>
         <Avatar className={classes.rightNavAvatar} image='/images/User.png' cover />
         <IconMenu className={classes.rightNavMenu} icon={<i className="fa fa-chevron-down" />} position='topRight' menuRipple>
           <MenuItem
-            caption='Account'
-            onTouchTap={() => this.context.router.push(ACCOUNT_PATH)}
+            caption='Profile'
+            onTouchTap={() => this.context.router.push(PROFILE_PATH)}
           />
           <MenuItem
             caption='Sign out'
@@ -76,7 +76,7 @@ export default class Navbar extends Component {
 
     return (
       <header className={`${classes.header} ${account ? account.showLeftNavigation ? classes.withLeftNav : '' : ''}`}>
-        <Link to={accountExists ? `${LIST_PATH}` : '/'} className={classes.logo}><Logo width="80" /></Link>
+        <Link to={accountExists ? `${DASHBOARD_PATH}` : '/'} className={classes.logo}><Logo width="80" /></Link>
 
         <div className={classes.nav}>
           <Link to={ABOUT_PATH}>About</Link>

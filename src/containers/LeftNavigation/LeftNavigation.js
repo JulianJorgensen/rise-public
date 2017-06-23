@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { UserAuthWrapper } from 'redux-auth-wrapper';
 import { reduxFirebase as rfConfig } from 'config';
 import { firebaseConnect, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase';
-import { LIST_PATH, ACCOUNT_PATH, LOGIN_PATH, SIGNUP_PATH, ABOUT_PATH, leftNav } from 'constants';
+import { DASHBOARD_PATH, ACCOUNT_PATH, LOGIN_PATH, SIGNUP_PATH, ABOUT_PATH, leftNav } from 'constants';
 
 
 @firebaseConnect()

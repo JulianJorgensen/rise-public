@@ -2,7 +2,7 @@ import React from 'react';
 import { get } from 'lodash';
 import { UserAuthWrapper } from 'redux-auth-wrapper';
 import { browserHistory } from 'react-router';
-import { LIST_PATH, NOT_AUTHORIZED_PATH } from 'constants';
+import { DASHBOARD_PATH, GETTING_STARTED_PATH, NOT_AUTHORIZED_PATH } from 'constants';
 import { pathToJS } from 'react-redux-firebase';
 import LoadingSpinner from 'components/LoadingSpinner';
 
@@ -45,8 +45,8 @@ export const UserIsNotAuthenticated = UserAuthWrapper({ // eslint-disable-line n
   allowRedirectBack: false,
   LoadingComponent: LoadingSpinner,
   failureRedirectPath: (state, props) =>
-    // redirect to page user was on or to list path
-    props.location.query.redirect || LIST_PATH,
+    // redirect to page user was on or to getting started page
+    props.location.query.redirect || GETTING_STARTED_PATH,
   authSelector: ({ firebase }) => pathToJS(firebase, 'auth'),
   authenticatingSelector: ({ firebase }) =>
     (pathToJS(firebase, 'auth') === undefined) ||

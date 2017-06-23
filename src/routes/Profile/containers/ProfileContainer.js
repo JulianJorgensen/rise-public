@@ -4,13 +4,14 @@ import { connect } from 'react-redux';
 import { firebaseConnect, pathToJS, isLoaded } from 'react-redux-firebase';
 import { reduxFirebase as rfConfig } from 'config';
 import { UserIsAuthenticated, UserHasPermission } from 'utils/router'
-import defaultUserImageUrl from 'static/images/User.png';
+
+import Avatar from 'react-toolbox/lib/avatar';
 import LoadingSpinner from 'components/LoadingSpinner';
-import AccountForm from '../components/AccountForm/AccountForm';
-import classes from './AccountContainer.css';
+import ProfileForm from '../components/ProfileForm/ProfileForm';
+import classes from './ProfileContainer.css';
 
 @UserIsAuthenticated // redirect to /login if user is not authenticated
-@UserHasPermission('account')
+@UserHasPermission('profile')
 @firebaseConnect() // add this.props.firebase
 @connect( // Map redux state to props
   ({ firebase }) => ({
@@ -18,7 +19,7 @@ import classes from './AccountContainer.css';
     account: pathToJS(firebase, 'profile')
   })
 )
-export default class Account extends Component {
+export default class Profile extends Component {
   static propTypes = {
     account: PropTypes.object,
     auth: PropTypes.shape({
@@ -41,7 +42,11 @@ export default class Account extends Component {
   }
 
   updateAccount = (newData) => {
-    console.log('newData: ', newData);
+    newData = {
+      ...newData,
+      role: `${newData.role.name}${newData.status === 'pending' ? '-pending' : ''}`
+    }
+
     this.props.firebase
       .update(`${rfConfig.userProfile}/${this.props.auth.uid}`, newData)
       .catch((err) => {
@@ -49,33 +54,30 @@ export default class Account extends Component {
       })
     }
   render () {
-    const { account } = this.props
+    const { account } = this.props;
 
     if (!isLoaded(account)) {
       return <LoadingSpinner />
     }
 
     return (
-      <div className={classes.container}>
-        <Card className={classes.pane}>
-          <div className={classes.settings}>
-            <div className={classes.avatar}>
-              <img
-                className={classes.avatarCurrent}
-                src={account && account.avatarUrl || defaultUserImageUrl}
-                onClick={this.toggleModal}
-              />
-            </div>
-            <div className={classes.meta}>
-              <AccountForm
-                initialValues={account}
-                account={account}
-                onSubmit={this.updateAccount}
-              />
-            </div>
-          </div>
-        </Card>
-      </div>
+      <Card className={classes.container}>
+        <div className={classes.avatarContainer}>
+          <Avatar
+            className={classes.avatar}
+            image={account && account.avatarUrl || '/images/User.png'}
+            cover
+            onClick={() => this.toggleModal}
+          />
+        </div>
+        <div className={classes.meta}>
+          <ProfileForm
+            initialValues={account}
+            account={account}
+            onSubmit={this.updateAccount}
+          />
+        </div>
+      </Card>
     )
   }
 }

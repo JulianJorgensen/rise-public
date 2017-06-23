@@ -1,4 +1,4 @@
-import { LIST_PATH as path } from 'constants'
+import { DASHBOARD_PATH as path } from 'constants'
 
 export default (store) => ({
   path,

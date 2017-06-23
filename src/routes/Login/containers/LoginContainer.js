@@ -74,7 +74,7 @@ export default class Login extends Component {
           type='warning'
           action='close'
           label={authError ? authError.message : 'Signup error'}
-          onClick={this.handleSnackbarClick}
+          onClick={() => this.handleSnackbarClick}
           timeout={3000}
           onTimeout={this.handleSnackbarClick}
         />

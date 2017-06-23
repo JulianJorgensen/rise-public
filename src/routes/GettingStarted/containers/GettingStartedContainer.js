@@ -13,7 +13,7 @@ import BankingForm from '../components/BankingForm/BankingForm';
 import classes from './GettingStartedContainer.css';
 
 @UserIsAuthenticated // redirect to /login if user is not authenticated
-@UserHasPermission('getting-started')
+// @UserHasPermission('getting-started')
 @firebaseConnect() // add this.props.firebase
 @connect( // Map redux state to props
   ({ firebase }) => ({
@@ -42,7 +42,7 @@ export default class GettingStarted extends Component {
   updateFirebase = (newData) => {
     newData = {
       ...newData,
-      role: newData.role.name
+      role: `${newData.role.name}${newData.status === 'pending' ? '-pending' : ''}`
     }
     this.props.firebase
       .update(`${rfConfig.userProfile}/${this.props.auth.uid}`, newData)
@@ -75,11 +75,15 @@ export default class GettingStarted extends Component {
   }
 
   finishSteps = (newData) => {
-    let {role} = newData;
-
     // update firebase
+    newData = {
+      ...newData,
+      hasSubmittedDetails: true
+    }
     this.updateFirebase(newData);
 
+    // parse data into email format
+    let {role} = newData;
     let parsedUserData = Object.assign(newData, {
       uid: this.props.auth.uid,
       role: role.name
@@ -99,7 +103,6 @@ export default class GettingStarted extends Component {
 
     // log message
     this.setState({
-      message: 'Great job! Your application is in process. We will be in touch...',
       finished: true
     });
 
@@ -112,6 +115,12 @@ export default class GettingStarted extends Component {
 
     if (!isLoaded(account)) {
       return <LoadingSpinner />
+    }
+
+    if (account && account.hasSubmittedDetails){
+      this.setState({
+        finished: true
+      });
     }
 
     let renderSteps = () => {
@@ -148,7 +157,7 @@ export default class GettingStarted extends Component {
 
     return (
       <div className={classes.container}>
-        <h2>{this.state.message}</h2>
+        <h2>{this.state.finished ? 'Great job! Your application is in process. We will be in touch...' : this.state.message}</h2>
         {renderSteps()}
       </div>
     )

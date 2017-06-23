@@ -8,7 +8,7 @@ import {
   isLoaded,
   isEmpty
 } from 'react-redux-firebase'
-import { LIST_PATH } from 'constants'
+import { DASHBOARD_PATH } from 'constants'
 import { UserIsAuthenticated, UserHasPermission } from 'utils/router'
 import LoadingSpinner from 'components/LoadingSpinner'
 import classes from './DashboardContainer.css'

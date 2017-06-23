@@ -1,9 +1,9 @@
 export const ABOUT_PATH = '/about'
 export const FEATURES_PATH = '/features'
 export const PRICING_PATH = '/pricing'
-export const LIST_PATH = '/dashboard'
+export const DASHBOARD_PATH = '/dashboard'
 export const DETAIL_PATH = ':projectname'
-export const ACCOUNT_PATH = '/account'
+export const PROFILE_PATH = '/profile'
 export const GETTING_STARTED_PATH = '/getting-started'
 export const LOGIN_PATH = '/login'
 export const SIGNUP_PATH = '/signup'
@@ -31,8 +31,8 @@ export const formNames = {
 
 export const paths = {
   about: ABOUT_PATH,
-  list: LIST_PATH,
-  account: ACCOUNT_PATH,
+  dashboard: DASHBOARD_PATH,
+  profile: PROFILE_PATH,
   detail: DETAIL_PATH,
   login: LOGIN_PATH,
   signup: SIGNUP_PATH,

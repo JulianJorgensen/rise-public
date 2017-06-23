@@ -18,6 +18,7 @@ export const reduxFirebase = {
     return ({
       email: user.email || user.providerData[0].email,
       role: 'athlete-pending',
+      status: 'pending',
       showLeftNavigation: true
     })
   }
