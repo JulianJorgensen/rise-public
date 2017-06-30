@@ -29,7 +29,7 @@ export default class DatePicker extends Component {
         label={label}
         required={required}
         sundayFirstDayOfWeek
-        onChange={() => this.handleChange.bind(this, 'date')}
+        onChange={this.handleChange.bind(this, 'date')}
         value={this.state.date}
       />
     );

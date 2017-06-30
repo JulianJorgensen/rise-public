@@ -3,7 +3,7 @@ import classes from './Navbar.css'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { firebaseConnect, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase'
-import { DASHBOARD_PATH, PROFILE_PATH, LOGIN_PATH, SIGNUP_PATH, ABOUT_PATH } from 'constants'
+import { DASHBOARD_PATH, PROFILE_PATH, SETTINGS_PATH, LOGIN_PATH, SIGNUP_PATH, ABOUT_PATH } from 'constants'
 
 // Components
 import {IconMenu, MenuItem, MenuDivider } from 'react-toolbox/lib/menu';
@@ -65,6 +65,11 @@ export default class Navbar extends Component {
           <MenuItem
             caption='Profile'
             onTouchTap={() => this.context.router.push(PROFILE_PATH)}
+          />
+          <MenuItem
+            caption='Settings'
+            onTouchTap={() => this.context.router.push(SETTINGS_PATH)}
+            disabled={account.status === 'pending'}
           />
           <MenuItem
             caption='Sign out'

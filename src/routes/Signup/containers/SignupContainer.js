@@ -77,7 +77,7 @@ export default class Signup extends Component {
 
     return (
       <div className={classes.container}>
-        <Tabs theme={classes} index={this.state.roleIndex} onChange={() => this.handleRoleChange} inverse>
+        <Tabs theme={classes} index={this.state.roleIndex} onChange={this.handleRoleChange} inverse>
           <Tab label='Athlete'>
             <AthleteSignupForm onSubmit={this.handleSignup} />
           </Tab>

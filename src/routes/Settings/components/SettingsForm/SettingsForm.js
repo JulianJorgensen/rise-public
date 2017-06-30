@@ -2,39 +2,28 @@ import React, { PropTypes } from 'react'
 import { Field, reduxForm } from 'redux-form'
 import Button from 'components/Button'
 import TextField from 'components/TextField'
-import { ACCOUNT_FORM_NAME } from 'constants'
+import { SETTINGS_FORM_NAME } from 'constants'
 import ProviderDataForm from '../ProviderDataForm'
-import classes from './ProfileForm.css'
+import classes from './SettingsForm.css'
 
-export const AccountForm = ({ account, handleSubmit, submitting }) => (
+export const SettingsForm = ({ account, handleSubmit, submitting }) => (
   <form className={classes.container} onSubmit={handleSubmit}>
-    <h4>Profile</h4>
+    <h4>Settings</h4>
     <Field
-      name='firstName'
+      name='email'
       component={TextField}
-      label='First Name'
+      label='Email'
     />
     <Field
-      name='lastName'
+      name='address'
       component={TextField}
-      label='Last Name'
+      label='Address'
     />
     <Field
-      name='bio'
+      name='phone'
       component={TextField}
-      label='Bio'
-      rows={3}
-      multiline
+      label='Phone'
     />
-    {
-      !!account && !!account.providerData &&
-        <div>
-          <h4>Linked Accounts</h4>
-          <ProviderDataForm
-            providerData={account.providerData}
-          />
-        </div>
-    }
     <Button
       primary
       label='Save'
@@ -44,12 +33,12 @@ export const AccountForm = ({ account, handleSubmit, submitting }) => (
   </form>
 )
 
-AccountForm.propTypes = {
+SettingsForm.propTypes = {
   account: PropTypes.object,
   handleSubmit: PropTypes.func,
   submitting: PropTypes.bool
 }
 
 export default reduxForm({
-  form: ACCOUNT_FORM_NAME
-})(AccountForm)
+  form: SETTINGS_FORM_NAME
+})(SettingsForm)

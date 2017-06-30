@@ -4,15 +4,29 @@ import Button from 'components/Button';
 import TextField from 'components/TextField';
 import DatePicker from 'components/DatePicker';
 import CountryPicker from 'components/CountryPicker';
+import countryList from 'country-list';
+import StatePicker from 'components/StatePicker';
 import RadioGroup from 'components/RadioGroup';
 import { ACCOUNT_FORM_NAME } from 'constants';
 import ProviderDataForm from '../ProviderDataForm';
 import classes from './AccountForm.css';
 
+const countries = countryList().getData().map((country) => {
+  return {
+    value: country.code,
+    label: country.name
+  }
+});
+
 class AccountForm extends Component {
   state = {
-    age: ''
+    age: '',
+    country: 'US'
   }
+
+  handleCountryChange = (country) => {
+    this.setState({country});
+  };
 
   handleAge = (age) => {
     this.setState({age});
@@ -82,9 +96,18 @@ class AccountForm extends Component {
           required
         />
         <Field
+          name='country'
+          component={CountryPicker}
+          handleCountryChange={this.handleCountryChange}
+          country={this.state.country}
+          countries={countries}
+          label='Country'
+        />
+        <Field
           name='state'
-          component={TextField}
+          component={StatePicker}
           label='State / Province'
+          country={this.state.country}
           required
         />
         <Field
@@ -92,11 +115,6 @@ class AccountForm extends Component {
           component={TextField}
           label='ZIP / Post Code'
           required
-        />
-        <Field
-          name='country'
-          component={CountryPicker}
-          label='Country'
         />
         {
           !!account && !!account.providerData &&

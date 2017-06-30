@@ -8,7 +8,7 @@ let send = function(body) {
 
     let mailOptions = {
       from: {name: 'RISE Robot', address: 'no-reply@rise-athletes.com'},
-      to: {name: 'RISE Admin', address: 'me@julianjorgensen.com'},
+      to: {name: 'RISE Admin', address: 'rise@riseeliteathletes.com'},
       subject: `New ${role} setup`,
       template: {
         name: `./server/emails/templates/adminAlertEmail.pug`,
