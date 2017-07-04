@@ -6,6 +6,7 @@ import FeaturesRoute from './Features'
 import PricingRoute from './Pricing'
 import SettingsRoute from './Settings'
 import ScheduleRoute from './Schedule'
+import VideoRoute from './Video'
 import LoginRoute from './Login'
 import SignupRoute from './Signup'
 import DashboardRoute from './Dashboard'
@@ -29,6 +30,7 @@ export const createRoutes = (store) => ({
     PricingRoute,
     SettingsRoute,
     ScheduleRoute,
+    VideoRoute,
     LoginRoute,
     SignupRoute,
     NotAuthorized,

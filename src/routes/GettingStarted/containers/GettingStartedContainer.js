@@ -90,7 +90,7 @@ export default class GettingStarted extends Component {
     });
 
     // send notification email to admin
-    axios.post('/email/new-user-setup', {
+    axios.post('https://us-central1-rise-1602c.cloudfunctions.net/adminAlertEmail', {
       message: `We have a new ${role.name} user to setup...`,
       userData: parsedUserData
     })
@@ -98,7 +98,7 @@ export default class GettingStarted extends Component {
       console.log(response);
     })
     .catch((error) => {
-      console.log('Error using /email/new-user-setup: ', error);
+      console.log('Error sending admin alert email: ', error);
     });
 
     // log message

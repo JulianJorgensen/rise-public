@@ -11,14 +11,6 @@ let bodyParser = require('body-parser');
 // Setting up basic middleware for all Express requests
 app.use(logger('dev')); // Log requests to API using morgan
 
-// create application/x-www-form-urlencoded parser
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// routes
-let email = require('./routes/email');
-app.use('/email', email);
-
 // This rewrites all routes requests to the root /index.html file
 // (ignoring file requests). If you want to implement universal
 // rendering, you'll want to remove this middleware.

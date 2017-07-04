@@ -8,10 +8,9 @@
   width: 100%;
   background-color: white;
   box-shadow: 0 1px 0 gray(50%, 50%);
-  font-family: System-UI, Roboto, Helvetica;
   justify-content: space-between;
   &.withLeftNav{
-    width: calc(100% - 200px);
+    width: calc(100% - 300px);
   }
 
   & a{
@@ -20,6 +19,8 @@
   }
 
   & .logo{
+    display: flex;
+    align-self: center;
     margin-left: rem(20);
   }
 }
@@ -64,6 +65,11 @@
   }
 }
 
+.leftNav{
+  display: flex;
+  flex-direction: row;
+}
+
 .rightNav{
   display: flex;
   flex-direction: row;
@@ -79,18 +85,18 @@
   }
 }
 
-
-.brand {
-}
-.appBar{
-}
-.wrapper {
-}
-.avatar {
-}
-.menu {
-}
-.link {
-}
-.title {
+.toggle{
+  width: 76px;
+  height: inherit;
+  cursor: pointer;
+  background-color: var(--blue);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:after{
+    content: '\f0c9';
+    font-family: 'FontAwesome';
+    color: white;
+    font-size: 30px;
+  }
 }

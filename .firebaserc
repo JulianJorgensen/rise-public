@@ -2,6 +2,7 @@
   "projects": {
     "dev": "rise-1602c",
     "stage": "rise-1602c",
-    "prod": "rise-1602c"
+    "prod": "rise-1602c",
+    "default": "rise-1602c"
   }
 }

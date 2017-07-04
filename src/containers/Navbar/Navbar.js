@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import classes from './Navbar.css'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
+import { reduxFirebase as rfConfig } from 'config';
 import { firebaseConnect, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase'
 import { DASHBOARD_PATH, PROFILE_PATH, SETTINGS_PATH, LOGIN_PATH, SIGNUP_PATH, ABOUT_PATH } from 'constants'
 
@@ -46,11 +47,20 @@ export default class Navbar extends Component {
     this.context.router.push('/');
   }
 
+  handleToggleLeftNavigation = () => {
+    this.props.firebase
+      .update(`${rfConfig.userProfile}/${this.props.auth.uid}`, {showLeftNavigation: !this.props.account.showLeftNavigation})
+      .catch((err) => {
+        console.error('Error', err)
+        // TODO: Display error to user
+      })
+  }
+
   render () {
     const { account } = this.props;
     const accountExists = isLoaded(account) && !isEmpty(account);
 
-    const mainMenu = (
+    const ctaMenu = (
       <div className={classes.navCta}>
         <Link to={SIGNUP_PATH} className={classes.join}>Join now</Link>
         <Link to={LOGIN_PATH} className={classes.signin}>Sign In</Link>
@@ -77,16 +87,28 @@ export default class Navbar extends Component {
           />
         </IconMenu>
       </div>
-    ) : mainMenu
+    ) : ctaMenu
+
+    const mainMenu = !accountExists ? (
+      <div className={classes.nav}>
+        <Link to={ABOUT_PATH}>About</Link>
+        <Link to='/features'>Features</Link>
+        <Link to='/pricing'>Pricing</Link>
+      </div>
+    ) : ''
+
+    const toggle = accountExists ? (
+      <div className={classes.toggle} onClick={() => {
+        this.handleToggleLeftNavigation()
+      }}></div>
+    ) : ''
 
     return (
       <header className={`${classes.header} ${account ? account.showLeftNavigation ? classes.withLeftNav : '' : ''}`}>
-        <Link to={accountExists ? `${DASHBOARD_PATH}` : '/'} className={classes.logo}><Logo width="80" /></Link>
-
-        <div className={classes.nav}>
-          <Link to={ABOUT_PATH}>About</Link>
-          <Link to='/features'>Features</Link>
-          <Link to='/pricing'>Pricing</Link>
+        <div className={classes.leftNav}>
+          {toggle}
+          <Link to={accountExists ? `${DASHBOARD_PATH}` : '/'} className={classes.logo}><Logo width="80" /></Link>
+          {mainMenu}
         </div>
 
         {rightMenu}

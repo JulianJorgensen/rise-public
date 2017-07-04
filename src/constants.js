@@ -6,6 +6,7 @@ export const PROFILE_PATH = '/profile'
 export const SETTINGS_PATH = '/settings'
 export const GETTING_STARTED_PATH = '/getting-started'
 export const SCHEDULE_PATH = '/schedule'
+export const VIDEO_PATH = '/video'
 export const LOGIN_PATH = '/login'
 export const SIGNUP_PATH = '/signup'
 export const RECOVER_PATH = '/forgot'
@@ -38,6 +39,7 @@ export const paths = {
   profile: PROFILE_PATH,
   settings: SETTINGS_PATH,
   schedule: SCHEDULE_PATH,
+  video: VIDEO_PATH,
   login: LOGIN_PATH,
   signup: SIGNUP_PATH,
   notAuthorized: NOT_AUTHORIZED_PATH
@@ -47,6 +49,7 @@ export const leftNav = [
   {
     url: 'dashboard',
     anchor: 'Dashboard',
+    icon: 'fa-home',
     children: [
       {
         url: 'getting-started',
@@ -65,6 +68,7 @@ export const leftNav = [
   {
     url: 'chat',
     anchor: 'Chat',
+    icon: 'fa-comments',
     children: [
       {
         url: 'inbox',
@@ -79,6 +83,7 @@ export const leftNav = [
   {
     url: 'video',
     anchor: 'Video',
+    icon: 'fa-video-camera',
     children: [
       {
         url: 'contacts',
@@ -93,6 +98,7 @@ export const leftNav = [
   {
     url: 'library',
     anchor: 'Exercise Library',
+    icon: 'fa-files-o',
     children: [
       {
         url: 'sport1',
@@ -107,6 +113,7 @@ export const leftNav = [
   {
     url: 'schedule',
     anchor: 'Schedule',
+    icon: 'fa-calendar',
     children: [
       {
         url: 'calendar',
@@ -121,6 +128,7 @@ export const leftNav = [
   {
     url: 'activity',
     anchor: 'Account Activity',
+    icon: 'fa-tasks',
     children: [
       {
         url: 'login-time',
@@ -139,6 +147,8 @@ export const leftNav = [
   {
     url: 'my-athletes',
     anchor: 'My Athletes',
+    icon: 'fa-users',
+    showOnlyFor: 'mentor',
     children: [
       {
         url: 'profiles',
