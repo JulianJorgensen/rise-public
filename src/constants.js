@@ -1,7 +1,7 @@
 export const ABOUT_PATH = '/about'
 export const FEATURES_PATH = '/features'
 export const PRICING_PATH = '/pricing'
-export const DASHBOARD_PATH = '/dashboard'
+export const DASHBOARD_PATH = '/overview'
 export const PROFILE_PATH = '/profile'
 export const SETTINGS_PATH = '/settings'
 export const GETTING_STARTED_PATH = '/getting-started'
@@ -47,7 +47,7 @@ export const paths = {
 
 export const leftNav = [
   {
-    url: 'dashboard',
+    url: 'overview',
     anchor: 'Dashboard',
     icon: 'fa-home',
     children: [
@@ -72,11 +72,13 @@ export const leftNav = [
     children: [
       {
         url: 'inbox',
-        anchor: 'Inbox'
+        anchor: 'Inbox',
+        disabled: true
       },
       {
         url: 'sent',
-        anchor: 'Sent'
+        anchor: 'Sent',
+        disabled: true
       }
     ]
   },
@@ -86,12 +88,13 @@ export const leftNav = [
     icon: 'fa-video-camera',
     children: [
       {
-        url: 'contacts',
-        anchor: 'Contacts'
-      },
-      {
         url: 'log',
         anchor: 'Call log'
+      },
+      {
+        url: 'contacts',
+        anchor: 'Contacts',
+        disabled: true
       }
     ]
   },
@@ -101,29 +104,21 @@ export const leftNav = [
     icon: 'fa-files-o',
     children: [
       {
-        url: 'sport1',
-        anchor: 'Sport 1'
+        url: 'sport-1',
+        anchor: 'Sport 1',
+        disabled: true
       },
       {
-        url: 'sport2',
-        anchor: 'Sport 2'
+        url: 'sport-2',
+        anchor: 'Sport 2',
+        disabled: true
       }
     ]
   },
   {
     url: 'schedule',
     anchor: 'Schedule',
-    icon: 'fa-calendar',
-    children: [
-      {
-        url: 'calendar',
-        anchor: 'Calendar'
-      },
-      {
-        url: 'alerts',
-        anchor: 'Alerts'
-      }
-    ]
+    icon: 'fa-calendar'
   },
   {
     url: 'activity',
@@ -132,15 +127,18 @@ export const leftNav = [
     children: [
       {
         url: 'login-time',
-        anchor: 'Login Time'
+        anchor: 'Login Time',
+        disabled: true
       },
       {
         url: 'payments',
-        anchor: 'Payments'
+        anchor: 'Payments',
+        disabled: true
       },
       {
         url: 'overview',
-        anchor: 'Overview'
+        anchor: 'Overview',
+        disabled: true
       }
     ]
   },
@@ -152,7 +150,8 @@ export const leftNav = [
     children: [
       {
         url: 'profiles',
-        anchor: 'Profiles'
+        anchor: 'Profiles',
+        disabled: true
       }
     ]
   }

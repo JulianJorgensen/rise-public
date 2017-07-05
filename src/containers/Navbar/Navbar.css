@@ -1,3 +1,4 @@
+
 @import "../../styles/variables.css";
 
 .header{
@@ -73,15 +74,40 @@
 .rightNav{
   display: flex;
   flex-direction: row;
-  align-items: center;
+
+  & .rightNavVideo,
+  & .rightNavChat{
+    width: 80px;
+    height: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 25px;
+  }
+
+  & .rightNavVideo{
+    background-color: gray(20%);
+  }
+
+  & .rightNavChat{
+    background-color: gray(30%);
+    margin-right: 40px;
+  }
+
+  & .rightNavName{
+    align-self: center;
+  }
 
   & .rightNavAvatar{
     margin: 0 20px;
+    align-self: center;
   }
 
   & .rightNavMenu{
     border-left: 2px solid gray(80%);
     padding: 20px;
+    align-self: center;
   }
 }
 

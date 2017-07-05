@@ -10,6 +10,12 @@ export const SettingsForm = ({ account, handleSubmit, submitting }) => (
   <form className={classes.container} onSubmit={handleSubmit}>
     <h4>Settings</h4>
     <Field
+      name='role.name'
+      component={TextField}
+      label='Role'
+      disabled
+    />
+    <Field
       name='email'
       component={TextField}
       label='Email'

@@ -42,7 +42,8 @@ export default class GettingStarted extends Component {
   updateFirebase = (newData) => {
     newData = {
       ...newData,
-      role: `${newData.role.name}${newData.status === 'pending' ? '-pending' : ''}`
+      role: `${newData.role.name}${newData.status === 'pending' ? '-pending' : ''}`,
+      mentor: newData.mentor.uid
     }
     this.props.firebase
       .update(`${rfConfig.userProfile}/${this.props.auth.uid}`, newData)

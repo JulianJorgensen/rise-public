@@ -34,7 +34,7 @@ export default class Video extends Component {
   render () {
     let renderZoomIframe = () => {
       return (
-        <iframe width="100%" height={800} style={{border: 0}} src="https://zoom.us/s/105531475" />
+        <iframe width="100%" height={800} style={{border: 0}} src="https://zoom.us/s/597304648" />
       )
     }
 

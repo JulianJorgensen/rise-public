@@ -1,8 +1,9 @@
 .container {
   display: flex;
+  min-height: 100vh;
 }
 .mainContent{
-  width: 100%;
+  flex-grow: 1;
 }
 .layout{
   display: flex;

@@ -1,0 +1,24 @@
+.container{
+
+}
+
+.label{
+  font-size: 12px;
+  margin: 0;
+  opacity: 0.26;
+  position: relative;
+  bottom: -15px;
+}
+
+.inputs{
+  display: flex;
+  max-width: rem(300);
+  & .day{
+    width: 20%
+  }
+  & .month,
+  & .year{
+    margin-left: 15px;
+    width: 40%;
+  }
+}

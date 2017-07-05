@@ -46,7 +46,9 @@ export default class Signup extends Component {
 
     return createUser({ email, password })
       .then((newUser) => {
-        update(`${rfConfig.userProfile}/${this.props.auth.uid}`, {
+        let {uid} = this.props.auth;
+        update(`${rfConfig.userProfile}/${uid}`, {
+          uid: uid,
           role: this.state.role
         });
       });

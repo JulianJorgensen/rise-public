@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import Button from 'components/Button';
 import TextField from 'components/TextField';
-import DatePicker from 'components/DatePicker';
+import DateOfBirth from 'components/DateOfBirth';
 import CountryPicker from 'components/CountryPicker';
 import countryList from 'country-list';
 import StatePicker from 'components/StatePicker';
@@ -77,7 +77,7 @@ class AccountForm extends Component {
         />
         <Field
           name='birthday'
-          component={DatePicker}
+          component={DateOfBirth}
           label='Date of birth'
           ageCallback={this.handleAge}
         />
