@@ -4,9 +4,7 @@ import classes from './LoadingSpinner.css'
 
 export const LoadingSpinner = () => (
   <div className={classes.container}>
-    <div className={classes.progress}>
-      <ProgressBar type="circular" mode="indeterminate" />
-    </div>
+    <ProgressBar multicolor type="circular" mode="indeterminate" />
   </div>
 )
 

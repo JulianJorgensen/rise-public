@@ -127,15 +127,15 @@ export default class GettingStarted extends Component {
     let renderSteps = () => {
       if (!this.state.finished){
         return (
-          <Tabs index={this.state.step} onChange={this.handleStepChange}>
-            <Tab label='1. Personal info' className={classes.tab} disabled={this.state.step !== 0}>
+          <Tabs index={this.state.step} theme={classes} onChange={this.handleStepChange}>
+            <Tab label='1. Personal info' disabled={this.state.step !== 0}>
               <AccountForm
                 initialValues={account}
                 account={account}
                 onSubmit={this.nextStep}
               />
             </Tab>
-            <Tab label='2. Sport info' className={classes.tab} disabled={this.state.step !== 1}>
+            <Tab label='2. Sport info' disabled={this.state.step !== 1}>
               <SportsForm
                 initialValues={account}
                 account={account}
@@ -143,7 +143,7 @@ export default class GettingStarted extends Component {
                 handleBack={this.prevStep}
               />
             </Tab>
-            <Tab label='3. Banking info' className={classes.tab} disabled={this.state.step !== 2}>
+            <Tab label='3. Banking info' disabled={this.state.step !== 2}>
               <BankingForm
                 initialValues={account}
                 account={account}

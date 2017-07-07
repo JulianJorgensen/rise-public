@@ -6,6 +6,7 @@ import { firebaseConnect, isLoaded, isEmpty, pathToJS } from 'react-redux-fireba
 import { reduxFirebase as rfConfig } from 'config';
 import Snackbar from 'components/Snackbar';
 import {Tab, Tabs} from 'react-toolbox';
+import moment from 'moment-timezone';
 import { LOGIN_PATH } from 'constants';
 import { UserIsNotAuthenticated } from 'utils/router';
 import AthleteSignupForm from '../components/AthleteSignupForm';
@@ -49,7 +50,8 @@ export default class Signup extends Component {
         let {uid} = this.props.auth;
         update(`${rfConfig.userProfile}/${uid}`, {
           uid: uid,
-          role: this.state.role
+          role: this.state.role,
+          timezone: moment.tz.guess()
         });
       });
   }

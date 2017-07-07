@@ -4,10 +4,11 @@ import cn from 'classnames';
 import RTButton from 'react-toolbox/lib/button';
 import customTheme from './Button.css';
 
-const Button = ({ className, white, hollow, theme, href, ...others }) => {
+const Button = ({ className, white, hollow, primary, theme, href, ...others }) => {
   const _className = cn(className, {
     [customTheme.white]: white,
-    [customTheme.hollow]: hollow
+    [customTheme.hollow]: hollow,
+    [customTheme.primary]: primary
   });
 
   if (href == undefined) {

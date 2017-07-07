@@ -1,4 +1,9 @@
+@import "../../styles/variables.css";
+
 .button{
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: rem(50);
   padding-left: rem(30);
   padding-right: rem(30);
@@ -12,6 +17,10 @@
   &:hover{
     background-color: color(gray(60%) alpha(-80%));
   }
+}
+
+.button.primary:not([disabled]) {
+  @apply --success-theme;
 }
 
 .button.white:not([disabled]) {

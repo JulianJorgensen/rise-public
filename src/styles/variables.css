@@ -2,6 +2,15 @@
 :root {
   --blue: #0F5E9A;
   --darkBlue: #042745;
+  --success: #4BB543;
+
+  --success-theme: {
+    background-color: var(--success);
+    color: white;
+    &:hover{
+      background-color: color(var(--success) shade(10%));
+    }
+  };
 }
 
 /* Media queries */

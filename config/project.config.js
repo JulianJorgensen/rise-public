@@ -50,8 +50,7 @@ const config = {
     'react-redux',
     // 'redux', // avoid warning in production
     'react-redux-firebase',
-    'react-toolbox',
-    'material-ui'
+    'react-toolbox'
   ],
 
   compiler_css_modules: true, // enable/disable css modules
