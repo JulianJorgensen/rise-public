@@ -1,35 +1,35 @@
-import React, { Component, cloneElement, PropTypes } from 'react'
-import { map } from 'lodash'
-import { connect } from 'react-redux'
+import React, { Component, cloneElement, PropTypes } from 'react';
+import axios from 'axios';
+import { connect } from 'react-redux';
 import {
   firebaseConnect,
   populatedDataToJS,
   pathToJS,
   isLoaded,
   isEmpty
-} from 'react-redux-firebase'
-import { DASHBOARD_PATH } from 'constants'
-import { UserIsAuthenticated, UserHasPermission } from 'utils/router'
-import LoadingSpinner from 'components/LoadingSpinner'
-import classes from './DashboardContainer.css'
+} from 'react-redux-firebase';
+import moment from 'moment-timezone';
+import { DASHBOARD_PATH } from 'constants';
+import { UserIsAuthenticated, UserHasPermission } from 'utils/router';
+import LoadingSpinner from 'components/LoadingSpinner';
+import UpcomingAppointments from 'containers/UpcomingAppointments';
+import classes from './DashboardContainer.css';
 
-const populates = [
-  { child: 'createdBy', root: 'users', keyProp: 'uid' }
-]
+const ACUITY_MENTOR_CALL_ID = 346940;
 
-@UserIsAuthenticated
+@UserIsAuthenticated // redirect to /login if user is not authenticated
 @UserHasPermission('dashboard')
-@firebaseConnect([
-  { path: 'projects', populates }
-  // 'projects#populate=owner:users' // string equivalent
-])
-@connect(
-  ({ firebase }, { params }) => ({
+@firebaseConnect() // add this.props.firebase
+@connect( // Map redux state to props
+  ({ firebase }) => ({
     auth: pathToJS(firebase, 'auth'),
-    projects: populatedDataToJS(firebase, 'projects', populates)
+    account: pathToJS(firebase, 'profile')
   })
 )
 export default class Dashboard extends Component {
+  state = {
+  }
+
   static contextTypes = {
     router: React.PropTypes.object.isRequired
   }
@@ -41,38 +41,9 @@ export default class Dashboard extends Component {
     children: PropTypes.object
   }
 
-  state = {
-    newProjectModal: false,
-    addProjectModal: false
-  }
-
-  newSubmit = (newProject) => {
-    const { firebase: { pushWithMeta } } = this.props
-    return pushWithMeta('projects', newProject)
-      .then(() => this.setState({ newProjectModal: false }))
-      .catch(err => {
-        // TODO: Show Snackbar
-        console.error('error creating new project', err) // eslint-disable-line
-      })
-  }
-
-  deleteProject = (key) => {
-    return this.props.firebase.remove(`projects/${key}`)
-      .then(() => {
-        // TODO: Show snackbar
-      })
-  }
-
-  toggleModal = (name, project) => {
-    this.setState({ [`${name}Modal`]: !this.state[`${name}Modal`] })
-  }
-
   render () {
-    const { projects, auth } = this.props
-
-    if (!isLoaded(projects, auth)) {
-      return <LoadingSpinner />
-    }
+    const { projects, auth, account } = this.props;
+    const { firstName, timezone, mentor } = account;
 
     // Project Route is being loaded
     if (this.props.children) {
@@ -80,12 +51,41 @@ export default class Dashboard extends Component {
       return cloneElement(this.props.children, this.props)
     }
 
-    const { newProjectModal } = this.state
-
-    return (
-      <div className="page-content">
-        <h1>Dashboard</h1>
-      </div>
-    )
+    if (account) {
+      return (
+        <div className={classes.container}>
+          <div className={classes.welcome}>
+            <h1>Welcome{firstName ? ` back, ${firstName}` : '!'}</h1>
+          </div>
+          <div className={classes.actionsContainer}>
+            <h2>would you like to</h2>
+            <div className={classes.actions}>
+              <div className={classes.action}>
+                <i className="fa fa-calendar" />
+              </div>
+              <div className={classes.action}>
+                <i className="fa fa-calendar" />
+              </div>
+              <div className={classes.action}>
+                <i className="fa fa-calendar" />
+              </div>
+            </div>
+          </div>
+          <div className={classes.logs}>
+            <div className={classes.logsInner}>
+              <div className={classes.logsCompleted}>
+                <h3>Recently Completed</h3>
+              </div>
+              <div className={classes.logsUpcoming}>
+                <h3>Upcoming Calls</h3>
+                <UpcomingAppointments />
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+    }else{
+      return <LoadingSpinner />
+    }
   }
 }

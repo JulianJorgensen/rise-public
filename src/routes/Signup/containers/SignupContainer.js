@@ -80,7 +80,7 @@ export default class Signup extends Component {
     const { snackCanOpen } = this.state
 
     return (
-      <div className={classes.container}>
+      <div className={classes.wrapper}>
         <Tabs theme={classes} index={this.state.roleIndex} onChange={this.handleRoleChange} inverse>
           <Tab label='Athlete'>
             <AthleteSignupForm onSubmit={this.handleSignup} />

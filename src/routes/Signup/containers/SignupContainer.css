@@ -2,7 +2,9 @@
   background-color: gray(98%);
 }
 
-.container{
+.wrapper{
+  /*composes: wrapper from "../../../styles/layout.css";*/
+  margin-top: rem(100);
   width: rem(400);
 }
 

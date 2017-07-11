@@ -1,4 +1,5 @@
-.container{
+.wrapper{
+  margin-top: rem(100);
   width: rem(400);
 }
 

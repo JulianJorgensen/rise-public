@@ -74,6 +74,7 @@ class AccountForm extends Component {
           name='phone'
           component={TextField}
           label='Phone Number'
+          required
         />
         <Field
           name='birthday'

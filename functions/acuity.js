@@ -1,5 +1,5 @@
-let Acuity = require('acuityscheduling');
 let functions = require('firebase-functions');
+let Acuity = require('acuityscheduling');
 let userId = functions.config().acuity.userid;
 let apiKey = functions.config().acuity.key;
 
@@ -8,7 +8,21 @@ let acuity = Acuity.basic({
   apiKey: apiKey
 });
 
+// field id in acuity (for unique user id to identify a users appointments etc)
+let uidFieldId = 3274695;
+
 module.exports = {
+  getUpcomingAppointments: function(query) {
+    return new Promise(function(resolve, reject){
+      let {maxDate, calendarID, appointmentTypeID, uid} = query;
+      let today = new Date();
+      acuity.request(`/appointments?minDate=${today}&maxDate=${maxDate}&calendarID=${calendarID}&appointmentTypeID=${appointmentTypeID}&canceled=false&field:${uidFieldId}=${uid}`, function (err, res, appointments) {
+        if (err) return console.error(err);
+        resolve(appointments);
+      });
+    });
+  },
+
   getAvailableDates: function(query) {
     return new Promise(function(resolve, reject){
       let {month, appointmentTypeID, calendarID, timezone} = query;
@@ -32,8 +46,8 @@ module.exports = {
 
   createAppointment: function(query) {
     return new Promise(function(resolve, reject){
-      let {appointmentTypeID, datetime, firstName, lastName, email, phone, calendarID} = query;
-      var options = {
+      let {appointmentTypeID, datetime, firstName, lastName, email, phone, calendarID, uid} = query;
+      let options = {
         method: 'POST',
         body: {
           appointmentTypeID,
@@ -42,7 +56,10 @@ module.exports = {
           lastName,
           email,
           phone,
-          calendarID
+          calendarID,
+          fields: [
+            {id: uidFieldId, value: uid}
+          ]
         }
       };
       acuity.request('/appointments', options, function (err, res, appointment) {

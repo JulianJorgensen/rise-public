@@ -51,7 +51,7 @@ export default class Login extends Component {
     const { snackCanOpen } = this.state
 
     return (
-      <div className={classes.container}>
+      <div className={classes.wrapper}>
         <Card className={classes.panel}>
           <LoginForm onSubmit={this.handleLogin} />
         </Card>

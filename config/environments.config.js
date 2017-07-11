@@ -14,14 +14,15 @@ module.exports = {
       apiKey: 'AIzaSyDpuf3lnAJgGYn46QrZJ2fk9me5lZoy4fA',
       authDomain: 'rise-1602c.firebaseapp.com',
       databaseURL: 'https://rise-1602c.firebaseio.com',
-      storageBucket: 'rise-1602c.appspot.com'
+      storageBucket: 'rise-1602c.appspot.com',
+      functions: 'https://us-central1-rise-1602c.cloudfunctions.net'
     },
     reduxFirebase: {
       userProfile: 'users', // root that user profiles are written to
       enableLogging: false, // enable/disable Firebase Database Logging
       updateProfileOnLogin: false // enable/disable updating of profile on login
       // profileDecorator: (userData) => ({ email: userData.email }) // customize format of user profile
-    }
+    },
   }),
 
   // ======================================================
@@ -41,7 +42,8 @@ module.exports = {
       apiKey: 'AIzaSyCTUERDM-Pchn_UDTsfhVPiwM4TtNIxots',
       authDomain: 'redux-firebasev3.firebaseapp.com',
       databaseURL: 'https://redux-firebasev3.firebaseio.com',
-      storageBucket: 'redux-firebasev3.appspot.com'
+      storageBucket: 'redux-firebasev3.appspot.com',
+      functions: 'https://us-central1-rise-1602c.cloudfunctions.net'
     },
     reduxFirebase: {
       userProfile: 'users', // root that user profiles are written to

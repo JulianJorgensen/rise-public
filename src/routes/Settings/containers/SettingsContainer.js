@@ -44,7 +44,8 @@ export default class Settings extends Component {
   updateAccount = (newData) => {
     newData = {
       ...newData,
-      role: `${newData.role.name}${newData.status === 'pending' ? '-pending' : ''}`
+      role: `${newData.role.name}${newData.status === 'pending' ? '-pending' : ''}`,
+      mentor: newData.mentor ? newData.mentor.uid : null
     }
 
     this.props.firebase

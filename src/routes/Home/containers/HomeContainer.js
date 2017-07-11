@@ -38,7 +38,7 @@ export default class Home extends React.Component {
     };
 
     return (
-      <div className="page-content">
+      <div className={styles.wrapper}>
         <div className={styles.ctaMarquee} style={{backgroundImage: 'url(/images/landing-placeholder.jpg)'}}>
           <h1 className={styles.header}>Rise Athletes</h1>
           <h2 className={styles.subheader}>Develop the Olympic mindset</h2>

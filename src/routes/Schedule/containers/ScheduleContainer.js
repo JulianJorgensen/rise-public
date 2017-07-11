@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { firebaseConnect, pathToJS, isLoaded } from 'react-redux-firebase';
-import { reduxFirebase as rfConfig } from 'config';
+import { firebase as fbConfig, reduxFirebase as rfConfig } from 'config';
 import { UserIsAuthenticated, UserHasPermission } from 'utils/router'
 import axios from 'axios';
 import moment from 'moment-timezone';
@@ -10,16 +10,17 @@ import TimezoneSelector from '../components/TimezoneSelector';
 import Button from 'components/Button';
 import LoadingSpinner from 'components/LoadingSpinner';
 import classes from './ScheduleContainer.css';
-import buttons from 'styles/buttons.css';
+
+console.log('fb config: ', fbConfig);
 
 let availableDates = [
-  moment("2017-07-07", "YYYY-MM-DD").toDate(),
-  moment("2017-07-08", "YYYY-MM-DD").toDate(),
-  moment("2017-07-09", "YYYY-MM-DD").toDate(),
   moment("2017-07-10", "YYYY-MM-DD").toDate(),
   moment("2017-07-11", "YYYY-MM-DD").toDate(),
   moment("2017-07-12", "YYYY-MM-DD").toDate(),
-  moment("2017-07-13", "YYYY-MM-DD").toDate()
+  moment("2017-07-13", "YYYY-MM-DD").toDate(),
+  moment("2017-07-14", "YYYY-MM-DD").toDate(),
+  moment("2017-07-15", "YYYY-MM-DD").toDate(),
+  moment("2017-07-16", "YYYY-MM-DD").toDate()
 ]
 
 let today = moment(new Date());
@@ -53,7 +54,7 @@ export default class Schedule extends Component {
     let {mentor} = this.props.account;
     let {timezone} = this.props;
     // get available dates
-    axios.get('http://localhost:5002/rise-1602c/us-central1/getAvailableDates', {
+    axios.get(`${fbConfig.functions}/getAvailableDates`, {
       params: {
         month: month,
         appointmentTypeID: ACUITY_MENTOR_CALL_ID,
@@ -115,7 +116,7 @@ export default class Schedule extends Component {
     let {selectedDate} = this.state;
     let {timezone, mentor} = this.props.account;
     // get available times for selected date
-    axios.get('http://localhost:5002/rise-1602c/us-central1/getAvailableTimes', {
+    axios.get(`${fbConfig.functions}/getAvailableTimes`, {
       params: {
         date: moment(selectedDate).format('YYYY-MM-DD'),
         appointmentTypeID: ACUITY_MENTOR_CALL_ID,
@@ -125,6 +126,8 @@ export default class Schedule extends Component {
     })
     .then((response) => {
       let availableTimes = response.data;
+      console.log(fbConfig.functions);
+      console.log('available times: ', response.data);
       availableTimes.sort((a,b) => {
         // Turn your strings into dates, and then subtract them
         // to get a value that is either negative, positive, or zero.
@@ -151,7 +154,7 @@ export default class Schedule extends Component {
     });
 
     // create appointment
-    axios.get('http://localhost:5002/rise-1602c/us-central1/createAppointment', {
+    axios.get(`${fbConfig.functions}/createAppointment`, {
       params: {
         datetime: `${moment(selectedDate).format('YYYY-MM-DD')}${moment(selectedTime).tz(account.timezone).format('THH:mmZ')}`,
         appointmentTypeID: ACUITY_MENTOR_CALL_ID,
@@ -159,7 +162,8 @@ export default class Schedule extends Component {
         firstName: account.firstName,
         lastName: account.lastName,
         email: account.email,
-        phone: account.phone
+        phone: account.phone,
+        uid: account.uid
       }
     })
     .then((response) => {
@@ -220,94 +224,102 @@ export default class Schedule extends Component {
       }
     }
 
-    if (isConfirmed){
-      return (
-        <div className={`${classes.container} ${classes.success}`}>
-          <h1 className={classes.header}>Congratulations!</h1>
-          <p>You're now scheduled for a session with {account.mentor.firstName} on:</p>
-          <div className={classes.confirmationDetails}>
-            <div className={classes.time}>
-              <div className={classes.time}><strong>{moment(selectedDate).format('MMMM Do YYYY')}</strong> at <strong>{moment(selectedTime).format('h:mma')}</strong></div>
+    if (account.mentor){
+      if (isConfirmed){
+        return (
+          <div className={`${classes.container} ${classes.success}`}>
+            <h1 className={classes.header}>Congratulations!</h1>
+            <p>You're now scheduled for a session with {account.mentor.firstName} on:</p>
+            <div className={classes.confirmationDetails}>
+              <div className={classes.time}>
+                <div className={classes.time}><strong>{moment(selectedDate).format('MMMM Do YYYY')}</strong> at <strong>{moment(selectedTime).format('h:mma')}</strong></div>
+              </div>
             </div>
+            <Button
+              label="Schedule another session"
+              onClick={() => this.setState({confirmed: false})}
+            />
           </div>
-          <Button
-            label="Schedule another session"
-            onClick={() => this.setState({confirmed: false})}
-          />
-        </div>
-      )
+        )
+      }else{
+        return (
+          <div className={classes.container}>
+            <h2>Schedule a session with your mentor {account.mentor.firstName}</h2>
+
+            <form onSubmit={this.handleConfirmation} className={classes.scheduleForm}>
+              <div className={classes.dateTimeFields}>
+                <DatePicker
+                  active={showDatesModal}
+                  onDismiss={() => this.setState({showDatesModal: false})}
+                  label='Date'
+                  sundayFirstDayOfWeek
+                  onChange={this.handleDateChange.bind(this)}
+                  value={selectedDate}
+                  // minDate={today}
+                  // maxDate={today.add(MAX_MONTHS_IN_ADVANCE, 'M')}
+                  autoOk={true}
+                  enabledDates={availableDates}
+                  required
+                />
+
+                <Input
+                  type='text'
+                  label='Time'
+                  name='time'
+                  value={selectedTime ? moment(selectedTime).format('h:mma') : ''}
+                  onClick={this.showAvailableTimes.bind(this)}
+                  required
+                />
+              </div>
+
+              <TimezoneSelector changeable />
+
+              <Button
+                type="submit"
+                label='Schedule session'
+              />
+            </form>
+
+            <Dialog
+              actions={[
+                { label: "Choose another day", onClick: this.handleShowDates }
+              ]}
+              active={showTimesModal}
+              onEscKeyDown={this.handleShowDates}
+              onOverlayClick={this.handleShowDates}
+              title={`Available Times for ${moment(selectedDate).format('MMMM Do YYYY')}`}
+            >
+              {availableTimesFetched ? renderAvailableTimes() : <LoadingSpinner />}
+            </Dialog>
+
+            <Dialog
+              actions={[
+                {
+                  icon: isConfirming ? <i className="fa fa-spinner fa-pulse fa-fw" /> : null,
+                  label: `Schedule session`,
+                  onClick: this.confirmMeeting,
+                  primary: true,
+                  className: `${classes.confirmButton} ${classes.button}`,
+                  disabled: isConfirming ? true : false
+                }
+              ]}
+              active={showConfirmationModal}
+              onEscKeyDown={this.handleHideConfirmationModal}
+              onOverlayClick={this.handleHideConfirmationModal}
+              title={`Confirm your session with ${account.mentor.firstName}`}
+            >
+              <div className={classes.confirmationDetails}>
+                <div className={classes.time}><strong>{moment(selectedDate).format('MMMM Do YYYY')}</strong> at <strong>{moment(selectedTime).format('h:mma')}</strong></div>
+                <TimezoneSelector />
+              </div>
+            </Dialog>
+          </div>
+        )
+      }
     }else{
       return (
         <div className={classes.container}>
-          <h2>Schedule a session with your mentor {account.mentor.firstName}</h2>
-
-          <form onSubmit={this.handleConfirmation} className={classes.scheduleForm}>
-            <div className={classes.dateTimeFields}>
-              <DatePicker
-                active={showDatesModal}
-                onDismiss={() => this.setState({showDatesModal: false})}
-                label='Date'
-                sundayFirstDayOfWeek
-                onChange={this.handleDateChange.bind(this)}
-                value={selectedDate}
-                // minDate={today}
-                // maxDate={today.add(MAX_MONTHS_IN_ADVANCE, 'M')}
-                autoOk={true}
-                enabledDates={availableDates}
-                required
-              />
-
-              <Input
-                type='text'
-                label='Time'
-                name='time'
-                value={selectedTime ? moment(selectedTime).format('h:mma') : ''}
-                onClick={this.showAvailableTimes.bind(this)}
-                required
-              />
-            </div>
-
-            <TimezoneSelector changeable />
-
-            <Button
-              type="submit"
-              label='Schedule session'
-            />
-          </form>
-
-          <Dialog
-            actions={[
-              { label: "Choose another day", onClick: this.handleShowDates }
-            ]}
-            active={showTimesModal}
-            onEscKeyDown={this.handleShowDates}
-            onOverlayClick={this.handleShowDates}
-            title={`Available Times for ${moment(selectedDate).format('MMMM Do YYYY')}`}
-          >
-            {availableTimesFetched ? renderAvailableTimes() : <LoadingSpinner />}
-          </Dialog>
-
-          <Dialog
-            actions={[
-              {
-                icon: isConfirming ? <i className="fa fa-spinner fa-pulse fa-fw" /> : null,
-                label: `Schedule session`,
-                onClick: this.confirmMeeting,
-                primary: true,
-                className: `${classes.confirmButton} ${classes.button}`,
-                disabled: isConfirming ? true : false
-              }
-            ]}
-            active={showConfirmationModal}
-            onEscKeyDown={this.handleHideConfirmationModal}
-            onOverlayClick={this.handleHideConfirmationModal}
-            title={`Confirm your session with ${account.mentor.firstName}`}
-          >
-            <div className={classes.confirmationDetails}>
-              <div className={classes.time}><strong>{moment(selectedDate).format('MMMM Do YYYY')}</strong> at <strong>{moment(selectedTime).format('h:mma')}</strong></div>
-              <TimezoneSelector />
-            </div>
-          </Dialog>
+          <h2>You currently don't have a mentor assigned.</h2>
         </div>
       )
     }

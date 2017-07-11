@@ -1,7 +1,7 @@
 export const ABOUT_PATH = '/about'
 export const FEATURES_PATH = '/features'
 export const PRICING_PATH = '/pricing'
-export const DASHBOARD_PATH = '/overview'
+export const DASHBOARD_PATH = '/dashboard'
 export const PROFILE_PATH = '/profile'
 export const SETTINGS_PATH = '/settings'
 export const GETTING_STARTED_PATH = '/getting-started'
@@ -47,7 +47,7 @@ export const paths = {
 
 export const leftNav = [
   {
-    url: 'overview',
+    url: 'dashboard',
     anchor: 'Dashboard',
     icon: 'fa-home',
     children: [

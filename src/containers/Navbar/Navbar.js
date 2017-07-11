@@ -60,6 +60,8 @@ export default class Navbar extends Component {
     const { account } = this.props;
     const accountExists = isLoaded(account) && !isEmpty(account);
 
+    // this.props.firebase.logout();
+
     const ctaMenu = (
       <div className={classes.navCta}>
         <Link to={SIGNUP_PATH} className={classes.join}>Join now</Link>

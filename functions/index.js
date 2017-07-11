@@ -1,4 +1,3 @@
-require('dotenv').config();
 const functions = require('firebase-functions');
 const adminAlertEmail = require('./emails/adminAlert');
 const acuity = require('./acuity');
@@ -9,6 +8,15 @@ exports.adminAlertEmail = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     adminAlertEmail.send(request.body).then(() => {
       response.status(200).send('success');
+    });
+  });
+});
+
+// Function: get all upcoming appointments
+exports.getUpcomingAppointments = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    acuity.getUpcomingAppointments(request.query).then((res) => {
+      response.status(200).send(res);
     });
   });
 });

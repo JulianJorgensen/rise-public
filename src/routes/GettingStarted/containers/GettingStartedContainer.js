@@ -24,7 +24,6 @@ import classes from './GettingStartedContainer.css';
 export default class GettingStarted extends Component {
   state = {
     step: 0,
-    message: 'Let’s get you all set up!',
     finished: false
   }
 
@@ -43,7 +42,7 @@ export default class GettingStarted extends Component {
     newData = {
       ...newData,
       role: `${newData.role.name}${newData.status === 'pending' ? '-pending' : ''}`,
-      mentor: newData.mentor.uid
+      mentor: newData.mentor ? newData.mentor.uid : null
     }
     this.props.firebase
       .update(`${rfConfig.userProfile}/${this.props.auth.uid}`, newData)
@@ -83,6 +82,9 @@ export default class GettingStarted extends Component {
     }
     this.updateFirebase(newData);
 
+    // set state as finished
+    this.setState({finished: true});
+
     // parse data into email format
     let {role} = newData;
     let parsedUserData = Object.assign(newData, {
@@ -102,64 +104,71 @@ export default class GettingStarted extends Component {
       console.log('Error sending admin alert email: ', error);
     });
 
-    // log message
-    this.setState({
-      finished: true
-    });
-
     // scroll to top
     window.scrollTo(0, 0);
   }
 
   render () {
     const { account } = this.props;
+    let { finished } = this.state;
 
     if (!isLoaded(account)) {
       return <LoadingSpinner />
     }
 
-    if (account && account.hasSubmittedDetails){
-      this.setState({
-        finished: true
-      });
+    let renderSteps = () => {
+      return (
+        <Tabs index={this.state.step} theme={classes} onChange={this.handleStepChange}>
+          <Tab label='1. Personal info' disabled={this.state.step !== 0}>
+            <AccountForm
+              initialValues={account}
+              account={account}
+              onSubmit={this.nextStep}
+            />
+          </Tab>
+          <Tab label='2. Sport info' disabled={this.state.step !== 1}>
+            <SportsForm
+              initialValues={account}
+              account={account}
+              onSubmit={this.nextStep}
+              handleBack={this.prevStep}
+            />
+          </Tab>
+          <Tab label='3. Banking info' disabled={this.state.step !== 2}>
+            <BankingForm
+              initialValues={account}
+              account={account}
+              handleBack={this.prevStep}
+              onSubmit={this.finishSteps}
+            />
+          </Tab>
+        </Tabs>
+      )
     }
 
-    let renderSteps = () => {
-      if (!this.state.finished){
+    let renderContent = () => {
+      console.log('rendering account: ', account);
+      if(account.status === 'confirmed' && account.hasSubmittedDetails){
         return (
-          <Tabs index={this.state.step} theme={classes} onChange={this.handleStepChange}>
-            <Tab label='1. Personal info' disabled={this.state.step !== 0}>
-              <AccountForm
-                initialValues={account}
-                account={account}
-                onSubmit={this.nextStep}
-              />
-            </Tab>
-            <Tab label='2. Sport info' disabled={this.state.step !== 1}>
-              <SportsForm
-                initialValues={account}
-                account={account}
-                onSubmit={this.nextStep}
-                handleBack={this.prevStep}
-              />
-            </Tab>
-            <Tab label='3. Banking info' disabled={this.state.step !== 2}>
-              <BankingForm
-                initialValues={account}
-                account={account}
-                handleBack={this.prevStep}
-                onSubmit={this.finishSteps}
-              />
-            </Tab>
-          </Tabs>
+          <h2>Congratulations. You have been approved!</h2>
+        )
+      }else if (account.hasSubmittedDetails || finished) {
+        return (
+          <h2>Great job! We will review your profile as soon as possible</h2>
+        )
+      }else{
+        return (
+          <div>
+            <h2>Let’s get you all set up!</h2>
+            {renderSteps()}
+          </div>
         )
       }
     }
 
-    return (
+    return(
       <div className={classes.container}>
-        <h2>{this.state.finished ? 'Great job! Your application is in process. We will be in touch...' : this.state.message}</h2>
-        {renderSteps()}
+        {account ? renderContent() : <LoadingSpinner />}
       </div>
     )
   }
