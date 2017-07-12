@@ -6,6 +6,7 @@ export const PROFILE_PATH = '/profile'
 export const SETTINGS_PATH = '/settings'
 export const GETTING_STARTED_PATH = '/getting-started'
 export const SCHEDULE_PATH = '/schedule'
+export const MY_ATHLETES_PATH = '/my-athletes'
 export const VIDEO_PATH = '/video'
 export const LOGIN_PATH = '/login'
 export const SIGNUP_PATH = '/signup'
@@ -39,6 +40,7 @@ export const paths = {
   profile: PROFILE_PATH,
   settings: SETTINGS_PATH,
   schedule: SCHEDULE_PATH,
+  myAthletes: MY_ATHLETES_PATH,
   video: VIDEO_PATH,
   login: LOGIN_PATH,
   signup: SIGNUP_PATH,

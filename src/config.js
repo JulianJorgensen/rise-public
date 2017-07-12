@@ -13,7 +13,8 @@ export const reduxFirebase = {
   userProfile: 'users', // root that user profiles are written to
   profileParamsToPopulate: [
     { child: 'role', root: 'roles' },
-    { child: 'mentor', root: 'users' }
+    { child: 'mentor', root: 'users' },
+    { child: 'mentees', root: 'users', childParam: 'uid' }
   ],
   // enableLogging: false, // enable/disable Firebase Database Logging
   // updateProfileOnLogin: true, // enable/disable updating of profile on login
