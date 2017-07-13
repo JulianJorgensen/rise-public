@@ -12,12 +12,12 @@ import SportsForm from '../components/SportsForm/SportsForm';
 import BankingForm from '../components/BankingForm/BankingForm';
 import classes from './GettingStartedContainer.css';
 
-// @userIsAuthenticated // redirect to /login if user is not authenticated
+@userIsAuthenticated // redirect to /login if user is not authenticated
 // @UserHasPermission('getting-started')
 @firebaseConnect() // add this.props.firebase
-@connect( // Map redux state to props
-  ({ firebase }) => ({
-    account: populate(firebase, 'profile')
+@connect(
+  ({ firebase: { auth } }) => ({
+    auth
   })
 )
 export default class GettingStarted extends Component {
@@ -111,7 +111,9 @@ export default class GettingStarted extends Component {
     const { account } = this.props;
     let { finished } = this.state;
 
+    console.log('props: ', this.props);
     console.log('account: ', account);
+    console.log('auth: ', this.props.auth);
 
     if (!isLoaded(account)) {
       return <LoadingSpinner />

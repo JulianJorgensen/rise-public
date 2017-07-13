@@ -3,7 +3,7 @@ import { get } from 'lodash';
 import { connectedReduxRedirect } from 'redux-auth-wrapper/history3/redirect';
 import { browserHistory } from 'react-router';
 import { DASHBOARD_PATH, GETTING_STARTED_PATH, NOT_AUTHORIZED_PATH } from 'constants';
-import { populate, isLoaded } from 'react-redux-firebase';
+import { populate, isLoaded, isEmpty } from 'react-redux-firebase';
 import LoadingSpinner from 'components/LoadingSpinner';
 
 const AUTHED_REDIRECT = 'AUTHED_REDIRECT';
@@ -18,7 +18,7 @@ const UNAUTHED_REDIRECT = 'UNAUTHED_REDIRECT';
 
 export const userIsAuthenticated = connectedReduxRedirect({
   redirectPath: '/login',
-  authenticatedSelector: ({ auth }) => isLoaded(auth) && !isEmpty(auth),
+  authenticatedSelector: ({ firebase }) => isLoaded(firebase.auth) && !isEmpty(firebase.auth),
   authenticatingSelector: ({ firebase }) => populate(firebase, 'isInitializing') === true,
   AuthenticatingComponent: LoadingSpinner,
   wrapperDisplayName: 'UserIsAuthenticated',
@@ -33,7 +33,7 @@ export const userIsAuthenticated = connectedReduxRedirect({
 
 
 /**
- * @description Higher Order Component that redirects to listings page or most
+ * @description Higher Order Component that redirects to dashboard page or most
  * recent route instead rendering if user is not authenticated. This is useful
  * routes that should not be displayed if a user is logged in, such as the
  * login route.
@@ -44,7 +44,7 @@ export const userIsNotAuthenticated = connectedReduxRedirect({
   redirectPath: (state, props) =>
     // redirect to page user was on or to getting started page
     props.location.query.redirect || GETTING_STARTED_PATH,
-  authenticatedSelector: ({ auth }) => isLoaded(auth) && isEmpty(auth),
+  authenticatedSelector: ({ firebase }) => isLoaded(firebase.auth) && isEmpty(firebase.auth),
   authenticatingSelector: ({ firebase }) => populate(firebase, 'isInitializing') === true,
   AuthenticatingComponent: LoadingSpinner,
   wrapperDisplayName: 'UserIsNotAuthenticated',
