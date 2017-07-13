@@ -16,8 +16,9 @@ import classes from './GettingStartedContainer.css';
 // @UserHasPermission('getting-started')
 @firebaseConnect() // add this.props.firebase
 @connect(
-  ({ firebase: { auth } }) => ({
-    auth
+  ({ firebase: { auth, profile } }) => ({
+    auth,
+    account: profile
   })
 )
 export default class GettingStarted extends Component {
@@ -110,10 +111,6 @@ export default class GettingStarted extends Component {
   render () {
     const { account } = this.props;
     let { finished } = this.state;
-
-    console.log('props: ', this.props);
-    console.log('account: ', account);
-    console.log('auth: ', this.props.auth);
 
     if (!isLoaded(account)) {
       return <LoadingSpinner />
