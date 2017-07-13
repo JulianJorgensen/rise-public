@@ -11,8 +11,6 @@ import Button from 'components/Button';
 import LoadingSpinner from 'components/LoadingSpinner';
 import classes from './ScheduleContainer.css';
 
-console.log('fb config: ', fbConfig);
-
 let availableDates = [
   moment("2017-07-10", "YYYY-MM-DD").toDate(),
   moment("2017-07-11", "YYYY-MM-DD").toDate(),
