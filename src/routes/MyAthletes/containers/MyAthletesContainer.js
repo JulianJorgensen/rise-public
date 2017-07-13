@@ -1,19 +1,19 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { firebaseConnect, pathToJS, isLoaded } from 'react-redux-firebase';
+import { firebaseConnect } from 'react-redux-firebase';
 import { reduxFirebase as rfConfig } from 'config';
-import { UserIsAuthenticated, UserHasPermission } from 'utils/router'
+import { userIsAuthenticated, userHasPermission } from 'utils/router'
 
 import LoadingSpinner from 'components/LoadingSpinner';
 import classes from './MyAthletesContainer.css';
 
-@UserIsAuthenticated // redirect to /login if user is not authenticated
-@UserHasPermission('my-athletes')
+@userIsAuthenticated // redirect to /login if user is not authenticated
+// @userHasPermission('my-athletes')
 @firebaseConnect() // add this.props.firebase
 @connect( // Map redux state to props
-  ({ firebase }) => ({
-    auth: pathToJS(firebase, 'auth'),
-    account: pathToJS(firebase, 'profile')
+  ({ firebase: { auth, data: { todos }} }) => ({
+    todos,
+    auth
   })
 )
 export default class MyAthletes extends Component {

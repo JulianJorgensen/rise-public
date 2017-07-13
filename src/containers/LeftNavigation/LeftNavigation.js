@@ -3,17 +3,15 @@ import { get } from 'lodash';
 import classes from './LeftNavigation.css';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { UserAuthWrapper } from 'redux-auth-wrapper';
-import { firebaseConnect, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase';
+import { firebaseConnect, populate, isLoaded } from 'react-redux-firebase';
 import { DASHBOARD_PATH, ACCOUNT_PATH, LOGIN_PATH, SIGNUP_PATH, ABOUT_PATH, leftNav } from 'constants';
 import Accordion from 'components/Accordion';
 
 @firebaseConnect()
 @connect(
   ({ firebase }) => ({
-    authError: pathToJS(firebase, 'authError'),
-    auth: pathToJS(firebase, 'auth'),
-    account: pathToJS(firebase, 'profile')
+    authError: populate(firebase, 'authError'),
+    account: populate(firebase, 'profile')
   })
 )
 export default class LefNavigation extends Component {

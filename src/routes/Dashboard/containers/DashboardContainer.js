@@ -1,29 +1,22 @@
 import React, { Component, cloneElement, PropTypes } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import {
-  firebaseConnect,
-  populatedDataToJS,
-  pathToJS,
-  isLoaded,
-  isEmpty
-} from 'react-redux-firebase';
+import { firebaseConnect, populate } from 'react-redux-firebase';
 import moment from 'moment-timezone';
 import { DASHBOARD_PATH } from 'constants';
-import { UserIsAuthenticated, UserHasPermission } from 'utils/router';
+import { userIsAuthenticated, UserHasPermission } from 'utils/router';
 import LoadingSpinner from 'components/LoadingSpinner';
 import UpcomingAppointments from 'containers/UpcomingAppointments';
 import classes from './DashboardContainer.css';
 
 const ACUITY_MENTOR_CALL_ID = 346940;
 
-@UserIsAuthenticated // redirect to /login if user is not authenticated
-@UserHasPermission('dashboard')
+@userIsAuthenticated // redirect to /login if user is not authenticated
+// @userHasPermission('dashboard')
 @firebaseConnect() // add this.props.firebase
 @connect( // Map redux state to props
   ({ firebase }) => ({
-    auth: pathToJS(firebase, 'auth'),
-    account: pathToJS(firebase, 'profile')
+    account: populate(firebase, 'profile')
   })
 )
 export default class Dashboard extends Component {

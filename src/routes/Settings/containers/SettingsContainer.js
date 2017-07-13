@@ -1,22 +1,21 @@
 import React, { Component, PropTypes } from 'react';
 import { Card } from 'react-toolbox/lib/card';
 import { connect } from 'react-redux';
-import { firebaseConnect, pathToJS, isLoaded } from 'react-redux-firebase';
+import { firebaseConnect, populate } from 'react-redux-firebase';
 import { reduxFirebase as rfConfig } from 'config';
-import { UserIsAuthenticated, UserHasPermission } from 'utils/router'
+import { userIsAuthenticated, userHasPermission } from 'utils/router'
 
 import Avatar from 'react-toolbox/lib/avatar';
 import LoadingSpinner from 'components/LoadingSpinner';
 import SettingsForm from '../components/SettingsForm/SettingsForm';
 import classes from './SettingsContainer.css';
 
-@UserIsAuthenticated // redirect to /login if user is not authenticated
-@UserHasPermission('settings')
+@userIsAuthenticated // redirect to /login if user is not authenticated
+// @userHasPermission('settings')
 @firebaseConnect() // add this.props.firebase
 @connect( // Map redux state to props
   ({ firebase }) => ({
-    auth: pathToJS(firebase, 'auth'),
-    account: pathToJS(firebase, 'profile')
+    account: populate(firebase, 'profile')
   })
 )
 export default class Settings extends Component {

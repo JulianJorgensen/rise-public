@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { firebaseConnect, pathToJS, isLoaded } from 'react-redux-firebase';
+import { firebaseConnect, populate, isLoaded } from 'react-redux-firebase';
 import { reduxFirebase as rfConfig } from 'config';
-import { UserIsAuthenticated, UserHasPermission } from 'utils/router'
+import { userIsAuthenticated, userHasPermission } from 'utils/router'
 import axios from 'axios';
 import defaultUserImageUrl from 'static/images/User.png';
 import {Tab, Tabs} from 'react-toolbox';
@@ -12,13 +12,12 @@ import SportsForm from '../components/SportsForm/SportsForm';
 import BankingForm from '../components/BankingForm/BankingForm';
 import classes from './GettingStartedContainer.css';
 
-@UserIsAuthenticated // redirect to /login if user is not authenticated
+// @userIsAuthenticated // redirect to /login if user is not authenticated
 // @UserHasPermission('getting-started')
 @firebaseConnect() // add this.props.firebase
 @connect( // Map redux state to props
   ({ firebase }) => ({
-    auth: pathToJS(firebase, 'auth'),
-    account: pathToJS(firebase, 'profile')
+    account: populate(firebase, 'profile')
   })
 )
 export default class GettingStarted extends Component {
@@ -111,6 +110,8 @@ export default class GettingStarted extends Component {
   render () {
     const { account } = this.props;
     let { finished } = this.state;
+
+    console.log('account: ', account);
 
     if (!isLoaded(account)) {
       return <LoadingSpinner />

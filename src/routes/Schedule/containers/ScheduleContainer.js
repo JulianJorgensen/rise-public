@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { firebaseConnect, pathToJS, isLoaded } from 'react-redux-firebase';
+import { firebaseConnect, populate } from 'react-redux-firebase';
 import { firebase as fbConfig, reduxFirebase as rfConfig } from 'config';
-import { UserIsAuthenticated, UserHasPermission } from 'utils/router'
+import { userIsAuthenticated, userHasPermission } from 'utils/router'
 import axios from 'axios';
 import moment from 'moment-timezone';
 import {Chip, DatePicker, Dropdown, Dialog, Input, List, ListItem} from 'react-toolbox/lib';
@@ -10,8 +10,6 @@ import TimezoneSelector from '../components/TimezoneSelector';
 import Button from 'components/Button';
 import LoadingSpinner from 'components/LoadingSpinner';
 import classes from './ScheduleContainer.css';
-
-console.log('fb config: ', fbConfig);
 
 let availableDates = [
   moment("2017-07-10", "YYYY-MM-DD").toDate(),
@@ -27,13 +25,12 @@ let today = moment(new Date());
 const MAX_MONTHS_IN_ADVANCE = 3;
 const ACUITY_MENTOR_CALL_ID = 346940;
 
-@UserIsAuthenticated // redirect to /login if user is not authenticated
-@UserHasPermission('schedule')
+@userIsAuthenticated // redirect to /login if user is not authenticated
+// @userHasPermission('schedule')
 @firebaseConnect() // add this.props.firebase
 @connect( // Map redux state to props
   ({ firebase }) => ({
-    auth: pathToJS(firebase, 'auth'),
-    account: pathToJS(firebase, 'profile')
+    account: populate(firebase, 'profile')
   })
 )
 export default class Schedule extends Component {

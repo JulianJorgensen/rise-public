@@ -1,10 +1,10 @@
 import React, { Component, cloneElement, PropTypes } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { firebaseConnect, pathToJS } from 'react-redux-firebase';
+import { firebaseConnect, populate } from 'react-redux-firebase';
 import { firebase as fbConfig } from 'config';
 import moment from 'moment-timezone';
-import { UserIsAuthenticated, UserHasPermission } from 'utils/router';
+import { userIsAuthenticated, userHasPermission } from 'utils/router';
 import LoadingSpinner from 'components/LoadingSpinner';
 import classes from './UpcomingAppointments.css';
 
@@ -13,9 +13,8 @@ const ACUITY_MENTOR_CALL_ID = 346940;
 @firebaseConnect()
 @connect(
   ({ firebase }) => ({
-    authError: pathToJS(firebase, 'authError'),
-    auth: pathToJS(firebase, 'auth'),
-    account: pathToJS(firebase, 'profile')
+    authError: populate(firebase, 'authError'),
+    account: populate(firebase, 'profile')
   })
 )
 export default class UpcomingAppointments extends Component {

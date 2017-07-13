@@ -3,7 +3,7 @@ import classes from './Navbar.css'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { reduxFirebase as rfConfig } from 'config';
-import { firebaseConnect, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase'
+import { firebaseConnect, populate, isLoaded } from 'react-redux-firebase'
 import { DASHBOARD_PATH, PROFILE_PATH, SETTINGS_PATH, LOGIN_PATH, SIGNUP_PATH, ABOUT_PATH } from 'constants'
 
 // Components
@@ -27,9 +27,8 @@ const avatarStyles = {
 @firebaseConnect()
 @connect(
   ({ firebase }) => ({
-    authError: pathToJS(firebase, 'authError'),
-    auth: pathToJS(firebase, 'auth'),
-    account: pathToJS(firebase, 'profile')
+    authError: populate(firebase, 'authError'),
+    account: populate(firebase, 'profile')
   })
 )
 export default class Navbar extends Component {
