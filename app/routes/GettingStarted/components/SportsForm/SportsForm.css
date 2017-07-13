@@ -1,0 +1,5 @@
+.ctas{
+  display: flex;
+  justify-content: space-between;
+  margin-top: rem(30);
+}

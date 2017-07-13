@@ -1,6 +1,0 @@
-.logItem{
-  margin-bottom: rem(20);
-  & .title{
-    margin: 0;
-  }
-}
