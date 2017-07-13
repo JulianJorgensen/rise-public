@@ -1,62 +1,56 @@
-// We only need to import the modules necessary for initial render
-import CoreLayout from '../layouts/CoreLayout/CoreLayout'
-import Home from './Home'
-import AboutRoute from './About'
-import FeaturesRoute from './Features'
-import PricingRoute from './Pricing'
-import SettingsRoute from './Settings'
-import ScheduleRoute from './Schedule'
-import MyAthletesRoute from './MyAthletes'
-import VideoRoute from './Video'
-import LoginRoute from './Login'
-import SignupRoute from './Signup'
-import DashboardRoute from './Dashboard'
-import ProfileRoute from './Profile'
-import GettingStartedRoute from './GettingStarted'
-import RecoverRoute from './Recover'
-import NotAuthorized from './NotAuthorized'
+import React from 'react';
+import {BrowserRouter as Router, Route, HashRouter, Link} from 'react-router-dom';
+import DocumentMeta from 'react-document-meta';
+import Main from './index';
+import LeftNavigation from '../containers/LeftNavigation';
+import Navbar from '../containers/Navbar';
 
-/*  Note: Instead of using JSX, we recommend using react-router
-    PlainRoute objects to build route definitions.   */
+import Home from './Home';
+import AboutRoute from './About';
+import FeaturesRoute from './Features';
+import PricingRoute from './Pricing';
+import SettingsRoute from './Settings';
+import ScheduleRoute from './Schedule';
+import MyAthletesRoute from './MyAthletes';
+import VideoRoute from './Video';
+import LoginRoute from './Login';
+import SignupRoute from './Signup';
+import DashboardRoute from './Dashboard';
+import ProfileRoute from './Profile';
+import GettingStartedRoute from './GettingStarted';
+import RecoverRoute from './Recover';
+import NotAuthorized from './NotAuthorized';
 
-export const createRoutes = (store) => ({
-  path: '/',
-  component: CoreLayout,
-  indexRoute: Home,
-  childRoutes: [
-    ProfileRoute,
-    GettingStartedRoute,
-    AboutRoute,
-    FeaturesRoute,
-    PricingRoute,
-    SettingsRoute,
-    ScheduleRoute,
-    MyAthletesRoute,
-    VideoRoute,
-    LoginRoute,
-    SignupRoute,
-    NotAuthorized,
-    DashboardRoute(store), // async route definitions recieve store
-    RecoverRoute(store) // async route definitions recieve store
-  ]
-})
+import { Layout } from 'react-toolbox/lib/layout';
+import ReactGA from 'react-ga';
+// ReactGA.initialize('UA-6241825-9'); // initialize Google Analytics
 
-/*  Note: childRoutes can be chunked or otherwise loaded programmatically
-    using getChildRoutes with the following signature:
+import classes from './index.css'
 
-    getChildRoutes (location, cb) {
-      require.ensure([], (require) => {
-        cb(null, [
-          // Remove imports!
-          require('./Counter').default(store)
-        ])
-      })
-    }
+// site meta data
+const meta = {
+  title: 'RISE Athletes',
+  description: 'Some meta description here..',
+  meta: {
+    charset: 'utf-8'
+  },
+  auto: {
+    ograph: true
+  }
+};
 
-    However, this is not necessary for code-splitting! It simply provides
-    an API for async route definitions. Your code splitting should occur
-    inside the route `getComponent` function, since it is only invoked
-    when the route exists and matches.
-*/
-
-export default createRoutes
+export default (
+  <Router>
+    <div id="main">
+      <DocumentMeta {...meta} />
+      <LeftNavigation />
+      <div className={classes.mainContent}>
+        <Navbar />
+        <Route path="/" component={Main} />
+        <Layout className={classes.layout}>
+          <Route exact path="/" component={Home} />
+        </Layout>
+      </div>
+    </div>
+  </Router>
+);

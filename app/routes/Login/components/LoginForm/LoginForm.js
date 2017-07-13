@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
 import Button from 'components/Button';
 import Checkbox from 'react-toolbox/lib/checkbox';

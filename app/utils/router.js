@@ -1,7 +1,7 @@
 import React from 'react';
 import { get } from 'lodash';
 import { UserAuthWrapper } from 'redux-auth-wrapper';
-import { browserHistory } from 'react-router';
+// import { browserHistory } from 'react-router-dom';
 import { DASHBOARD_PATH, GETTING_STARTED_PATH, NOT_AUTHORIZED_PATH } from 'constants';
 import { pathToJS } from 'react-redux-firebase';
 import LoadingSpinner from 'components/LoadingSpinner';
@@ -24,7 +24,7 @@ export const UserIsAuthenticated = UserAuthWrapper({ // eslint-disable-line new-
     (pathToJS(firebase, 'isInitializing') === true),
   predicate: auth => auth !== null,
   redirectAction: newLoc => (dispatch) => {
-    browserHistory.replace(newLoc)
+    // browserHistory.replace(newLoc)
     dispatch({
       type: UNAUTHED_REDIRECT,
       payload: { message: 'User is not authenticated.' }
@@ -53,7 +53,7 @@ export const UserIsNotAuthenticated = UserAuthWrapper({ // eslint-disable-line n
     (pathToJS(firebase, 'isInitializing') === true),
   predicate: auth => auth === null,
   redirectAction: newLoc => (dispatch) => {
-    browserHistory.replace(newLoc)
+    // browserHistory.replace(newLoc)
     dispatch({ type: AUTHED_REDIRECT })
   }
 })
@@ -79,7 +79,7 @@ export const UserHasPermission = permission => UserAuthWrapper({ // eslint-disab
       || (pathToJS(firebase, 'profile') === undefined)
       || (pathToJS(firebase, 'isInitializing') === true),
   redirectAction: newLoc => (dispatch) => {
-    browserHistory.replace(newLoc);
+    // browserHistory.replace(newLoc);
     dispatch({ type: UNAUTHED_REDIRECT });
   },
   failureRedirectPath: `${NOT_AUTHORIZED_PATH}`,

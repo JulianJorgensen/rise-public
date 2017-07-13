@@ -1,0 +1,58 @@
+@import "../../styles/variables.css";
+
+.container{
+  width: 300px;
+  position: relative;
+  background-color: gray(80%);
+  &.collapsed{
+    width: 0;
+    & .navItems{
+      overflow: hidden;
+    }
+  }
+}
+
+.navItems{
+  display: flex;
+  flex-direction: column;
+
+  & .navItemsGroup{
+    display: flex;
+    flex-direction: column;
+
+    & .navItemsGroupHeadline{
+      font-size: 20px;
+      background-color: gray(20%);
+      margin: 0;
+      padding: 20px;
+      color: white;
+      border-bottom: 1px solid gray(80%);
+      cursor: pointer;
+    }
+
+    & .navItemsGroupContent{
+      display: flex;
+      flex-direction: column;
+      background-color: gray(20%);
+    }
+
+    & .navItem{
+      padding: 20px 20px 20px 40px;
+      border-bottom: 1px solid gray(80%);
+      color: white;
+      text-decoration: none;
+    }
+
+    & .navItemsGroupHeadline.disabled,
+    & .navItem.disabled{
+      background-color: gray(25%);
+      color: gray(40%);
+      cursor: default;
+    }
+
+    & .navItemsGroupHeadline.active,
+    & .navItemsGroupContent.active{
+      background-color: gray(10%);
+    }
+  }
+}

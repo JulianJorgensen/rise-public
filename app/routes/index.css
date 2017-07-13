@@ -1,0 +1,12 @@
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+.mainContent{
+  flex-grow: 1;
+}
+.layout{
+  display: flex;
+  justify-content: center;
+  margin-top: rem(76);
+}

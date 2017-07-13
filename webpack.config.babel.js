@@ -20,15 +20,17 @@ const IS_PRODUCTION = (NODE_ENV === 'production');
 const VENDOR_LIBS = [
   'react',
   'react-dom',
-  'react-redux'
+  'react-router-dom',
+  'react-redux',
+  'react-redux-firebase',
+  'react-toolbox'
 ];
-
 
 // Webpack config for both production and development environments
 // ====================
 const BASE_CONFIG = {
   entry: {
-    bundle: path.resolve(__dirname, 'app/main'),
+    bundle: path.resolve(__dirname, 'app/app'),
     vendor: VENDOR_LIBS
   },
   output: {

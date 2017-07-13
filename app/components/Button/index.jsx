@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 import cn from 'classnames';
 import RTButton from 'react-toolbox/lib/button';
 import customTheme from './Button.css';
