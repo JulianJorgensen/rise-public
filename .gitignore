@@ -3,8 +3,7 @@
 .DS_Store
 **/.DS_Store
 
-node_modules
-coverage
-dist
-functions/.runtimeconfig.json
+node_modules/
+public
 .env
+functions/.runtimeconfig.json
