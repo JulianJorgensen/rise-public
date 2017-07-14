@@ -4,7 +4,7 @@ import classes from './index.css';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { UserAuthWrapper } from 'redux-auth-wrapper';
-import { firebaseConnect, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase';
+import { firebaseConnect, populate, isLoaded, isEmpty } from 'react-redux-firebase';
 import { DASHBOARD_PATH, ACCOUNT_PATH, LOGIN_PATH, SIGNUP_PATH, ABOUT_PATH } from 'constants';
 import Accordion from 'components/Accordion';
 
@@ -122,10 +122,9 @@ const leftNav = [
 
 @firebaseConnect()
 @connect(
-  ({ firebase }) => ({
-    authError: pathToJS(firebase, 'authError'),
-    auth: pathToJS(firebase, 'auth'),
-    account: pathToJS(firebase, 'profile')
+  ({ firebase: { authError, profile } }) => ({
+    authError,
+    account: profile
   })
 )
 export default class LefNavigation extends Component {
@@ -139,7 +138,7 @@ export default class LefNavigation extends Component {
   }
 
   render () {
-    const { account, auth } = this.props;
+    const { account } = this.props;
     const accountExists = isLoaded(account) && !isEmpty(account);
 
     let renderNavItems = () => {

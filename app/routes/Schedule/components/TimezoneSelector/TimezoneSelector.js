@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { firebaseConnect, pathToJS, isLoaded } from 'react-redux-firebase';
+import { firebaseConnect, populate } from 'react-redux-firebase';
 import { reduxFirebase as rfConfig } from 'config';
-import { UserIsAuthenticated, UserHasPermission } from 'utils/router';
+import { userIsAuthenticated, userHasPermission } from 'utils/router';
 import moment from 'moment-timezone';
 import {Dropdown} from 'react-toolbox/lib';
 import Button from 'components/Button';
@@ -21,8 +21,7 @@ let timezones = Object.entries(timezoneData).map((item) => {
 @firebaseConnect() // add this.props.firebase
 @connect( // Map redux state to props
   ({ firebase }) => ({
-    auth: pathToJS(firebase, 'auth'),
-    account: pathToJS(firebase, 'profile')
+    account: populate(firebase, 'profile')
   })
 )
 export default class TimezoneSelector extends Component {

@@ -2,13 +2,13 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router-dom';
 import GoogleButton from 'react-google-button';
 import { connect } from 'react-redux';
-import { firebaseConnect, isLoaded, isEmpty, pathToJS } from 'react-redux-firebase';
+import { firebaseConnect, populate } from 'react-redux-firebase';
 import { reduxFirebase as rfConfig } from 'config';
 import Snackbar from 'components/Snackbar';
 import {Tab, Tabs} from 'react-toolbox';
 import moment from 'moment-timezone';
 import { LOGIN_PATH } from 'constants';
-import { UserIsNotAuthenticated } from 'utils/router';
+import { userIsNotAuthenticated } from 'utils/router';
 import AthleteSignupForm from '../components/AthleteSignupForm';
 import MentorSignupForm from '../components/MentorSignupForm';
 import classes from './SignupContainer.css';
@@ -16,12 +16,11 @@ import classes from './SignupContainer.css';
 import { Card } from 'react-toolbox/lib/card';
 
 
-@UserIsNotAuthenticated // redirect to dashboard if logged in
+@userIsNotAuthenticated // redirect to dashboard if logged in
 @firebaseConnect() // add this.props.firebase
 @connect( // map redux state to props
   ({firebase}) => ({
-    auth: pathToJS(firebase, 'auth'),
-    authError: pathToJS(firebase, 'authError')
+    authError: populate(firebase, 'authError')
   })
 )
 export default class Signup extends Component {

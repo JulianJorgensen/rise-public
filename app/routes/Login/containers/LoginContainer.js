@@ -2,19 +2,19 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router-dom';
 import GoogleButton from 'react-google-button';
 import { connect } from 'react-redux';
-import { firebaseConnect, isLoaded, isEmpty, pathToJS } from 'react-redux-firebase';
+import { firebaseConnect, populate, isLoaded } from 'react-redux-firebase';
 import Snackbar from 'components/Snackbar';
 import { Card } from 'react-toolbox/lib/card';
-import { UserIsNotAuthenticated } from 'utils/router';
+import { userIsNotAuthenticated } from 'utils/router';
 import { SIGNUP_PATH } from 'constants';
 import LoginForm from '../components/LoginForm';
 import classes from './LoginContainer.css';
 
-@UserIsNotAuthenticated // redirect to list page if logged in
+@userIsNotAuthenticated // redirect to dashboard page if logged in
 @firebaseConnect() // add this.props.firebase
 @connect( // map redux state to props
   ({ firebase }) => ({
-    authError: pathToJS(firebase, 'authError')
+    authError: populate(firebase, 'authError')
   })
 )
 export default class Login extends Component {
@@ -47,8 +47,13 @@ export default class Login extends Component {
     this.handleLogin({ provider })
 
   render () {
-    const { authError } = this.props
+    const { authError, auth, firebase } = this.props
     const { snackCanOpen } = this.state
+
+    console.log('authError: ', authError);
+    console.log('auth: ', auth);
+    console.log('firebase: ', firebase);
+    console.log('firebase auth: ', firebase.auth);
 
     return (
       <div className={classes.wrapper}>
