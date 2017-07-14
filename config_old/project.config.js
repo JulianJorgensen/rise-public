@@ -48,7 +48,6 @@ const config = {
     'react',
     'react-router',
     'react-redux',
-    // 'redux', // avoid warning in production
     'react-redux-firebase',
     'react-toolbox'
   ],

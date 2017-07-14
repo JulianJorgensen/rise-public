@@ -6,7 +6,7 @@ import styles from './styles/app.css';
 import fonts from './fonts/fonts.css';
 import routes from './routes/index';
 
-import createStore from './store_new/createStore';
+import createStore from './store/createStore';
 
 const initialState = window.___INITIAL_STATE__;
 const store = createStore(initialState);
