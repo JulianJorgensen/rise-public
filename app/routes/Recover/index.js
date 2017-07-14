@@ -1,4 +1,4 @@
-import { RECOVER_PATH as path } from 'constants'
+import { RECOVER_PATH as path } from 'app/constants';
 
 export default (store) => ({
   path: path,

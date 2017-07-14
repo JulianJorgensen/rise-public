@@ -3,7 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import Button from 'components/Button';
 import TextField from 'components/TextField';
 import RadioGroup from 'components/RadioGroup';
-import { SPORTS_FORM_NAME } from 'constants';
+import { SPORTS_FORM_NAME } from 'app/constants';
 import classes from './SportsForm.css';
 
 export const SportsForm = ({ account, handleBack, handleSubmit, submitting }) => (

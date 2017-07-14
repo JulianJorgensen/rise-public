@@ -111,11 +111,6 @@ const BASE_CONFIG = {
       names: ['vendor', 'manifest'],
       minChunks: Infinity
     }),
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('production')
-      }
-    }),
     new HTMLWebpackPlugin({
       template: 'app/index.html'
     }),
@@ -127,21 +122,15 @@ const BASE_CONFIG = {
   ],
   devtool: `${IS_PRODUCTION ? 'inline' : 'cheap-eval'}-source-map`,
   resolve: {
-    modules: [
-      'node_modules',
-      './app',
-      './app/router',
-      './app/components',
-      './app/vendor',
-      './app/api',
-      './app/utils'
-    ],
     alias: {
-      app: 'app',
-      router: 'router/router.jsx',
-      invoiceActions: 'actions/invoiceActions.jsx',
-      reducers: 'reducers/reducers.jsx',
-      configureStore: 'store/configureStore.jsx'
+      assets: path.resolve(__dirname, 'app/assets/'),
+      app: path.resolve(__dirname, 'app/'),
+      components: path.resolve(__dirname, 'app/components/'),
+      containers: path.resolve(__dirname, 'app/containers/'),
+      routes: path.resolve(__dirname, 'app/routes/'),
+      store: path.resolve(__dirname, 'app/store/'),
+      styles: path.resolve(__dirname, 'app/styles/'),
+      utils: path.resolve(__dirname, 'app/utils/')
     },
     extensions: ['.js', '.jsx', '.css']
   }
@@ -150,6 +139,11 @@ const BASE_CONFIG = {
 
 // Webpack plugins unique to the production build:
 const PROD_PLUGINS = [
+  new webpack.DefinePlugin({
+    'process.env': {
+      NODE_ENV: JSON.stringify('production')
+    }
+  }),
   new ExtractTextPlugin('[name].min.[contenthash].css'),
   new webpack.optimize.UglifyJsPlugin({
     compress: {

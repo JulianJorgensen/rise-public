@@ -1,10 +1,10 @@
-import React, { PropTypes } from 'react'
-import { Field, reduxForm } from 'redux-form'
-import Button from 'components/Button'
-import TextField from 'components/TextField'
-import { required, email } from 'utils/forms'
-import { RECOVER_EMAIL_FORM_NAME } from 'constants'
-import classes from './EmailForm.css'
+import React, { PropTypes } from 'react';
+import { Field, reduxForm } from 'redux-form';
+import Button from 'components/Button';
+import TextField from 'components/TextField';
+import { required, email } from 'utils/forms';
+import { RECOVER_EMAIL_FORM_NAME } from 'app/constants';
+import classes from './EmailForm.css';
 
 export const EmailForm = ({ account, handleSubmit, submitting, pristine, valid }) => (
   <form className={classes.container} onSubmit={handleSubmit}>

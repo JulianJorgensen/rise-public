@@ -1,0 +1,49 @@
+@import "../../styles/variables.css";
+
+.container{
+  composes: container from "../../styles/layout.css";
+  padding: rem(20);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: rem(600);
+  max-width: 100%;
+
+  &.success{
+    & .header{
+      color: var(--success);
+    }
+  }
+}
+
+.times{
+  margin-bottom: rem(20);
+  & .time{
+    cursor: pointer;
+  }
+}
+
+.scheduleForm{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  & .dateTimeFields{
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.confirmationDetails{
+  text-align: center;
+  & .time{
+    background-color: gray(98%);
+    padding: rem(30);
+    font-size: rem(30);
+    margin-bottom: rem(15);
+  }
+}
+
+.button.confirmButton:not([disabled]) {
+  @apply --success-theme;
+}

@@ -1,5 +1,5 @@
-import { FEATURES_PATH as path } from 'constants'
-import component from './containers/FeaturesContainer'
+import { FEATURES_PATH as path } from 'app/constants';
+import component from './containers/FeaturesContainer';
 
 export default {
   path,

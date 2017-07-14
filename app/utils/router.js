@@ -2,7 +2,7 @@ import React from 'react';
 import { get } from 'lodash';
 import { connectedReduxRedirect } from 'redux-auth-wrapper/history4/redirect';
 // import { browserHistory } from 'react-router';
-import { DASHBOARD_PATH, GETTING_STARTED_PATH, NOT_AUTHORIZED_PATH } from 'constants';
+import { DASHBOARD_PATH, GETTING_STARTED_PATH, NOT_AUTHORIZED_PATH } from 'app/constants';
 import { populate, isLoaded, isEmpty } from 'react-redux-firebase';
 import LoadingSpinner from 'components/LoadingSpinner';
 
@@ -43,7 +43,8 @@ export const userIsAuthenticated = connectedReduxRedirect({
 export const userIsNotAuthenticated = connectedReduxRedirect({
   redirectPath: (state, props) =>
     // redirect to page user was on or to getting started page
-    props.location.query.redirect || GETTING_STARTED_PATH,
+    'login',
+    // props.location.query.redirect || GETTING_STARTED_PATH,
   authenticatedSelector: ({ firebase }) => isLoaded(firebase.auth) && isEmpty(firebase.auth),
   authenticatingSelector: ({ firebase }) => populate(firebase, 'isInitializing') === true,
   AuthenticatingComponent: LoadingSpinner,

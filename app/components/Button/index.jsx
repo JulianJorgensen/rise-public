@@ -11,7 +11,7 @@ const Button = ({ className, white, hollow, primary, theme, href, ...others }) =
     [customTheme.primary]: primary
   });
 
-  if (href == undefined) {
+  if (href === undefined) {
     return <RTButton className={_className} theme={customTheme} {...others}/>;
   }
 

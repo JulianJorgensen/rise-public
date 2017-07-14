@@ -1,0 +1,11 @@
+.container{
+  width: rem(500);
+  padding: rem(20);
+}
+
+.tab{
+  flex-grow: 1;
+  &:focus {
+    outline: none;
+  }
+}

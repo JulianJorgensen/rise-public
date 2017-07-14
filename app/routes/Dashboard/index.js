@@ -1,24 +1,84 @@
-import { DASHBOARD_PATH as path } from 'constants'
+import React, { Component, cloneElement, PropTypes } from 'react';
+import axios from 'axios';
+import { connect } from 'react-redux';
+import { firebaseConnect, populate } from 'react-redux-firebase';
+import moment from 'moment-timezone';
+import { DASHBOARD_PATH } from 'app/constants';
+import { userIsAuthenticated, UserHasPermission } from 'utils/router';
+import LoadingSpinner from 'components/LoadingSpinner';
+import UpcomingAppointments from 'containers/UpcomingAppointments';
+import classes from './index.css';
 
-export default (store) => ({
-  path,
-  /*  Async getComponent is only invoked when route matches   */
-  getComponent (nextState, cb) {
-    /*  Webpack - use 'require.ensure' to create a split point
-        and embed an async module loader (jsonp) when bundling   */
-    require.ensure([], (require) => {
-      /*  Webpack - use require callback to define
-          dependencies for bundling   */
-      const Projects = require('./containers/DashboardContainer').default
+const ACUITY_MENTOR_CALL_ID = 346940;
 
-      /*  Return getComponent   */
-      cb(null, Projects)
+@userIsAuthenticated // redirect to /login if user is not authenticated
+// @userHasPermission('dashboard')
+@firebaseConnect()
+@connect(
+  ({ firebase }) => ({
+    account: populate(firebase, 'profile')
+  })
+)
+export default class Dashboard extends Component {
+  state = {
+  }
 
-    /* Webpack named bundle   */
-  }, 'Dashboard')
-  },
-  childRoutes: [
-    // Project // not function for sync route
-    // async routes definitions require function here i.e. Project(store)
-  ]
-})
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  }
+
+  static propTypes = {
+    projects: PropTypes.object,
+    firebase: PropTypes.object,
+    auth: PropTypes.object,
+    children: PropTypes.object
+  }
+
+  render () {
+    const { projects, auth, account } = this.props;
+    const { firstName, timezone, mentor } = account;
+
+    // Project Route is being loaded
+    if (this.props.children) {
+      // pass all props to children routes
+      return cloneElement(this.props.children, this.props)
+    }
+
+    if (account) {
+      return (
+        <div className={classes.container}>
+          <div className={classes.welcome}>
+            <h1>Welcome{firstName ? ` back, ${firstName}` : '!'}</h1>
+          </div>
+          <div className={classes.actionsContainer}>
+            <h2>would you like to</h2>
+            <div className={classes.actions}>
+              <div className={classes.action}>
+                <i className="fa fa-calendar" />
+              </div>
+              <div className={classes.action}>
+                <i className="fa fa-calendar" />
+              </div>
+              <div className={classes.action}>
+                <i className="fa fa-calendar" />
+              </div>
+            </div>
+          </div>
+          <div className={classes.logs}>
+            <div className={classes.logsInner}>
+              <div className={classes.logsCompleted}>
+                <h3>Recently Completed</h3>
+              </div>
+              <div className={classes.logsUpcoming}>
+                <h3>Upcoming Calls</h3>
+                <UpcomingAppointments />
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+    }else{
+      return <LoadingSpinner />
+    }
+  }
+}

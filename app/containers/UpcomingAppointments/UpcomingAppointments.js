@@ -2,7 +2,7 @@ import React, { Component, cloneElement, PropTypes } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { firebaseConnect, populate } from 'react-redux-firebase';
-import { firebase as fbConfig } from 'config';
+import { firebase as fbConfig } from 'app/config';
 import moment from 'moment-timezone';
 import { userIsAuthenticated, userHasPermission } from 'utils/router';
 import LoadingSpinner from 'components/LoadingSpinner';
@@ -13,7 +13,6 @@ const ACUITY_MENTOR_CALL_ID = 346940;
 @firebaseConnect()
 @connect(
   ({ firebase }) => ({
-    authError: populate(firebase, 'authError'),
     account: populate(firebase, 'profile')
   })
 )
@@ -25,6 +24,8 @@ export default class UpcomingAppointments extends Component {
 
   getUpcomingAppointments = () => {
     let {uid, mentor} = this.props.account;
+
+    console.log('account: ', this.props.account);
 
     axios.get(`${fbConfig.functions}/getUpcomingAppointments`, {
       params: {
@@ -50,7 +51,7 @@ export default class UpcomingAppointments extends Component {
   }
 
   render () {
-    const { projects, auth, account } = this.props;
+    const { projects, account } = this.props;
     const { firstName, timezone, mentor } = account;
     let { upcomingAppointments, upcomingAppointmentsFetched } = this.state;
 

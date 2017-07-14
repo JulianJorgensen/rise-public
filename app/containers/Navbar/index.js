@@ -1,10 +1,9 @@
 import React, { Component, PropTypes } from 'react';
-import classes from './index.css';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { reduxFirebase as rfConfig } from 'config';
-import { firebaseConnect, populate, isLoaded, isEmpty } from 'react-redux-firebase'
-import { DASHBOARD_PATH, PROFILE_PATH, SETTINGS_PATH, LOGIN_PATH, SIGNUP_PATH, ABOUT_PATH } from 'constants';
+import { reduxFirebase as rfConfig } from 'app/config';
+import { firebaseConnect, populate, isLoaded, isEmpty } from 'react-redux-firebase';
+import * as CONST from 'app/constants';
 
 // Components
 import {IconMenu, MenuItem, MenuDivider } from 'react-toolbox/lib/menu';
@@ -12,22 +11,13 @@ import Avatar from 'react-toolbox/lib/avatar';
 import Navigation from 'react-toolbox/lib/navigation';
 import Logo from 'components/Logo/Logo'
 
-const buttonStyle = {
-  color: 'white',
-  textDecoration: 'none',
-  alignSelf: 'center'
-}
+import classes from './index.css';
 
-const avatarStyles = {
-  wrapper: { marginTop: 0 },
-  button: { marginRight: '.5rem', width: '200px', height: '64px' },
-  buttonSm: { marginRight: '.5rem', width: '30px', height: '64px', padding: '0' }
-}
-
+@withRouter
 @firebaseConnect()
 @connect(
   ({ firebase }) => ({
-    authError: populate(firebase, 'authError'),
+    auth: firebase.auth,
     account: populate(firebase, 'profile')
   })
 )
@@ -56,15 +46,13 @@ export default class Navbar extends Component {
   }
 
   render () {
-    const { account } = this.props;
+    const { account, history } = this.props;
     const accountExists = isLoaded(account) && !isEmpty(account);
-
-    // this.props.firebase.logout();
 
     const ctaMenu = (
       <div className={classes.navCta}>
-        <Link to={SIGNUP_PATH} className={classes.join}>Join now</Link>
-        <Link to={LOGIN_PATH} className={classes.signin}>Sign In</Link>
+        <Link to='/signup' className={classes.join}>Join now</Link>
+        <Link to='/login' className={classes.signin}>Sign In</Link>
       </div>
     )
 
@@ -77,16 +65,16 @@ export default class Navbar extends Component {
         <IconMenu className={classes.rightNavMenu} icon={<i className="fa fa-chevron-down" />} position='topRight' menuRipple>
           <MenuItem
             caption='Profile'
-            onTouchTap={() => this.context.router.push(PROFILE_PATH)}
+            onClick={() => history.push(CONST.PROFILE_PATH)}
           />
           <MenuItem
             caption='Settings'
-            onTouchTap={() => this.context.router.push(SETTINGS_PATH)}
+            onClick={() => history.push(CONST.SETTINGS_PATH)}
             disabled={account.status === 'pending'}
           />
           <MenuItem
             caption='Sign out'
-            onTouchTap={this.handleLogout}
+            onClick={this.handleLogout}
           />
         </IconMenu>
       </div>
@@ -94,9 +82,9 @@ export default class Navbar extends Component {
 
     const mainMenu = !accountExists ? (
       <div className={classes.nav}>
-        <Link to={ABOUT_PATH}>About</Link>
-        <Link to='/features'>Features</Link>
-        <Link to='/pricing'>Pricing</Link>
+        <Link to={CONST.ABOUT_PATH}>About</Link>
+        <Link to={CONST.FEATURES_PATH}>Features</Link>
+        <Link to={CONST.PRICING_PATH}>Pricing</Link>
       </div>
     ) : ''
 
@@ -110,7 +98,7 @@ export default class Navbar extends Component {
       <header className={`${classes.header} ${account ? account.showLeftNavigation ? classes.withLeftNav : '' : ''}`}>
         <div className={classes.leftNav}>
           {toggle}
-          <Link to={accountExists ? `${DASHBOARD_PATH}` : '/'} className={classes.logo}><Logo width="80" /></Link>
+          <Link to={accountExists ? `${CONST.DASHBOARD_PATH}` : '/'} className={classes.logo}><Logo width="80" /></Link>
           {mainMenu}
         </div>
 

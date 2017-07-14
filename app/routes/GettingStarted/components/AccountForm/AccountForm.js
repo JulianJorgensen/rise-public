@@ -7,7 +7,7 @@ import CountryPicker from 'components/CountryPicker';
 import countryList from 'country-list';
 import StatePicker from 'components/StatePicker';
 import RadioGroup from 'components/RadioGroup';
-import { ACCOUNT_FORM_NAME } from 'constants';
+import { ACCOUNT_FORM_NAME } from 'app/constants';
 import ProviderDataForm from '../ProviderDataForm';
 import classes from './AccountForm.css';
 

@@ -1,5 +1,5 @@
-import { PRICING_PATH as path } from 'constants'
-import component from './containers/PricingContainer'
+import { PRICING_PATH as path } from 'app/constants';
+import component from './containers/PricingContainer';
 
 export default {
   path,

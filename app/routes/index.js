@@ -6,19 +6,19 @@ import LeftNavigation from '../containers/LeftNavigation';
 import Navbar from '../containers/Navbar';
 
 import Home from './Home';
-import AboutRoute from './About';
-import FeaturesRoute from './Features';
-import PricingRoute from './Pricing';
-import SettingsRoute from './Settings';
-import ScheduleRoute from './Schedule';
-import MyAthletesRoute from './MyAthletes';
-import VideoRoute from './Video';
-import LoginRoute from './Login';
-import SignupRoute from './Signup';
-import DashboardRoute from './Dashboard';
-import ProfileRoute from './Profile';
-import GettingStartedRoute from './GettingStarted';
-import RecoverRoute from './Recover';
+import About from './About';
+import Features from './Features';
+import Pricing from './Pricing';
+import Settings from './Settings';
+import Schedule from './Schedule';
+import MyAthletes from './MyAthletes';
+import Video from './Video';
+import Login from './Login';
+import Signup from './Signup';
+import Dashboard from './Dashboard';
+import Profile from './Profile';
+import GettingStarted from './GettingStarted';
+import Recover from './Recover';
 import NotAuthorized from './NotAuthorized';
 
 import { Layout } from 'react-toolbox/lib/layout';
@@ -41,7 +41,7 @@ const meta = {
 
 export default (
   <Router>
-    <div id="main">
+    <div className={classes.container}>
       <DocumentMeta {...meta} />
       <LeftNavigation />
       <div className={classes.mainContent}>
@@ -49,8 +49,16 @@ export default (
         <Route path="/" component={Main} />
         <Layout className={classes.layout}>
           <Route exact path="/" component={Home} />
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
+          <Route path="/dashboard" component={Dashboard} />
+          <Route path="/getting-started" component={GettingStarted} />
+          <Route path="/settings" component={Settings} />
+          <Route path="/profile" component={Profile} />
+          <Route path="/schedule" component={Schedule} />
         </Layout>
       </div>
+      {ENV_CONFIG.ENV !== 'production' ? <div className={classes.environment}>{ENV_CONFIG.ENV}</div> : ''}
     </div>
   </Router>
 );

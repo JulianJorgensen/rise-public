@@ -8,5 +8,16 @@
 .layout{
   display: flex;
   justify-content: center;
-  margin-top: rem(76);
+  align-items: center;
+}
+.environment{
+  position: fixed;
+  bottom: 0;
+  right: rem(15);
+  background-color: gray(96%);
+  color: gray(80%);
+  padding: rem(3) rem(10);
+  font-size: rem(12);
+  border-top-left-radius: rem(5);
+  border-top-right-radius: rem(5);
 }

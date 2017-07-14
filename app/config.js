@@ -1,11 +1,10 @@
 export const firebase = {
-  apiKey: 'AIzaSyDpuf3lnAJgGYn46QrZJ2fk9me5lZoy4fA',
-  authDomain: 'rise-1602c.firebaseapp.com',
-  databaseURL: 'https://rise-1602c.firebaseio.com',
-  storageBucket: 'rise-1602c.appspot.com',
-  functions: 'https://us-central1-rise-1602c.cloudfunctions.net'
+  apiKey: ENV_CONFIG.firebase.apiKey,
+  authDomain: ENV_CONFIG.firebase.authDomain,
+  databaseURL: ENV_CONFIG.firebase.databaseURL,
+  functions: ENV_CONFIG.firebase.functionsURL,
+  storageBucket: ENV_CONFIG.firebase.storageBucket
 }
-// functions: 'http://localhost:5002/rise-1602c/us-central1'
 
 // Config for react-redux-firebase
 // For more details, visit https://prescottprue.gitbooks.io/react-redux-firebase/content/config.html

@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { required, validateEmail } from 'utils/forms';
-import { MENTOR_SIGNUP_FORM_NAME } from 'constants';
+import { MENTOR_SIGNUP_FORM_NAME } from 'app/constants';
 import Button from 'components/Button';
 import TextField from 'components/TextField';
 import classes from './MentorSignupForm.css';

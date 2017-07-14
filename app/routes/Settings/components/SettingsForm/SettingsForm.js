@@ -1,10 +1,10 @@
-import React, { PropTypes } from 'react'
-import { Field, reduxForm } from 'redux-form'
-import Button from 'components/Button'
-import TextField from 'components/TextField'
-import { SETTINGS_FORM_NAME } from 'constants'
-import ProviderDataForm from '../ProviderDataForm'
-import classes from './SettingsForm.css'
+import React, { PropTypes } from 'react';
+import { Field, reduxForm } from 'redux-form';
+import Button from 'components/Button';
+import TextField from 'components/TextField';
+import { SETTINGS_FORM_NAME } from 'app/constants';
+import ProviderDataForm from '../ProviderDataForm';
+import classes from './SettingsForm.css';
 
 export const SettingsForm = ({ account, handleSubmit, submitting }) => (
   <form className={classes.container} onSubmit={handleSubmit}>
