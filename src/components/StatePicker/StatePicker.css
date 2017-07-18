@@ -1,6 +1,0 @@
-.default{
-  & input{
-    padding-left: rem(5);
-    font-family: 'Poppins';
-  }
-}

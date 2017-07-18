@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+.mainContent{
+  flex-grow: 1;
+}
+.layout{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.notification{
+  background-color: yellow;
+  text-align: center;
+  width: 100%;
+  height: var(--top-notification-height);
+}
+.environment{
+  position: fixed;
+  bottom: 0;
+  right: rem(15);
+  background-color: gray(96%);
+  color: gray(80%);
+  padding: rem(3) rem(10);
+  font-size: rem(12);
+  border-top-left-radius: rem(5);
+  border-top-right-radius: rem(5);
+}

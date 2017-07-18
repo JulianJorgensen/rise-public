@@ -1,6 +1,0 @@
-.default{
-  margin-top: rem(5);
-  & input{
-    padding-left: rem(5);
-  }
-}

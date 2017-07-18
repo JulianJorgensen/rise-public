@@ -1,0 +1,9 @@
+.portal{
+  display: flex;
+  justify-content: center;
+}
+
+.default{
+  right: auto;
+  left: auto;
+}
