@@ -13,7 +13,7 @@ const ACUITY_MENTOR_CALL_ID = 346940;
 
 const populates = [{ child: 'role', root: 'roles' }];
 
-@userIsAuthenticated // redirect to /login if user is not authenticated
+// @userIsAuthenticated // redirect to /login if user is not authenticated
 // @userHasPermission('dashboard')
 @firebaseConnect()
 @connect(

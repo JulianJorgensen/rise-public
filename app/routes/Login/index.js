@@ -10,7 +10,7 @@ import { SIGNUP_PATH } from 'app/constants';
 import LoginForm from './components/LoginForm';
 import classes from './index.css';
 
-@userIsNotAuthenticated // redirect to dashboard page if logged in
+// @userIsNotAuthenticated // redirect to dashboard page if logged in
 @firebaseConnect() // add this.props.firebase
 @connect( // map redux state to props
   ({ firebase }) => ({
@@ -47,11 +47,10 @@ export default class Login extends Component {
     this.handleLogin({ provider })
 
   render () {
-    const { authError, auth, firebase } = this.props
+    const { authError, firebase } = this.props
     const { snackCanOpen } = this.state
 
     console.log('authError: ', authError);
-    console.log('auth: ', auth);
     console.log('firebase: ', firebase);
     console.log('firebase auth: ', firebase.auth);
 
