@@ -244,6 +244,19 @@ export default class Schedule extends Component {
       }else{
         return (
           <div className={classes.container}>
+            <div>
+              <h2>Which kind of session would you like to schedule?</h2>
+              <div className={classes.scheduleType}>
+                <div className={classes.onetime}>
+                  <h3>One-time session</h3>
+                </div>
+                <div className={classes.recurring}>
+                  <h3>Recurring</h3>
+                  <small>(season of 14 sessions)</small>
+                </div>
+              </div>
+            </div>
+
             <h2>Schedule a session with your mentor {account.mentor.firstName}</h2>
 
             <form onSubmit={this.handleConfirmation} className={classes.scheduleForm}>

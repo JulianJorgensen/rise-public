@@ -24,6 +24,28 @@
   }
 }
 
+.scheduleType{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  & .onetime,
+  & .recurring{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: rem(5);
+    background-color: gray(96%);
+    border: 1px solid gray(60%);
+    padding: rem(40);
+    text-align: center;
+    margin-right: rem(15);
+    & h3{
+      margin: 0;
+    }
+  }
+}
+
 .scheduleForm{
   display: flex;
   flex-direction: column;
