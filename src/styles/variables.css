@@ -11,6 +11,8 @@
       background-color: color(var(--success) shade(10%));
     }
   };
+
+  --top-notification-height: rem(70);
 }
 
 /* Media queries */

@@ -40,10 +40,23 @@ export default class UpcomingAppointments extends Component {
         upcomingAppointments,
         upcomingAppointmentsFetched: true
       });
+
+      // update site notifications bar if any appointments are upcoming
+      this.updateNotificationBar();
     })
     .catch((error) => {
       console.log(`Error getting upcoming appointments`, error);
     });
+  }
+
+  updateNotificationsBar = () => {
+    // set redux state
+    
+    // this.state.upcomingAppointments.map((appointment) => {
+    //   if (appointment.date) {
+    //
+    //   }
+    // });
   }
 
   componentWillMount(){

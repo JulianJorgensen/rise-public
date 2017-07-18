@@ -6,13 +6,16 @@ import styles from 'styles/app.css';
 import Layout from 'react-toolbox/lib/layout/Layout';
 
 export const CoreLayout = ({ children }) => (
-  <div className={classes.container}>
-    <LeftNavigation />
-    <div className={classes.mainContent}>
-      <Navbar />
-      <Layout className={classes.layout}>
-        {children}
-      </Layout>
+  <div>
+    <div className={classes.notification}>You have an upcoming appointment.</div>
+    <div className={classes.container}>
+      <LeftNavigation />
+      <div className={classes.mainContent}>
+        <Navbar withNotification={true} />
+        <Layout className={classes.layout}>
+          {children}
+        </Layout>
+      </div>
     </div>
   </div>
 )

@@ -12,7 +12,10 @@
   &.withLeftNav{
     width: calc(100% - 300px);
   }
-
+  &.withNotification{
+    position: absolute;
+    top: var(--top-notification-height);
+  }
   & a{
     text-decoration: none;
     text-transform: uppercase;

@@ -57,7 +57,7 @@ export default class Navbar extends Component {
   }
 
   render () {
-    const { account } = this.props;
+    const { account, withNotification } = this.props;
     const accountExists = isLoaded(account) && !isEmpty(account);
 
     // this.props.firebase.logout();
@@ -108,7 +108,7 @@ export default class Navbar extends Component {
     ) : ''
 
     return (
-      <header className={`${classes.header} ${account ? account.showLeftNavigation ? classes.withLeftNav : '' : ''}`}>
+      <header className={`${classes.header} ${account ? account.showLeftNavigation ? classes.withLeftNav : '' : ''} ${withNotification ? classes.withNotification : ''}`}>
         <div className={classes.leftNav}>
           {toggle}
           <Link to={accountExists ? `${DASHBOARD_PATH}` : '/'} className={classes.logo}><Logo width="80" /></Link>
