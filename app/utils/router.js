@@ -18,7 +18,15 @@ const UNAUTHED_REDIRECT = 'UNAUTHED_REDIRECT';
 
 export const userIsAuthenticated = connectedReduxRedirect({
   redirectPath: '/dashboard',
-  authenticatedSelector: ({ firebase }) => pathToJS(firebase, 'auth'),
+  authenticatedSelector: ({ firebase }) => {
+    const user = pathToJS(firebase, 'profile');
+    if (user) {
+      let populatedObj = { ...pathToJS(firebase, 'auth'), user };
+      return populatedObj;
+    }else{
+      return false;
+    }
+  },
   authenticatingSelector: ({ firebase }) =>
     (pathToJS(firebase, 'auth') === undefined) ||
     (pathToJS(firebase, 'isInitializing') === true),
@@ -68,29 +76,37 @@ export const userIsNotAuthenticated = connectedReduxRedirect({
  * @return {Component} wrappedComponent
  */
 
-export const userHasPermission = () => {return true};
-// export const UserHasPermission = permission => UserAuthWrapper({
-//   authSelector: ({ firebase }) => {
-//     const user = populate(firebase, 'profile');
-//     if (user) {
-//       return { ...populate(firebase, 'auth'), user }; // attach profile for use in predicate
-//     }
-//     return populate(firebase, 'auth');
-//   },
-//   authenticatingSelector: ({ firebase }) =>
-//       (populate(firebase, 'auth') === undefined)
-//       || (populate(firebase, 'profile') === undefined)
-//       || (populate(firebase, 'isInitializing') === true),
-//   redirectAction: newLoc => (dispatch) => {
-//     browserHistory.replace(newLoc);
-//     dispatch({ type: UNAUTHED_REDIRECT });
-//   },
-//   failureRedirectPath: `${NOT_AUTHORIZED_PATH}`,
-//   wrapperDisplayName: 'UserHasPermission',
-//   predicate: auth => get(auth, `user.role.${permission}`, false),
-//   allowRedirectBack: false,
-//   LoadingComponent: LoadingSpinner
-// });
+export const userHasPermission = permission => connectedReduxRedirect({
+  authenticatedSelector: ({ firebase }) => {
+    const user = pathToJS(firebase, 'profile');
+    console.log('figuring out if is authenticated', user);
+    if (user) {
+      let populatedObj = { ...pathToJS(firebase, 'auth'), user };
+      console.log('populatedObj', populatedObj);
+
+      // check if has permission using lodash
+      if (get(auth, `user.role.${permission}`, false)){
+      }
+
+      return populatedObj;
+    }else{
+      return false;
+    }
+  },
+  // predicate: auth => get(auth, `user.role.${permission}`, false),
+  authenticatingSelector: ({ firebase }) =>
+      (pathToJS(firebase, 'auth') === undefined)
+      || (pathToJS(firebase, 'profile') === undefined)
+      || (pathToJS(firebase, 'isInitializing') === true),
+  AuthenticatingComponent: LoadingSpinner,
+  redirectAction: newLoc => (dispatch) => {
+    // browserHistory.replace(newLoc);
+    dispatch({ type: UNAUTHED_REDIRECT });
+  },
+  redirectPath: `${NOT_AUTHORIZED_PATH}`,
+  wrapperDisplayName: 'UserHasPermission',
+  allowRedirectBack: false
+});
 
 export default {
   userIsAuthenticated,

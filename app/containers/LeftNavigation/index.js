@@ -4,11 +4,13 @@ import classes from './index.css';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { UserAuthWrapper } from 'redux-auth-wrapper';
+import { userIsAuthenticated, userHasPermission } from 'utils/router';
 import { firebaseConnect, dataToJS, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase';
 import { DASHBOARD_PATH, ACCOUNT_PATH, LOGIN_PATH, SIGNUP_PATH, ABOUT_PATH } from 'app/constants';
 import Accordion from 'components/Accordion';
 import navItems from './components/navItems'
 
+@userIsAuthenticated
 @firebaseConnect()
 @connect(
   ({ firebase }) => ({

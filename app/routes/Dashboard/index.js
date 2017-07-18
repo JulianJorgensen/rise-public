@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { firebaseConnect, dataToJS, pathToJS } from 'react-redux-firebase';
 import moment from 'moment-timezone';
 import { DASHBOARD_PATH } from 'app/constants';
-import { userIsAuthenticated, UserHasPermission } from 'utils/router';
+import { userIsAuthenticated, userHasPermission } from 'utils/router';
 import LoadingSpinner from 'components/LoadingSpinner';
 import UpcomingAppointments from 'containers/UpcomingAppointments';
 import classes from './index.css';
@@ -12,7 +12,7 @@ import classes from './index.css';
 const ACUITY_MENTOR_CALL_ID = 346940;
 
 // @userIsAuthenticated // redirect to /login if user is not authenticated
-// @userHasPermission('dashboard')
+@userHasPermission('dashboard')
 @firebaseConnect()
 @connect( // Map redux state to props
   ({ firebase }) => ({
