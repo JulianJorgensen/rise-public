@@ -28,7 +28,7 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  & .onetime,
+  & .single,
   & .recurring{
     display: flex;
     flex-direction: column;
@@ -37,9 +37,10 @@
     border-radius: rem(5);
     background-color: gray(96%);
     border: 1px solid gray(60%);
-    padding: rem(40);
+    padding: rem(40) 0;
     text-align: center;
-    margin-right: rem(15);
+    cursor: pointer;
+    width: calc(50% - 30px);
     & h3{
       margin: 0;
     }

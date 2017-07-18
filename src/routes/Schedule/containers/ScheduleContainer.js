@@ -5,27 +5,23 @@ import { firebase as fbConfig, reduxFirebase as rfConfig } from 'config';
 import { UserIsAuthenticated, UserHasPermission } from 'utils/router'
 import axios from 'axios';
 import moment from 'moment-timezone';
-import {Chip, DatePicker, Dropdown, Dialog, Input, List, ListItem} from 'react-toolbox/lib';
+import {Checkbox, Chip, DatePicker, Dropdown, Dialog, Input, List, ListItem} from 'react-toolbox/lib';
 import TimezoneSelector from '../components/TimezoneSelector';
 import Button from 'components/Button';
 import LoadingSpinner from 'components/LoadingSpinner';
 import classes from './ScheduleContainer.css';
 
-console.log('fb config: ', fbConfig);
 
 let availableDates = [
-  moment("2017-07-10", "YYYY-MM-DD").toDate(),
-  moment("2017-07-11", "YYYY-MM-DD").toDate(),
-  moment("2017-07-12", "YYYY-MM-DD").toDate(),
-  moment("2017-07-13", "YYYY-MM-DD").toDate(),
-  moment("2017-07-14", "YYYY-MM-DD").toDate(),
-  moment("2017-07-15", "YYYY-MM-DD").toDate(),
-  moment("2017-07-16", "YYYY-MM-DD").toDate()
+  moment("2017-07-20", "YYYY-MM-DD").toDate(),
+  moment("2017-07-21", "YYYY-MM-DD").toDate(),
+  moment("2017-07-22", "YYYY-MM-DD").toDate()
 ]
 
 let today = moment(new Date());
 const MAX_MONTHS_IN_ADVANCE = 3;
 const ACUITY_MENTOR_CALL_ID = 346940;
+const RECURRING_WEEKS = 14;
 
 @UserIsAuthenticated // redirect to /login if user is not authenticated
 @UserHasPermission('schedule')
@@ -38,6 +34,7 @@ const ACUITY_MENTOR_CALL_ID = 346940;
 )
 export default class Schedule extends Component {
   state = {
+    recurring: null,
     selectedDate: '',
     showDatesModal: false,
     showTimesModal: false,
@@ -49,6 +46,12 @@ export default class Schedule extends Component {
     isConfirming: false,
     location: ''
   };
+
+  handleRecurring = (value) => {
+    this.setState({
+      recurring: value
+    });
+  }
 
   getAvailableDates = (month) => {
     let {mentor} = this.props.account;
@@ -115,43 +118,61 @@ export default class Schedule extends Component {
   showAvailableTimes = () => {
     let {selectedDate} = this.state;
     let {timezone, mentor} = this.props.account;
-    // get available times for selected date
-    axios.get(`${fbConfig.functions}/getAvailableTimes`, {
-      params: {
-        date: moment(selectedDate).format('YYYY-MM-DD'),
-        appointmentTypeID: ACUITY_MENTOR_CALL_ID,
-        calendarID: mentor.acuityCalendarId,
-        timezone: timezone
-      }
-    })
-    .then((response) => {
-      let availableTimes = response.data;
-      console.log(fbConfig.functions);
-      console.log('available times: ', response.data);
-      availableTimes.sort((a,b) => {
-        // Turn your strings into dates, and then subtract them
-        // to get a value that is either negative, positive, or zero.
-        return new Date(a.time) - new Date(b.time);
-      });
-      this.setState({
-        availableTimes,
-        availableTimesFetched: true
-      });
-    })
-    .catch((error) => {
-      console.log(`Error getting available times for date: ${selectedDate}`, error);
-    });
 
-    this.setState({showTimesModal: true});
+    if (!selectedDate){
+      this.setState({
+        showDatesModal: true,
+        showTimesModal: false
+      });
+    }else{
+      // get available times for selected date
+      axios.get(`${fbConfig.functions}/getAvailableTimes`, {
+        params: {
+          date: moment(selectedDate).format('YYYY-MM-DD'),
+          appointmentTypeID: ACUITY_MENTOR_CALL_ID,
+          calendarID: mentor.acuityCalendarId,
+          timezone: timezone
+        }
+      })
+      .then((response) => {
+        let availableTimes = response.data;
+        console.log(fbConfig.functions);
+        console.log('available times: ', response.data);
+        availableTimes.sort((a,b) => {
+          // Turn your strings into dates, and then subtract them
+          // to get a value that is either negative, positive, or zero.
+          return new Date(a.time) - new Date(b.time);
+        });
+        this.setState({
+          availableTimes,
+          availableTimesFetched: true
+        });
+      })
+      .catch((error) => {
+        console.log(`Error getting available times for date: ${selectedDate}`, error);
+      });
+
+      this.setState({showTimesModal: true});
+    }
   }
 
   confirmMeeting = () => {
     let {account} = this.props;
-    let {selectedDate, selectedTime} = this.state;
+    let {recurring, selectedDate, selectedTime} = this.state;
+    let dates = [];
 
     this.setState({
       isConfirming: true
     });
+
+    if (recurring){
+      dates = [];
+
+      // add the formatted date for each week (formatted for acuity)
+      for (let i=0; i < RECURRING_WEEKS; i++) {
+        dates.push(moment(selectedDate).add(i, 'weeks').format('YYYY-MM-DD') + moment(selectedTime).tz(account.timezone).format('THH:mmZ'));
+      }
+    }
 
     // create appointment
     axios.get(`${fbConfig.functions}/createAppointment`, {
@@ -163,7 +184,9 @@ export default class Schedule extends Component {
         lastName: account.lastName,
         email: account.email,
         phone: account.phone,
-        uid: account.uid
+        uid: account.uid,
+        recurring: recurring,
+        dates
       }
     })
     .then((response) => {
@@ -191,7 +214,7 @@ export default class Schedule extends Component {
 
   render () {
     let {account} = this.props;
-    let {selectedDate, selectedTime, showTimesModal, showDatesModal, showConfirmationModal, availableTimes, availableTimesFetched, isConfirmed, isConfirming, location} = this.state;
+    let {recurring, selectedDate, selectedTime, showTimesModal, showDatesModal, showConfirmationModal, availableTimes, availableTimesFetched, isConfirmed, isConfirming, location} = this.state;
 
     let renderAvailableTimes = () => {
       if (availableTimes.length > 0) {
@@ -241,30 +264,17 @@ export default class Schedule extends Component {
             />
           </div>
         )
-      }else{
+      }else if (recurring !== null){
         return (
           <div className={classes.container}>
-            <div>
-              <h2>Which kind of session would you like to schedule?</h2>
-              <div className={classes.scheduleType}>
-                <div className={classes.onetime}>
-                  <h3>One-time session</h3>
-                </div>
-                <div className={classes.recurring}>
-                  <h3>Recurring</h3>
-                  <small>(season of 14 sessions)</small>
-                </div>
-              </div>
-            </div>
-
-            <h2>Schedule a session with your mentor {account.mentor.firstName}</h2>
+            <h2>Scheduling {recurring ? '14 recurring sessions' : 'a single session'} with your mentor {account.mentor.firstName}</h2>
 
             <form onSubmit={this.handleConfirmation} className={classes.scheduleForm}>
               <div className={classes.dateTimeFields}>
                 <DatePicker
                   active={showDatesModal}
                   onDismiss={() => this.setState({showDatesModal: false})}
-                  label='Date'
+                  label={recurring ? 'Start Date' : 'Date'}
                   sundayFirstDayOfWeek
                   onChange={this.handleDateChange.bind(this)}
                   value={selectedDate}
@@ -287,9 +297,15 @@ export default class Schedule extends Component {
 
               <TimezoneSelector changeable />
 
+              <Checkbox
+                label="Recurring"
+                checked={recurring}
+                onChange={this.handleRecurring.bind(this)}
+              />
+
               <Button
                 type="submit"
-                label='Schedule session'
+                label={`Schedule session${recurring ? 's' : ''}`}
               />
             </form>
 
@@ -326,6 +342,27 @@ export default class Schedule extends Component {
                 <TimezoneSelector />
               </div>
             </Dialog>
+          </div>
+        )
+      }else{
+        return (
+          <div className={classes.container}>
+            <h2>Which kind of session would you like to schedule?</h2>
+            <div className={classes.scheduleType}>
+              <div
+                className={classes.single}
+                onClick={() => this.handleRecurring(false)}
+              >
+                <h3>Single session</h3>
+              </div>
+              <div
+                className={classes.recurring}
+                onClick={() => this.handleRecurring(true)}
+              >
+                <h3>Recurring</h3>
+                <small>(season of 14 sessions)</small>
+              </div>
+            </div>
           </div>
         )
       }

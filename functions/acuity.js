@@ -46,7 +46,7 @@ module.exports = {
 
   createAppointment: function(query) {
     return new Promise(function(resolve, reject){
-      let {appointmentTypeID, datetime, firstName, lastName, email, phone, calendarID, uid} = query;
+      let {appointmentTypeID, recurring, dates, datetime, firstName, lastName, email, phone, calendarID, uid} = query;
       let options = {
         method: 'POST',
         body: {
@@ -62,10 +62,28 @@ module.exports = {
           ]
         }
       };
-      acuity.request('/appointments', options, function (err, res, appointment) {
-        if (err) return console.error(err);
-        resolve(appointment);
-      });
+
+      // if (recurring){
+      //   // create recurring appointments
+      //   let createAppointments = dates.map((date) => {
+      //     return new Promise(function(resolve, reject) {
+      //       options.body.datetime = date;
+      //       acuity.request('/appointments', options, function (err, res, appointment) {
+      //         if (err) return console.error(err);
+      //         resolve(`Appointment created on ${date}`);
+      //       });
+      //     });
+      //   });
+      //   Promise.all(createAppointments).then(() => {
+      //     resolve('The recurring appointments have been scheduled...');
+      //   });
+      // }else{
+      //   // create a single appointment
+      //   acuity.request('/appointments', options, function (err, res, appointment) {
+      //     if (err) return console.error(err);
+      //     resolve(appointment);
+      //   });
+      // }
     });
   }
 };
