@@ -1,7 +1,7 @@
 import React, { Component, cloneElement, PropTypes } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { firebaseConnect, populate } from 'react-redux-firebase';
+import { firebaseConnect, dataToJS, pathToJS } from 'react-redux-firebase';
 import { firebase as fbConfig } from 'app/config';
 import moment from 'moment-timezone';
 import { userIsAuthenticated, userHasPermission } from 'utils/router';
@@ -13,7 +13,8 @@ const ACUITY_MENTOR_CALL_ID = 346940;
 @firebaseConnect()
 @connect(
   ({ firebase }) => ({
-    account: populate(firebase, 'profile')
+    auth: pathToJS(firebase, 'auth'),
+    account: dataToJS(firebase, 'profile')
   })
 )
 export default class UpcomingAppointments extends Component {
@@ -51,7 +52,7 @@ export default class UpcomingAppointments extends Component {
 
   updateNotificationsBar = () => {
     // set redux state
-    
+
     // this.state.upcomingAppointments.map((appointment) => {
     //   if (appointment.date) {
     //
@@ -59,8 +60,8 @@ export default class UpcomingAppointments extends Component {
     // });
   }
 
-  componentWillMount(){
-    console.log('roles from getUpcomingAppoints: ', this.props.roles);
+  componentWillMount() {
+    console.log('props from getUpcomingAppoints: ', this.props);
     this.getUpcomingAppointments();
   }
 

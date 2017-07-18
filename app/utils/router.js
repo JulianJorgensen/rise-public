@@ -3,7 +3,7 @@ import { get } from 'lodash';
 import { connectedReduxRedirect } from 'redux-auth-wrapper/history4/redirect';
 // import { browserHistory } from 'react-router';
 import { DASHBOARD_PATH, GETTING_STARTED_PATH, NOT_AUTHORIZED_PATH } from 'app/constants';
-import { populate, isLoaded, isEmpty } from 'react-redux-firebase';
+import { pathToJS } from 'react-redux-firebase';
 import LoadingSpinner from 'components/LoadingSpinner';
 
 const AUTHED_REDIRECT = 'AUTHED_REDIRECT';
@@ -17,9 +17,11 @@ const UNAUTHED_REDIRECT = 'UNAUTHED_REDIRECT';
  */
 
 export const userIsAuthenticated = connectedReduxRedirect({
-  redirectPath: '/login',
-  authenticatedSelector: ({ firebase }) => isLoaded(firebase.auth) && !isEmpty(firebase.auth),
-  authenticatingSelector: ({ firebase }) => populate(firebase, 'isInitializing') === true,
+  redirectPath: '/dashboard',
+  authenticatedSelector: ({ firebase }) => pathToJS(firebase, 'auth'),
+  authenticatingSelector: ({ firebase }) =>
+    (pathToJS(firebase, 'auth') === undefined) ||
+    (pathToJS(firebase, 'isInitializing') === true),
   AuthenticatingComponent: LoadingSpinner,
   wrapperDisplayName: 'UserIsAuthenticated',
   redirectAction: newLoc => (dispatch) => {
@@ -45,8 +47,10 @@ export const userIsNotAuthenticated = connectedReduxRedirect({
     // redirect to page user was on or to getting started page
     'login',
     // props.location.query.redirect || GETTING_STARTED_PATH,
-  authenticatedSelector: ({ firebase }) => isLoaded(firebase.auth) && isEmpty(firebase.auth),
-  authenticatingSelector: ({ firebase }) => populate(firebase, 'isInitializing') === true,
+  authenticatedSelector: ({ firebase }) => pathToJS(firebase, 'auth'),
+  authenticatingSelector: ({ firebase }) =>
+    (pathToJS(firebase, 'auth') === undefined) ||
+    (pathToJS(firebase, 'isInitializing') === true),
   AuthenticatingComponent: LoadingSpinner,
   wrapperDisplayName: 'UserIsNotAuthenticated',
   redirectAction: newLoc => (dispatch) => {

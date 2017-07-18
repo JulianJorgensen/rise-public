@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { firebaseConnect } from 'react-redux-firebase'
+import { firebaseConnect, dataToJS, pathToJS } from 'react-redux-firebase';
 import { Snackbar } from 'react-toolbox'
 import { Card } from 'react-toolbox/lib/card'
 import EmailForm from '../components/EmailForm'

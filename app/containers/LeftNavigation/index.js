@@ -4,7 +4,7 @@ import classes from './index.css';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { UserAuthWrapper } from 'redux-auth-wrapper';
-import { firebaseConnect, populate, isLoaded, isEmpty } from 'react-redux-firebase';
+import { firebaseConnect, dataToJS, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase';
 import { DASHBOARD_PATH, ACCOUNT_PATH, LOGIN_PATH, SIGNUP_PATH, ABOUT_PATH } from 'app/constants';
 import Accordion from 'components/Accordion';
 import navItems from './components/navItems'
@@ -12,7 +12,8 @@ import navItems from './components/navItems'
 @firebaseConnect()
 @connect(
   ({ firebase }) => ({
-    account: populate(firebase, 'profile')
+    account: pathToJS(firebase, 'profile'),
+    auth: pathToJS(firebase, 'auth')
   })
 )
 export default class LefNavigation extends Component {

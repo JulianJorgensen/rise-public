@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router-dom';
 import GoogleButton from 'react-google-button';
 import { connect } from 'react-redux';
-import { firebaseConnect, populate, isLoaded } from 'react-redux-firebase';
+import { firebaseConnect, dataToJS, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase';
 import { reduxFirebase as rfConfig } from 'app/config';
 import Snackbar from 'components/Snackbar';
 import {Tab, Tabs} from 'react-toolbox';
@@ -20,7 +20,7 @@ import { Card } from 'react-toolbox/lib/card';
 @firebaseConnect() // add this.props.firebase
 @connect( // map redux state to props
   ({firebase}) => ({
-    authError: populate(firebase, 'authError')
+    authError: pathToJS(firebase, 'authError')
   })
 )
 export default class Signup extends Component {

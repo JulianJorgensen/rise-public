@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { firebaseConnect, populate } from 'react-redux-firebase';
+import { firebaseConnect, dataToJS, pathToJS } from 'react-redux-firebase';
 import { reduxFirebase as rfConfig } from 'app/config';
 import { userIsAuthenticated, userHasPermission } from 'utils/router'
 
@@ -11,9 +11,10 @@ import classes from './VideoContainer.css';
 @userIsAuthenticated // redirect to /login if user is not authenticated
 // @userHasPermission('video')
 @firebaseConnect() // add this.props.firebase
-@connect( // Map redux state to props
+@connect(
   ({ firebase }) => ({
-    account: populate(firebase, 'profile')
+    auth: pathToJS(firebase, 'auth'),
+    account: dataToJS(firebase, 'profile')
   })
 )
 export default class Video extends Component {

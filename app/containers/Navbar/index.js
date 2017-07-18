@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { reduxFirebase as rfConfig } from 'app/config';
-import { firebaseConnect, populate, isLoaded, isEmpty } from 'react-redux-firebase';
+import { firebaseConnect, dataToJS, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase';
 import * as CONST from 'app/constants';
 
 // Components
@@ -17,8 +17,8 @@ import classes from './index.css';
 @firebaseConnect()
 @connect(
   ({ firebase }) => ({
-    auth: firebase.auth,
-    account: populate(firebase, 'profile')
+    auth: pathToJS(firebase, 'auth'),
+    account: dataToJS(firebase, 'profile')
   })
 )
 export default class Navbar extends Component {

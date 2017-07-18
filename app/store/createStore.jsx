@@ -13,26 +13,27 @@ import { firebase as fbConfig, reduxFirebase as reduxConfig } from '../config';
 export default (initialState = {}) => {
   // Build the middleware for intercepting and dispatching navigation actions
   const middleware = [
-    thunk
+    thunk.withExtraArgument(getFirebase)
   ];
 
-  const reducer = combineReducers({
-    // Add sync reducers here
-    firebaseStateReducer,
-    form,
-    location: locationReducer,
-  });
-
-  firebase.initializeApp(fbConfig); // initialize firebase instance
+  const enhancers = [];
+  if (ENV_CONFIG.ENV === 'development') {
+    const devToolsExtension = window.devToolsExtension
+    if (typeof devToolsExtension === 'function') {
+      enhancers.push(devToolsExtension())
+    }
+  }
 
   const store = createStore(
     makeRootReducer(),
+    initialState,
     compose(
-      reactReduxFirebase(firebase, reduxConfig),
+      reactReduxFirebase(fbConfig, reduxConfig),
       applyMiddleware(...middleware),
-      window.devToolsExtension ? window.devToolsExtension() : f => f
+      ...enhancers
     )
   );
+  store.asyncReducers = {};
 
   return store;
 };

@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router-dom';
 import GoogleButton from 'react-google-button';
 import { connect } from 'react-redux';
-import { firebaseConnect, populate, isLoaded } from 'react-redux-firebase';
+import { firebaseConnect, dataToJS, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase';
 import Snackbar from 'components/Snackbar';
 import { Card } from 'react-toolbox/lib/card';
 import { userIsNotAuthenticated } from 'utils/router';

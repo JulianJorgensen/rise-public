@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { firebaseConnect, populate, isLoaded } from 'react-redux-firebase';
+import { firebaseConnect, dataToJS, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase';
 import { reduxFirebase as rfConfig } from 'app/config';
 import { userIsAuthenticated, userHasPermission } from 'utils/router'
 import axios from 'axios';
@@ -16,9 +16,9 @@ import classes from './index.css';
 // @UserHasPermission('getting-started')
 @firebaseConnect() // add this.props.firebase
 @connect(
-  ({ firebase: { auth, profile } }) => ({
-    auth,
-    account: profile
+  ({ firebase }) => ({
+    auth: pathToJS(firebase, 'auth'),
+    account: dataToJS(firebase, 'profile')
   })
 )
 export default class GettingStarted extends Component {
