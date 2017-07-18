@@ -1,7 +1,9 @@
 let functions = require('firebase-functions');
 let Acuity = require('acuityscheduling');
+let moment = require('moment-timezone');
 let userId = functions.config().acuity.userid;
 let apiKey = functions.config().acuity.key;
+
 
 let acuity = Acuity.basic({
   userId: userId,
@@ -46,7 +48,7 @@ module.exports = {
 
   createAppointment: function(query) {
     return new Promise(function(resolve, reject){
-      let {appointmentTypeID, recurring, dates, datetime, firstName, lastName, email, phone, calendarID, uid} = query;
+      let {appointmentTypeID, datetime, firstName, lastName, email, phone, calendarID, uid} = query;
       let options = {
         method: 'POST',
         body: {
@@ -63,27 +65,49 @@ module.exports = {
         }
       };
 
-      // if (recurring){
-      //   // create recurring appointments
-      //   let createAppointments = dates.map((date) => {
-      //     return new Promise(function(resolve, reject) {
-      //       options.body.datetime = date;
-      //       acuity.request('/appointments', options, function (err, res, appointment) {
-      //         if (err) return console.error(err);
-      //         resolve(`Appointment created on ${date}`);
-      //       });
-      //     });
-      //   });
-      //   Promise.all(createAppointments).then(() => {
-      //     resolve('The recurring appointments have been scheduled...');
-      //   });
-      // }else{
-      //   // create a single appointment
-      //   acuity.request('/appointments', options, function (err, res, appointment) {
-      //     if (err) return console.error(err);
-      //     resolve(appointment);
-      //   });
-      // }
+      acuity.request('/appointments', options, function (err, res, appointment) {
+        if (err) return console.error(err);
+        resolve(appointment);
+      });
     });
+  },
+
+  createRecurringAppointments: function(query) {
+    let {appointmentTypeID, recurringDates, datetime, firstName, lastName, email, phone, calendarID, uid} = query;
+    let dates = recurringDates.replace(/ /g, '+').split(',');
+
+    let createAppointments = dates.map((datetime) => {
+      return new Promise(function(resolve, reject) {
+        let options = {
+          method: 'POST',
+          body: {
+            appointmentTypeID,
+            datetime,
+            firstName,
+            lastName,
+            email,
+            phone,
+            calendarID,
+            fields: [
+              {id: uidFieldId, value: uid}
+            ]
+          }
+        };
+        acuity.request('/appointments', options, function (err, res, appointment) {
+          if (err) reject(err);
+          console.log('res data: ', res.data);
+          console.log('res body: ', res.body);
+          resolve(`Appointment created on ${datetime}`);
+        });
+      });
+    });
+
+    return Promise.all(createAppointments)
+      .then(() => {
+        return `The recurring appointments have been scheduled for dates: ${dates}...`;
+      })
+      .catch((err) => {
+        return 'There was an error creating recurring appointments...'
+      });
   }
 };

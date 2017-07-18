@@ -159,23 +159,24 @@ export default class Schedule extends Component {
   confirmMeeting = () => {
     let {account} = this.props;
     let {recurring, selectedDate, selectedTime} = this.state;
-    let dates = [];
+    let recurringDates = [];
 
     this.setState({
       isConfirming: true
     });
 
+    console.log('is it recurring? ', recurring);
     if (recurring){
-      dates = [];
-
       // add the formatted date for each week (formatted for acuity)
       for (let i=0; i < RECURRING_WEEKS; i++) {
-        dates.push(moment(selectedDate).add(i, 'weeks').format('YYYY-MM-DD') + moment(selectedTime).tz(account.timezone).format('THH:mmZ'));
+        recurringDates.push(moment(selectedDate).add(i, 'weeks').format('YYYY-MM-DD') + moment(selectedTime).tz(account.timezone).format('THH:mmZ'));
       }
+
+      recurringDates = recurringDates.join(',');
     }
 
     // create appointment
-    axios.get(`${fbConfig.functions}/createAppointment`, {
+    axios.get(`${fbConfig.functions}/${recurring ? 'createRecurringAppointments' : 'createAppointment'}`, {
       params: {
         datetime: `${moment(selectedDate).format('YYYY-MM-DD')}${moment(selectedTime).tz(account.timezone).format('THH:mmZ')}`,
         appointmentTypeID: ACUITY_MENTOR_CALL_ID,
@@ -185,8 +186,7 @@ export default class Schedule extends Component {
         email: account.email,
         phone: account.phone,
         uid: account.uid,
-        recurring: recurring,
-        dates
+        recurringDates: recurring ? recurringDates : null
       }
     })
     .then((response) => {
@@ -252,7 +252,7 @@ export default class Schedule extends Component {
         return (
           <div className={`${classes.container} ${classes.success}`}>
             <h1 className={classes.header}>Congratulations!</h1>
-            <p>You're now scheduled for a session with {account.mentor.firstName} on:</p>
+            <p>You're now scheduled for {recurring ? 'recurring sessions' : 'a session'} with {account.mentor.firstName} {recurring ? 'starting on' : 'on'}:</p>
             <div className={classes.confirmationDetails}>
               <div className={classes.time}>
                 <div className={classes.time}><strong>{moment(selectedDate).format('MMMM Do YYYY')}</strong> at <strong>{moment(selectedTime).format('h:mma')}</strong></div>
@@ -267,7 +267,7 @@ export default class Schedule extends Component {
       }else if (recurring !== null){
         return (
           <div className={classes.container}>
-            <h2>Scheduling {recurring ? '14 recurring sessions' : 'a single session'} with your mentor {account.mentor.firstName}</h2>
+            <h2>Scheduling {recurring ? `${RECURRING_WEEKS} recurring sessions` : 'a single session'} with your mentor {account.mentor.firstName}</h2>
 
             <form onSubmit={this.handleConfirmation} className={classes.scheduleForm}>
               <div className={classes.dateTimeFields}>
@@ -360,7 +360,7 @@ export default class Schedule extends Component {
                 onClick={() => this.handleRecurring(true)}
               >
                 <h3>Recurring</h3>
-                <small>(season of 14 sessions)</small>
+                <small>(season of {RECURRING_WEEKS} sessions)</small>
               </div>
             </div>
           </div>

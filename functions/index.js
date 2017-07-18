@@ -47,3 +47,12 @@ exports.createAppointment = functions.https.onRequest((request, response) => {
     });
   });
 });
+
+// Function: create recurring acuity appointments
+exports.createRecurringAppointments = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    acuity.createRecurringAppointments(request.query).then((res) => {
+      response.status(200).send(res);
+    });
+  });
+});
