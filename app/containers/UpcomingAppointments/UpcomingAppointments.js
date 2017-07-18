@@ -25,11 +25,11 @@ export default class UpcomingAppointments extends Component {
   getUpcomingAppointments = () => {
     let {uid, mentor} = this.props.account;
 
-    console.log('account: ', this.props.account);
+    console.log('account from getUpcomingAppoints: ', this.props.account);
 
     axios.get(`${fbConfig.functions}/getUpcomingAppointments`, {
       params: {
-        calendarID: mentor.acuityCalendarId,
+        // calendarID: mentor.acuityCalendarId,
         appointmentTypeID: ACUITY_MENTOR_CALL_ID,
         uid: uid
       }
@@ -47,13 +47,16 @@ export default class UpcomingAppointments extends Component {
   }
 
   componentWillMount(){
+    console.log('roles from getUpcomingAppoints: ', this.props.roles);
     this.getUpcomingAppointments();
   }
 
   render () {
-    const { projects, account } = this.props;
+    const { account } = this.props;
     const { firstName, timezone, mentor } = account;
     let { upcomingAppointments, upcomingAppointmentsFetched } = this.state;
+
+    console.log('roles from render: ', this.props.roles);
 
     let renderUpcomingAppointments = () => {
       return upcomingAppointments.map((appointment) => {

@@ -6295,6 +6295,10 @@ react-css-themr@^2.1.2:
     hoist-non-react-statics "^1.2.0"
     invariant "^2.2.1"
 
+react-display-name@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/react-display-name/-/react-display-name-0.2.0.tgz#0e1f7086e45a32d07764df35ed32ff16f1259790"
+
 react-document-meta@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/react-document-meta/-/react-document-meta-2.1.2.tgz#891ccca08a416c3eefe015294cef56dad0f19d3f"
@@ -6338,14 +6342,15 @@ react-motion@^0.5.0:
     prop-types "^15.5.8"
     raf "^3.1.0"
 
-react-redux-firebase@2.0.0-beta.2-stable:
-  version "2.0.0-beta"
-  resolved "https://registry.yarnpkg.com/react-redux-firebase/-/react-redux-firebase-2.0.0-beta.tgz#1458643c8ce72ca0d26c4b380a0aabc543b407e1"
+react-redux-firebase@canary:
+  version "2.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/react-redux-firebase/-/react-redux-firebase-2.0.0-beta.2.tgz#170d69dad1e0e45a60e9684c8597d8917c7d5cfe"
   dependencies:
     hoist-non-react-statics "^1.2.0"
     jwt-decode "^2.2.0"
     lodash "^4.17.4"
     prop-types "^15.5.8"
+    react-display-name "^0.2.0"
 
 react-redux@^4.4.5:
   version "4.4.8"

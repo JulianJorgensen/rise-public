@@ -11,38 +11,26 @@ import classes from './index.css';
 
 const ACUITY_MENTOR_CALL_ID = 346940;
 
+const populates = [{ child: 'role', root: 'roles' }];
+
 @userIsAuthenticated // redirect to /login if user is not authenticated
 // @userHasPermission('dashboard')
 @firebaseConnect()
 @connect(
   ({ firebase }) => ({
-    account: populate(firebase, 'profile')
+    account: populate(firebase, 'profile', populates)
   })
 )
 export default class Dashboard extends Component {
   state = {
   }
 
-  static contextTypes = {
-    router: React.PropTypes.object.isRequired
-  }
-
-  static propTypes = {
-    projects: PropTypes.object,
-    firebase: PropTypes.object,
-    auth: PropTypes.object,
-    children: PropTypes.object
-  }
-
   render () {
-    const { projects, auth, account } = this.props;
+    const { account } = this.props;
     const { firstName, timezone, mentor } = account;
 
-    // Project Route is being loaded
-    if (this.props.children) {
-      // pass all props to children routes
-      return cloneElement(this.props.children, this.props)
-    }
+    console.log('Dashboard: account from render: ', account);
+    console.log('Dashboard: account role from render: ', account.role);
 
     if (account) {
       return (
