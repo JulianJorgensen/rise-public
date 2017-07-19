@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { firebaseConnect, dataToJS, pathToJS } from 'react-redux-firebase';
+import { firebaseConnect, dataToJS, pathToJS, populatedDataToJS } from 'react-redux-firebase';
 import { firebase as fbConfig, reduxFirebase as rfConfig } from 'app/config';
 import { userIsAuthenticated, userHasPermission } from 'utils/router';
 import axios from 'axios';
@@ -14,7 +14,10 @@ import classes from './index.css';
 let availableDates = [
   moment("2017-07-20", "YYYY-MM-DD").toDate(),
   moment("2017-07-21", "YYYY-MM-DD").toDate(),
-  moment("2017-07-22", "YYYY-MM-DD").toDate()
+  moment("2017-07-22", "YYYY-MM-DD").toDate(),
+  moment("2017-07-23", "YYYY-MM-DD").toDate(),
+  moment("2017-07-24", "YYYY-MM-DD").toDate(),
+  moment("2017-07-25", "YYYY-MM-DD").toDate()
 ]
 
 let today = moment(new Date());
@@ -33,6 +36,7 @@ const RECURRING_WEEKS = 14;
 )
 export default class Schedule extends Component {
   state = {
+    selectedAthlete: null,
     recurring: null,
     selectedDate: '',
     showDatesModal: false,
@@ -45,6 +49,10 @@ export default class Schedule extends Component {
     isConfirming: false,
     location: ''
   };
+
+  handleSelectedAthlete = (selectedAthlete) => {
+    this.setState({ selectedAthlete });
+  }
 
   handleRecurring = (value) => {
     this.setState({
@@ -157,7 +165,7 @@ export default class Schedule extends Component {
 
   confirmMeeting = () => {
     let { account } = this.props;
-    let { recurring, selectedDate, selectedTime } = this.state;
+    let { selectedAthlete, recurring, selectedDate, selectedTime } = this.state;
     let recurringDates = [];
 
     this.setState({
@@ -183,7 +191,7 @@ export default class Schedule extends Component {
         lastName: account.lastName,
         email: account.email,
         phone: account.phone,
-        uid: account.uid,
+        uid: selectedAthlete ? selectedAthlete.uid : account.uid,
         recurringDates: recurring ? recurringDates : null
       }
     })
@@ -212,10 +220,26 @@ export default class Schedule extends Component {
 
   render () {
     let { account } = this.props;
-    let { recurring, selectedDate, selectedTime, showTimesModal, showDatesModal, showConfirmationModal, availableTimes, availableTimesFetched, isConfirmed, isConfirming, location } = this.state;
+    let { selectedAthlete, recurring, selectedDate, selectedTime, showTimesModal, showDatesModal, showConfirmationModal, availableTimes, availableTimesFetched, isConfirmed, isConfirming, location } = this.state;
 
-    console.log('schedule page props:', this.props);
-    console.log('schedule page ', account);
+    let renderAssignAthlete = () => {
+      let assignedAthletes = account.mentees.map((mentee) => {
+        return {
+          value: mentee,
+          label: `${mentee.firstName ? mentee.firstName : mentee.email} ${mentee.lastName ? mentee.lastName : ''}`
+        };
+      });
+      return (
+        <Dropdown
+          auto
+          onChange={this.handleSelectedAthlete}
+          source={assignedAthletes}
+          value={this.state.selectedAthlete}
+          label="Athlete"
+          required
+        />
+      )
+    }
 
     let renderAvailableTimes = () => {
       if (availableTimes.length > 0) {
@@ -269,9 +293,11 @@ export default class Schedule extends Component {
         }else if (recurring !== null){
           return (
             <div className={classes.container}>
-              <h2>Scheduling {recurring ? `${RECURRING_WEEKS} recurring sessions` : 'a single session'} with your mentor {account.mentor.firstName}</h2>
+              <h2>Scheduling {recurring ? `${RECURRING_WEEKS} recurring sessions` : 'a single session'} with your {account.role.name === 'mentor' ? `athlete ${ selectedAthlete ? selectedAthlete.firstName : '' }` : `mentor ${account.mentor.firstName}`}</h2>
 
               <form onSubmit={this.handleConfirmation} className={classes.scheduleForm}>
+                { account.role.name === 'mentor' ? renderAssignAthlete() : '' }
+
                 <div className={classes.dateTimeFields}>
                   <DatePicker
                     active={showDatesModal}
@@ -337,7 +363,7 @@ export default class Schedule extends Component {
                 active={showConfirmationModal}
                 onEscKeyDown={this.handleHideConfirmationModal}
                 onOverlayClick={this.handleHideConfirmationModal}
-                title={`Confirm your session with ${account.mentor.firstName}`}
+                title={`Confirm your session with ${selectedAthlete ? selectedAthlete.firstName : account.mentor.firstName}`}
               >
                 <div className={classes.confirmationDetails}>
                   <div className={classes.time}><strong>{moment(selectedDate).format('MMMM Do YYYY')}</strong> at <strong>{moment(selectedTime).format('h:mma')}</strong></div>

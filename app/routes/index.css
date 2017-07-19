@@ -1,6 +1,8 @@
+@import "../styles/variables.css";
+
 .container{
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
 }
 .content {
   display: flex;
@@ -15,8 +17,10 @@
   align-items: center;
 }
 .notification{
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: yellow;
-  text-align: center;
   width: 100%;
   height: var(--top-notification-height);
 }

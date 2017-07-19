@@ -1,5 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import {BrowserRouter as Router, Route, HashRouter, Link, withRouter} from 'react-router-dom';
+import { connect } from 'react-redux';
+import { firebaseConnect, dataToJS, pathToJS, isEmpty, isLoaded } from 'react-redux-firebase';
+import { firebase as fbConfig } from 'app/config';
 import DocumentMeta from 'react-document-meta';
 import Main from './index';
 import LeftNavigation from '../containers/LeftNavigation';
@@ -60,14 +63,16 @@ export default class Index extends React.Component {
   }
 
   render() {
+    let { notifications } = this.props;
+    console.log('notifications: ', this.props);
     return (
       <div className={classes.container}>
-        {/* <div className={classes.notification}>You have an upcoming appointment.</div> */}
+        {notifications ? notification.show ? <div className={classes.notification}>You have an upcoming appointment.</div> : '' : ''}
         <div className={classes.content}>
           <DocumentMeta {...meta} />
           <LeftNavigation />
           <div className={classes.mainContent}>
-            <Navbar />
+            <Navbar withNotification={notifications ? notifications.show ? true : false : false} />
             <Layout className={classes.layout}>
               <Route exact path="/" component={Home} />
               <Route path="/about" component={About} />
@@ -79,6 +84,7 @@ export default class Index extends React.Component {
               <Route path="/settings" component={Settings} />
               <Route path="/profile" component={Profile} />
               <Route path="/schedule" component={Schedule} />
+              <Route path="/my-athletes" component={MyAthletes} />
             </Layout>
           </div>
           {ENV_CONFIG.ENV !== 'production' ? <div className={classes.environment}>{ENV_CONFIG.ENV}</div> : ''}

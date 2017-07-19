@@ -65,8 +65,13 @@ export default class UpcomingAppointments extends Component {
     // });
   }
 
-  componentWillMount(){
+  componentWillMount() {
     this.getUpcomingAppointments();
+
+    this.props.dispatch({
+      type: 'SET_NOTIFICATION',
+      message: 'this is a tester'
+    });
   }
 
   render () {
