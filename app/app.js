@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
+import {BrowserRouter as Router} from 'react-router-dom';
 
 import styles from './styles/app.css';
 import fonts from './fonts/fonts.css';
-import routes from './routes/index';
+import Main from './routes/index';
 
 import createStore from './store/createStore';
 
@@ -19,7 +20,9 @@ store.subscribe(() => {
 
 ReactDOM.render(
   <Provider store={store}>
-    {routes}
+    <Router>
+      <Main />
+    </Router>
   </Provider>,
   document.getElementById('app')
 );

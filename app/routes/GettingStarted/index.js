@@ -13,12 +13,12 @@ import BankingForm from './components/BankingForm/BankingForm';
 import classes from './index.css';
 
 @userIsAuthenticated // redirect to /login if user is not authenticated
-// @UserHasPermission('getting-started')
+@userHasPermission('getting-started')
 @firebaseConnect() // add this.props.firebase
 @connect(
   ({ firebase }) => ({
     auth: pathToJS(firebase, 'auth'),
-    account: dataToJS(firebase, 'profile')
+    account: pathToJS(firebase, 'profile')
   })
 )
 export default class GettingStarted extends Component {

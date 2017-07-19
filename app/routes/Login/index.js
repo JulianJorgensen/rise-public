@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import GoogleButton from 'react-google-button';
 import { connect } from 'react-redux';
 import { firebaseConnect, dataToJS, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase';
@@ -10,11 +10,11 @@ import { SIGNUP_PATH } from 'app/constants';
 import LoginForm from './components/LoginForm';
 import classes from './index.css';
 
-// @userIsNotAuthenticated // redirect to dashboard page if logged in
+@userIsNotAuthenticated
 @firebaseConnect() // add this.props.firebase
 @connect( // map redux state to props
   ({ firebase }) => ({
-    authError: populate(firebase, 'authError')
+    authError: pathToJS(firebase, 'authError')
   })
 )
 export default class Login extends Component {

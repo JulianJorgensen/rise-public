@@ -3,7 +3,7 @@ import { get } from 'lodash';
 import { connectedReduxRedirect } from 'redux-auth-wrapper/history4/redirect';
 // import { browserHistory } from 'react-router';
 import { DASHBOARD_PATH, GETTING_STARTED_PATH, NOT_AUTHORIZED_PATH } from 'app/constants';
-import { pathToJS } from 'react-redux-firebase';
+import { pathToJS, isLoaded, isEmpty } from 'react-redux-firebase';
 import LoadingSpinner from 'components/LoadingSpinner';
 
 const AUTHED_REDIRECT = 'AUTHED_REDIRECT';
@@ -18,19 +18,15 @@ const UNAUTHED_REDIRECT = 'UNAUTHED_REDIRECT';
 
 export const userIsAuthenticated = connectedReduxRedirect({
   redirectPath: '/dashboard',
+  allowRedirectBack: false,
   authenticatedSelector: ({ firebase }) => {
     const user = pathToJS(firebase, 'profile');
-    if (user) {
-      let populatedObj = { ...pathToJS(firebase, 'auth'), user };
-      return populatedObj;
-    }else{
-      return false;
-    }
+    return isLoaded(user);
   },
   authenticatingSelector: ({ firebase }) =>
     (pathToJS(firebase, 'auth') === undefined) ||
     (pathToJS(firebase, 'isInitializing') === true),
-  AuthenticatingComponent: LoadingSpinner,
+  // AuthenticatingComponent: LoadingSpinner,
   wrapperDisplayName: 'UserIsAuthenticated',
   redirectAction: newLoc => (dispatch) => {
     // browserHistory.replace(newLoc)
@@ -51,15 +47,16 @@ export const userIsAuthenticated = connectedReduxRedirect({
  * @return {Component} wrappedComponent
  */
 export const userIsNotAuthenticated = connectedReduxRedirect({
-  redirectPath: (state, props) =>
-    // redirect to page user was on or to getting started page
-    'login',
-    // props.location.query.redirect || GETTING_STARTED_PATH,
-  authenticatedSelector: ({ firebase }) => pathToJS(firebase, 'auth'),
+  redirectPath: '/dashboard',
+  allowRedirectBack: false,
+  authenticatedSelector: ({ firebase }) => {
+    const user = pathToJS(firebase, 'profile');
+    return !isEmpty(user);
+  },
   authenticatingSelector: ({ firebase }) =>
     (pathToJS(firebase, 'auth') === undefined) ||
     (pathToJS(firebase, 'isInitializing') === true),
-  AuthenticatingComponent: LoadingSpinner,
+  // AuthenticatingComponent: LoadingSpinner,
   wrapperDisplayName: 'UserIsNotAuthenticated',
   redirectAction: newLoc => (dispatch) => {
     // browserHistory.replace(newLoc)
@@ -78,34 +75,26 @@ export const userIsNotAuthenticated = connectedReduxRedirect({
 
 export const userHasPermission = permission => connectedReduxRedirect({
   authenticatedSelector: ({ firebase }) => {
-    const user = pathToJS(firebase, 'profile');
-    console.log('figuring out if is authenticated', user);
-    if (user) {
-      let populatedObj = { ...pathToJS(firebase, 'auth'), user };
-      console.log('populatedObj', populatedObj);
-
-      // check if has permission using lodash
-      if (get(auth, `user.role.${permission}`, false)){
-      }
-
-      return populatedObj;
-    }else{
-      return false;
-    }
+    const account = pathToJS(firebase, 'profile');
+    const auth = pathToJS(firebase, 'auth');
+    // check if has permission using lodash
+    console.log('permission: ', permission);
+    console.log('account: ', account);
+    return (!isEmpty(account) && isLoaded(account) && get(account, `role.${permission}`, false));
   },
   // predicate: auth => get(auth, `user.role.${permission}`, false),
   authenticatingSelector: ({ firebase }) =>
       (pathToJS(firebase, 'auth') === undefined)
       || (pathToJS(firebase, 'profile') === undefined)
       || (pathToJS(firebase, 'isInitializing') === true),
-  AuthenticatingComponent: LoadingSpinner,
+  // AuthenticatingComponent: LoadingSpinner,
   redirectAction: newLoc => (dispatch) => {
     // browserHistory.replace(newLoc);
-    dispatch({ type: UNAUTHED_REDIRECT });
+    // dispatch({ type: UNAUTHED_REDIRECT });
   },
-  redirectPath: `${NOT_AUTHORIZED_PATH}`,
-  wrapperDisplayName: 'UserHasPermission',
-  allowRedirectBack: false
+  redirectPath: '/not-authorized',
+  allowRedirectBack: false,
+  wrapperDisplayName: 'UserHasPermission'
 });
 
 export default {

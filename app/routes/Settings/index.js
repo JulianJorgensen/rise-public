@@ -16,7 +16,7 @@ import classes from './index.css';
 @connect(
   ({ firebase }) => ({
     auth: pathToJS(firebase, 'auth'),
-    account: dataToJS(firebase, 'profile')
+    account: pathToJS(firebase, 'profile')
   })
 )
 export default class Settings extends Component {

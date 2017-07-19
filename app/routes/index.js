@@ -1,5 +1,5 @@
-import React from 'react';
-import {BrowserRouter as Router, Route, HashRouter, Link} from 'react-router-dom';
+import React, { Component, PropTypes } from 'react';
+import {BrowserRouter as Router, Route, HashRouter, Link, withRouter} from 'react-router-dom';
 import DocumentMeta from 'react-document-meta';
 import Main from './index';
 import LeftNavigation from '../containers/LeftNavigation';
@@ -39,29 +39,51 @@ const meta = {
   }
 };
 
-export default (
-  <Router>
-    <div>
-      <div className={classes.notification}>You have an upcoming appointment.</div>
+@withRouter
+export default class Index extends React.Component {
+  constructor() {
+    super();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.location !== prevProps.location) {
+      this.onRouteChanged();
+    }
+  }
+
+  onRouteChanged() {
+    // log page view to Google Analytics
+    // logPageView(location);
+
+    // scroll to top when changing page
+    window.scrollTo(0, 0);
+  }
+
+  render() {
+    return (
       <div className={classes.container}>
-        <DocumentMeta {...meta} />
-        <LeftNavigation />
-        <div className={classes.mainContent}>
-          <Navbar />
-          <Route path="/" component={Main} />
-          <Layout className={classes.layout}>
-            <Route exact path="/" component={Home} />
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={Signup} />
-            <Route path="/dashboard" component={Dashboard} />
-            <Route path="/getting-started" component={GettingStarted} />
-            <Route path="/settings" component={Settings} />
-            <Route path="/profile" component={Profile} />
-            <Route path="/schedule" component={Schedule} />
-          </Layout>
+        {/* <div className={classes.notification}>You have an upcoming appointment.</div> */}
+        <div className={classes.content}>
+          <DocumentMeta {...meta} />
+          <LeftNavigation />
+          <div className={classes.mainContent}>
+            <Navbar />
+            <Layout className={classes.layout}>
+              <Route exact path="/" component={Home} />
+              <Route path="/about" component={About} />
+              <Route path="/features" component={Features} />
+              <Route path="/login" component={Login} />
+              <Route path="/signup" component={Signup} />
+              <Route path="/dashboard" component={Dashboard} />
+              <Route path="/getting-started" component={GettingStarted} />
+              <Route path="/settings" component={Settings} />
+              <Route path="/profile" component={Profile} />
+              <Route path="/schedule" component={Schedule} />
+            </Layout>
+          </div>
+          {ENV_CONFIG.ENV !== 'production' ? <div className={classes.environment}>{ENV_CONFIG.ENV}</div> : ''}
         </div>
-        {ENV_CONFIG.ENV !== 'production' ? <div className={classes.environment}>{ENV_CONFIG.ENV}</div> : ''}
       </div>
-    </div>
-  </Router>
-);
+    )
+  }
+}

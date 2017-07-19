@@ -1,8 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import {Collapse} from 'react-collapse';
 import classes from './index.css';
 
+@withRouter
 export default class Accordion extends React.Component{
   constructor(){
     super();
@@ -10,10 +12,6 @@ export default class Accordion extends React.Component{
     this.state = {
       selected: null
     }
-  }
-
-  static contextTypes = {
-    router: PropTypes.object.isRequired
   }
 
   componentWillMount(){
@@ -25,7 +23,7 @@ export default class Accordion extends React.Component{
   }
 
   render() {
-    let {className, selected} = this.props;
+    let {className, selected, history} = this.props;
 
     return (
       <div className={className}>
@@ -51,7 +49,7 @@ export default class Accordion extends React.Component{
                 });
 
                 if (titleHref) {
-                  this.context.router.push(titleHref);
+                  history.push(titleHref);
                 }
               }}>{title}</div>
               <Collapse

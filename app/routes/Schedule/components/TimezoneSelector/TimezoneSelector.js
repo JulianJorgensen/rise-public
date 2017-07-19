@@ -18,11 +18,11 @@ let timezones = Object.entries(timezoneData).map((item) => {
   })
 });
 
-@firebaseConnect() // add this.props.firebase
+@firebaseConnect()
 @connect(
   ({ firebase }) => ({
     auth: pathToJS(firebase, 'auth'),
-    account: dataToJS(firebase, 'profile')
+    account: pathToJS(firebase, 'profile')
   })
 )
 export default class TimezoneSelector extends Component {

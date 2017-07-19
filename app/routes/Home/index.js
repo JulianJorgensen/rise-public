@@ -1,6 +1,7 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 let {connect} = require('react-redux');
+import { userIsNotAuthenticated } from 'utils/router';
 
 import Slider from 'react-slick';
 import Layout from 'react-toolbox/lib/layout/Layout';
@@ -9,6 +10,8 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 import styles from './index.css';
 import InstagramFeed from 'containers/InstagramFeed/InstagramFeed'
 
+@withRouter
+@userIsNotAuthenticated
 export default class Home extends React.Component {
   constructor() {
     super();

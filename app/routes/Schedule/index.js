@@ -22,13 +22,13 @@ const MAX_MONTHS_IN_ADVANCE = 3;
 const ACUITY_MENTOR_CALL_ID = 346940;
 const RECURRING_WEEKS = 14;
 
-@userIsAuthenticated // redirect to /login if user is not authenticated
-// @userHasPermission('schedule')
-@firebaseConnect() // add this.props.firebase
+@userIsAuthenticated
+@userHasPermission('schedule')
+@firebaseConnect()
 @connect(
   ({ firebase }) => ({
     auth: pathToJS(firebase, 'auth'),
-    account: dataToJS(firebase, 'profile')
+    account: pathToJS(firebase, 'profile')
   })
 )
 export default class Schedule extends Component {
@@ -156,15 +156,14 @@ export default class Schedule extends Component {
   }
 
   confirmMeeting = () => {
-    let {account} = this.props;
-    let {recurring, selectedDate, selectedTime} = this.state;
+    let { account } = this.props;
+    let { recurring, selectedDate, selectedTime } = this.state;
     let recurringDates = [];
 
     this.setState({
       isConfirming: true
     });
 
-    console.log('is it recurring? ', recurring);
     if (recurring){
       // add the formatted date for each week (formatted for acuity)
       for (let i=0; i < RECURRING_WEEKS; i++) {
@@ -212,8 +211,11 @@ export default class Schedule extends Component {
   }
 
   render () {
-    let {account} = this.props;
-    let {recurring, selectedDate, selectedTime, showTimesModal, showDatesModal, showConfirmationModal, availableTimes, availableTimesFetched, isConfirmed, isConfirming, location} = this.state;
+    let { account } = this.props;
+    let { recurring, selectedDate, selectedTime, showTimesModal, showDatesModal, showConfirmationModal, availableTimes, availableTimesFetched, isConfirmed, isConfirming, location } = this.state;
+
+    console.log('schedule page props:', this.props);
+    console.log('schedule page ', account);
 
     let renderAvailableTimes = () => {
       if (availableTimes.length > 0) {
@@ -246,130 +248,136 @@ export default class Schedule extends Component {
       }
     }
 
-    if (account.mentor){
-      if (isConfirmed){
-        return (
-          <div className={`${classes.container} ${classes.success}`}>
-            <h1 className={classes.header}>Congratulations!</h1>
-            <p>You're now scheduled for {recurring ? 'recurring sessions' : 'a session'} with {account.mentor.firstName} {recurring ? 'starting on' : 'on'}:</p>
-            <div className={classes.confirmationDetails}>
-              <div className={classes.time}>
-                <div className={classes.time}><strong>{moment(selectedDate).format('MMMM Do YYYY')}</strong> at <strong>{moment(selectedTime).format('h:mma')}</strong></div>
+    if (account){
+      if (account.mentor){
+        if (isConfirmed){
+          return (
+            <div className={`${classes.container} ${classes.success}`}>
+              <h1 className={classes.header}>Congratulations!</h1>
+              <p>You're now scheduled for {recurring ? 'recurring sessions' : 'a session'} with {account.mentor.firstName} {recurring ? 'starting on' : 'on'}:</p>
+              <div className={classes.confirmationDetails}>
+                <div className={classes.time}>
+                  <div className={classes.time}><strong>{moment(selectedDate).format('MMMM Do YYYY')}</strong> at <strong>{moment(selectedTime).format('h:mma')}</strong></div>
+                </div>
+              </div>
+              <Button
+                label="Schedule another session"
+                onClick={() => this.setState({confirmed: false})}
+              />
+            </div>
+          )
+        }else if (recurring !== null){
+          return (
+            <div className={classes.container}>
+              <h2>Scheduling {recurring ? `${RECURRING_WEEKS} recurring sessions` : 'a single session'} with your mentor {account.mentor.firstName}</h2>
+
+              <form onSubmit={this.handleConfirmation} className={classes.scheduleForm}>
+                <div className={classes.dateTimeFields}>
+                  <DatePicker
+                    active={showDatesModal}
+                    onDismiss={() => this.setState({showDatesModal: false})}
+                    label={recurring ? 'Start Date' : 'Date'}
+                    sundayFirstDayOfWeek
+                    onChange={this.handleDateChange.bind(this)}
+                    value={selectedDate}
+                    // minDate={today}
+                    // maxDate={today.add(MAX_MONTHS_IN_ADVANCE, 'M')}
+                    autoOk={true}
+                    enabledDates={availableDates}
+                    required
+                  />
+
+                  <Input
+                    type='text'
+                    label='Time'
+                    name='time'
+                    value={selectedTime ? moment(selectedTime).format('h:mma') : ''}
+                    onClick={this.showAvailableTimes.bind(this)}
+                    required
+                  />
+                </div>
+
+                <TimezoneSelector changeable />
+
+                <Checkbox
+                  label="Recurring"
+                  checked={recurring}
+                  onChange={this.handleRecurring.bind(this)}
+                />
+
+                <Button
+                  type="submit"
+                  label={`Schedule session${recurring ? 's' : ''}`}
+                />
+              </form>
+
+              <Dialog
+                actions={[
+                  { label: "Choose another day", onClick: this.handleShowDates }
+                ]}
+                active={showTimesModal}
+                onEscKeyDown={this.handleShowDates}
+                onOverlayClick={this.handleShowDates}
+                title={`Available Times for ${moment(selectedDate).format('MMMM Do YYYY')}`}
+              >
+                {availableTimesFetched ? renderAvailableTimes() : <LoadingSpinner />}
+              </Dialog>
+
+              <Dialog
+                actions={[
+                  {
+                    icon: isConfirming ? <i className="fa fa-spinner fa-pulse fa-fw" /> : null,
+                    label: `Schedule session`,
+                    onClick: this.confirmMeeting,
+                    primary: true,
+                    className: `${classes.confirmButton} ${classes.button}`,
+                    disabled: isConfirming ? true : false
+                  }
+                ]}
+                active={showConfirmationModal}
+                onEscKeyDown={this.handleHideConfirmationModal}
+                onOverlayClick={this.handleHideConfirmationModal}
+                title={`Confirm your session with ${account.mentor.firstName}`}
+              >
+                <div className={classes.confirmationDetails}>
+                  <div className={classes.time}><strong>{moment(selectedDate).format('MMMM Do YYYY')}</strong> at <strong>{moment(selectedTime).format('h:mma')}</strong></div>
+                  <TimezoneSelector />
+                </div>
+              </Dialog>
+            </div>
+          )
+        }else{
+          return (
+            <div className={classes.container}>
+              <h2>Which kind of session would you like to schedule?</h2>
+              <div className={classes.scheduleType}>
+                <div
+                  className={classes.single}
+                  onClick={() => this.handleRecurring(false)}
+                >
+                  <h3>Single session</h3>
+                </div>
+                <div
+                  className={classes.recurring}
+                  onClick={() => this.handleRecurring(true)}
+                >
+                  <h3>Recurring</h3>
+                  <small>(season of {RECURRING_WEEKS} sessions)</small>
+                </div>
               </div>
             </div>
-            <Button
-              label="Schedule another session"
-              onClick={() => this.setState({confirmed: false})}
-            />
-          </div>
-        )
-      }else if (recurring !== null){
-        return (
-          <div className={classes.container}>
-            <h2>Scheduling {recurring ? `${RECURRING_WEEKS} recurring sessions` : 'a single session'} with your mentor {account.mentor.firstName}</h2>
-
-            <form onSubmit={this.handleConfirmation} className={classes.scheduleForm}>
-              <div className={classes.dateTimeFields}>
-                <DatePicker
-                  active={showDatesModal}
-                  onDismiss={() => this.setState({showDatesModal: false})}
-                  label={recurring ? 'Start Date' : 'Date'}
-                  sundayFirstDayOfWeek
-                  onChange={this.handleDateChange.bind(this)}
-                  value={selectedDate}
-                  // minDate={today}
-                  // maxDate={today.add(MAX_MONTHS_IN_ADVANCE, 'M')}
-                  autoOk={true}
-                  enabledDates={availableDates}
-                  required
-                />
-
-                <Input
-                  type='text'
-                  label='Time'
-                  name='time'
-                  value={selectedTime ? moment(selectedTime).format('h:mma') : ''}
-                  onClick={this.showAvailableTimes.bind(this)}
-                  required
-                />
-              </div>
-
-              <TimezoneSelector changeable />
-
-              <Checkbox
-                label="Recurring"
-                checked={recurring}
-                onChange={this.handleRecurring.bind(this)}
-              />
-
-              <Button
-                type="submit"
-                label={`Schedule session${recurring ? 's' : ''}`}
-              />
-            </form>
-
-            <Dialog
-              actions={[
-                { label: "Choose another day", onClick: this.handleShowDates }
-              ]}
-              active={showTimesModal}
-              onEscKeyDown={this.handleShowDates}
-              onOverlayClick={this.handleShowDates}
-              title={`Available Times for ${moment(selectedDate).format('MMMM Do YYYY')}`}
-            >
-              {availableTimesFetched ? renderAvailableTimes() : <LoadingSpinner />}
-            </Dialog>
-
-            <Dialog
-              actions={[
-                {
-                  icon: isConfirming ? <i className="fa fa-spinner fa-pulse fa-fw" /> : null,
-                  label: `Schedule session`,
-                  onClick: this.confirmMeeting,
-                  primary: true,
-                  className: `${classes.confirmButton} ${classes.button}`,
-                  disabled: isConfirming ? true : false
-                }
-              ]}
-              active={showConfirmationModal}
-              onEscKeyDown={this.handleHideConfirmationModal}
-              onOverlayClick={this.handleHideConfirmationModal}
-              title={`Confirm your session with ${account.mentor.firstName}`}
-            >
-              <div className={classes.confirmationDetails}>
-                <div className={classes.time}><strong>{moment(selectedDate).format('MMMM Do YYYY')}</strong> at <strong>{moment(selectedTime).format('h:mma')}</strong></div>
-                <TimezoneSelector />
-              </div>
-            </Dialog>
-          </div>
-        )
+          )
+        }
       }else{
         return (
           <div className={classes.container}>
-            <h2>Which kind of session would you like to schedule?</h2>
-            <div className={classes.scheduleType}>
-              <div
-                className={classes.single}
-                onClick={() => this.handleRecurring(false)}
-              >
-                <h3>Single session</h3>
-              </div>
-              <div
-                className={classes.recurring}
-                onClick={() => this.handleRecurring(true)}
-              >
-                <h3>Recurring</h3>
-                <small>(season of {RECURRING_WEEKS} sessions)</small>
-              </div>
-            </div>
+            <h2>You currently don't have a mentor assigned.</h2>
           </div>
         )
       }
     }else{
       return (
-        <div className={classes.container}>
-          <h2>You currently don't have a mentor assigned.</h2>
-        </div>
+        <LoadingSpinner />
       )
     }
   }

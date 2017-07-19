@@ -18,14 +18,10 @@ import classes from './index.css';
 @connect(
   ({ firebase }) => ({
     auth: pathToJS(firebase, 'auth'),
-    account: dataToJS(firebase, 'profile')
+    account: pathToJS(firebase, 'profile')
   })
 )
 export default class Navbar extends Component {
-  static contextTypes = {
-    router: PropTypes.object.isRequired
-  }
-
   static propTypes = {
     account: PropTypes.object,
     firebase: PropTypes.object.isRequired
@@ -33,7 +29,7 @@ export default class Navbar extends Component {
 
   handleLogout = () => {
     this.props.firebase.logout();
-    this.context.router.push('/');
+    this.props.history.push('/');
   }
 
   handleToggleLeftNavigation = () => {

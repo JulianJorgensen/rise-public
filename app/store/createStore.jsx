@@ -5,7 +5,6 @@ import 'firebase/storage';
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import { firebaseStateReducer, reactReduxFirebase, getFirebase } from 'react-redux-firebase';
 import thunk from 'redux-thunk';
-import locationReducer from './location';
 import { reducer as form } from 'redux-form';
 import makeRootReducer from './reducers';
 import { firebase as fbConfig, reduxFirebase as reduxConfig } from '../config';

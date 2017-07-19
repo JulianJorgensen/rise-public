@@ -11,12 +11,12 @@ import ProfileForm from './components/ProfileForm/ProfileForm';
 import classes from './index.css';
 
 @userIsAuthenticated // redirect to /login if user is not authenticated
-// @userHasPermission('profile')
+@userHasPermission('profile')
 @firebaseConnect() // add this.props.firebase
 @connect(
   ({ firebase }) => ({
     auth: pathToJS(firebase, 'auth'),
-    account: dataToJS(firebase, 'profile')
+    account: pathToJS(firebase, 'profile')
   })
 )
 export default class Profile extends Component {

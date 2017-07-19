@@ -1,15 +1,16 @@
 import React, { Component, PropTypes } from 'react';
 import { get } from 'lodash';
 import classes from './index.css';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { UserAuthWrapper } from 'redux-auth-wrapper';
 import { userIsAuthenticated, userHasPermission } from 'utils/router';
 import { firebaseConnect, dataToJS, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase';
 import { DASHBOARD_PATH, ACCOUNT_PATH, LOGIN_PATH, SIGNUP_PATH, ABOUT_PATH } from 'app/constants';
-import Accordion from 'components/Accordion';
+import NavAccordion from './components/NavAccordion';
 import navItems from './components/navItems'
 
+@withRouter
 @userIsAuthenticated
 @firebaseConnect()
 @connect(
@@ -19,20 +20,14 @@ import navItems from './components/navItems'
   })
 )
 export default class LefNavigation extends Component {
-  static contextTypes = {
-    router: PropTypes.object.isRequired
-  }
-
   static propTypes = {
     account: PropTypes.object,
     firebase: PropTypes.object.isRequired
   }
 
   render () {
-    const { account } = this.props;
+    const { account, activePath } = this.props;
     const accountExists = isLoaded(account) && !isEmpty(account);
-
-    console.log('account from leftnav: ', account);
 
     let renderNavItems = () => {
       return navItems.filter((navGroup) => {
@@ -66,12 +61,15 @@ export default class LefNavigation extends Component {
       });
     }
 
-    if (accountExists){
+    if (accountExists) {
       return (
         <div className={`${classes.container} ${!account.showLeftNavigation ? classes.collapsed : ''}`}>
-          <Accordion className={classes.navItems} selected={0}>
+          <NavAccordion
+            activePath={activePath}
+            className={classes.navItems}
+          >
             {renderNavItems()}
-          </Accordion>
+          </NavAccordion>
         </div>
       )
     }else{
