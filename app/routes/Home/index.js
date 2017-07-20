@@ -11,15 +11,13 @@ import styles from './index.css';
 import InstagramFeed from 'containers/InstagramFeed/InstagramFeed'
 
 @withRouter
-@userIsNotAuthenticated
 export default class Home extends React.Component {
   constructor() {
     super();
   }
 
   render() {
-
-    var settings = {
+    let settings = {
       dots: true,
       infinite: true,
       speed: 500,

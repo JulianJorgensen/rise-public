@@ -4,9 +4,11 @@ import { connect } from 'react-redux';
 import { firebaseConnect, dataToJS, pathToJS, isEmpty, isLoaded } from 'react-redux-firebase';
 import { firebase as fbConfig } from 'app/config';
 import DocumentMeta from 'react-document-meta';
-import Main from './index';
-import LeftNavigation from '../containers/LeftNavigation';
+
+import TopNotification from 'components/TopNotification';
+import LeftNavigation from 'containers/LeftNavigation';
 import Navbar from '../containers/Navbar';
+import GetMeetings from 'containers/GetMeetings';
 
 import Home from './Home';
 import About from './About';
@@ -28,7 +30,7 @@ import { Layout } from 'react-toolbox/lib/layout';
 import ReactGA from 'react-ga';
 // ReactGA.initialize('UA-6241825-9'); // initialize Google Analytics
 
-import classes from './index.css'
+import classes from './index.css';
 
 // site meta data
 const meta = {
@@ -43,6 +45,13 @@ const meta = {
 };
 
 @withRouter
+@firebaseConnect()
+@connect(
+  ({ notification, firebase }) => ({
+    account: pathToJS(firebase, 'profile'),
+    notification
+  })
+)
 export default class Index extends React.Component {
   constructor() {
     super();
@@ -63,20 +72,22 @@ export default class Index extends React.Component {
   }
 
   render() {
-    let { notifications } = this.props;
-    console.log('notifications: ', this.props);
+    let { account, notification } = this.props;
+
     return (
       <div className={classes.container}>
-        {notifications ? notification.show ? <div className={classes.notification}>You have an upcoming appointment.</div> : '' : ''}
-        <div className={classes.content}>
+        <GetMeetings />
+        <TopNotification />
+        <div className={`${classes.content} ${notification ? notification.show ? classes.withNotification : '' : ''}`}>
           <DocumentMeta {...meta} />
           <LeftNavigation />
           <div className={classes.mainContent}>
-            <Navbar withNotification={notifications ? notifications.show ? true : false : false} />
+            <Navbar withNotification={notification ? notification.show ? true : false : false} />
             <Layout className={classes.layout}>
               <Route exact path="/" component={Home} />
               <Route path="/about" component={About} />
               <Route path="/features" component={Features} />
+              <Route path="/pricing" component={Pricing} />
               <Route path="/login" component={Login} />
               <Route path="/signup" component={Signup} />
               <Route path="/dashboard" component={Dashboard} />
@@ -84,6 +95,7 @@ export default class Index extends React.Component {
               <Route path="/settings" component={Settings} />
               <Route path="/profile" component={Profile} />
               <Route path="/schedule" component={Schedule} />
+              <Route path="/video" component={Video} />
               <Route path="/my-athletes" component={MyAthletes} />
             </Layout>
           </div>

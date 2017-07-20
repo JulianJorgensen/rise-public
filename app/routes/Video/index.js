@@ -1,7 +1,35 @@
-import { VIDEO_PATH as path } from 'app/constants';
-import component from './containers/VideoContainer';
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { firebaseConnect, dataToJS, pathToJS } from 'react-redux-firebase';
+import { reduxFirebase as rfConfig } from 'app/config';
+import { userIsAuthenticated, userHasPermission } from 'utils/router'
 
-export default {
-  path,
-  component
+import Meetings from 'containers/Meetings';
+import LoadingSpinner from 'components/LoadingSpinner';
+import classes from './index.css';
+
+@userIsAuthenticated
+@userHasPermission('video')
+@firebaseConnect()
+@connect(
+  ({ firebase }) => ({
+    auth: pathToJS(firebase, 'auth'),
+    account: dataToJS(firebase, 'profile')
+  })
+)
+export default class Video extends Component {
+  constructor(){
+    super();
+
+    this.state = {
+    }
+  }
+
+  render () {
+    return (
+      <div className={classes.container}>
+        <Meetings />
+      </div>
+    )
+  }
 }

@@ -14,11 +14,10 @@ let acuity = Acuity.basic({
 let uidFieldId = 3274695;
 
 module.exports = {
-  getUpcomingAppointments: function(query) {
-    return new Promise(function(resolve, reject){
-      let {maxDate, calendarID, appointmentTypeID, uid} = query;
-      let today = new Date();
-      acuity.request(`/appointments?minDate=${today}&maxDate=${maxDate}&calendarID=${calendarID}&appointmentTypeID=${appointmentTypeID}&canceled=false&field:${uidFieldId}=${uid}`, function (err, res, appointments) {
+  getAppointments: function(query) {
+    return new Promise(function(resolve, reject) {
+      let {max, minDate, maxDate, appointmentTypeID, uid} = query;
+      acuity.request(`/appointments?minDate=${minDate}&maxDate=${maxDate}&max=${max}&appointmentTypeID=${appointmentTypeID}&canceled=false&field:${uidFieldId}=${uid}`, function (err, res, appointments) {
         if (err) return console.error(err);
         resolve(appointments);
       });

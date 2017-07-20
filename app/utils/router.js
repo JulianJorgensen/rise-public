@@ -51,7 +51,7 @@ export const userIsNotAuthenticated = connectedReduxRedirect({
   allowRedirectBack: false,
   authenticatedSelector: ({ firebase }) => {
     const user = pathToJS(firebase, 'profile');
-    return !isEmpty(user);
+    return isEmpty(user);
   },
   authenticatingSelector: ({ firebase }) =>
     (pathToJS(firebase, 'auth') === undefined) ||

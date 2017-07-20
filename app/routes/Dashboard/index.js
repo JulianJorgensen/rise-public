@@ -6,10 +6,8 @@ import moment from 'moment-timezone';
 import { DASHBOARD_PATH } from 'app/constants';
 import { userIsAuthenticated, userHasPermission } from 'utils/router';
 import LoadingSpinner from 'components/LoadingSpinner';
-import UpcomingAppointments from 'containers/UpcomingAppointments';
+import Meetings from 'containers/Meetings';
 import classes from './index.css';
-
-const ACUITY_MENTOR_CALL_ID = 346940;
 
 @userIsAuthenticated
 @userHasPermission('dashboard')
@@ -39,6 +37,16 @@ export default class Dashboard extends Component {
         <div className={classes.welcome}>
           <h1>Welcome{firstName ? ` back, ${firstName}` : '!'}</h1>
         </div>
+        <div className={classes.logs}>
+          <div className={classes.logsInner}>
+            <div className={classes.logsCompleted}>
+              <Meetings filter="completed" />
+            </div>
+            <div className={classes.logsUpcoming}>
+              <Meetings />
+            </div>
+          </div>
+        </div>
         <div className={classes.actionsContainer}>
           <h2>would you like to</h2>
           <div className={classes.actions}>
@@ -50,17 +58,6 @@ export default class Dashboard extends Component {
             </div>
             <div className={classes.action}>
               <i className="fa fa-calendar" />
-            </div>
-          </div>
-        </div>
-        <div className={classes.logs}>
-          <div className={classes.logsInner}>
-            <div className={classes.logsCompleted}>
-              <h3>Recently Completed</h3>
-            </div>
-            <div className={classes.logsUpcoming}>
-              <h3>Upcoming Calls</h3>
-              <UpcomingAppointments />
             </div>
           </div>
         </div>

@@ -1,0 +1,38 @@
+@import "../../styles/variables.css";
+
+.container{
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: var(--top-notification-height);
+  &.default{
+    @apply --alert-theme;
+  }
+  &.error{
+    @apply --error-theme;
+  }
+  &.success{
+    @apply --succcess-theme;
+  }
+
+  & .close{
+    position: absolute;
+    right: rem(10);
+    top: 50%;
+    margin-top: rem(-15);
+    background-color: gray(50%);
+    border-radius: 50%;
+    width: rem(30);
+    height: rem(30);
+    font-size: rem(16);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+}

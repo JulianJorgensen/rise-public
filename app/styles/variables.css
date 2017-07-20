@@ -3,6 +3,8 @@
   --blue: #0F5E9A;
   --darkBlue: #042745;
   --success: #4BB543;
+  --teal: #0FD3DC;
+  --red: #FF0000;
 
   --success-theme: {
     background-color: var(--success);
@@ -12,7 +14,36 @@
     }
   };
 
+  --alert-theme: {
+    background-color: var(--teal);
+    color: white;
+    &:hover{
+      background-color: color(var(--teal) shade(10%));
+    }
+  };
+
+  --error-theme: {
+    background-color: var(--red);
+    color: white;
+    &:hover{
+      background-color: color(var(--red) shade(10%));
+    }
+  };
+
   --top-notification-height: rem(70);
+
+  --notification-badge-styles: {
+    position: absolute;
+    bottom: rem(5);
+    right: rem(5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: rem(14);
+    border-radius: 50%;
+    height: rem(20);
+    width: rem(20);
+  };
 }
 
 /* Media queries */

@@ -11,10 +11,11 @@ import LoginForm from './components/LoginForm';
 import classes from './index.css';
 
 @userIsNotAuthenticated
-@firebaseConnect() // add this.props.firebase
-@connect( // map redux state to props
-  ({ firebase }) => ({
-    authError: pathToJS(firebase, 'authError')
+@firebaseConnect()
+@connect(
+  ({ notification, firebase }) => ({
+    authError: pathToJS(firebase, 'authError'),
+    notification
   })
 )
 export default class Login extends Component {
@@ -39,8 +40,9 @@ export default class Login extends Component {
   };
 
   handleLogin = loginData => {
-    this.setState({ snackCanOpen: true })
-    return this.props.firebase.login(loginData)
+    this.setState({ snackCanOpen: true });
+    this.props.firebase.login(loginData).then(() => {
+    });
   }
 
   providerLogin = (provider) =>

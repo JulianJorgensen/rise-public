@@ -13,7 +13,6 @@
     width: calc(100% - 300px);
   }
   &.withNotification{
-    position: absolute;
     top: var(--top-notification-height);
   }
   & a{
@@ -77,8 +76,15 @@
   display: flex;
   flex-direction: row;
 
+  & .numberOfNotifications{
+    @apply --notification-badge-styles;
+    background-color: color(var(--teal) blackness(90%));
+    color: var(--teal);
+  }
+
   & .rightNavVideo,
   & .rightNavChat{
+    position: relative;
     width: 80px;
     height: inherit;
     display: flex;

@@ -10,9 +10,9 @@ import LoadingSpinner from 'components/LoadingSpinner';
 import SettingsForm from './components/SettingsForm/SettingsForm';
 import classes from './index.css';
 
-@userIsAuthenticated // redirect to /login if user is not authenticated
-// @userHasPermission('settings')
-@firebaseConnect() // add this.props.firebase
+@userIsAuthenticated
+@userHasPermission('settings')
+@firebaseConnect()
 @connect(
   ({ firebase }) => ({
     auth: pathToJS(firebase, 'auth'),
@@ -34,12 +34,6 @@ export default class Settings extends Component {
   state = { modalOpen: false }
 
   handleLogout = () => this.props.firebase.logout()
-
-  toggleModal = () => {
-    this.setState({
-      modalOpen: !this.state.modalOpen
-    })
-  }
 
   updateAccount = (newData) => {
     newData = {
