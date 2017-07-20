@@ -19,7 +19,7 @@ export default class TopNotification extends Component {
   }
 
   handleCloseNotification = () => {
-    this.props.dispatch({ type: 'CLOSE_GLOBAL_NOTIFICATION' });
+    this.props.dispatch({ type: 'CLOSE_NOTIFICATION' });
   }
 
   render() {

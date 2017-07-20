@@ -51,9 +51,14 @@ export default class GetMeetings extends Component {
         if (meetingTime > now) {
           upcomingMeetings.push(meeting);
 
-          // set notification if meeting is today
-          if (meetingTime.format('YYYY-MM-DD').isSame(now.format('YYYY-MM-DD'))) {
-            this.setNotification();
+          // set notification if meeting is coming up soon
+          if (meetingTime.diff(now, 'days') <= 1) {
+            let timeFromNow = meetingTime.diff(now, 'hours');
+            this.props.dispatch({
+              type: 'SET_NOTIFICATION',
+              message: `You have a meeting in ${timeFromNow} hours!`,
+              url: '/video'
+            });
           }
         }else{
           completedMeetings.push(meeting);
@@ -76,17 +81,6 @@ export default class GetMeetings extends Component {
     .catch((error) => {
       console.log(`Error getting meetings`, error);
     });
-  }
-
-  setNotification = () => {
-    let { account } = this.props;
-    this.props.dispatch({
-      type: 'SET_NOTIFICATION',
-      message: 'You have a meeting today!',
-      url: '/video'
-    });
-
-    this.setState({ notificationSet : true });
   }
 
   render () {
