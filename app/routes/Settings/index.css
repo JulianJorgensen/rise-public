@@ -1,6 +1,5 @@
 .container{
   /*composes: container from "../../../styles/layout.css";*/
-  margin-top: rem(100);
   padding: rem(20);
   display: flex;
   flex-direction: row;

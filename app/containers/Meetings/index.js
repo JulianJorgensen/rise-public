@@ -83,7 +83,10 @@ export default class Meetings extends Component {
       )
     }else{
       return (
-        <div>You don't have any upcoming meetings. <Link to='/schedule'>Schedule one now</Link></div>
+        <div>
+          <h3>Upcoming Meetings</h3>
+          <div>You don't have any upcoming meetings. <Link to='/schedule'>Schedule one now</Link></div>
+        </div>
       )
     }
   }

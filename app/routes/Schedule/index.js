@@ -11,16 +11,6 @@ import Button from 'components/Button';
 import LoadingSpinner from 'components/LoadingSpinner';
 import classes from './index.css';
 
-let availableDates = [
-  moment("2017-07-20", "YYYY-MM-DD").toDate(),
-  moment("2017-07-21", "YYYY-MM-DD").toDate(),
-  moment("2017-07-22", "YYYY-MM-DD").toDate(),
-  moment("2017-07-23", "YYYY-MM-DD").toDate(),
-  moment("2017-07-24", "YYYY-MM-DD").toDate(),
-  moment("2017-07-25", "YYYY-MM-DD").toDate()
-]
-
-let today = moment(new Date());
 const MAX_MONTHS_IN_ADVANCE = 3;
 const ACUITY_MENTOR_CALL_ID = 346940;
 const RECURRING_WEEKS = 14;
@@ -42,6 +32,7 @@ export default class Schedule extends Component {
     showDatesModal: false,
     showTimesModal: false,
     showConfirmationModal: false,
+    availableDates: [],
     availableTimes: [],
     availableTimesFetched: false,
     selectedTime: '',
@@ -61,8 +52,9 @@ export default class Schedule extends Component {
   }
 
   getAvailableDates = (month) => {
-    let {mentor} = this.props.account;
-    let {timezone} = this.props;
+    let { mentor, timezone } = this.props.account;
+
+    console.log('getting dates for: ', month);
     // get available dates
     axios.get(`${fbConfig.functions}/getAvailableDates`, {
       params: {
@@ -73,8 +65,14 @@ export default class Schedule extends Component {
       }
     })
     .then((response) => {
-      let availableDates = response.data;
-      this.setState({availableDates: this.state.availableDates.push(availableDates)}, () => {
+      let availableDatesObj = response.data;
+      let availableDates = [...this.state.availableDates];
+
+      availableDatesObj.map((obj) => {
+        availableDates.push(moment(obj.date, "YYYY-MM-DD").toDate());
+      });
+
+      this.setState({ availableDates: availableDates }, () => {
         console.log('updated new available dates: ', this.state);
       });
     })
@@ -210,12 +208,11 @@ export default class Schedule extends Component {
     });
   }
 
-  componentWillMount(){
-    // let nextMonth = today.add(1, 'M');
-    // let in2Months = today.add(2, 'M');
-    // this.getAvailableDates(today.format('YYYY-MM'));
-    // this.getAvailableDates(nextMonth.format('YYYY-MM'));
-    // this.getAvailableDates(nextMonth.format('YYYY-MM'));
+  componentWillMount() {
+    // get available dates for months
+    for (let i = 0; i < MAX_MONTHS_IN_ADVANCE; i++) {
+      this.getAvailableDates(moment(new Date()).add(i, 'M').format('YYYY-MM'));
+    }
   }
 
   render () {
@@ -309,7 +306,7 @@ export default class Schedule extends Component {
                     // minDate={today}
                     // maxDate={today.add(MAX_MONTHS_IN_ADVANCE, 'M')}
                     autoOk={true}
-                    enabledDates={availableDates}
+                    enabledDates={this.state.availableDates}
                     required
                   />
 
