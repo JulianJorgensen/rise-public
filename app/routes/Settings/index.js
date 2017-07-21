@@ -4,10 +4,15 @@ import { firebaseConnect, dataToJS, pathToJS, isLoaded, isEmpty } from 'react-re
 import { reduxFirebase as rfConfig } from 'app/config';
 import { userIsAuthenticated, userHasPermission } from 'utils/router';
 
+import {Elements} from 'react-stripe-elements';
+
+import { Tab, Tabs } from 'react-toolbox/lib/tabs';
 import Avatar from 'react-toolbox/lib/avatar';
 import { Card } from 'react-toolbox/lib/card';
 import LoadingSpinner from 'components/LoadingSpinner';
-import SettingsForm from './components/SettingsForm/SettingsForm';
+import SettingsForm from './components/SettingsForm';
+import MentorBankingForm from './components/MentorBankingForm';
+import Payment from 'containers/Payment';
 import classes from './index.css';
 
 @userIsAuthenticated
@@ -31,15 +36,24 @@ export default class Settings extends Component {
     })
   }
 
-  state = { modalOpen: false }
+  state = {
+    tab: 0
+  }
 
-  handleLogout = () => this.props.firebase.logout()
+  handleTabChange = (tab) => {
+    this.setState({tab});
+  };
 
   updateAccount = (newData) => {
+    let menteesFirebaseFormatted = newData.mentees.map((mentee, index) => {
+      return mentee.uid
+    });
+
     newData = {
       ...newData,
       role: `${newData.role.name}${newData.status === 'pending' ? '-pending' : ''}`,
-      mentor: newData.mentor ? newData.mentor.uid : null
+      mentor: newData.mentor ? newData.mentor.uid : null,
+      mentees: menteesFirebaseFormatted
     }
 
     this.props.firebase
@@ -56,13 +70,29 @@ export default class Settings extends Component {
     }
 
     return (
-      <Card className={classes.container}>
-        <SettingsForm
-          initialValues={account}
-          account={account}
-          onSubmit={this.updateAccount}
-        />
-      </Card>
+      <div className={classes.container}>
+        <Tabs index={this.state.tab} theme={classes} onChange={this.handleTabChange}>
+          <Tab label='General'>
+            <SettingsForm
+              initialValues={account}
+              account={account}
+              onSubmit={this.updateAccount}
+            />
+          </Tab>
+          <Tab label='Payment'>
+            {account.role.name === 'mentor' ?
+              <MentorBankingForm
+                initialValues={account}
+                account={account}
+                onSubmit={this.updateAccount}
+              /> :
+              <Elements>
+                <Payment />
+              </Elements>
+            }
+          </Tab>
+        </Tabs>
+      </div>
     )
   }
 }

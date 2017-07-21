@@ -4,8 +4,9 @@ import {Provider} from 'react-redux';
 import {BrowserRouter as Router} from 'react-router-dom';
 
 import styles from './styles/app.css';
-import fonts from './fonts/fonts.css';
 import Main from './routes/index';
+
+import {StripeProvider} from 'react-stripe-elements';
 
 import createStore from './store/createStore';
 
@@ -20,9 +21,11 @@ store.subscribe(() => {
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router>
-      <Main />
-    </Router>
+    <StripeProvider apiKey="pk_test_12345">
+      <Router>
+        <Main />
+      </Router>
+    </StripeProvider>
   </Provider>,
   document.getElementById('app')
 );

@@ -20,6 +20,14 @@
 }
 
 .button.primary:not([disabled]) {
+  color: white;
+  background-color: var(--blue);
+  &:hover{
+    background-color: color(var(--blue) blackness(50%));
+  }
+}
+
+.button.confirm:not([disabled]) {
   @apply --success-theme;
 }
 

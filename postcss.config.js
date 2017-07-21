@@ -6,6 +6,15 @@ module.exports = {
     'postcss-mixins': {},
     'postcss-each': {},
     'postcss-remify': {},
-    'postcss-cssnext': {}
-  },
+    'postcss-cssnext': {},
+    'postcss-font-magician' : {
+      variants: {
+        'Poppins': {
+          '400': [],
+          '600': []
+        }
+      },
+      foundries: ['google']
+    }
+  }
 };

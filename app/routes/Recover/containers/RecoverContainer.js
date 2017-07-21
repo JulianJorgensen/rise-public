@@ -1,9 +1,9 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react';
 import { firebaseConnect, dataToJS, pathToJS } from 'react-redux-firebase';
-import { Snackbar } from 'react-toolbox'
-import { Card } from 'react-toolbox/lib/card'
-import EmailForm from '../components/EmailForm'
-import classes from './RecoverContainer.css'
+import Snackbar from 'components/Snackbar';
+import { Card } from 'react-toolbox/lib/card';
+import EmailForm from '../components/EmailForm';
+import classes from './RecoverContainer.css';
 
 @firebaseConnect() // adds this.props.firebase
 export default class RecoverContainer extends Component {

@@ -5,12 +5,45 @@
     "data": "database.roles.json"
   },
   "hosting": {
-    "public": "dist",
+    "public": "public",
     "rewrites": [
       {
         "source": "**",
         "destination": "/index.html"
       }
-    ]
+    ],
+    "headers": [ {
+      "source" : "**/*.@(eot|otf|ttf|ttc|woff|font.css)",
+      "headers" : [ {
+        "key" : "Access-Control-Allow-Origin",
+        "value" : "*"
+      } ]
+      }, {
+      "source" : "**/@(vendor.min).*",
+      "headers" : [ {
+        "key" : "Cache-Control",
+        "value" : "max-age=31536000"
+      } ]
+      }, {
+      "source" : "**/@(bundle.min|manifest.min|fonts).*",
+      "headers" : [ {
+        "key" : "Cache-Control",
+        "value" : "max-age=518400"
+      } ]
+      }, {
+      "source" : "**/*.@(jpg|jpeg|gif|png)",
+      "headers" : [ {
+        "key" : "Cache-Control",
+        "value" : "max-age=31536000"
+      } ]
+      }, {
+      "source" : "404.html",
+      "headers" : [ {
+        "key" : "Cache-Control",
+        "value" : "max-age=300"
+      } ]
+    } ],
+    "cleanUrls": true,
+    "trailingSlash": false
   }
 }

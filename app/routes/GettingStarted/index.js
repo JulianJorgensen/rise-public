@@ -5,7 +5,7 @@ import { reduxFirebase as rfConfig } from 'app/config';
 import { userIsAuthenticated, userHasPermission } from 'utils/router'
 import axios from 'axios';
 import defaultUserImageUrl from 'assets/images/User.png';
-import {Tab, Tabs} from 'react-toolbox';
+import {Tab, Tabs} from 'react-toolbox/lib/tabs';
 import LoadingSpinner from 'components/LoadingSpinner';
 import AccountForm from './components/AccountForm/AccountForm';
 import SportsForm from './components/SportsForm/SportsForm';
@@ -39,10 +39,15 @@ export default class GettingStarted extends Component {
   }
 
   updateFirebase = (newData) => {
+    let menteesFirebaseFormatted = newData.mentees.map((mentee, index) => {
+      return mentee.uid
+    });
+
     newData = {
       ...newData,
       role: `${newData.role.name}${newData.status === 'pending' ? '-pending' : ''}`,
-      mentor: newData.mentor ? newData.mentor.uid : null
+      mentor: newData.mentor ? newData.mentor.uid : null,
+      mentees: menteesFirebaseFormatted
     }
     this.props.firebase
       .update(`${rfConfig.userProfile}/${this.props.auth.uid}`, newData)

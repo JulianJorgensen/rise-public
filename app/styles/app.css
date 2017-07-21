@@ -1,6 +1,8 @@
 /* Globals */
-@import "vendor/slick.css";
-@import "vendor/slick-theme.css";
-
+@import "typography.css";
 @import "variables.css";
 @import "layout.css";
+
+/* Vendor */
+@import "vendor/slick.css";
+@import "vendor/slick-theme.css";

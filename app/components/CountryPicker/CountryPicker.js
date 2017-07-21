@@ -35,7 +35,7 @@ export default class CountryPicker extends Component {
   }
 
   render() {
-    let { className, label, required, countries, handleCountryChange } = this.props;
+    let { className, label, placeholder, required, countries, handleCountryChange } = this.props;
     const _className = cn(className, classes.default);
 
     return (
@@ -45,6 +45,7 @@ export default class CountryPicker extends Component {
         onChange={this.handleChange.bind(this)}
         source={countries}
         value={this.state.country}
+        placeholder={placeholder}
       />
     );
   }

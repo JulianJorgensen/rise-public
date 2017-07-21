@@ -1,6 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
-import { Snackbar } from 'react-toolbox';
+import { Snackbar } from 'react-toolbox/lib/snackbar';
 import classes from './Snackbar.css';
 
 const SnackBar = ({ className, ...props }) => {

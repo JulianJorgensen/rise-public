@@ -102,7 +102,7 @@ class AccountForm extends Component {
           handleCountryChange={this.handleCountryChange}
           country={this.state.country}
           countries={countries}
-          label='Country'
+          placeholder='Country'
         />
         <Field
           name='state'

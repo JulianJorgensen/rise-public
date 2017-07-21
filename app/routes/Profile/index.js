@@ -42,10 +42,15 @@ export default class Profile extends Component {
   }
 
   updateAccount = (newData) => {
+    let menteesFirebaseFormatted = newData.mentees.map((mentee, index) => {
+      return mentee.uid
+    });
+
     newData = {
       ...newData,
       role: `${newData.role.name}${newData.status === 'pending' ? '-pending' : ''}`,
-      mentor: newData.mentor ? newData.mentor.uid : null
+      mentor: newData.mentor ? newData.mentor.uid : null,
+      mentees: menteesFirebaseFormatted
     }
 
     this.props.firebase

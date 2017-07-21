@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import Dropdown from 'react-toolbox/lib/dropdown';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import monthsList from 'months';
 import classes from './index.css';
 
