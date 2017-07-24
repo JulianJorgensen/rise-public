@@ -3,6 +3,9 @@
 .wrapper{
   composes: wrapper from "../../styles/layout.css";
   margin-top: rem(80);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .container{

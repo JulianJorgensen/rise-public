@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import GoogleButton from 'react-google-button';
 import { connect } from 'react-redux';
 import { firebaseConnect, dataToJS, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase';
@@ -15,12 +15,13 @@ import classes from './index.css';
 
 import { Card } from 'react-toolbox/lib/card';
 
-
-@userIsNotAuthenticated // redirect to dashboard if logged in
-@firebaseConnect() // add this.props.firebase
-@connect( // map redux state to props
-  ({firebase}) => ({
-    authError: pathToJS(firebase, 'authError')
+@withRouter
+@userIsNotAuthenticated
+@firebaseConnect()
+@connect(
+  ({ firebase }) => ({
+    authError: pathToJS(firebase, 'authError'),
+     auth: pathToJS(firebase, 'auth')
   })
 )
 export default class Signup extends Component {
@@ -39,19 +40,21 @@ export default class Signup extends Component {
   }
 
   handleSignup = ({ email, password }) => {
-    const { firebase } = this.props;
+    const { firebase, history } = this.props;
     const { createUser, update } = firebase;
     this.setState({ snackCanOpen: true });
     // create new user then login (redirect handled by factory)
 
     return createUser({ email, password })
       .then((newUser) => {
-        let {uid} = this.props.auth;
+        let { uid } = this.props.auth;
         update(`${rfConfig.userProfile}/${uid}`, {
           uid: uid,
           role: this.state.role,
           timezone: moment.tz.guess()
         });
+
+        history.push('/getting-started');
       });
   }
 

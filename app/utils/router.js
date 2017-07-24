@@ -47,7 +47,7 @@ export const userIsAuthenticated = connectedReduxRedirect({
  * @return {Component} wrappedComponent
  */
 export const userIsNotAuthenticated = connectedReduxRedirect({
-  redirectPath: '/dashboard',
+  redirectPath: '/login',
   allowRedirectBack: false,
   authenticatedSelector: ({ firebase }) => {
     const user = pathToJS(firebase, 'profile');
@@ -56,11 +56,11 @@ export const userIsNotAuthenticated = connectedReduxRedirect({
   authenticatingSelector: ({ firebase }) =>
     (pathToJS(firebase, 'auth') === undefined) ||
     (pathToJS(firebase, 'isInitializing') === true),
-  // AuthenticatingComponent: LoadingSpinner,
+  AuthenticatingComponent: LoadingSpinner,
   wrapperDisplayName: 'UserIsNotAuthenticated',
   redirectAction: newLoc => (dispatch) => {
     // browserHistory.replace(newLoc)
-    dispatch({ type: AUTHED_REDIRECT })
+    console.log('user IS authenticated, redirect to : ', newLoc.pathname);
   }
 })
 

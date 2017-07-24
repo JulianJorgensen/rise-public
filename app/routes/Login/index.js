@@ -10,6 +10,7 @@ import { SIGNUP_PATH } from 'app/constants';
 import LoginForm from './components/LoginForm';
 import classes from './index.css';
 
+@withRouter
 @userIsNotAuthenticated
 @firebaseConnect()
 @connect(
@@ -42,6 +43,7 @@ export default class Login extends Component {
   handleLogin = loginData => {
     this.setState({ snackCanOpen: true });
     this.props.firebase.login(loginData).then(() => {
+      this.props.history.push('/dashboard');
     });
   }
 

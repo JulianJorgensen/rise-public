@@ -31,6 +31,7 @@ export default class Navbar extends Component {
   }
 
   handleLogout = () => {
+    this.props.dispatch({ type: 'CLOSE_NOTIFICATION' });
     this.props.firebase.logout();
     this.props.history.push('/');
   }

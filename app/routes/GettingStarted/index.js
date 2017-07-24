@@ -29,9 +29,6 @@ export default class GettingStarted extends Component {
 
   static propTypes = {
     account: PropTypes.object,
-    auth: PropTypes.shape({
-      uid: PropTypes.string
-    }),
     firebase: PropTypes.shape({
       update: PropTypes.func.isRequired,
       logout: PropTypes.func.isRequired
@@ -39,9 +36,12 @@ export default class GettingStarted extends Component {
   }
 
   updateFirebase = (newData) => {
-    let menteesFirebaseFormatted = newData.mentees.map((mentee, index) => {
-      return mentee.uid
-    });
+    let menteesFirebaseFormatted = [];
+    if (newData.mentees) {
+      menteesFirebaseFormatted = newData.mentees.map((mentee, index) => {
+        return mentee.uid
+      });
+    }
 
     newData = {
       ...newData,
