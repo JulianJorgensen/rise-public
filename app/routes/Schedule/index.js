@@ -268,7 +268,7 @@ export default class Schedule extends Component {
     if (account.role.name === 'athlete' && !account.mentor) {
       return (
         <div className={classes.container}>
-          <h2>You currently don't have a mentor assigned.</h2>
+          <h4>You currently don't have a mentor assigned.</h4>
         </div>
       )
     }
@@ -276,15 +276,15 @@ export default class Schedule extends Component {
     if (account.role.name === 'mentor' && !account.mentees) {
       return (
         <div className={classes.container}>
-          <h2>You currently don't have any athletes assigned.</h2>
+          <h4>You currently don't have any athletes assigned.</h4>
         </div>
       )
     }
 
-    if (isConfirmed){
+    if (isConfirmed) {
       return (
         <div className={`${classes.container} ${classes.success}`}>
-          <h1 className={classes.header}>Congratulations!</h1>
+          <h2 className={classes.header}>Congratulations!</h2>
           <p>You're now scheduled for {recurring ? 'recurring sessions' : 'a session'} with {account.mentor.firstName} {recurring ? 'starting on' : 'on'}:</p>
           <div className={classes.confirmationDetails}>
             <div className={classes.time}>

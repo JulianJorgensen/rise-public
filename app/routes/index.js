@@ -14,15 +14,21 @@ import Home from './Home';
 import About from './About';
 import Features from './Features';
 import Pricing from './Pricing';
-import Settings from './Settings';
+import Settings from './Dashboard/Settings';
 import Schedule from './Schedule';
 import MyAthletes from './MyAthletes';
 import Video from './Video';
+import CallLogs from './Video/CallLogs';
 import Login from './Login';
 import Signup from './Signup';
 import Dashboard from './Dashboard';
-import Profile from './Profile';
+import Profile from './Dashboard/Profile';
 import GettingStarted from './GettingStarted';
+
+import Admin from './Admin';
+import AdminUsers from './Admin/Users';
+import AdminCallLogs from './Admin/CallLogs';
+
 import Recover from './Recover';
 import NotAuthorized from './NotAuthorized';
 
@@ -90,13 +96,17 @@ export default class Index extends React.Component {
               <Route path="/pricing" component={Pricing} />
               <Route path="/login" component={Login} />
               <Route path="/signup" component={Signup} />
-              <Route path="/dashboard" component={Dashboard} />
               <Route path="/getting-started" component={GettingStarted} />
-              <Route path="/settings" component={Settings} />
-              <Route path="/profile" component={Profile} />
+              <Route exact path="/dashboard" component={Dashboard} />
+              <Route path="/dashboard/settings" component={Settings} />
+              <Route path="/dashboard/profile" component={Profile} />
               <Route path="/schedule" component={Schedule} />
-              <Route path="/video" component={Video} />
+              <Route exact path="/video" component={Video} />
+              <Route path="/video/logs" component={CallLogs} />
               <Route path="/my-athletes" component={MyAthletes} />
+              <Route exact path="/admin" component={Admin} />
+              <Route path="/admin/users" component={AdminUsers} />
+              <Route path="/admin/call-logs" component={AdminCallLogs} />
             </Layout>
           </div>
           {ENV_CONFIG.ENV !== 'production' ? <div className={classes.environment}>{ENV_CONFIG.ENV}</div> : ''}

@@ -26,12 +26,17 @@ export default class LefNavigation extends Component {
   }
 
   render () {
-    const { account, activePath } = this.props;
-    const accountExists = isLoaded(account) && !isEmpty(account);
+    let { account, activePath } = this.props;
+    let accountExists = isLoaded(account) && !isEmpty(account);
+    let primaryRoute;
 
     let renderNavItems = () => {
       return navItems.filter((navGroup) => {
-          return (!navGroup.showOnlyFor || navGroup.showOnlyFor === account.role.name)
+        if (navGroup.showOnlyFor) {
+          return navGroup.showOnlyFor.includes(account.status === 'pending' ? `${account.role.name}-pending` : account.role.name);
+        }else{
+          return true;
+        }
         })
         .map((navGroup, index) => {
           return (
@@ -40,7 +45,7 @@ export default class LefNavigation extends Component {
               className={classes.navItemsGroup}
             >
               <div
-                className={`${classes.navItemsGroupHeadline} ${account.role[navGroup.url] ? '' : classes.disabled}`}
+                className={`${classes.navItemsGroupHeadline} ${account.role[navGroup.url.substring(1)] ? '' : classes.disabled}`}
                 classNameActive={classes.active}
                 href={navGroup.url ? navGroup.url : null}
               >
@@ -51,8 +56,9 @@ export default class LefNavigation extends Component {
                 classNameActive={classes.active}
               >
                 {navGroup.children ? navGroup.children.map((navItem, navItemIndex) => {
+                  primaryRoute = navItem.url.split('/')[1];
                   return (
-                    <Link key={navItemIndex} to={`/${navItem.url}`} className={`${classes.navItem} ${(!account.role[navItem.url] || navItem.disabled) ? classes.disabled : ''}`}>{navItem.anchor}</Link>
+                    <Link key={navItemIndex} to={`${navItem.url}`} className={`${classes.navItem} ${(!account.role[primaryRoute] || navItem.disabled) ? classes.disabled : ''}`}>{navItem.anchor}</Link>
                   )
                 }) : ''}
               </div>

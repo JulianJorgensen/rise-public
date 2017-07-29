@@ -1,0 +1,39 @@
+@import "../../styles/variables.css";
+
+.container{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.welcome{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 40vh;
+  color: white;
+  background-image: linear-gradient(to bottom right, var(--orange), color(var(--orange) blackness(40%)));
+  width: 100%;
+}
+
+.logs{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background-color: gray(98%);
+  padding: rem(60) 0;
+
+  & .logsInner{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: rem(600);
+
+    & .logsCompleted,
+    & .logsUpcoming{
+      width: 48%;
+    }
+  }
+}

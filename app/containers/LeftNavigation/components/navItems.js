@@ -1,110 +1,123 @@
 export const navItems = [
   {
-    url: 'dashboard',
+    url: '/getting-started',
+    anchor: 'Getting started',
+    icon: 'fa-play',
+    showOnlyFor: [
+      'mentor-pending'
+    ]
+  },
+  {
+    url: '/dashboard',
     anchor: 'Dashboard',
     icon: 'fa-home',
     children: [
       {
-        url: 'getting-started',
-        anchor: 'Getting started'
-      },
-      {
-        url: 'profile',
+        url: '/dashboard/profile',
         anchor: 'Profile'
       },
       {
-        url: 'settings',
+        url: '/dashboard/settings',
         anchor: 'Settings'
       }
     ]
   },
+  // {
+  //   url: '/chat',
+  //   anchor: 'Chat',
+  //   icon: 'fa-comments',
+  //   children: [
+  //     {
+  //       url: '/inbox',
+  //       anchor: 'Inbox',
+  //       disabled: true
+  //     },
+  //     {
+  //       url: '/sent',
+  //       anchor: 'Sent',
+  //       disabled: true
+  //     }
+  //   ]
+  // },
   {
-    url: 'chat',
-    anchor: 'Chat',
-    icon: 'fa-comments',
-    children: [
-      {
-        url: 'inbox',
-        anchor: 'Inbox',
-        disabled: true
-      },
-      {
-        url: 'sent',
-        anchor: 'Sent',
-        disabled: true
-      }
-    ]
-  },
-  {
-    url: 'video',
+    url: '/video',
     anchor: 'Video',
     icon: 'fa-video-camera',
     children: [
       {
-        url: 'log',
-        anchor: 'Call log'
-      },
-      {
-        url: 'contacts',
-        anchor: 'Contacts',
-        disabled: true
+        url: '/video/logs',
+        anchor: 'Call logs'
       }
     ]
   },
   {
-    url: 'library',
+    url: '/library',
     anchor: 'Exercise Library',
     icon: 'fa-files-o',
     children: [
       {
-        url: 'sport-1',
+        url: '/sport-1',
         anchor: 'Sport 1',
         disabled: true
       },
       {
-        url: 'sport-2',
+        url: '/sport-2',
         anchor: 'Sport 2',
         disabled: true
       }
     ]
   },
   {
-    url: 'schedule',
+    url: '/schedule',
     anchor: 'Schedule',
     icon: 'fa-calendar'
   },
+  // {
+  //   url: '/activity',
+  //   anchor: 'Account Activity',
+  //   icon: 'fa-tasks',
+  //   children: [
+  //     {
+  //       url: '/login-time',
+  //       anchor: 'Login Time',
+  //       disabled: true
+  //     },
+  //     {
+  //       url: '/payments',
+  //       anchor: 'Payments',
+  //       disabled: true
+  //     },
+  //     {
+  //       url: '/overview',
+  //       anchor: 'Overview',
+  //       disabled: true
+  //     }
+  //   ]
+  // },
   {
-    url: 'activity',
-    anchor: 'Account Activity',
-    icon: 'fa-tasks',
-    children: [
-      {
-        url: 'login-time',
-        anchor: 'Login Time',
-        disabled: true
-      },
-      {
-        url: 'payments',
-        anchor: 'Payments',
-        disabled: true
-      },
-      {
-        url: 'overview',
-        anchor: 'Overview',
-        disabled: true
-      }
+    url: '/my-athletes',
+    anchor: 'My Athletes',
+    icon: 'fa-users',
+    showOnlyFor: [
+      'mentor',
+      'admin'
     ]
   },
   {
-    url: 'my-athletes',
-    anchor: 'My Athletes',
-    icon: 'fa-users',
-    showOnlyFor: 'mentor',
+    url: '/admin',
+    anchor: 'Admin',
+    icon: 'fa-cogs',
+    showOnlyFor: [
+      'admin'
+    ],
     children: [
       {
-        url: 'profiles',
-        anchor: 'Profiles',
-        disabled: true
+        url: '/admin/users',
+        anchor: 'Users'
+      },
+      {
+        url: '/admin/call-logs',
+        anchor: 'Call Logs'
       }
     ]
   }

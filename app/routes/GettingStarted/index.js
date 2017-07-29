@@ -1,16 +1,19 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import { firebaseConnect, dataToJS, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase';
 import { reduxFirebase as rfConfig } from 'app/config';
-import { userIsAuthenticated, userHasPermission } from 'utils/router'
-import axios from 'axios';
-import defaultUserImageUrl from 'assets/images/User.png';
-import {Tab, Tabs} from 'react-toolbox/lib/tabs';
+import { userIsAuthenticated, userHasPermission } from 'utils/router';
+import { Tab, Tabs } from 'react-toolbox/lib/tabs';
 import LoadingSpinner from 'components/LoadingSpinner';
-import AccountForm from './components/AccountForm/AccountForm';
-import SportsForm from './components/SportsForm/SportsForm';
-import BankingForm from './components/BankingForm/BankingForm';
+import AccountForm from 'containers/AccountForm/AccountForm';
+import SportsFormMentor from 'containers/SportsFormMentor';
+import SportsFormAthlete from 'containers/SportsFormAthlete';
+import BankingForm from 'containers/BankingForm';
+import ConfirmationFormAthlete from 'containers/ConfirmationFormAthlete';
 import classes from './index.css';
+
+import defaultUserImageUrl from 'assets/images/User.png';
 
 @userIsAuthenticated // redirect to /login if user is not authenticated
 @userHasPermission('getting-started')
@@ -117,6 +120,8 @@ export default class GettingStarted extends Component {
     const { account } = this.props;
     let { finished } = this.state;
 
+    let isMentor = account.role.name === 'mentor' ? true : false;
+
     if (!isLoaded(account)) {
       return <LoadingSpinner />
     }
@@ -132,21 +137,39 @@ export default class GettingStarted extends Component {
             />
           </Tab>
           <Tab label='2. Sport info' disabled={this.state.step !== 1}>
-            <SportsForm
-              initialValues={account}
-              account={account}
-              onSubmit={this.nextStep}
-              handleBack={this.prevStep}
-            />
+            {isMentor ?
+              <SportsFormMentor
+                initialValues={account}
+                account={account}
+                onSubmit={this.nextStep}
+                handleBack={this.prevStep}
+              /> :
+              <SportsFormAthlete
+                initialValues={account}
+                account={account}
+                onSubmit={this.nextStep}
+                handleBack={this.prevStep}
+              />
+            }
           </Tab>
-          <Tab label='3. Banking info' disabled={this.state.step !== 2}>
-            <BankingForm
-              initialValues={account}
-              account={account}
-              handleBack={this.prevStep}
-              onSubmit={this.finishSteps}
-            />
-          </Tab>
+          {isMentor ?
+            <Tab label='3. Getting paid' disabled={this.state.step !== 2}>
+              <BankingForm
+                initialValues={account}
+                account={account}
+                handleBack={this.prevStep}
+                onSubmit={this.finishSteps}
+              />
+            </Tab> :
+            <Tab label='3. Confirmation' disabled={this.state.step !== 2}>
+              <ConfirmationFormAthlete
+                initialValues={account}
+                account={account}
+                handleBack={this.prevStep}
+                onSubmit={this.finishSteps}
+              />
+            </Tab>
+          }
         </Tabs>
       )
     }

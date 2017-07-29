@@ -12,10 +12,19 @@ exports.adminAlertEmail = functions.https.onRequest((request, response) => {
   });
 });
 
-// Function: get all upcoming meetings
-exports.getMeetings = functions.https.onRequest((request, response) => {
+// Function: get all upcoming meetings based on UID
+exports.getMeetingsByUid = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
-    acuity.getAppointments(request.query).then((res) => {
+    acuity.getAppointmentsByUid(request.query).then((res) => {
+      response.status(200).send(res);
+    });
+  });
+});
+
+// Function: get all upcoming meetings based on UID
+exports.getAllMeetings = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    acuity.getAllAppointments(request.query).then((res) => {
       response.status(200).send(res);
     });
   });

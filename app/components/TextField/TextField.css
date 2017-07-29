@@ -3,4 +3,7 @@
   & input{
     padding-left: rem(5);
   }
+  & textarea{
+    line-height: rem(24);
+  }
 }

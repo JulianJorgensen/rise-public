@@ -91,7 +91,7 @@
     align-items: center;
     justify-content: center;
     color: white;
-    font-size: 25px;
+    font-size: rem(25);
   }
 
   & .rightNavVideo{
@@ -100,27 +100,27 @@
 
   & .rightNavChat{
     background-color: gray(30%);
-    margin-right: 40px;
   }
 
   & .rightNavName{
+    margin-left: rem(40);
     align-self: center;
   }
 
   & .rightNavAvatar{
-    margin: 0 20px;
+    margin: 0 rem(20);
     align-self: center;
   }
 
   & .rightNavMenu{
     border-left: 2px solid gray(80%);
-    padding: 20px;
+    padding: rem(20);
     align-self: center;
   }
 }
 
 .toggle{
-  width: 76px;
+  width: rem(76);
   height: inherit;
   cursor: pointer;
   background-color: var(--blue);
@@ -131,6 +131,6 @@
     content: '\f0c9';
     font-family: 'FontAwesome';
     color: white;
-    font-size: 30px;
+    font-size: rem(30);
   }
 }

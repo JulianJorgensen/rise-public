@@ -18,7 +18,7 @@ export default class TopNotification extends Component {
     this.props.history.push(url)
   }
 
-  handleCloseNotification = () => {
+  handleCloseNotification = (e) => {
     this.props.dispatch({ type: 'CLOSE_NOTIFICATION' });
   }
 
@@ -32,7 +32,10 @@ export default class TopNotification extends Component {
             className={`${classes.container} ${notification.style === 'error' ? classes.error : notification.style === 'success' ? classes.success : classes.default }`}
             onClick={() => this.handleNotificationClick() }
           >
-            {notification.message} <a onClick={() => this.handleCloseNotification()} className={classes.close}><i className="fa fa-times" /></a>
+            {notification.message} <a onClick={(e) => {
+              e.stopPropagation();
+              this.handleCloseNotification();
+            }} className={classes.close}><i className="fa fa-times" /></a>
           </div>
         )
       }else{

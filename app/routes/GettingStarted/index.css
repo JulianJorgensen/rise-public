@@ -4,9 +4,14 @@
   margin-top: rem(30);
 }
 
-.tab{
-  flex-grow: 1;
+.tab,
+.label {
   &:focus {
     outline: none;
   }
+}
+
+.label{
+  flex-grow: 1;
+  text-align: center;
 }

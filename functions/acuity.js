@@ -14,10 +14,20 @@ let acuity = Acuity.basic({
 let uidFieldId = 3274695;
 
 module.exports = {
-  getAppointments: function(query) {
+  getAppointmentsByUid: function(query) {
     return new Promise(function(resolve, reject) {
       let {max, minDate, maxDate, appointmentTypeID, uid} = query;
       acuity.request(`/appointments?minDate=${minDate}&maxDate=${maxDate}&max=${max}&appointmentTypeID=${appointmentTypeID}&canceled=false&field:${uidFieldId}=${uid}`, function (err, res, appointments) {
+        if (err) return console.error(err);
+        resolve(appointments);
+      });
+    });
+  },
+
+  getAllAppointments: function(query) {
+    return new Promise(function(resolve, reject) {
+      let {max, minDate, maxDate, appointmentTypeID} = query;
+      acuity.request(`/appointments?minDate=${minDate}&maxDate=${maxDate}&max=${max}&appointmentTypeID=${appointmentTypeID}&canceled=false`, function (err, res, appointments) {
         if (err) return console.error(err);
         resolve(appointments);
       });

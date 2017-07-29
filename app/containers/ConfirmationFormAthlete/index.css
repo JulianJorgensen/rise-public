@@ -1,0 +1,14 @@
+.ctas{
+  display: flex;
+  justify-content: space-between;
+  margin-top: rem(30);
+}
+
+.termsAndConditions{
+  height: rem(300);
+  width: 100%;
+  overflow-y: scroll;
+  font-style: italic;
+  color: gray(20%);
+  margin-bottom: rem(30);
+}

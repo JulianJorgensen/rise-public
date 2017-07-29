@@ -21,7 +21,7 @@ export default class NavAccordion extends React.Component{
   }
 
   setActivePath() {
-    this.setState({ activePath: this.props.location.pathname.substring(1) });
+    this.setState({ activePath: this.props.location.pathname });
   }
 
   render() {
@@ -42,7 +42,7 @@ export default class NavAccordion extends React.Component{
           let contentClassName = contentProps.className;
           let contentActiveClassName = contentProps.classNameActive;
           let titleHref = titleProps.href;
-          let active = activePath === titleHref;
+          let active = activePath.split('/')[1] === titleHref.substring(1);
 
           return (
             <div key={index} className={`${itemClassName ? itemClassName : classes.item} ${active ? classes.active : ''}`}>

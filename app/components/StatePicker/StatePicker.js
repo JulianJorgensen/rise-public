@@ -12,21 +12,19 @@ export default class StatePicker extends Component {
   }
 
   handleChange = (value) => {
-    console.log('changing state to: ', value);
     this.setState({selectedProvince: value}, () => {
       this.updateReduxForm();
-      console.log('new state: ', this.state);
     });
   };
 
   updateReduxForm = () => {
-    let {input} = this.props;
+    let { input } = this.props;
     input.onChange(this.state.selectedProvince);
   };
 
   updateProvinces = (country) => {
     let newDomesticProvinces = [];
-    let {input} = this.props;
+    let { input } = this.props;
     provinces.map((province) => {
       if (province.country === country){
         newDomesticProvinces.push({
@@ -64,7 +62,6 @@ export default class StatePicker extends Component {
     let { className, label, required, country } = this.props;
     const _className = cn(className, classes.default);
 
-    console.log('rendered state: ', this.state);
     if (this.state.domesticProvinces.length > 0){
       return (
         <Dropdown
@@ -72,6 +69,7 @@ export default class StatePicker extends Component {
           onChange={this.handleChange.bind(this)}
           source={this.state.domesticProvinces}
           value={this.state.selectedProvince}
+          placeholder="State / Province"
           auto
         />
       )
