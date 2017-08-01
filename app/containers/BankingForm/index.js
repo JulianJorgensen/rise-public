@@ -9,35 +9,9 @@ import classes from './index.css';
 export const BankingForm = ({ account, handleBack, handleSubmit, submitting }) => (
   <form className={classes.container} onSubmit={handleSubmit}>
     <Field
-      name='payment.account-name'
+      name='payment.stripeEmail'
       component={TextField}
-      label='Name account is under'
-    />
-    <Field
-      name='payment.banking-type'
-      component={RadioGroup}
-      inputs={[
-        { label: 'Business', value: 'business' },
-        { label: 'Personal', value: 'personal' }
-      ]}
-    />
-    <Field
-      name='payment.routing-number'
-      component={TextField}
-      label='Routing Number'
-    />
-    <Field
-      name='payment.account-number'
-      component={TextField}
-      label='Account Number'
-    />
-    <Field
-      name='payment.account-type'
-      component={RadioGroup}
-      inputs={[
-        { label: 'Chequeing', value: 'chequeing' },
-        { label: 'Savings', value: 'savings' }
-      ]}
+      label='Stripe email'
     />
     <div className={classes.ctas}>
       <Button

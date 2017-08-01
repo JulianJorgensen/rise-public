@@ -1,6 +1,5 @@
-.container {
-  width: rem(300);
-}
-
-.submit {
+.ctas{
+  display: flex;
+  justify-content: space-between;
+  margin-top: rem(30);
 }

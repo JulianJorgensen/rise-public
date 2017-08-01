@@ -1,6 +1,7 @@
 const functions = require('firebase-functions');
 const adminAlertEmail = require('./emails/adminAlert');
 const acuity = require('./acuity');
+const stripe = require('./stripe');
 const cors = require('cors')({origin: true});
 
 // Function: send admin alert email
@@ -12,10 +13,55 @@ exports.adminAlertEmail = functions.https.onRequest((request, response) => {
   });
 });
 
+// Function: create customer
+exports.createStripeCustomer = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    stripe.createCustomer(request.query).then((res) => {
+      response.status(200).send(res);
+    });
+  });
+});
+
+// Function: get all cards for a customer
+exports.getCards = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    stripe.getCards(request.query).then((res) => {
+      response.status(200).send(res);
+    });
+  });
+});
+
+// Function: create charge
+exports.createCharge = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    stripe.createCharge(request.query).then((res) => {
+      response.status(200).send(res);
+    });
+  });
+});
+
+// Function: create charge
+exports.createSubscription = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    stripe.createSubscription(request.query).then((res) => {
+      response.status(200).send(res);
+    });
+  });
+});
+
 // Function: get all upcoming meetings based on UID
 exports.getMeetingsByUid = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     acuity.getAppointmentsByUid(request.query).then((res) => {
+      response.status(200).send(res);
+    });
+  });
+});
+
+// Function: get all upcoming meetings based on mentor UID
+exports.getMeetingsByMentorUid = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    acuity.getAppointmentsByMentorUid(request.query).then((res) => {
       response.status(200).send(res);
     });
   });

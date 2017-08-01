@@ -26,7 +26,7 @@ export default class LefNavigation extends Component {
   }
 
   render () {
-    let { account, activePath } = this.props;
+    let { account, location, activePath } = this.props;
     let accountExists = isLoaded(account) && !isEmpty(account);
     let primaryRoute;
 
@@ -58,7 +58,10 @@ export default class LefNavigation extends Component {
                 {navGroup.children ? navGroup.children.map((navItem, navItemIndex) => {
                   primaryRoute = navItem.url.split('/')[1];
                   return (
-                    <Link key={navItemIndex} to={`${navItem.url}`} className={`${classes.navItem} ${(!account.role[primaryRoute] || navItem.disabled) ? classes.disabled : ''}`}>{navItem.anchor}</Link>
+                    <Link
+                      key={navItemIndex}
+                      to={`${navItem.url}`}
+                      className={`${classes.navItem} ${navItem.url === location.pathname ? classes.navItemActive : ''} ${(!account.role[primaryRoute] || navItem.disabled) ? classes.disabled : ''}`}>{navItem.anchor}</Link>
                   )
                 }) : ''}
               </div>

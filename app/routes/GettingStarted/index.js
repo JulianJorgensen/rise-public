@@ -10,6 +10,7 @@ import AccountForm from 'containers/AccountForm/AccountForm';
 import SportsFormMentor from 'containers/SportsFormMentor';
 import SportsFormAthlete from 'containers/SportsFormAthlete';
 import BankingForm from 'containers/BankingForm';
+import PaymentForm from 'containers/PaymentForm';
 import ConfirmationFormAthlete from 'containers/ConfirmationFormAthlete';
 import classes from './index.css';
 
@@ -73,7 +74,7 @@ export default class GettingStarted extends Component {
 
   nextStep = (newData) => {
     // update firebase
-    this.updateFirebase(newData);
+    if (newData) this.updateFirebase(newData);
 
     // proceed to next step
     this.handleStepChange(this.state.step + 1);
@@ -161,7 +162,17 @@ export default class GettingStarted extends Component {
                 onSubmit={this.finishSteps}
               />
             </Tab> :
-            <Tab label='3. Confirmation' disabled={this.state.step !== 2}>
+            <Tab label='3. Payment' disabled={this.state.step !== 2}>
+              <PaymentForm
+                initialValues={account}
+                account={account}
+                handleBack={this.prevStep}
+                onSubmit={this.nextStep}
+              />
+            </Tab>
+          }
+          {!isMentor ?
+            <Tab label='4. Confirmation' disabled={this.state.step !== 3}>
               <ConfirmationFormAthlete
                 initialValues={account}
                 account={account}
@@ -169,7 +180,7 @@ export default class GettingStarted extends Component {
                 onSubmit={this.finishSteps}
               />
             </Tab>
-          }
+          : ''}
         </Tabs>
       )
     }

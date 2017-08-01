@@ -4,48 +4,22 @@ import Button from 'components/Button';
 import TextField from 'components/TextField';
 import RadioGroup from 'components/RadioGroup';
 import { BANKING_FORM_NAME } from 'app/constants';
-import ProviderDataForm from '../ProviderDataForm';
 import classes from './index.css';
 
-export const MentorBankingForm = ({ account, handleSubmit, submitting }) => (
+export const MentorBankingForm = ({ account, handleBack, handleSubmit, submitting }) => (
   <form className={classes.container} onSubmit={handleSubmit}>
     <Field
-      name='payment.account-name'
+      name='payment.stripeEmail'
       component={TextField}
-      label='Name account is under'
+      label='Stripe email'
     />
-    <Field
-      name='payment.banking-type'
-      component={RadioGroup}
-      inputs={[
-        { label: 'Business', value: 'business' },
-        { label: 'Personal', value: 'personal' }
-      ]}
-    />
-    <Field
-      name='payment.routing-number'
-      component={TextField}
-      label='Routing Number'
-    />
-    <Field
-      name='payment.account-number'
-      component={TextField}
-      label='Account Number'
-    />
-    <Field
-      name='payment.account-type'
-      component={RadioGroup}
-      inputs={[
-        { label: 'Chequeing', value: 'chequeing' },
-        { label: 'Savings', value: 'savings' }
-      ]}
-    />
-    <Button
-      primary
-      label='Save'
-      type='submit'
-      className={classes.submit}
-    />
+    <div className={classes.ctas}>
+      <Button
+        primary
+        label='Finish'
+        type='submit'
+      />
+    </div>
   </form>
 )
 

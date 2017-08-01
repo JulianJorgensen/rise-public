@@ -65,7 +65,7 @@ export default class MyAthletes extends Component {
     return (
       <div>
         <h2>Your athletes</h2>
-        <Table multiSelectable onRowSelect={this.handleRowSelect} style={{ marginTop: 10 }}>
+        <Table multiSelectable={false} onRowSelect={this.handleRowSelect} style={{ marginTop: 10 }}>
           <TableHead>
             <TooltipCell tooltip="This is a custom name the athlete choose">
               Displayname

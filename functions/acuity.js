@@ -12,12 +12,23 @@ let acuity = Acuity.basic({
 
 // field id in acuity (for unique user id to identify a users appointments etc)
 let uidFieldId = 3274695;
+let mentorUidFieldId = 3376419;
 
 module.exports = {
   getAppointmentsByUid: function(query) {
     return new Promise(function(resolve, reject) {
       let {max, minDate, maxDate, appointmentTypeID, uid} = query;
       acuity.request(`/appointments?minDate=${minDate}&maxDate=${maxDate}&max=${max}&appointmentTypeID=${appointmentTypeID}&canceled=false&field:${uidFieldId}=${uid}`, function (err, res, appointments) {
+        if (err) return console.error(err);
+        resolve(appointments);
+      });
+    });
+  },
+
+  getAppointmentsByMentorUid: function(query) {
+    return new Promise(function(resolve, reject) {
+      let {max, minDate, maxDate, appointmentTypeID, uid} = query;
+      acuity.request(`/appointments?minDate=${minDate}&maxDate=${maxDate}&max=${max}&appointmentTypeID=${appointmentTypeID}&canceled=false&field:${mentorUidFieldId}=${uid}`, function (err, res, appointments) {
         if (err) return console.error(err);
         resolve(appointments);
       });
@@ -57,7 +68,7 @@ module.exports = {
 
   createAppointment: function(query) {
     return new Promise(function(resolve, reject){
-      let {appointmentTypeID, datetime, firstName, lastName, email, phone, calendarID, uid} = query;
+      let {appointmentTypeID, datetime, firstName, lastName, email, phone, calendarID, uid, mentorUid} = query;
       let options = {
         method: 'POST',
         body: {
@@ -69,7 +80,8 @@ module.exports = {
           phone,
           calendarID,
           fields: [
-            {id: uidFieldId, value: uid}
+            {id: uidFieldId, value: uid},
+            {id: mentorUidFieldId, value: mentorUid},
           ]
         }
       };
@@ -82,7 +94,7 @@ module.exports = {
   },
 
   createRecurringAppointments: function(query) {
-    let {appointmentTypeID, recurringDates, datetime, firstName, lastName, email, phone, calendarID, uid} = query;
+    let {appointmentTypeID, recurringDates, datetime, firstName, lastName, email, phone, calendarID, uid, mentorUid} = query;
     let dates = recurringDates.replace(/ /g, '+').split(',');
 
     let createAppointments = dates.map((datetime) => {
@@ -98,7 +110,8 @@ module.exports = {
             phone,
             calendarID,
             fields: [
-              {id: uidFieldId, value: uid}
+              {id: uidFieldId, value: uid},
+              {id: mentorUidFieldId, value: mentorUid}
             ]
           }
         };

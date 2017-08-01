@@ -5,17 +5,17 @@
 // ------------------------------------
 // Reducer
 // ------------------------------------
-const initialState = null;
+const initialState = {needsUpdate: true};
 export default function meetingsReducer (state = initialState, action) {
   switch (action.type) {
     case 'SET_MEETINGS':
       return {
         ...state,
         upcoming: [
-          ...action.upcomingMeetings
+          ...action.upcoming
         ],
         completed: [
-          ...action.completedMeetings
+          ...action.completed
         ]
       };
     case 'SET_ALL_MEETINGS':
@@ -23,12 +23,17 @@ export default function meetingsReducer (state = initialState, action) {
         ...state,
         all: {
           upcoming: [
-            ...action.upcomingMeetings
+            ...action.upcoming
           ],
           completed: [
-            ...action.completedMeetings
+            ...action.completed
           ]
         }
+      };
+    case 'MEETINGS_NEEDS_UPDATE':
+      return {
+        ...state,
+        needsUpdate: action.state
       };
     default:
       return state;

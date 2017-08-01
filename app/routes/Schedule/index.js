@@ -164,6 +164,7 @@ export default class Schedule extends Component {
   confirmMeeting = () => {
     let { account } = this.props;
     let { selectedAthlete, recurring, selectedDate, selectedTime } = this.state;
+    let isMentor = (account.role.name === 'mentor');
     let recurringDates = [];
 
     this.setState({
@@ -190,17 +191,23 @@ export default class Schedule extends Component {
         email: account.email,
         phone: account.phone,
         uid: selectedAthlete ? selectedAthlete.uid : account.uid,
+        mentorUid: isMentor ? account.uid : account.mentor.uid,
         recurringDates: recurring ? recurringDates : null
       }
     })
     .then((response) => {
       let confirmation = response.data;
-      console.log('confirmed! ', confirmation);
       this.setState({
         isConfirming: false,
         isConfirmed: true,
         showConfirmationModal: false,
         location: confirmation.location
+      });
+
+      // update redux connected meetings
+      this.props.dispatch({
+        type: 'MEETINGS_NEEDS_UPDATE',
+        state: true
       });
     })
     .catch((error) => {
@@ -214,6 +221,7 @@ export default class Schedule extends Component {
   render () {
     let { account } = this.props;
     let { selectedAthlete, recurring, selectedDate, selectedTime, showTimesModal, showDatesModal, showConfirmationModal, availableTimes, availableTimesFetched, isConfirmed, isConfirming, location } = this.state;
+    let isMentor = (account.role.name === 'mentor');
 
     let renderAssignAthlete = () => {
       let assignedAthletes = account.mentees.map((mentee) => {
@@ -273,7 +281,7 @@ export default class Schedule extends Component {
       )
     }
 
-    if (account.role.name === 'mentor' && !account.mentees) {
+    if (isMentor && !account.mentees) {
       return (
         <div className={classes.container}>
           <h4>You currently don't have any athletes assigned.</h4>
@@ -303,10 +311,10 @@ export default class Schedule extends Component {
     }else if (recurring !== null){
       return (
         <div className={classes.container}>
-          <h2>Scheduling {recurring ? `${RECURRING_WEEKS} recurring sessions` : 'a single session'} with your {account.role.name === 'mentor' ? `athlete ${ selectedAthlete ? selectedAthlete.firstName : '' }` : `mentor ${account.mentor.firstName}`}</h2>
+          <h2>Scheduling {recurring ? `${RECURRING_WEEKS} recurring sessions` : 'a single session'} with your {isMentor ? `athlete ${ selectedAthlete ? selectedAthlete.firstName : '' }` : `mentor ${account.mentor.firstName}`}</h2>
 
           <form onSubmit={this.handleConfirmation} className={classes.scheduleForm}>
-            { account.role.name === 'mentor' ? renderAssignAthlete() : '' }
+            { isMentor ? renderAssignAthlete() : '' }
 
             <div className={classes.dateTimeFields}>
               <DatePicker

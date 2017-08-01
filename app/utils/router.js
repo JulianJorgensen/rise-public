@@ -77,9 +77,6 @@ export const userHasPermission = permission => connectedReduxRedirect({
   authenticatedSelector: ({ firebase }) => {
     const account = pathToJS(firebase, 'profile');
     const auth = pathToJS(firebase, 'auth');
-    // check if has permission using lodash
-    console.log('permission: ', permission);
-    console.log('account: ', account);
     return (!isEmpty(account) && isLoaded(account) && get(account, `role.${permission}`, false));
   },
   // predicate: auth => get(auth, `user.role.${permission}`, false),

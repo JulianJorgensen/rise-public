@@ -4,10 +4,10 @@
 :root {
   --h1: rem(50);
   --h2: rem(30);
-  --h3: rem(26);
-  --h4: rem(22);
-  --h5: rem(20);
-  --h6: rem(16);
+  --h3: rem(22);
+  --h4: rem(18);
+  --h5: rem(16);
+  --h6: rem(14);
 
   --lineHeight: 1.15;
 }
