@@ -64,7 +64,7 @@ class AddCard extends React.Component {
       <form onSubmit={this.handleSubmit}>
         {/* <AddressSection /> */}
         <label className={classes.cardLabel}>
-          Add a new card
+          <h5>Add a new card</h5>
           <div className={classes.card}>
             <CardElement style={{base: {fontSize: '18px'}}} />
           </div>

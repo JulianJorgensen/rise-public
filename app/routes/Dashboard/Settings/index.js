@@ -87,7 +87,7 @@ export default class Settings extends Component {
                 onSubmit={this.updateAccount}
               /> :
               <Elements>
-                <PaymentForm />
+                <PaymentForm showCards={true} />
               </Elements>
             }
           </Tab>

@@ -31,6 +31,15 @@ exports.getCards = functions.https.onRequest((request, response) => {
   });
 });
 
+// Function: delete a card from Stripe
+exports.deleteCard = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    stripe.deleteCard(request.query).then((res) => {
+      response.status(200).send(res);
+    });
+  });
+});
+
 // Function: create charge
 exports.createCharge = functions.https.onRequest((request, response) => {
   cors(request, response, () => {

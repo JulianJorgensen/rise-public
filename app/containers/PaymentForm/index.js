@@ -5,10 +5,12 @@ import AddCard from './components/AddCard';
 
 export default class PaymentForm extends React.Component {
   render() {
+    let { showCards } = this.props;
+
     return (
       <Elements>
         <div>
-          <ExistingCards />
+          { showCards ? <ExistingCards /> : '' }
           <AddCard {...this.props} />
         </div>
       </Elements>

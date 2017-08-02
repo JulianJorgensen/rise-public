@@ -5,10 +5,12 @@ import { userIsAuthenticated, userHasPermission } from 'utils/router';
 import { injectStripe } from 'react-stripe-elements';
 import axios from 'axios';
 import { firebase as fbConfig } from 'app/config';
+import LoadingSpinner from 'components/LoadingSpinner';
 import Button from 'components/Button';
 import AddressSection from './AddressSection';
 import CardItem from './CardItem';
 import classes from './index.css';
+
 
 @userIsAuthenticated
 @userHasPermission('settings')
@@ -52,23 +54,40 @@ class ExistingCards extends React.Component {
 
   render() {
     let { cards, fetchedCards } = this.state;
+    let { account } = this.props;
 
     if (!fetchedCards) {
       return (
-        <div>
-          getting cards...
-        </div>
+        <LoadingSpinner />
       );
     }
 
+    if (cards.length < 1) {
+      return (
+        <div className={classes.cards}>
+          You haven't added any cards yet.
+        </div>
+      )
+    }
+
     return (
-      <div>
-        Current cards
-        <ul className={classes.cards}>
+      <div className={classes.cards}>
+        <h5>Current active {cards.length > 1 ? 'cards' : 'card'}</h5>
+        <div>
           {cards.map((card, index) => {
-            return <CardItem key={index} last4={card.last4} />
+            return (
+              <CardItem
+                key={index}
+                last4={card.last4}
+                name={card.name}
+                id={card.id}
+                exp_month={card.exp_month}
+                exp_year={card.exp_year}
+                stripeCustomerId={account.payment.stripeCustomerId}
+              />
+            )
           })}
-        </ul>
+        </div>
       </div>
     );
   }

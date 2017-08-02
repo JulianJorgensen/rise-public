@@ -38,6 +38,18 @@ module.exports = {
     });
   },
 
+  deleteCard: function(query) {
+    let { stripeCustomerId, cardId } = query;
+    console.log('deleting card...');
+    console.log('stripeCustomerId: ', stripeCustomerId);
+    console.log('cardId: ', cardId);
+    return new Promise(function(resolve, reject) {
+      stripe.customers.deleteCard(stripeCustomerId, cardId, function(err, confirmation) {
+        resolve(confirmation);
+      });
+    });
+  },
+
   createCharge: function(query) {
     let { amount, currency, stripeCustomerId, description } = query;
 
