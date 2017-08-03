@@ -49,7 +49,7 @@ export const SportsFormMentor = ({ account, handleBack, handleSubmit, submitting
       <Button
         label='Back'
         type='button'
-        onClick={handleBack}
+        onClick={() => handleBack}
       />
       <Button
         primary

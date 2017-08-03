@@ -26,10 +26,6 @@ export default class Dashboard extends Component {
     firebase: PropTypes.object.isRequired
   }
 
-  componentWillMount() {
-    console.log('mounting dashboard...');
-  }
-
   render () {
     const { account, history } = this.props;
     const { firstName, timezone, mentor } = account;

@@ -8,13 +8,7 @@ module.exports = {
     'postcss-remify': {},
     'postcss-cssnext': {},
     'postcss-font-magician' : {
-      variants: {
-        'Poppins': {
-          '400': [],
-          '600': []
-        }
-      },
-      foundries: ['google']
+      hosted: ['./app/assets/fonts']
     }
   }
 };

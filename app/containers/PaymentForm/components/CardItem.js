@@ -48,7 +48,7 @@ class CardItem extends React.Component {
         />
         <CardText>{name}</CardText>
         <CardActions>
-          <Button icon='delete' label="Delete" disabled={deleting ? true : false} onClick={this.deleteCard.bind(this)} />
+          <Button icon='delete' label="Delete" disabled={deleting ? true : false} onClick={() => this.deleteCard.bind(this)} />
         </CardActions>
       </Card>
     );

@@ -80,7 +80,7 @@ export default class TimezoneSelector extends Component {
           <Button
             floating
             mini
-            onClick={this.setNewTimezone}
+            onClick={() => this.setNewTimezone}
           ><i className="fa fa-check" /></Button>
         </div>
       )

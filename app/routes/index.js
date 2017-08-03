@@ -6,6 +6,7 @@ import { firebase as fbConfig } from 'app/config';
 import DocumentMeta from 'react-document-meta';
 
 import TopNotification from 'components/TopNotification';
+import Snackbar from 'components/Snackbar';
 import LeftNavigation from 'containers/LeftNavigation';
 import Navbar from '../containers/Navbar';
 import GetMeetings from 'containers/GetMeetings';
@@ -84,6 +85,7 @@ export default class Index extends React.Component {
       <div className={classes.container}>
         <GetMeetings />
         <TopNotification />
+        <Snackbar />
         <div className={`${classes.content} ${notification ? notification.show ? classes.withNotification : '' : ''}`}>
           <DocumentMeta {...meta} />
           <LeftNavigation />

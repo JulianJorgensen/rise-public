@@ -1,18 +1,41 @@
-import React from 'react';
-import cn from 'classnames';
-import { Snackbar } from 'react-toolbox/lib/snackbar';
-import classes from './Snackbar.css';
+import React, { Component, PropTypes } from 'react'
+import { Link, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import RTSnackbar from 'react-toolbox/lib/snackbar';
+import classes from './index.css';
 
-const SnackBar = ({ className, ...props }) => {
-  const _className = cn(className, classes.default);
+@withRouter
+@connect(
+  ({ snackbar }) => ({
+    snackbar
+  })
+)
+export default class Snackbar extends Component {
+  handleCloseSnackbar = (e) => {
+    this.props.dispatch({ type: 'CLOSE_SNACKBAR' });
+  }
 
-  return (
-    <Snackbar
-      className={_className}
-      theme={classes}
-      {...props}
-    />
-  )
-};
+  handleSnackbarClick = () => {
+    this.handleCloseSnackbar();
+  }
 
-export default SnackBar;
+  render() {
+    let { snackbar } = this.props;
+
+    if (!snackbar || !snackbar.show) {
+      return <div></div>
+    }
+
+    return (
+      <RTSnackbar
+        active={snackbar.show}
+        type='warning'
+        action='close'
+        label={snackbar.message}
+        onClick={this.handleSnackbarClick}
+        timeout={8000}
+        onTimeout={this.handleSnackbarClick}
+      />
+    )
+  }
+}

@@ -25,7 +25,7 @@ export const ConfirmationFormAthlete = ({ account, handleBack, handleSubmit, sub
       <Button
         label='Back'
         type='button'
-        onClick={handleBack}
+        onClick={() => handleBack}
       />
       <Button
         primary

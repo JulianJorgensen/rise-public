@@ -5,6 +5,8 @@ import { firebase as fbConfig, reduxFirebase as rfConfig } from 'app/config';
 import { userIsAuthenticated, userHasPermission } from 'utils/router';
 import axios from 'axios';
 import moment from 'moment-timezone';
+import _ from 'lodash';
+import { isMentor, isAdmin } from 'utils/utils';
 import {Checkbox, Chip, DatePicker, Dropdown, Dialog, Input, List, ListItem} from 'react-toolbox/lib';
 import TimezoneSelector from './components/TimezoneSelector';
 import Button from 'components/Button';
@@ -54,7 +56,6 @@ export default class Schedule extends Component {
   getAvailableDates = (month) => {
     let { mentor, timezone } = this.props.account;
 
-    console.log('getting dates for: ', month);
     // get available dates
     axios.get(`${fbConfig.functions}/getAvailableDates`, {
       params: {
@@ -114,10 +115,7 @@ export default class Schedule extends Component {
     this.setState({
       showDatesModal: true,
       showTimesModal: false
-    }, () => {
-      console.log('handleShowDates');
-      console.log('state: ', this.state);
-    })
+    });
   };
 
   showAvailableTimes = () => {
@@ -141,8 +139,6 @@ export default class Schedule extends Component {
       })
       .then((response) => {
         let availableTimes = response.data;
-        console.log(fbConfig.functions);
-        console.log('available times: ', response.data);
         availableTimes.sort((a,b) => {
           // Turn your strings into dates, and then subtract them
           // to get a value that is either negative, positive, or zero.
@@ -162,9 +158,8 @@ export default class Schedule extends Component {
   }
 
   confirmMeeting = () => {
-    let { account } = this.props;
+    let { account, dispatch } = this.props;
     let { selectedAthlete, recurring, selectedDate, selectedTime } = this.state;
-    let isMentor = (account.role.name === 'mentor');
     let recurringDates = [];
 
     this.setState({
@@ -190,25 +185,34 @@ export default class Schedule extends Component {
         lastName: account.lastName,
         email: account.email,
         phone: account.phone,
-        uid: selectedAthlete ? selectedAthlete.uid : account.uid,
-        mentorUid: isMentor ? account.uid : account.mentor.uid,
+        uid: selectedAthlete ? selectedAthlete : account.uid,
+        mentorUid: isMentor(account.role) ? account.uid : account.mentor.uid,
         recurringDates: recurring ? recurringDates : null
       }
     })
     .then((response) => {
       let confirmation = response.data;
-      this.setState({
-        isConfirming: false,
-        isConfirmed: true,
-        showConfirmationModal: false,
-        location: confirmation.location
-      });
+      if (confirmation.error){
+        console.log('error creating appointment', confirmation.error);
+        dispatch({
+          type: 'SET_SNACKBAR',
+          message: `There was an error creating the appointment: ${confirmation.message}`,
+          style: 'error'
+        });
+      }else{
+        this.setState({
+          isConfirming: false,
+          isConfirmed: true,
+          showConfirmationModal: false,
+          location: confirmation.location
+        });
 
-      // update redux connected meetings
-      this.props.dispatch({
-        type: 'MEETINGS_NEEDS_UPDATE',
-        state: true
-      });
+        // update redux connected meetings
+        dispatch({
+          type: 'MEETINGS_NEEDS_UPDATE',
+          state: true
+        });
+      }
     })
     .catch((error) => {
       console.log(`Error confirming appointment`, error);
@@ -221,15 +225,17 @@ export default class Schedule extends Component {
   render () {
     let { account } = this.props;
     let { selectedAthlete, recurring, selectedDate, selectedTime, showTimesModal, showDatesModal, showConfirmationModal, availableTimes, availableTimesFetched, isConfirmed, isConfirming, location } = this.state;
-    let isMentor = (account.role.name === 'mentor');
+    let selectedAthleteAccount = selectedAthlete && account.mentees ? _.find(account.mentees, { 'uid': selectedAthlete }) : '';
+
+    let assignedAthletes = account.mentees ? account.mentees.map((mentee) => {
+      return {
+        value: mentee.uid,
+        label: `${mentee.firstName ? mentee.firstName : mentee.email} ${mentee.lastName ? mentee.lastName : ''}`
+      };
+    }) : '';
+
 
     let renderAssignAthlete = () => {
-      let assignedAthletes = account.mentees.map((mentee) => {
-        return {
-          value: mentee,
-          label: `${mentee.firstName ? mentee.firstName : mentee.email} ${mentee.lastName ? mentee.lastName : ''}`
-        };
-      });
       return (
         <Dropdown
           auto
@@ -281,7 +287,7 @@ export default class Schedule extends Component {
       )
     }
 
-    if (isMentor && !account.mentees) {
+    if (isMentor(account.role) && !account.mentees) {
       return (
         <div className={classes.container}>
           <h4>You currently don't have any athletes assigned.</h4>
@@ -311,10 +317,10 @@ export default class Schedule extends Component {
     }else if (recurring !== null){
       return (
         <div className={classes.container}>
-          <h2>Scheduling {recurring ? `${RECURRING_WEEKS} recurring sessions` : 'a single session'} with your {isMentor ? `athlete ${ selectedAthlete ? selectedAthlete.firstName : '' }` : `mentor ${account.mentor.firstName}`}</h2>
+          <h2>Scheduling {recurring ? `${RECURRING_WEEKS} recurring sessions` : 'a single session'} with your {isMentor(account.role) ? `athlete ${ selectedAthlete ? selectedAthleteAccount.firstName : '' }` : `mentor ${account.mentor.firstName}`}</h2>
 
           <form onSubmit={this.handleConfirmation} className={classes.scheduleForm}>
-            { isMentor ? renderAssignAthlete() : '' }
+            { isMentor(account.role) ? renderAssignAthlete() : '' }
 
             <div className={classes.dateTimeFields}>
               <DatePicker
@@ -336,7 +342,7 @@ export default class Schedule extends Component {
                 label='Time'
                 name='time'
                 value={selectedTime ? moment(selectedTime).format('h:mma') : ''}
-                onClick={this.showAvailableTimes.bind(this)}
+                onClick={() => this.showAvailableTimes.bind(this)}
                 required
               />
             </div>
@@ -381,7 +387,7 @@ export default class Schedule extends Component {
             active={showConfirmationModal}
             onEscKeyDown={this.handleHideConfirmationModal}
             onOverlayClick={this.handleHideConfirmationModal}
-            title={`Confirm your session with ${selectedAthlete ? selectedAthlete.firstName : account.mentor.firstName}`}
+            title={`Confirm your session with ${selectedAthlete ? selectedAthleteAccount.firstName : account.mentor.firstName}`}
           >
             <div className={classes.confirmationDetails}>
               <div className={classes.time}><strong>{moment(selectedDate).format('MMMM Do YYYY')}</strong> at <strong>{moment(selectedTime).format('h:mma')}</strong></div>

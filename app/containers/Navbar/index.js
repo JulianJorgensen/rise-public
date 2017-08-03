@@ -49,8 +49,6 @@ export default class Navbar extends Component {
     const { account, history, notification, meetings, withNotification } = this.props;
     const accountExists = isLoaded(account) && !isEmpty(account);
 
-    console.log('account', account);
-
     let numberOfUpcomingAppointments = meetings ? meetings.upcoming ? meetings.upcoming.length : 0 : 0;
 
     const ctaMenu = (
@@ -79,7 +77,7 @@ export default class Navbar extends Component {
           />
           <MenuItem
             caption='Sign out'
-            onClick={this.handleLogout}
+            onClick={() => this.handleLogout}
           />
         </IconMenu>
       </div>

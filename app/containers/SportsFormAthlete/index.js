@@ -56,7 +56,7 @@ export const SportsFormAthlete = ({ account, handleBack, handleSubmit, submittin
       <Button
         label='Back'
         type='button'
-        onClick={handleBack}
+        onClick={() => handleBack}
       />
       <Button
         primary

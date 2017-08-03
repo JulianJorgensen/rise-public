@@ -3,7 +3,6 @@ import { Link, withRouter } from 'react-router-dom';
 import GoogleButton from 'react-google-button';
 import { connect } from 'react-redux';
 import { firebaseConnect, dataToJS, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase';
-import Snackbar from 'components/Snackbar';
 import { Card } from 'react-toolbox/lib/card';
 import { userIsNotAuthenticated } from 'utils/router';
 import { SIGNUP_PATH } from 'app/constants';
@@ -29,22 +28,19 @@ export default class Login extends Component {
     })
   }
 
-  state = {
-    // state of snackbar so it can be closed
-    snackCanOpen: false
-  }
-
-  handleSnackbarClick = () => {
-    this.setState({
-      snackCanOpen: false
-    });
-  };
-
   handleLogin = loginData => {
-    this.setState({ snackCanOpen: true });
-    this.props.firebase.login(loginData).then(() => {
-      this.props.history.push('/dashboard');
-    });
+    let { authError } = this.props;
+    if (isLoaded(authError) && !isEmpty(authError)) {
+      dispatch({
+        type: 'SET_SNACKBAR',
+        message: authError.message,
+        style: 'error'
+      });
+    }else{
+      this.props.firebase.login(loginData).then(() => {
+        this.props.history.push('/dashboard');
+      });
+    }
   }
 
   providerLogin = (provider) =>
@@ -52,11 +48,6 @@ export default class Login extends Component {
 
   render () {
     const { authError, firebase } = this.props
-    const { snackCanOpen } = this.state
-
-    console.log('authError: ', authError);
-    console.log('firebase: ', firebase);
-    console.log('firebase auth: ', firebase.auth);
 
     return (
       <div className={classes.wrapper}>
@@ -77,15 +68,6 @@ export default class Login extends Component {
             Sign Up
           </Link>
         </div>
-        <Snackbar
-          active={isLoaded(authError) && !isEmpty(authError) && snackCanOpen}
-          type='warning'
-          action='close'
-          label={authError ? authError.message : 'Signup error'}
-          onClick={() => this.handleSnackbarClick}
-          timeout={3000}
-          onTimeout={this.handleSnackbarClick}
-        />
       </div>
     )
   }

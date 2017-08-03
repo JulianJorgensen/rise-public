@@ -82,8 +82,8 @@ export default class Users extends Component {
         <Table onRowSelect={() => this.handleRowSelect} style={{ marginTop: 10 }}>
           <TableHead multiSelectable={false}>
             <TableCell>Role</TableCell>
-            <TableCell onClick={this.handleSortClick} sorted={sorted}>First name</TableCell>
-            <TableCell onClick={this.handleSortClick} sorted={sorted}>Last name</TableCell>
+            <TableCell onClick={() => this.handleSortClick} sorted={sorted}>First name</TableCell>
+            <TableCell onClick={() => this.handleSortClick} sorted={sorted}>Last name</TableCell>
             <TableCell>Email</TableCell>
           </TableHead>
           { Object.keys(users).map(

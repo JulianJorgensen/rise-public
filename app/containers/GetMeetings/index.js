@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import { firebaseConnect, dataToJS, pathToJS, isEmpty, isLoaded } from 'react-redux-firebase';
 import { firebase as fbConfig } from 'app/config';
 import { userIsAuthenticated, userHasPermission } from 'utils/router';
-import UserMeetings from './UserMeetings';
-import AllMeetings from './AllMeetings';
+import GetUserMeetings from './GetUserMeetings';
+import GetAllMeetings from './GetAllMeetings';
 import LoadingSpinner from 'components/LoadingSpinner';
+import { isMentor, isAdmin } from 'utils/utils';
 
 @userIsAuthenticated
 @firebaseConnect()
@@ -26,25 +27,11 @@ export default class GetMeetings extends Component {
     let { account } = this.props;
 
     if (!isEmpty(account) && isLoaded(account)) {
-      let { mentees, role } = account;
-
-      // is a mentor
-      if (role.name === 'mentor') {
-        return (
-          <UserMeetings isMentor={true} />
-        )
-      }
-
-      // FOR ADMINS ONLY
-      let isAdmin = role.name === 'admin' ? true : false;
-      if (isAdmin) {
-        return (
-          <AllMeetings />
-        )
-      }
-
       return (
-        <UserMeetings />
+        <div>
+          <GetUserMeetings isMentor={isMentor(account.role) ? true : false} />
+          {isAdmin(account.role) ? <GetAllMeetings /> : '' }
+        </div>
       )
     }else{
       return <div></div>

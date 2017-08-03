@@ -4,7 +4,6 @@ import GoogleButton from 'react-google-button';
 import { connect } from 'react-redux';
 import { firebaseConnect, dataToJS, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase';
 import { reduxFirebase as rfConfig } from 'app/config';
-import Snackbar from 'components/Snackbar';
 import {Tab, Tabs} from 'react-toolbox/lib/tabs';
 import moment from 'moment-timezone';
 import { LOGIN_PATH } from 'app/constants';
@@ -26,7 +25,6 @@ import { Card } from 'react-toolbox/lib/card';
 )
 export default class Signup extends Component {
   state = {
-    snackCanOpen: false,
     roleIndex: 0,
     role: 'athlete-pending'
   }
@@ -40,10 +38,17 @@ export default class Signup extends Component {
   }
 
   handleSignup = ({ email, password }) => {
-    const { firebase, history } = this.props;
+    const { firebase, history, authError } = this.props;
     const { createUser, update } = firebase;
-    this.setState({ snackCanOpen: true });
-    // create new user then login (redirect handled by factory)
+
+    if (isLoaded(authError) && !isEmpty(authError)) {
+      dispatch({
+        type: 'SET_SNACKBAR',
+        message: authError.message,
+        style: 'error'
+      });
+      return false;
+    }
 
     return createUser({ email, password })
       .then((newUser) => {
@@ -65,21 +70,12 @@ export default class Signup extends Component {
     });
   };
 
-  handleSnackbarClick = () => {
-    this.setState({
-      snackCanOpen: false
-    });
-  };
-
   providerLogin = (provider) => {
-    this.setState({ snackCanOpen: true })
-
     return this.props.firebase.login({ provider })
   }
 
   render () {
     const { authError } = this.props
-    const { snackCanOpen } = this.state
 
     return (
       <div className={classes.wrapper}>
@@ -105,17 +101,6 @@ export default class Signup extends Component {
             Login
           </Link>
         </div>
-        {
-          <Snackbar
-            active={isLoaded(authError) && !isEmpty(authError) && snackCanOpen}
-            type='warning'
-            action='close'
-            label={authError ? authError.message : 'Signup error'}
-            onClick={() => this.handleSnackbarClick}
-            onTimeout={() => this.handleSnackbarClick}
-            timeout={3000}
-          />
-        }
       </div>
     )
   }

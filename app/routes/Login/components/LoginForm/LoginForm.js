@@ -8,8 +8,6 @@ import TextField from 'components/TextField';
 import { required, validateEmail } from 'utils/forms';
 import classes from './LoginForm.css';
 
-console.log('login form name: ', LOGIN_FORM_NAME);
-
 export const LoginForm = ({ handleSubmit, submitting }) => (
   <form className={classes.container} onSubmit={handleSubmit}>
     <Field

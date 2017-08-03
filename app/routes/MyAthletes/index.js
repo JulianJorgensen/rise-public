@@ -70,8 +70,8 @@ export default class MyAthletes extends Component {
             <TooltipCell tooltip="This is a custom name the athlete choose">
               Displayname
             </TooltipCell>
-            <TableCell onClick={this.handleSortClick} sorted={sorted}>First name</TableCell>
-            <TableCell onClick={this.handleSortClick} sorted={sorted}>Last name</TableCell>
+            <TableCell onClick={() => this.handleSortClick} sorted={sorted}>First name</TableCell>
+            <TableCell onClick={() => this.handleSortClick} sorted={sorted}>Last name</TableCell>
             <TableCell>Email</TableCell>
           </TableHead>
           {sortedData.map((item, idx) => (
