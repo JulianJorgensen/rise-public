@@ -77,7 +77,7 @@ export default class Navbar extends Component {
           />
           <MenuItem
             caption='Sign out'
-            onClick={() => this.handleLogout}
+            onClick={this.handleLogout}
           />
         </IconMenu>
       </div>

@@ -20,7 +20,7 @@ import { Card } from 'react-toolbox/lib/card';
 @connect(
   ({ firebase }) => ({
     authError: pathToJS(firebase, 'authError'),
-     auth: pathToJS(firebase, 'auth')
+    auth: pathToJS(firebase, 'auth')
   })
 )
 export default class Signup extends Component {
@@ -38,7 +38,7 @@ export default class Signup extends Component {
   }
 
   handleSignup = ({ email, password }) => {
-    const { firebase, history, authError } = this.props;
+    const { firebase, history, authError, dispatch } = this.props;
     const { createUser, update } = firebase;
 
     if (isLoaded(authError) && !isEmpty(authError)) {

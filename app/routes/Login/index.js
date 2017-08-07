@@ -13,9 +13,10 @@ import classes from './index.css';
 @userIsNotAuthenticated
 @firebaseConnect()
 @connect(
-  ({ notification, firebase }) => ({
+  ({ snackbar, notification, firebase }) => ({
     authError: pathToJS(firebase, 'authError'),
-    notification
+    notification,
+    snackbar
   })
 )
 export default class Login extends Component {
@@ -29,18 +30,17 @@ export default class Login extends Component {
   }
 
   handleLogin = loginData => {
-    let { authError } = this.props;
-    if (isLoaded(authError) && !isEmpty(authError)) {
+    this.props.firebase.login(loginData).then(() => {
+      this.props.history.push('/dashboard');
+    }).catch((error) => {
+      let { authError, dispatch } = this.props;
+
       dispatch({
         type: 'SET_SNACKBAR',
         message: authError.message,
         style: 'error'
       });
-    }else{
-      this.props.firebase.login(loginData).then(() => {
-        this.props.history.push('/dashboard');
-      });
-    }
+    })
   }
 
   providerLogin = (provider) =>

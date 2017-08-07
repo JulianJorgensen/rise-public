@@ -4,7 +4,8 @@ export const navItems = [
     anchor: 'Getting started',
     icon: 'fa-play',
     showOnlyFor: [
-      'mentor-pending'
+      'mentor-pending',
+      'athlete-pending'
     ]
   },
   {
