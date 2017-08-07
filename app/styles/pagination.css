@@ -1,0 +1,31 @@
+.container{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding: rem(30) 0;
+}
+
+.previous,
+.next,
+.break,
+.page{
+  list-style-type: none;
+}
+
+.previous,
+.break,
+.page{
+  margin-right: rem(10);
+}
+
+.page{
+  cursor: pointer;
+}
+
+.active{
+  font-weight: bold;
+  &:focus{
+    outline: 0;
+    border: 0;
+  }
+}

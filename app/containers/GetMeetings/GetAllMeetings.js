@@ -43,7 +43,7 @@ export default class GetAllMeetings extends Component {
       this.props.dispatch({
         type: 'SET_ALL_MEETINGS',
         upcoming: meetingsSorted.upcomingMeetings,
-        completed: meetingsSorted.upcomingMeetings
+        completed: meetingsSorted.completedMeetings
       });
     })
     .catch((error) => {

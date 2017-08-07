@@ -6,15 +6,19 @@ import { firebaseConnect, dataToJS, pathToJS, isEmpty, isLoaded } from 'react-re
 import { firebase as fbConfig } from 'app/config';
 import moment from 'moment-timezone';
 import { userIsAuthenticated, userHasPermission } from 'utils/router';
+import { getAttendeesFromMeeting } from 'utils/utils';
 import LoadingSpinner from 'components/LoadingSpinner';
 import classes from './index.css';
 
 @userIsAuthenticated
-@firebaseConnect()
+@firebaseConnect([
+  'users'
+])
 @connect(
   ({ firebase, meetings }) => ({
     account: pathToJS(firebase, 'profile'),
     auth: pathToJS(firebase, 'auth'),
+    users: dataToJS(firebase, 'users'),
     meetings
   })
 )
@@ -31,8 +35,9 @@ export default class AllMeetings extends Component {
   }
 
   render () {
-    let { account, meetings, filter, limit } = this.props;
+    let { account, meetings, filter, limit, users } = this.props;
     let { firstName, timezone, mentor } = account;
+    let attendees, meetingMentor, meetingAttendee;
 
     if(!meetings){
       return (
@@ -57,9 +62,12 @@ export default class AllMeetings extends Component {
           <div className={classes.completed}>
             <h3>Completed Meetings</h3>
             {completed.map((meeting, index) => {
+              attendees = meeting.forms.length > 0 ? getAttendeesFromMeeting(meeting.forms, users) : {};
+              meetingAttendee = attendees.athlete ? attendees.athlete.firstName : `${meeting.firstName} ${meeting.lastName}`;
+              meetingMentor = attendees.mentor ? attendees.mentor.firstName : meeting.calendar;
               return (
                 <div key={index} className={classes.logItem}>
-                  <h4 className={classes.title}>{meeting.type} with {mentor.firstName}</h4>
+                  <h4 className={classes.title}>{meetingMentor} and {meetingAttendee}</h4>
                   <date className={classes.date}>{moment(meeting.datetime).tz(timezone).format('MMMM Do YYYY h:mma z (Z)')}</date>
                   <div className={classes.description}>{meeting.type}</div>
                 </div>
@@ -82,12 +90,14 @@ export default class AllMeetings extends Component {
         <div>
           <h3>Upcoming Meetings</h3>
           {upcoming.map((meeting, index) => {
+            attendees = meeting.forms.length > 0 ? getAttendeesFromMeeting(meeting.forms, users) : {};
+            meetingAttendee = attendees.athlete ? attendees.athlete.firstName : `${meeting.firstName} ${meeting.lastName}`;
+            meetingMentor = attendees.mentor ? attendees.mentor.firstName : meeting.calendar;
             return (
               <div key={index} className={classes.logItem}>
-                <h4 className={classes.title}>{meeting.type} with {mentor.firstName}</h4>
+                <h4 className={classes.title}>{meetingMentor} and {meetingAttendee}</h4>
                 <date className={classes.date}>{moment(meeting.datetime).tz(timezone).format('MMMM Do YYYY h:mma z (Z)')}</date>
                 <div className={classes.description}>{meeting.type}</div>
-                <div><a href={`https://zoom.us/j/${meeting.location.split(' ')[3]}`} target="new">Join now</a></div>
               </div>
             )
           })}

@@ -1,0 +1,8 @@
+.container{
+  composes: container from "../../../../../styles/layout.css";
+}
+
+.download{
+  display: flex;
+  justify-content: center;
+}

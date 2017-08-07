@@ -8,6 +8,7 @@
   padding-left: rem(30);
   padding-right: rem(30);
   background-color: gray(95%);
+  text-decoration: none;
 }
 
 .button.hollow:not([disabled]) {

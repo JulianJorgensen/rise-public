@@ -1,0 +1,6 @@
+.container{
+  composes: container from "../../../../../styles/layout.css";
+  display: flex;
+  justify-content: space-between;
+  width: rem(500);
+}

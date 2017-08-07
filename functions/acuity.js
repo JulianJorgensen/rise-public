@@ -38,7 +38,7 @@ module.exports = {
   getAllAppointments: function(query) {
     return new Promise(function(resolve, reject) {
       let {max, minDate, maxDate, appointmentTypeID} = query;
-      acuity.request(`/appointments?minDate=${minDate}&maxDate=${maxDate}&max=${max}&appointmentTypeID=${appointmentTypeID}&canceled=false`, function (err, res, appointments) {
+      acuity.request(`/appointments?minDate=${minDate}&maxDate=${maxDate}${max ? `&max=${max}` : ''}&appointmentTypeID=${appointmentTypeID}&canceled=false`, function (err, res, appointments) {
         if (err) return console.error(err);
         resolve(appointments);
       });
