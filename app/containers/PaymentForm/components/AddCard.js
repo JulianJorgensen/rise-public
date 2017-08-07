@@ -76,7 +76,7 @@ class AddCard extends React.Component {
             <Button
               label='Back'
               type='button'
-              onClick={() => handleBack}
+              onClick={handleBack}
             /> : ''}
 
           <Button

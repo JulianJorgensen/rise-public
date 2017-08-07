@@ -65,6 +65,7 @@ export default class GettingStarted extends Component {
   };
 
   prevStep = () => {
+    console.log('handling back');
     // back to last step
     this.handleStepChange(this.state.step - 1);
 
@@ -166,6 +167,7 @@ export default class GettingStarted extends Component {
               <PaymentForm
                 initialValues={account}
                 account={account}
+                hasBackButton={true}
                 handleBack={this.prevStep}
                 onSubmit={this.nextStep}
               />

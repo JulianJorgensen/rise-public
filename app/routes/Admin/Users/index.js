@@ -71,8 +71,6 @@ export default class Users extends Component {
       )
     }
 
-    console.log('All users: ', users);
-
     const { sorted } = this.state;
     // const sortedData = this.getSortedData();
 

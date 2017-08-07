@@ -76,10 +76,10 @@ export default class MyAthletes extends Component {
           </TableHead>
           {sortedData.map((item, idx) => (
             <TableRow key={idx} selected={this.state.selected.indexOf(item.displayName) !== -1}>
-              <TableCell>{item.displayName}</TableCell>
-              <TableCell>{item.firstName}</TableCell>
-              <TableCell>{item.lastName}</TableCell>
-              <TableCell>{item.email}</TableCell>
+              <TableCell><div>{item.displayName}</div></TableCell>
+              <TableCell><div>{item.firstName}</div></TableCell>
+              <TableCell><div>{item.lastName}</div></TableCell>
+              <TableCell><div>{item.email}</div></TableCell>
             </TableRow>
           ))}
         </Table>

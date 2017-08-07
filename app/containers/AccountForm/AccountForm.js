@@ -7,6 +7,7 @@ import CountryPicker from 'components/CountryPicker';
 import countryList from 'country-list';
 import StatePicker from 'components/StatePicker';
 import RadioGroup from 'components/RadioGroup';
+import TimezoneSelector from 'components/TimezoneSelector';
 import { ACCOUNT_FORM_NAME } from 'app/constants';
 import ProviderDataForm from 'components/ProviderDataForm';
 import classes from './AccountForm.css';
@@ -119,6 +120,11 @@ class AccountForm extends Component {
           name='zipcode'
           component={TextField}
           label='ZIP / Post Code'
+          required
+        />
+        <Field
+          name='timezone'
+          component={TimezoneSelector}
           required
         />
         <Field
