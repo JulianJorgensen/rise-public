@@ -89,10 +89,10 @@ export default class Users extends Component {
           { Object.keys(users).map(
               (user, id) => (
                 <TableRow key={id}>
-                  <TableCell>{users[user].role}</TableCell>
-                  <TableCell>{users[user].firstName}</TableCell>
-                  <TableCell>{users[user].lastName}</TableCell>
-                  <TableCell>{users[user].email}</TableCell>
+                  <TableCell><div>{users[user].role}</div></TableCell>
+                  <TableCell><div>{users[user].firstName}</div></TableCell>
+                  <TableCell><div>{users[user].lastName}</div></TableCell>
+                  <TableCell><div>{users[user].email}</div></TableCell>
                 </TableRow>
               )
             )

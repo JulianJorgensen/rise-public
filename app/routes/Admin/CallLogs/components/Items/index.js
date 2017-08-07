@@ -31,10 +31,10 @@ export default class CallLogsItems extends Component {
       attendees = getAttendeesFromMeeting(meeting, users);
       return (
         <TableRow key={index}>
-          <TableCell>{meeting.type}</TableCell>
-          <TableCell>{moment(meeting.datetime).tz(timezone).format('MMMM Do YYYY h:mma z (Z)')}</TableCell>
-          <TableCell>{attendees.mentor.firstName}</TableCell>
-          <TableCell>{attendees.athlete.firstName}</TableCell>
+          <TableCell><div>{meeting.type}</div></TableCell>
+          <TableCell><div>{moment(meeting.datetime).tz(timezone).format('MMMM Do YYYY h:mma z (Z)')}</div></TableCell>
+          <TableCell><div>{attendees.mentor.firstName}</div></TableCell>
+          <TableCell><div>{attendees.athlete.firstName}</div></TableCell>
         </TableRow>
       )
     })

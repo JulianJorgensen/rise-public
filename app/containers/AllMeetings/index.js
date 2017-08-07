@@ -62,12 +62,10 @@ export default class AllMeetings extends Component {
           <div className={classes.completed}>
             <h3>Completed Meetings</h3>
             {completed.map((meeting, index) => {
-              attendees = meeting.forms.length > 0 ? getAttendeesFromMeeting(meeting.forms, users) : {};
-              meetingAttendee = attendees.athlete ? attendees.athlete.firstName : `${meeting.firstName} ${meeting.lastName}`;
-              meetingMentor = attendees.mentor ? attendees.mentor.firstName : meeting.calendar;
+              attendees = getAttendeesFromMeeting(meeting, users);
               return (
                 <div key={index} className={classes.logItem}>
-                  <h4 className={classes.title}>{meetingMentor} and {meetingAttendee}</h4>
+                  <h4 className={classes.title}>{attendees.mentor.firstName} and {attendees.athlete.firstName}</h4>
                   <date className={classes.date}>{moment(meeting.datetime).tz(timezone).format('MMMM Do YYYY h:mma z (Z)')}</date>
                   <div className={classes.description}>{meeting.type}</div>
                 </div>
@@ -90,12 +88,10 @@ export default class AllMeetings extends Component {
         <div>
           <h3>Upcoming Meetings</h3>
           {upcoming.map((meeting, index) => {
-            attendees = meeting.forms.length > 0 ? getAttendeesFromMeeting(meeting.forms, users) : {};
-            meetingAttendee = attendees.athlete ? attendees.athlete.firstName : `${meeting.firstName} ${meeting.lastName}`;
-            meetingMentor = attendees.mentor ? attendees.mentor.firstName : meeting.calendar;
+            attendees = getAttendeesFromMeeting(meeting, users);
             return (
               <div key={index} className={classes.logItem}>
-                <h4 className={classes.title}>{meetingMentor} and {meetingAttendee}</h4>
+                <h4 className={classes.title}>{attendees.mentor.firstName} and {attendees.athlete.firstName}</h4>
                 <date className={classes.date}>{moment(meeting.datetime).tz(timezone).format('MMMM Do YYYY h:mma z (Z)')}</date>
                 <div className={classes.description}>{meeting.type}</div>
               </div>

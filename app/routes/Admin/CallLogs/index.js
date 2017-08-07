@@ -84,15 +84,15 @@ export default class AdminCallLogs extends Component {
   }
 
   filterMeetings = () => {
-    let { meetings, startDate, endDate, offset, itemsPerPage } = this.state;
+    let { meetings, allMeetingsFetched, startDate, endDate, offset, itemsPerPage } = this.state;
 
-    let meetingsDateFiltered = meetings.filter((meeting) => {
-      let meetingDateTime = moment(meeting.datetime, 'YYYY-MM-DDTHH:mm:ssZ');
+    let meetingsDateFiltered = allMeetingsFetched ? meetings.filter((meeting) => {
+      let meetingDateTime = moment(meeting.datetime, 'YYYY-MM-DDTHH:mm:ssZ').toDate();
       if(startDate) {
-        return meetingDateTime >= startDate && meetingDateTime <= endDate
+        return meetingDateTime >= startDate && meetingDateTime <= endDate;
       }
-      return meetingDateTime <= endDate
-    });
+      return meetingDateTime <= endDate;
+    }) : meetings;
 
     this.setState({
       meetingsFiltered: meetingsDateFiltered,
