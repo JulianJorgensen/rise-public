@@ -3,6 +3,8 @@ import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import classes from './index.css';
 
+import 'assets/icons/regular/times.svg';
+
 @withRouter
 @connect(
   ({ notification }) => ({
@@ -35,7 +37,7 @@ export default class TopNotification extends Component {
             {notification.message} <a onClick={(e) => {
               e.stopPropagation();
               this.handleCloseNotification();
-            }} className={classes.close}><i className="fa fa-times" /></a>
+            }} className={classes.close}><Icon glyph={timesIcon} /></a>
           </div>
         )
       }else{

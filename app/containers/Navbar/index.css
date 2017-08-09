@@ -82,6 +82,12 @@
     color: var(--teal);
   }
 
+  & .rightNavIcon{
+    background-position: center center;
+    background-image: url('assets/icons/regular/chevron-down.svg');
+    height: rem(25);
+  }
+
   & .rightNavVideo,
   & .rightNavChat{
     position: relative;
@@ -90,12 +96,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
-    font-size: rem(25);
   }
 
   & .rightNavVideo{
     background-color: gray(20%);
+  }
+  & .videoIcon{
+    background-image: url('assets/icons/regular/video.svg?fill=white');
+    width: rem(25);
+    height: rem(25);
   }
 
   & .rightNavChat{
@@ -127,10 +136,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  &:after{
-    content: '\f0c9';
-    font-family: 'FontAwesome';
-    color: white;
-    font-size: rem(30);
+  & .icon{
+    background-image: url('assets/icons/regular/bars.svg?fill=white');
+    width: rem(25);
+    height: rem(25);
   }
 }

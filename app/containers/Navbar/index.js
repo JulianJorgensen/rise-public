@@ -9,8 +9,14 @@ import * as CONST from 'app/constants';
 import {IconMenu, MenuItem, MenuDivider } from 'react-toolbox/lib/menu';
 import Avatar from 'react-toolbox/lib/avatar';
 import Navigation from 'react-toolbox/lib/navigation';
-import Logo from 'components/Logo/Logo'
+import Logo from 'components/Logo/Logo';
 
+// icons
+import 'assets/icons/regular/video.svg';
+import 'assets/icons/regular/bars.svg';
+import 'assets/icons/regular/chevron-down.svg';
+
+// classes
 import classes from './index.css';
 
 @withRouter
@@ -60,11 +66,14 @@ export default class Navbar extends Component {
 
     const rightMenu = accountExists ? (
       <div className={classes.rightNav}>
-        <Link to='/video' className={classes.rightNavVideo}><i className="fa fa-video-camera" />{numberOfUpcomingAppointments > 0 ? <div className={classes.numberOfNotifications}>{numberOfUpcomingAppointments}</div> : ''}</Link>
+        <Link to='/video' className={classes.rightNavVideo}>
+          <div className={classes.videoIcon} />
+          {numberOfUpcomingAppointments > 0 ? <div className={classes.numberOfNotifications}>{numberOfUpcomingAppointments}</div> : ''}
+        </Link>
         {/* <Link to='/chat' className={classes.rightNavChat}><i className="fa fa-comments" /></Link> */}
         <div className={classes.rightNavName}>Hello {account.firstName}!</div>
         <Avatar className={classes.rightNavAvatar} image='/images/User.png' cover />
-        <IconMenu className={classes.rightNavMenu} icon={<i className="fa fa-chevron-down" />} position='topRight' menuRipple>
+        <IconMenu className={classes.rightNavMenu} icon={<div className={classes.rightNavIcon} />} position='topRight' menuRipple>
           <MenuItem
             caption='Profile'
             onClick={() => history.push(CONST.PROFILE_PATH)}
@@ -94,7 +103,7 @@ export default class Navbar extends Component {
     const toggle = accountExists ? (
       <div className={classes.toggle} onClick={() => {
         this.handleToggleLeftNavigation()
-      }}></div>
+      }}><div className={classes.icon} /></div>
     ) : ''
 
     return (

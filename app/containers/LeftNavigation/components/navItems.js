@@ -1,8 +1,20 @@
+import React from 'react';
+import classes from './index.css';
+
+// icons
+import 'assets/icons/regular/play.svg';
+import 'assets/icons/regular/home.svg';
+import 'assets/icons/regular/video.svg';
+import 'assets/icons/regular/file.svg';
+import 'assets/icons/regular/calendar-plus.svg';
+import 'assets/icons/regular/users.svg';
+import 'assets/icons/regular/cog.svg';
+
 export const navItems = [
   {
     url: '/getting-started',
     anchor: 'Getting started',
-    icon: 'fa-play',
+    className: classes.gettingStarted,
     showOnlyFor: [
       'mentor-pending',
       'athlete-pending'
@@ -11,7 +23,7 @@ export const navItems = [
   {
     url: '/dashboard',
     anchor: 'Dashboard',
-    icon: 'fa-home',
+    className: classes.dashboard,
     children: [
       {
         url: '/dashboard/profile',
@@ -26,7 +38,7 @@ export const navItems = [
   // {
   //   url: '/chat',
   //   anchor: 'Chat',
-  //   icon: 'fa-comments',
+  //   icon: 'comments',
   //   children: [
   //     {
   //       url: '/inbox',
@@ -43,7 +55,7 @@ export const navItems = [
   {
     url: '/video',
     anchor: 'Video',
-    icon: 'fa-video-camera',
+    className: classes.video,
     children: [
       {
         url: '/video/logs',
@@ -54,7 +66,7 @@ export const navItems = [
   {
     url: '/library',
     anchor: 'Exercise Library',
-    icon: 'fa-files-o',
+    className: classes.exercise,
     children: [
       {
         url: '/sport-1',
@@ -71,12 +83,12 @@ export const navItems = [
   {
     url: '/schedule',
     anchor: 'Schedule',
-    icon: 'fa-calendar'
+    className: classes.schedule
   },
   // {
   //   url: '/activity',
   //   anchor: 'Account Activity',
-  //   icon: 'fa-tasks',
+  //   icon: 'tasks',
   //   children: [
   //     {
   //       url: '/login-time',
@@ -98,7 +110,7 @@ export const navItems = [
   {
     url: '/my-athletes',
     anchor: 'My Athletes',
-    icon: 'fa-users',
+    className: classes.myAthletes,
     showOnlyFor: [
       'mentor',
       'admin'
@@ -107,7 +119,7 @@ export const navItems = [
   {
     url: '/admin',
     anchor: 'Admin',
-    icon: 'fa-cogs',
+    className: classes.admin,
     showOnlyFor: [
       'admin'
     ],

@@ -8,7 +8,9 @@ import Layout from 'react-toolbox/lib/layout/Layout';
 import Button from 'components/Button';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import styles from './index.css';
-import InstagramFeed from 'containers/InstagramFeed/InstagramFeed'
+import InstagramFeed from 'containers/InstagramFeed/InstagramFeed';
+
+import 'assets/icons/regular/trophy.svg';
 
 @withRouter
 export default class Home extends React.Component {
@@ -141,19 +143,19 @@ export default class Home extends React.Component {
           <Grid fluid>
             <Row className={styles.features}>
               <Col xs={12} md={4} className={styles.feature}>
-                <i className="fa fa-trophy" />
+                <div className={styles.icon} />
                 <h3 className={styles.title}>Title number one</h3>
                 <p>Cras rhoncus, sem non feugiat consectetur, odio mauris placerat nisi, facilisis rhoncus arcu erat sit amet magna. Vivamus interdum.</p>
                 <Button className={styles.cta} label="Learn more" flat hollow />
               </Col>
               <Col xs={12} md={4} className={styles.feature}>
-                <i className="fa fa-trophy" />
+                <div className={styles.icon} />
                 <h3 className={styles.title}>Title number one</h3>
                 <p>Cras rhoncus, sem non feugiat consectetur, odio mauris placerat nisi, facilisis rhoncus arcu erat sit amet magna. Vivamus interdum.</p>
                 <Button className={styles.cta} label="Learn more" flat hollow />
               </Col>
               <Col xs={12} md={4} className={styles.feature}>
-                <i className="fa fa-trophy" />
+                <div className={styles.icon} />
                 <h3 className={styles.title}>Title number one</h3>
                 <p>Cras rhoncus, sem non feugiat consectetur, odio mauris placerat nisi, facilisis rhoncus arcu erat sit amet magna. Vivamus interdum.</p>
                 <Button className={styles.cta} label="Learn more" flat hollow />
