@@ -70,7 +70,6 @@ export default class Navbar extends Component {
           <div className={classes.videoIcon} />
           {numberOfUpcomingAppointments > 0 ? <div className={classes.numberOfNotifications}>{numberOfUpcomingAppointments}</div> : ''}
         </Link>
-        {/* <Link to='/chat' className={classes.rightNavChat}><i className="fa fa-comments" /></Link> */}
         <div className={classes.rightNavName}>Hello {account.firstName}!</div>
         <Avatar className={classes.rightNavAvatar} image='/images/User.png' cover />
         <IconMenu className={classes.rightNavMenu} icon={<div className={classes.rightNavIcon} />} position='topRight' menuRipple>

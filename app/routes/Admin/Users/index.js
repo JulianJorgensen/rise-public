@@ -2,29 +2,19 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { firebaseConnect, dataToJS, pathToJS } from 'react-redux-firebase';
 import { reduxFirebase as rfConfig } from 'app/config';
-import { userIsAuthenticated, userHasPermission } from 'utils/router'
+import { userIsAdmin, userIsAuthenticated, userHasPermission } from 'utils/router'
 import { Table, TableHead, TableRow, TableCell, Tooltip } from 'react-toolbox/lib';
+import ReactPaginate from 'react-paginate';
 
 import LoadingSpinner from 'components/LoadingSpinner';
 import classes from './index.css';
+import pagination from 'styles/pagination.css';
+import Items from './components/Items';
 
 const TooltipCell = Tooltip(TableCell);
 
-const sortByCaloriesAsc = (a, b) => {
-  if (a.calories < b.calories) return -1;
-  if (a.calories > b.calories) return 1;
-  return 0;
-};
-
-const sortByCaloriesDesc = (a, b) => {
-  if (a.calories > b.calories) return -1;
-  if (a.calories < b.calories) return 1;
-  return 0;
-};
-
-
 @userIsAuthenticated
-@userHasPermission('admin')
+@userIsAdmin
 @firebaseConnect([
   'users'
 ])
@@ -41,61 +31,65 @@ export default class Users extends Component {
 
   state = {
     selected: '',
-    sorted: 'asc',
-    users: []
+    users: [],
+    usersVisible: [],
+    offset: 0,
+    itemsPerPage: 10,
+    pageCount: 0
   };
 
-  getSortedData = () => {
-    const compare = this.state.sorted === 'asc' ? sortByCaloriesAsc : sortByCaloriesDesc;
-    let users = this.props.users;
-    return users.sort(compare);
+  handlePageClick = (data) => {
+    let { users, itemsPerPage } = this.state;
+    let selected = data.selected;
+    let offset = Math.ceil(selected * itemsPerPage);
+
+    this.setState({
+      offset: offset,
+      usersVisible: users.slice(offset, itemsPerPage+offset)
+    });
   }
 
-  handleRowSelect = selected => {
-    const sortedData = this.getSortedData();
-    this.setState({ selected: selected.map(item => sortedData[item].name) });
-  };
+  componentWillUpdate() {
+    let { itemsPerPage, offset, usersVisible, users } = this.state;
+    let usersObj = this.props.users;
 
-  handleSortClick = () => {
-    const { sorted } = this.state;
-    const nextSorting = sorted === 'asc' ? 'desc' : 'asc';
-    this.setState({ sorted: nextSorting });
-  };
+    if (usersObj && usersVisible.length <= 0) {
+      let users = Object.keys(usersObj);
+      this.setState({
+        users: users,
+        usersVisible: users.slice(offset, itemsPerPage+offset),
+        pageCount: users.length / itemsPerPage
+      });
+    }
+  }
 
   render () {
-    let { users } = this.props;
+    let { pageCount, usersVisible } = this.state;
 
-    if(!users){
+    if(usersVisible.length <= 0){
       return (
         <LoadingSpinner />
       )
     }
 
-    const { sorted } = this.state;
-    // const sortedData = this.getSortedData();
-
     return (
-      <div>
+      <div className={classes.container}>
         <h2>All users</h2>
-        <Table onRowSelect={() => this.handleRowSelect} style={{ marginTop: 10 }}>
-          <TableHead multiSelectable={false}>
-            <TableCell>Role</TableCell>
-            <TableCell onClick={() => this.handleSortClick} sorted={sorted}>First name</TableCell>
-            <TableCell onClick={() => this.handleSortClick} sorted={sorted}>Last name</TableCell>
-            <TableCell>Email</TableCell>
-          </TableHead>
-          { Object.keys(users).map(
-              (user, id) => (
-                <TableRow key={id}>
-                  <TableCell><div>{users[user].role}</div></TableCell>
-                  <TableCell><div>{users[user].firstName}</div></TableCell>
-                  <TableCell><div>{users[user].lastName}</div></TableCell>
-                  <TableCell><div>{users[user].email}</div></TableCell>
-                </TableRow>
-              )
-            )
-          }
-        </Table>
+        <Items data={usersVisible} />
+
+        <ReactPaginate previousLabel={"previous"}
+                       nextLabel={"next"}
+                       breakLabel={<a href="">...</a>}
+                       breakClassName={pagination.break}
+                       pageCount={pageCount}
+                       marginPagesDisplayed={2}
+                       pageRangeDisplayed={10}
+                       onPageChange={this.handlePageClick}
+                       containerClassName={pagination.container}
+                       previousClassName={pagination.previous}
+                       nextClassName={pagination.next}
+                       pageClassName={pagination.page}
+                       activeClassName={pagination.active} />
       </div>
     );
   }

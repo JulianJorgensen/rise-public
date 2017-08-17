@@ -301,17 +301,17 @@ data-uri-to-buffer@0:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/data-uri-to-buffer/-/data-uri-to-buffer-0.0.4.tgz#46e13ab9da8e309745c8d01ce547213ebdb2fe3f"
 
-debug@2, debug@2.6.7:
-  version "2.6.7"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.7.tgz#92bad1f6d05bbb6bba22cca88bcd0ec894c2861e"
-  dependencies:
-    ms "2.0.0"
-
-debug@~2.2.0:
+debug@2, debug@~2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.2.0.tgz#f87057e995b1a1f6ae6a4960664137bc56f039da"
   dependencies:
     ms "0.7.1"
+
+debug@2.6.7:
+  version "2.6.7"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.7.tgz#92bad1f6d05bbb6bba22cca88bcd0ec894c2861e"
+  dependencies:
+    ms "2.0.0"
 
 decamelize@^1.0.0:
   version "1.2.0"
@@ -477,9 +477,9 @@ firebase-admin@^5.1.0:
     jsonwebtoken "7.1.9"
     node-forge "0.7.1"
 
-firebase-functions@^0.5.7:
-  version "0.5.8"
-  resolved "https://registry.yarnpkg.com/firebase-functions/-/firebase-functions-0.5.8.tgz#b8def16a6f9e777046c1bf303b3d08adb9cf5c29"
+firebase-functions@^0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/firebase-functions/-/firebase-functions-0.6.1.tgz#f64851a4a89d0e9cb64b0cef8ace1af91f83dbeb"
   dependencies:
     "@types/express" "^4.0.33"
     "@types/jsonwebtoken" "^7.1.32"

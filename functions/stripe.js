@@ -1,21 +1,13 @@
-let functions = require('firebase-functions');
-let admin = require('firebase-admin');
-admin.initializeApp(functions.config().firebase); // firebase is autopopulated when deploying using Firebase CLI
-let db = admin.database();
+const functions = require('firebase-functions');
+const database = require('./firebaseInit').database;
 
-let stripeSecretKey = functions.config().stripe.key;
-let stripe = require('stripe')(stripeSecretKey);
+const stripeSecretKey = functions.config().stripe.key;
+const stripe = require('stripe')(stripeSecretKey);
 
 module.exports = {
   createCustomer: function(query) {
     let { stripeToken, email, uid } = query;
-
-    console.log('query: ', query);
-    console.log('stripe Token: ', stripeToken);
-    console.log('email: ', email);
-    console.log('using UID: ', uid);
-
-    let userRef = db.ref("users").child(uid);
+    let userRef = database.ref("users").child(uid);
 
     return stripe.customers.create({
       email: email,
@@ -40,9 +32,6 @@ module.exports = {
 
   deleteCard: function(query) {
     let { stripeCustomerId, cardId } = query;
-    console.log('deleting card...');
-    console.log('stripeCustomerId: ', stripeCustomerId);
-    console.log('cardId: ', cardId);
     return new Promise(function(resolve, reject) {
       stripe.customers.deleteCard(stripeCustomerId, cardId, function(err, confirmation) {
         resolve(confirmation);

@@ -23,7 +23,7 @@
     & .navItemsGroupHeadline{
       display: flex;
       font-size: 20px;
-      background-color: gray(20%);
+      background-color: gray(40%);
       margin: 0;
       padding: rem(20);
       color: white;
@@ -64,7 +64,7 @@
 
     & .navItemsGroupHeadline.active,
     & .navItemsGroupContent.active{
-      background-color: gray(10%);
+      background-color: gray(30%);
     }
   }
 }

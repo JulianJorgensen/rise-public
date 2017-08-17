@@ -2,6 +2,7 @@ const functions = require('firebase-functions');
 const adminAlertEmail = require('./emails/adminAlert');
 const acuity = require('./acuity');
 const stripe = require('./stripe');
+const admin = require('./admin');
 const cors = require('cors')({origin: true});
 
 // Function: send admin alert email
@@ -116,6 +117,25 @@ exports.createAppointment = functions.https.onRequest((request, response) => {
 exports.createRecurringAppointments = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     acuity.createRecurringAppointments(request.query).then((res) => {
+      response.status(200).send(res);
+    });
+  });
+});
+
+
+// Admin Function: delete users
+exports.deleteUser = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    admin.deleteUser(request.query).then((res) => {
+      response.status(200).send(res);
+    });
+  });
+});
+
+// Admin Function: delete users
+exports.changeUserStatus = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    admin.changeUserStatus(request.query).then((res) => {
       response.status(200).send(res);
     });
   });

@@ -3,7 +3,7 @@ import { get } from 'lodash';
 import { connectedReduxRedirect } from 'redux-auth-wrapper/history4/redirect';
 // import { browserHistory } from 'react-router';
 import { DASHBOARD_PATH, GETTING_STARTED_PATH, NOT_AUTHORIZED_PATH } from 'app/constants';
-import { pathToJS, isLoaded, isEmpty } from 'react-redux-firebase';
+import { dataToJS, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase';
 import LoadingSpinner from 'components/LoadingSpinner';
 
 const AUTHED_REDIRECT = 'AUTHED_REDIRECT';
@@ -94,8 +94,43 @@ export const userHasPermission = permission => connectedReduxRedirect({
   wrapperDisplayName: 'UserHasPermission'
 });
 
+
+/**
+ * @description Higher Order Component that redirects to the homepage if
+ * the user does not have the required permission. This HOC requires that the user
+ * profile be loaded and the role property populated
+ * @param {Component} componentToWrap - Component to wrap
+ * @return {Component} wrappedComponent
+ */
+
+export const userIsAdmin = connectedReduxRedirect({
+  authenticatedSelector: ({ firebase }) => {
+    const account = pathToJS(firebase, 'profile');
+    const auth = pathToJS(firebase, 'auth');
+    return (
+      !isEmpty(account) &&
+      isLoaded(account) &&
+      get(account, 'role.admin', false)
+    );
+  },
+  // predicate: auth => get(auth, `user.role.${permission}`, false),
+  authenticatingSelector: ({ firebase }) =>
+      (pathToJS(firebase, 'auth') === undefined)
+      || (pathToJS(firebase, 'profile') === undefined)
+      || (pathToJS(firebase, 'isInitializing') === true),
+  // AuthenticatingComponent: LoadingSpinner,
+  redirectAction: newLoc => (dispatch) => {
+    // browserHistory.replace(newLoc);
+    // dispatch({ type: UNAUTHED_REDIRECT });
+  },
+  redirectPath: '/not-authorized',
+  allowRedirectBack: false,
+  wrapperDisplayName: 'UserIsAdmin'
+});
+
 export default {
   userIsAuthenticated,
   userIsNotAuthenticated,
-  userHasPermission
+  userHasPermission,
+  userIsAdmin
 }

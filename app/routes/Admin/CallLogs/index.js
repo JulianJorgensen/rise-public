@@ -54,7 +54,6 @@ export default class AdminCallLogs extends Component {
     .then((response) => {
       let meetings = response.data;
 
-      console.log('all meeting from the past: ', meetings);
       this.setState({
         fetched: true,
         allMeetingsFetched: limit === 'preview' ? false : true,

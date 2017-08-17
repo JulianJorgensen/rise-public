@@ -11,7 +11,9 @@
     "clean": "rimraf public",
     "start": "cross-env yarn run clean && webpack -w",
     "serve": "node app.js",
-    "build:prod": "cross-env yarn run clean && NODE_ENV=production webpack --progress --colors"
+    "build:prod": "cross-env yarn run clean && NODE_ENV=production webpack --progress --colors",
+    "deploy:prod": "cross-env yarn run clean && NODE_ENV=production webpack --progress --colors && firebase deploy",
+    "functions": "firebase serve --only functions"
   },
   "repository": {
     "type": "git",

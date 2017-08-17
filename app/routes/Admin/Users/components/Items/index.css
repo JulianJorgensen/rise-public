@@ -1,0 +1,21 @@
+.userStatus{
+  cursor: pointer;
+}
+
+.delete{
+  background-image: url('assets/icons/regular/trash.svg');
+  width: rem(15);
+  height: rem(15);
+  float: right;
+}
+
+.userData{
+  /*display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  & > div,
+  & > h4{
+    width: 45%;
+    margin: 0 0 rem(20) 0;
+  }*/
+}
