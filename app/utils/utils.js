@@ -1,5 +1,13 @@
 import _ from 'lodash';
 
+export function toObject(arr) {
+  let object = {};
+  arr.map((item) => {
+    object[item[0]] = item[1];
+  })
+  return object;
+}
+
 export function isMentor(role) {
   if (role.name === 'mentor' || role.name === 'admin') {
     return true;
@@ -48,4 +56,11 @@ export function getAttendeesFromMeeting(meeting, users) {
     athlete,
     mentor
   }
+}
+
+export function removePopulatedData(data) {
+  let filteredData = Object.entries(data).filter(([key, value]) => {
+    return typeof value !== 'object' && typeof value !== 'undefined';
+  });
+  return toObject(filteredData);
 }

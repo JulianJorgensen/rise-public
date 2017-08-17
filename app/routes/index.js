@@ -18,13 +18,16 @@ import Pricing from './Pricing';
 import Settings from './Dashboard/Settings';
 import Schedule from './Schedule';
 import MyAthletes from './MyAthletes';
-import Video from './Video';
-import CallLogs from './Video/CallLogs';
+import MyMeetings from './MyMeetings';
+import CallLogs from './MyMeetings/CallLogs';
 import Login from './Login';
 import Signup from './Signup';
 import Dashboard from './Dashboard';
 import Profile from './Dashboard/Profile';
 import GettingStarted from './GettingStarted';
+import Application from './GettingStarted/Application';
+import Agreements from './GettingStarted/Agreements';
+import Payment from './GettingStarted/Payment';
 
 import Admin from './Admin';
 import AdminUsers from './Admin/Users';
@@ -98,12 +101,15 @@ export default class Index extends React.Component {
               <Route path="/pricing" component={Pricing} />
               <Route path="/login" component={Login} />
               <Route path="/signup" component={Signup} />
-              <Route path="/getting-started" component={GettingStarted} />
+              <Route exact path="/getting-started" component={GettingStarted} />
+              <Route path="/getting-started/application" component={Application} />
+              <Route path="/getting-started/agreements" component={Agreements} />
+              <Route path="/getting-started/payment" component={Payment} />
               <Route exact path="/dashboard" component={Dashboard} />
               <Route path="/dashboard/settings" component={Settings} />
               <Route path="/dashboard/profile" component={Profile} />
               <Route path="/schedule" component={Schedule} />
-              <Route exact path="/video" component={Video} />
+              <Route exact path="/meetings" component={MyMeetings} />
               <Route path="/video/logs" component={CallLogs} />
               <Route path="/my-athletes" component={MyAthletes} />
               <Route exact path="/admin" component={Admin} />

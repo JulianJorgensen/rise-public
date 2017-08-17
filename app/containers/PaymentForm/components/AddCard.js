@@ -59,7 +59,7 @@ class AddCard extends React.Component {
   }
 
   render() {
-    let { handleBack, hasBackButton, submitLabel } = this.props;
+    let { submitLabel } = this.props;
     return (
       <form onSubmit={this.handleSubmit}>
         {/* <AddressSection /> */}
@@ -72,13 +72,6 @@ class AddCard extends React.Component {
         <small>We use Stripe for increased security.</small>
 
         <div className={classes.ctas}>
-          {hasBackButton ?
-            <Button
-              label='Back'
-              type='button'
-              onClick={handleBack}
-            /> : ''}
-
           <Button
             primary
             label={submitLabel ? submitLabel : 'Add card'}

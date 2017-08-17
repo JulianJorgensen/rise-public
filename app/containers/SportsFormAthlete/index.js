@@ -7,7 +7,7 @@ import RadioGroup from 'components/RadioGroup';
 import { SPORTS_FORM_NAME } from 'app/constants';
 import classes from './index.css';
 
-export const SportsFormAthlete = ({ account, handleBack, handleSubmit, submitting }) => (
+export const SportsFormAthlete = ({ account, handleBack, handleSubmit, submitLabel, submitting }) => (
   <form className={classes.container} onSubmit={handleSubmit}>
     <Field
       name='why-olympian-mentor'
@@ -60,7 +60,7 @@ export const SportsFormAthlete = ({ account, handleBack, handleSubmit, submittin
       />
       <Button
         primary
-        label='Next'
+        label={submitLabel || 'Next'}
         type='submit'
       />
     </div>

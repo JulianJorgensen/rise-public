@@ -61,18 +61,13 @@ export default class UsersItems extends Component {
       return false;
     }
 
-    const PENDING = 'pending';
-    let userIsPending = user.status === PENDING;
-    let newStatus = userIsPending ? 'confirmed' : PENDING;
-    let newRole = userIsPending ? user.role.replace(`-${PENDING}`, '') : user.role.concat(`-${PENDING}`);
-
-    console.log('new status: ', newStatus);
-    console.log('new role: ', newRole);
+    let applicationIsPending = user.applicationApproved;
+    let newRole = applicationPending ? user.role.replace(`-${PENDING}`, '') : user.role.concat(`-${PENDING}`);
 
     axios.get(`${fbConfig.functions}/changeUserStatus`, {
       params: {
         uid: uid,
-        newStatus: newStatus,
+        newStatus: !applicationIsPending,
         newRole: newRole
       }
     })

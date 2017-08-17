@@ -42,7 +42,7 @@ module.exports = {
     let userRef = database.ref(`users/${uid}`);
 
     return userRef.update({
-      status: newStatus,
+      applicationApproved: newStatus,
       role: newRole
     })
       .then(() => {

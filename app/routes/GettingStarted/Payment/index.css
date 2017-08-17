@@ -1,0 +1,5 @@
+.container{
+  width: rem(600);
+  padding: rem(20);
+  margin-top: rem(30);
+}

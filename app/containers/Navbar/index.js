@@ -12,7 +12,7 @@ import Navigation from 'react-toolbox/lib/navigation';
 import Logo from 'components/Logo/Logo';
 
 // icons
-import 'assets/icons/regular/video.svg';
+import 'assets/icons/regular/calendar.svg';
 import 'assets/icons/regular/bars.svg';
 import 'assets/icons/regular/chevron-down.svg';
 

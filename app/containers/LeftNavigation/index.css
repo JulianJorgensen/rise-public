@@ -15,56 +15,71 @@
 .navItems{
   display: flex;
   flex-direction: column;
+}
 
-  & .navItemsGroup{
-    display: flex;
-    flex-direction: column;
+.navItemsGroup{
+  display: flex;
+  flex-direction: column;
+}
 
-    & .navItemsGroupHeadline{
-      display: flex;
-      font-size: 20px;
-      background-color: gray(40%);
-      margin: 0;
-      padding: rem(20);
-      color: white;
-      border-bottom: 1px solid gray(80%);
-      cursor: pointer;
-      &:before{
-        content: '';
-        width: rem(20);
-        height: rem(20);
-        margin-right: rem(5);
-      }
-    }
+.navItemsGroupHeadline{
+  display: flex;
+  font-size: 20px;
+  background-color: gray(70%);
+  margin: 0;
+  padding: rem(20);
+  color: white;
+  border-bottom: 1px solid gray(80%);
+  cursor: pointer;
+}
 
-    & .navItemsGroupContent{
-      display: flex;
-      flex-direction: column;
-      background-color: gray(20%);
-    }
+.navAnchor{
+  &:before{
+    content: '';
+    display: inline-block;
+    width: rem(20);
+    height: rem(20);
+    margin-right: rem(5);
+  }
+}
 
-    & .navItem{
-      padding: rem(20) rem(20) rem(20) rem(40);
-      border-bottom: 1px solid gray(90%);
-      color: white;
-      text-decoration: none;
-    }
-    & .navItem.navItemActive{
-      padding-left: rem(25);
-      border-left: rem(15) solid var(--blue);
-      background-color: gray(6%);
-    }
+.navItemsGroupContent{
+  display: flex;
+  flex-direction: column;
+  background-color: gray(80%);
+}
 
-    & .navItemsGroupHeadline.disabled,
-    & .navItem.disabled{
-      background-color: gray(25%);
-      color: gray(40%);
-      cursor: default;
-    }
+.navItem{
+  padding: rem(20) rem(20) rem(20) rem(40);
+  border-bottom: 1px solid gray(90%);
+  color: white;
+  text-decoration: none;
+}
 
-    & .navItemsGroupHeadline.active,
-    & .navItemsGroupContent.active{
-      background-color: gray(30%);
-    }
+.navItem.navItemActive{
+  padding-left: rem(25);
+  border-left: rem(15) solid var(--blue);
+  background-color: color(var(--blue) shade(50%));
+  & .navAnchor{
+    color: white;
+  }
+}
+
+.disabled{
+  cursor: default;
+  &.navItem{
+    background-color: color(var(--lightBlue) saturation(5%) lightness(50%));
+  }
+  & .navAnchor{
+    opacity: 0.2;
+  }
+}
+
+.navItemsGroupHeadline.active,
+.navItemsGroupContent.active{
+  background-color: var(--lightBlue);
+  &,
+  & .navItem{
+    color: white;
   }
 }

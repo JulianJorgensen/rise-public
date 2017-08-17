@@ -2,12 +2,9 @@ let sendMail = require('./sendMail');
 
 // admin emails
 let adminEmails = [];
-if (process.env.NODE_ENV !== 'development') {
+if (process.env.NODE_ENV === 'development') {
   adminEmails = [
-    {name: 'RISE Admin', address: 'rise@riseeliteathletes.com'},
-    {name: 'Rebecca Soni', address: 'soniswim@gmail.com'},
-    {name: 'Julia Kozlov', address: 'busklub@gmail.com'},
-    {name: 'Full Julian Jorgensen', address: 'me@julianjorgensen.com'}
+    {name: 'Dev Julian Jorgensen', address: 'me@julianjorgensen.com'}
   ];
 } else {
   adminEmails = [

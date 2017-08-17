@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import Button from 'components/Button';
 import TextField from 'components/TextField';
@@ -53,18 +53,12 @@ export const SportsFormMentor = ({ account, handleBack, handleSubmit, submitting
       />
       <Button
         primary
-        label='Next'
+        label={submitLabel || 'Next'}
         type='submit'
       />
     </div>
   </form>
 )
-
-SportsFormMentor.propTypes = {
-  account: PropTypes.object,
-  handleSubmit: PropTypes.func,
-  submitting: PropTypes.bool
-}
 
 export default reduxForm({
   form: SPORTS_FORM_NAME

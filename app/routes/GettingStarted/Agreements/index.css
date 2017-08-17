@@ -1,0 +1,18 @@
+.container{
+  composes: container from "../../../styles/layout.css";
+}
+
+.ctas{
+  display: flex;
+  justify-content: space-between;
+  margin-top: rem(30);
+}
+
+.termsAndConditions{
+  height: rem(200);
+  width: 100%;
+  overflow-y: auto;
+  font-style: italic;
+  color: gray(30%);
+  margin-bottom: rem(30);
+}

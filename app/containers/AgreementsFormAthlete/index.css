@@ -1,0 +1,19 @@
+.term{
+  margin-bottom: rem(60);
+}
+
+.termBody{
+  max-height: rem(200);
+  width: 100%;
+  overflow-y: auto;
+  font-style: italic;
+  color: gray(30%);
+  font-size: rem(14);
+  margin-bottom: rem(30);
+}
+
+.ctas{
+  display: flex;
+  justify-content: space-between;
+  margin-top: rem(30);
+}

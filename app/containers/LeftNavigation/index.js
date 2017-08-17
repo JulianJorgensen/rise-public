@@ -8,7 +8,7 @@ import { userIsAuthenticated, userHasPermission } from 'utils/router';
 import { firebaseConnect, dataToJS, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase';
 import { DASHBOARD_PATH, ACCOUNT_PATH, LOGIN_PATH, SIGNUP_PATH, ABOUT_PATH } from 'app/constants';
 import NavAccordion from './components/NavAccordion';
-import navItems from './components/navItems'
+import navItems from './components/NavItems/index'
 
 @withRouter
 @userIsAuthenticated
@@ -26,19 +26,24 @@ export default class LefNavigation extends Component {
   }
 
   render () {
-    let { account, location, activePath } = this.props;
+    let { account, accountRaw, location, activePath } = this.props;
     let accountExists = isLoaded(account) && !isEmpty(account);
     let primaryRoute;
+    let navGroupDisabled;
+    let navItemRoute;
+    let navItemDisabled;
+    let showForUser;
 
     let renderNavItems = () => {
       return navItems.filter((navGroup) => {
-        if (navGroup.showOnlyFor) {
-          return navGroup.showOnlyFor.includes(account.status === 'pending' ? `${account.role.name}-pending` : account.role.name);
-        }else{
+        if (!navGroup.showOnlyFor){
           return true;
         }
-        })
+        showForUser = navGroup.showOnlyFor.includes(account.role.name) || navGroup.showOnlyFor.includes(`${account.role.name}-pending`);
+        return showForUser;
+      })
         .map((navGroup, index) => {
+          navGroupDisabled = account.role[navGroup.url.substring(1)] ? false : true;
           return (
             <div
               key={index}
@@ -47,13 +52,12 @@ export default class LefNavigation extends Component {
               <div
                 className={`
                   ${classes.navItemsGroupHeadline}
-                  ${account.role[navGroup.url.substring(1)] ? '' : classes.disabled}
-                  ${navGroup.className}
+                  ${navGroupDisabled ? classes.disabled : ''}
                 `}
                 classNameActive={classes.active}
-                href={navGroup.url ? navGroup.url : null}
+                href={navGroup.url && !navGroupDisabled ? navGroup.url : null}
               >
-                {navGroup.anchor}
+                <div className={`${classes.navAnchor} ${navGroup.className}`}>{navGroup.anchor}</div>
               </div>
               <div
                 className={classes.navItemsGroupContent}
@@ -61,11 +65,24 @@ export default class LefNavigation extends Component {
               >
                 {navGroup.children ? navGroup.children.map((navItem, navItemIndex) => {
                   primaryRoute = navItem.url.split('/')[1];
+                  navItemRoute = navItem.url.split('/')[2];
+                  navItemDisabled = (navItem.disabledForPendingApplicants && !account.applicationApproved) ? true : false;
+
+                  if(navItemDisabled){
+                    return (
+                      <div key={navItemIndex} className={`${classes.navItem} ${classes.disabled}`}>
+                        <div className={classes.navAnchor}>{navItem.anchor}</div>
+                      </div>
+                    )
+                  }
+
                   return (
                     <Link
                       key={navItemIndex}
-                      to={`${navItem.url}`}
-                      className={`${classes.navItem} ${navItem.url === location.pathname ? classes.navItemActive : ''} ${(!account.role[primaryRoute] || navItem.disabled) ? classes.disabled : ''}`}>{navItem.anchor}</Link>
+                      to={navItem.url}
+                      className={`${classes.navItem} ${navItem.url === location.pathname ? classes.navItemActive : ''}`}>
+                      <div className={classes.navAnchor}>{navItem.anchor}</div>
+                    </Link>
                   )
                 }) : ''}
               </div>

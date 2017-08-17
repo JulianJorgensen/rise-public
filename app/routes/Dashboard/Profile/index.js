@@ -1,8 +1,10 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { firebaseConnect, dataToJS, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase';
 import { reduxFirebase as rfConfig } from 'app/config';
 import { userIsAuthenticated, userHasPermission } from 'utils/router'
+
+import { removePopulatedData } from 'utils/utils';
 
 import { Card } from 'react-toolbox/lib/card';
 import Avatar from 'react-toolbox/lib/avatar';
@@ -20,39 +22,10 @@ import classes from './index.css';
   })
 )
 export default class Profile extends Component {
-  static propTypes = {
-    account: PropTypes.object,
-    auth: PropTypes.shape({
-      uid: PropTypes.string
-    }),
-    firebase: PropTypes.shape({
-      update: PropTypes.func.isRequired,
-      logout: PropTypes.func.isRequired
-    })
-  }
-
   state = { modalOpen: false }
 
-  handleLogout = () => this.props.firebase.logout()
-
-  toggleModal = () => {
-    this.setState({
-      modalOpen: !this.state.modalOpen
-    })
-  }
-
   updateAccount = (newData) => {
-    let menteesFirebaseFormatted = newData.mentees.map((mentee, index) => {
-      return mentee.uid
-    });
-
-    newData = {
-      ...newData,
-      role: `${newData.role.name}${newData.status === 'pending' ? '-pending' : ''}`,
-      mentor: newData.mentor ? newData.mentor.uid : null,
-      mentees: menteesFirebaseFormatted
-    }
-
+    newData = removePopulatedData(newData);
     this.props.firebase
       .update(`${rfConfig.userProfile}/${this.props.auth.uid}`, newData)
       .catch((err) => {
@@ -73,7 +46,6 @@ export default class Profile extends Component {
             className={classes.avatar}
             image={account && account.avatarUrl || '/images/User.png'}
             cover
-            onClick={() => this.toggleModal}
           />
         </div>
         <div className={classes.meta}>

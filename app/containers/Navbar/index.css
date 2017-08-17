@@ -99,16 +99,16 @@
   }
 
   & .rightNavVideo{
-    background-color: gray(20%);
+    background-color: gray(95%);
   }
   & .videoIcon{
-    background-image: url('assets/icons/regular/video.svg?fill=white');
+    background-image: url('assets/icons/regular/calendar.svg?fill=%230F5E9A');
     width: rem(25);
     height: rem(25);
   }
 
   & .rightNavChat{
-    background-color: gray(30%);
+    background-color: gray(95%);
   }
 
   & .rightNavName{
@@ -132,12 +132,12 @@
   width: rem(76);
   height: inherit;
   cursor: pointer;
-  background-color: var(--blue);
+  background-color: gray(95%);
   display: flex;
   justify-content: center;
   align-items: center;
   & .icon{
-    background-image: url('assets/icons/regular/bars.svg?fill=white');
+    background-image: url('assets/icons/regular/bars.svg?fill=%230F5E9A');
     width: rem(25);
     height: rem(25);
   }

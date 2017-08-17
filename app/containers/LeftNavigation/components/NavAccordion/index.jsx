@@ -42,7 +42,7 @@ export default class NavAccordion extends React.Component{
           let contentClassName = contentProps.className;
           let contentActiveClassName = contentProps.classNameActive;
           let titleHref = titleProps.href;
-          let active = activePath.split('/')[1] === titleHref.substring(1);
+          let active = titleProps.href ? activePath.split('/')[1] === titleHref.substring(1) : false;
 
           return (
             <div key={index} className={`${itemClassName ? itemClassName : classes.item} ${active ? classes.active : ''}`}>

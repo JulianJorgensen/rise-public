@@ -1,17 +1,3 @@
 .container{
-  width: rem(600);
-  padding: rem(20);
-  margin-top: rem(30);
-}
-
-.tab,
-.label {
-  &:focus {
-    outline: none;
-  }
-}
-
-.label{
-  flex-grow: 1;
-  text-align: center;
+  composes: container from "../../styles/layout.css";
 }

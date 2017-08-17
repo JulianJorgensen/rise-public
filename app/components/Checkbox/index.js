@@ -20,16 +20,17 @@ export default class Checkbox extends Component {
     this.setState({checked});
 
     // update redux form state
-    input.onChange(checked);
+    if(input) input.onChange(checked);
   }
 
   render() {
-    let { input, label } = this.props;
+    let { input, label, required } = this.props;
     return (
       <RTCheckbox
         checked={this.state.checked}
         label={label}
         onChange={this.handleChange.bind(this)}
+        required
       />
     )
   }
