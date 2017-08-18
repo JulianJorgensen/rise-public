@@ -132,10 +132,10 @@ exports.deleteUser = functions.https.onRequest((request, response) => {
   });
 });
 
-// Admin Function: delete users
-exports.changeUserStatus = functions.https.onRequest((request, response) => {
+// Admin Function: change application status
+exports.changeApplicationStatus = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
-    admin.changeUserStatus(request.query).then((res) => {
+    admin.changeApplicationStatus(request.query).then((res) => {
       response.status(200).send(res);
     });
   });

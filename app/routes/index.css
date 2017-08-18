@@ -25,9 +25,9 @@
   bottom: 0;
   right: rem(15);
   background-color: gray(96%);
-  color: gray(80%);
-  padding: rem(3) rem(10);
-  font-size: rem(12);
+  color: gray(60%);
+  padding: rem(5) rem(12);
+  font-size: rem(14);
   border-top-left-radius: rem(5);
   border-top-right-radius: rem(5);
 }

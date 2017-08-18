@@ -59,7 +59,7 @@ class ExistingCards extends React.Component {
       );
     }
 
-    if (cards.length < 1) {
+    if (!cards || cards.length < 1) {
       return (
         <div className={classes.cards}>
           You haven't added any cards yet.

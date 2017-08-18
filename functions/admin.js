@@ -37,19 +37,18 @@ module.exports = {
       });
   },
 
-  changeUserStatus: function(query) {
+  changeApplicationStatus: function(query) {
     let { uid, newStatus, newRole } = query;
     let userRef = database.ref(`users/${uid}`);
 
     return userRef.update({
-      applicationApproved: newStatus,
-      role: newRole
+      applicationApproved: (newStatus === 'true')
     })
       .then(() => {
-        return `Successfully changed user ${uid}!`;
+        return `Successfully changed application status for user ${uid} to ${newStatus}`;
       })
       .catch((error) => {
-        throw error(`Error changed user ${uid} status:`, error);
+        throw error(`Error changing application status for user ${uid}, error:`, error);
       });
   }
 }

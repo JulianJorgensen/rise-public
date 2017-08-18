@@ -75,12 +75,12 @@ export default class Navbar extends Component {
         <IconMenu className={classes.rightNavMenu} icon={<div className={classes.rightNavIcon} />} position='topRight' menuRipple>
           <MenuItem
             caption='Profile'
-            onClick={() => history.push(CONST.PROFILE_PATH)}
+            onClick={() => history.push('/dashboard/profile')}
             disabled={!account.role['profile']}
           />
           <MenuItem
             caption='Settings'
-            onClick={() => history.push(CONST.SETTINGS_PATH)}
+            onClick={() => history.push('/dashboard/settings')}
             disabled={!account.role['settings']}
           />
           <MenuItem

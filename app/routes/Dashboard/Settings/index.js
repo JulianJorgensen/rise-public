@@ -17,7 +17,6 @@ import MentorBankingForm from './components/MentorBankingForm';
 import classes from './index.css';
 
 @userIsAuthenticated
-@userHasPermission('settings')
 @firebaseConnect()
 @connect(
   ({ firebase }) => ({

@@ -12,7 +12,7 @@ import SpriteLoaderPlugin from 'svg-sprite-loader/plugin';
 
 // define environment constants
 const NODE_ENV = (process.env.NODE_ENV || 'development');
-const IS_PRODUCTION = (NODE_ENV === 'production');
+const IS_PRODUCTION = (NODE_ENV === 'production' && NODE_ENV === 'staging');
 
 console.log('Running webpack optimized for', NODE_ENV);
 

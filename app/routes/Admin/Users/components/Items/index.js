@@ -53,7 +53,7 @@ export default class UsersItems extends Component {
     });
   };
 
-  toggleUserStatus = (uid) => {
+  toggleApplicationStatus = (uid) => {
     let { users } = this.props;
     let user = users[uid];
 
@@ -61,14 +61,10 @@ export default class UsersItems extends Component {
       return false;
     }
 
-    let applicationIsPending = user.applicationApproved;
-    let newRole = applicationPending ? user.role.replace(`-${PENDING}`, '') : user.role.concat(`-${PENDING}`);
-
-    axios.get(`${fbConfig.functions}/changeUserStatus`, {
+    axios.get(`${fbConfig.functions}/changeApplicationStatus`, {
       params: {
         uid: uid,
-        newStatus: !applicationIsPending,
-        newRole: newRole
+        newStatus: !user.applicationApproved
       }
     })
     .then((response) => {
@@ -122,8 +118,9 @@ export default class UsersItems extends Component {
       return (
         <TableRow key={index}>
           <TooltipCell tooltip="Click to toggle status">
-            <div className={classes.userStatus} onClick={() => this.toggleUserStatus(user)}>{users[user].role}</div>
+            <div className={classes.applicationStatus} onClick={() => this.toggleApplicationStatus(user)}>{users[user].applicationApproved ? 'Approved' : 'Pending'}</div>
           </TooltipCell>
+          <TableCell><div>{users[user].role}</div></TableCell>
           <TableCell><div>{users[user].firstName}</div></TableCell>
           <TableCell><div>{users[user].lastName}</div></TableCell>
           <TableCell><div>{users[user].email}</div></TableCell>
@@ -135,6 +132,7 @@ export default class UsersItems extends Component {
       <div>
         <Table onRowSelect={this.handleRowSelect}>
           <TableHead>
+            <TableCell>Status</TableCell>
             <TableCell>Role</TableCell>
             <TableCell>First name</TableCell>
             <TableCell>Last name</TableCell>
