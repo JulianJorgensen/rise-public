@@ -4,7 +4,6 @@ let moment = require('moment-timezone');
 let userId = functions.config().acuity.userid;
 let apiKey = functions.config().acuity.key;
 
-
 let acuity = Acuity.basic({
   userId: userId,
   apiKey: apiKey

@@ -1,19 +1,19 @@
+let devConfig = require('../../config/development.config.js');
+let stageConfig = require('../../config/staging.config.js');
+let prodConfig = require('../../config/production.config.js');
 let sendMail = require('./sendMail');
 
 // admin emails
 let adminEmails = [];
-if (process.env.NODE_ENV === 'development') {
-  adminEmails = [
-    {name: 'Dev Julian Jorgensen', address: 'me@julianjorgensen.com'}
-  ];
+if (process.env.NODE_ENV === 'production') {
+  adminEmails = prodConfig.adminEmails;
+} else if(process.env.NODE_ENV === 'staging') {
+  adminEmails = stageConfig.adminEmails;
 } else {
-  adminEmails = [
-    {name: 'RISE Admin', address: 'rise@riseeliteathletes.com'},
-    {name: 'Rebecca Soni', address: 'soniswim@gmail.com'},
-    {name: 'Julia Kozlov', address: 'busklub@gmail.com'},
-    {name: 'Julian Jorgensen', address: 'me@julianjorgensen.com'}
-  ];
+  adminEmails = devConfig.adminEmails;
 }
+
+console.log('adminEmails: ', adminEmails);
 
 // send alert to admin
 let send = function(body) {

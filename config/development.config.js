@@ -7,5 +7,8 @@ module.exports = {
     databaseURL: 'https://rise-development.firebaseio.com',
     functionsURL: 'https://us-central1-rise-development.cloudfunctions.net',
     storageBucket: 'rise-development.appspot.com'
-  }
+  },
+  adminEmails: [
+    {name: 'Dev Julian Jorgensen', address: 'me@julianjorgensen.com'}
+  ]
 };
