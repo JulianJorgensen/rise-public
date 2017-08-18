@@ -4,7 +4,7 @@ import axios from 'axios';
 import { firebaseConnect, dataToJS, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase';
 import { reduxFirebase as rfConfig } from 'app/config';
 import { firebase as fbConfig } from 'app/config';
-import { userIsAuthenticated, userHasPermission } from 'utils/router';
+import { userIsAuthenticated } from 'utils/router';
 import { isMentor, removePopulatedData, updateAccount, activateUser } from 'utils/utils';
 
 import { Tab, Tabs } from 'react-toolbox/lib/tabs';
@@ -17,7 +17,6 @@ import LoadingSpinner from 'components/LoadingSpinner';
 import classes from './index.css';
 
 @userIsAuthenticated
-@userHasPermission('getting-started')
 @firebaseConnect()
 @connect(
   ({ firebase }) => ({

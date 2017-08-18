@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { get } from 'lodash';
-import classes from './index.css';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { UserAuthWrapper } from 'redux-auth-wrapper';
@@ -8,7 +7,9 @@ import { userIsAuthenticated, userHasPermission } from 'utils/router';
 import { firebaseConnect, dataToJS, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase';
 import { DASHBOARD_PATH, ACCOUNT_PATH, LOGIN_PATH, SIGNUP_PATH, ABOUT_PATH } from 'app/constants';
 import NavAccordion from './components/NavAccordion';
-import navItems from './components/NavItems/index'
+import navItems from './components/NavItems/index';
+import GettingStarted from './components/GettingStarted';
+import classes from './index.css';
 
 @withRouter
 @userIsAuthenticated
@@ -94,6 +95,8 @@ export default class LefNavigation extends Component {
     if (accountExists) {
       return (
         <div className={`${classes.container} ${!account.showLeftNavigation ? classes.collapsed : ''}`}>
+          { account.role['getting-started'] ?  <GettingStarted /> : '' }
+
           <NavAccordion
             activePath={activePath}
             className={classes.navItems}

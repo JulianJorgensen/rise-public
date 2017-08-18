@@ -56,13 +56,13 @@ export default class Dashboard extends Component {
             </div>
             <div
               className={classes.action}
-              onClick={() => history.push('/schedule')}
+              onClick={() => history.push('/profile')}
             >
               <div className={classes.icon} />
             </div>
             <div
               className={classes.action}
-              onClick={() => history.push('/schedule')}
+              onClick={() => history.push('/settings')}
             >
               <div className={classes.icon} />
             </div>

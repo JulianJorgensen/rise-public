@@ -9,16 +9,11 @@ import classes from './index.css';
 export const BankingForm = ({ account, handleBack, handleSubmit, submitting }) => (
   <form className={classes.container} onSubmit={handleSubmit}>
     <Field
-      name='payment.stripeEmail'
+      name='stripeEmail'
       component={TextField}
       label='Stripe email'
     />
     <div className={classes.ctas}>
-      <Button
-        label='Back'
-        type='button'
-        onClick={handleBack}
-      />
       <Button
         primary
         label='Finish'

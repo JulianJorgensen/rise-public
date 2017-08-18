@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { firebaseConnect, dataToJS, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase';
 import { reduxFirebase as rfConfig } from 'app/config';
 import { firebase as fbConfig } from 'app/config';
-import { userIsAuthenticated, userHasPermission } from 'utils/router';
+import { userIsAuthenticated } from 'utils/router';
 import { Tab, Tabs } from 'react-toolbox/lib/tabs';
 import { isMentor, removePopulatedData } from 'utils/utils';
 
@@ -17,7 +17,6 @@ import SportsFormAthlete from 'containers/SportsFormAthlete';
 import classes from './index.css';
 
 @userIsAuthenticated
-@userHasPermission('getting-started')
 @firebaseConnect()
 @connect(
   ({ firebase }) => ({
@@ -100,6 +99,8 @@ export default class Application extends Component {
   render () {
     const { account } = this.props;
     let { finished } = this.state;
+
+    console.log('account: ', account);
 
     if (account.applicationApproved) {
       return (

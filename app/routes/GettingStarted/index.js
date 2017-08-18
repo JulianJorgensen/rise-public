@@ -3,15 +3,14 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { firebaseConnect, dataToJS, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase';
 import { reduxFirebase as rfConfig } from 'app/config';
-import { userIsAuthenticated, userHasPermission } from 'utils/router';
+import { userIsAuthenticated } from 'utils/router';
 
 import Button from 'components/Button';
 import LoadingSpinner from 'components/LoadingSpinner';
 import classes from './index.css';
 
-@userIsAuthenticated // redirect to /login if user is not authenticated
-@userHasPermission('getting-started')
-@firebaseConnect() // add this.props.firebase
+@userIsAuthenticated
+@firebaseConnect()
 @connect(
   ({ firebase }) => ({
     auth: pathToJS(firebase, 'auth'),
@@ -19,9 +18,6 @@ import classes from './index.css';
   })
 )
 export default class GettingStarted extends Component {
-  state = {
-  }
-
   render () {
     const { account } = this.props;
 

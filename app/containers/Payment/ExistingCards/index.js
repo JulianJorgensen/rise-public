@@ -27,24 +27,22 @@ class ExistingCards extends React.Component {
 
   getCards() {
     let { account } = this.props;
-    if (account.payment) {
-      let { stripeCustomerId } = account.payment;
+    let { stripeCustomerId } = account;
 
-      axios.get(`${fbConfig.functions}/getCards`, {
-        params: {
-          stripeCustomerId: stripeCustomerId
-        }
-      })
-      .then((res) => {
-        console.log('response: ', res);
-        let cards = res.data.data;
+    axios.get(`${fbConfig.functions}/getCards`, {
+      params: {
+        stripeCustomerId: stripeCustomerId
+      }
+    })
+    .then((res) => {
+      console.log('response: ', res);
+      let cards = res.data.data;
 
-        this.setState({
-          fetchedCards: true,
-          cards
-        });
+      this.setState({
+        fetchedCards: true,
+        cards
       });
-    }
+    });
   }
 
   componentWillMount() {
@@ -82,7 +80,7 @@ class ExistingCards extends React.Component {
                 id={card.id}
                 exp_month={card.exp_month}
                 exp_year={card.exp_year}
-                stripeCustomerId={account.payment.stripeCustomerId}
+                stripeCustomerId={account.stripeCustomerId}
               />
             )
           })}

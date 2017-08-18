@@ -1,0 +1,25 @@
+@import "../../../../styles/variables.css";
+@import "../../index.css";
+
+.headline{
+  composes: navItemsGroupHeadline;
+  & .navAnchor:before{
+    background-image: url('assets/icons/regular/angle-double-right.svg?fill=white');
+  }
+}
+
+.navAnchor{
+  composes: navAnchor;
+}
+
+.content{
+  composes: navItemsGroupContent;
+}
+
+.navItem{
+  composes: navItem;
+}
+
+.disabled{
+  composes: disabled;
+}

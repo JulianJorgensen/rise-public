@@ -6,17 +6,17 @@ import RadioGroup from 'components/RadioGroup';
 import { BANKING_FORM_NAME } from 'app/constants';
 import classes from './index.css';
 
-export const MentorBankingForm = ({ account, handleBack, handleSubmit, submitting }) => (
+export const MentorBankingForm = ({ account, handleBack, submitLabel, handleSubmit, submitting }) => (
   <form className={classes.container} onSubmit={handleSubmit}>
     <Field
-      name='payment.stripeEmail'
+      name='stripeEmail'
       component={TextField}
       label='Stripe email'
     />
     <div className={classes.ctas}>
       <Button
         primary
-        label='Finish'
+        label={submitLabel || 'Finish'}
         type='submit'
       />
     </div>

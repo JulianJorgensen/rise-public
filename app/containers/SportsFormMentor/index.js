@@ -8,7 +8,7 @@ import PreferredContactMethod from './components/PreferredContactMethod';
 import { SPORTS_FORM_NAME } from 'app/constants';
 import classes from './index.css';
 
-export const SportsFormMentor = ({ account, handleBack, handleSubmit, submitting }) => (
+export const SportsFormMentor = ({ account, handleBack, handleSubmit, submitLabel, submitting }) => (
   <form className={classes.container} onSubmit={handleSubmit}>
     <Field
       name='sports'

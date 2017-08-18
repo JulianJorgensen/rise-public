@@ -60,8 +60,18 @@ export default class MyAthletes extends Component {
   };
 
   render () {
-    const { sorted } = this.state;
+    const { sorted, athletes } = this.state;
+
+    if (!athletes) {
+      return (
+        <div className={classes.container}>
+          <h4>You currently don't have any athletes assigned.</h4>
+        </div>
+      )
+    }
+
     const sortedData = this.getSortedData();
+
     return (
       <div>
         <h2>Your athletes</h2>

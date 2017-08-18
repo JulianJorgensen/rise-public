@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import { firebaseConnect, dataToJS, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase';
 import { reduxFirebase as rfConfig } from 'app/config';
 import { userIsAuthenticated, userHasPermission } from 'utils/router';
-import { removePopulatedData } from 'utils/utils';
+import { removePopulatedData, updateAccount } from 'utils/utils';
 
-import {Elements} from 'react-stripe-elements';
+import { Elements } from 'react-stripe-elements';
+import { AddCard, ExistingCards } from 'containers/Payment';
 
 import { Tab, Tabs } from 'react-toolbox/lib/tabs';
 import Avatar from 'react-toolbox/lib/avatar';
@@ -13,7 +14,6 @@ import { Card } from 'react-toolbox/lib/card';
 import LoadingSpinner from 'components/LoadingSpinner';
 import SettingsForm from './components/SettingsForm';
 import MentorBankingForm from './components/MentorBankingForm';
-import Payment from 'containers/Payment';
 import classes from './index.css';
 
 @userIsAuthenticated
@@ -36,18 +36,11 @@ export default class Settings extends Component {
 
   updateAccount = (newData) => {
     newData = removePopulatedData(newData);
-    this.props.firebase
-      .update(`${rfConfig.userProfile}/${this.props.auth.uid}`, newData)
-      .catch((err) => {
-        console.error('Error updating account', err) // eslint-disable-line no-console
-      })
-    }
+    updateAccount(this.props.firebase, this.props.auth.uid, newData);
+  }
+
   render () {
     const { account } = this.props;
-
-    if (!isLoaded(account)) {
-      return <LoadingSpinner />
-    }
 
     return (
       <div className={classes.container}>
@@ -65,9 +58,13 @@ export default class Settings extends Component {
                 initialValues={account}
                 account={account}
                 onSubmit={this.updateAccount}
+                submitLabel='Change Stripe Email'
               /> :
               <Elements>
-                <Payment showCards={true} />
+                <div>
+                  <ExistingCards />
+                  <AddCard onSubmit={this.completePaymentSetup} />
+                </div>
               </Elements>
             }
           </Tab>

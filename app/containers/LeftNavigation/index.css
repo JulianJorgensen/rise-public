@@ -25,7 +25,7 @@
 .navItemsGroupHeadline{
   display: flex;
   font-size: 20px;
-  background-color: gray(70%);
+  background-color: gray(60%);
   margin: 0;
   padding: rem(20);
   color: white;
@@ -46,7 +46,6 @@
 .navItemsGroupContent{
   display: flex;
   flex-direction: column;
-  background-color: gray(80%);
 }
 
 .navItem{
@@ -56,30 +55,25 @@
   text-decoration: none;
 }
 
-.navItem.navItemActive{
+.navItemsGroupHeadline.active,
+.navItemActive{
+  background-color: color(var(--blue) shade(50%));
+}
+.navItemActive{
   padding-left: rem(25);
   border-left: rem(15) solid var(--blue);
-  background-color: color(var(--blue) shade(50%));
-  & .navAnchor{
-    color: white;
-  }
 }
 
 .disabled{
   cursor: default;
   &.navItem{
-    background-color: color(var(--lightBlue) saturation(5%) lightness(50%));
+    background-color: gray(80%);
   }
   & .navAnchor{
     opacity: 0.2;
   }
 }
 
-.navItemsGroupHeadline.active,
 .navItemsGroupContent.active{
-  background-color: var(--lightBlue);
-  &,
-  & .navItem{
-    color: white;
-  }
+  background-color: color(var(--blue) saturation(20%) shade(10%));
 }

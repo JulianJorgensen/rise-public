@@ -18,7 +18,7 @@ import classes from './index.css';
   })
 )
 export default class MyMeetings extends Component {
-  constructor(){
+  constructor() {
     super();
 
     this.state = {

@@ -38,6 +38,7 @@
       padding: rem(50);
       border: 1px solid gray(60%);
       & .icon{
+        cursor: pointer;
         background-image: url('assets/icons/regular/calendar-plus.svg');
         width: rem(30);
         height: rem(30);

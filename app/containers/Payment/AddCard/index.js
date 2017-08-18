@@ -23,9 +23,9 @@ class AddCard extends React.Component {
     // We don't want to let default form submission happen here, which would refresh the page.
     ev.preventDefault();
 
-    let { uid, email, firstName, lastName, payment } = this.props.account;
+    let { uid, email, firstName, lastName, stripeCustomerId } = this.props.account;
 
-    if (payment && payment.stripeCustomerId) {
+    if (stripeCustomerId) {
       // add new card
     }else{
       // create new customer

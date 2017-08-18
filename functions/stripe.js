@@ -15,7 +15,7 @@ module.exports = {
     }).then(function(customer) {
       // Save the customer ID and other info in Firebase
       userRef.update({
-        "payment/stripeCustomerId": customer.id
+        "stripeCustomerId": customer.id
       });
     });
   },

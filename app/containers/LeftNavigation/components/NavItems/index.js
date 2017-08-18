@@ -12,31 +12,6 @@ import 'assets/icons/regular/cog.svg';
 
 export const navItems = [
   {
-    url: '/getting-started',
-    anchor: 'Getting started',
-    className: classes.gettingStarted,
-    children: [
-      {
-        url: '/getting-started/application',
-        anchor: 'Application'
-      },
-      {
-        url: '/getting-started/agreements',
-        anchor: 'Agreements',
-        disabledForPendingApplicants: true
-      },
-      {
-        url: '/getting-started/payment',
-        anchor: 'Payment Setup',
-        disabledForPendingApplicants: true
-      }
-    ],
-    showOnlyFor: [
-      'mentor-pending',
-      'athlete-pending'
-    ]
-  },
-  {
     url: '/dashboard',
     anchor: 'Dashboard',
     className: classes.dashboard,
