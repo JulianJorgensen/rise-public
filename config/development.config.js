@@ -5,10 +5,7 @@ module.exports = {
     apiKey: 'AIzaSyDSvGn7Z82SdiYzblNLuH1sLumnDK45jDY',
     authDomain: 'rise-development.firebaseapp.com',
     databaseURL: 'https://rise-development.firebaseio.com',
-    functionsURL: 'https://us-central1-rise-development.cloudfunctions.net',
+    functionsURL: 'http://localhost:5000/rise-development/us-central1',
     storageBucket: 'rise-development.appspot.com'
-  },
-  adminEmails: [
-    {name: 'Dev Julian Jorgensen', address: 'me@julianjorgensen.com'}
-  ]
+  }
 };

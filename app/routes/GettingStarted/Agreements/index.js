@@ -27,9 +27,16 @@ export default class Agreements extends Component {
   }
 
   confirm = () => {
+    let { role, hasSubmittedApplication, hasSetupPayment } = this.props.account;
+
+    this.setState({
+      finished: true
+    });
+
     updateAccount(this.props.firebase, this.props.auth.uid, {
-      hasConfirmedAgreements: true
-    })
+      hasConfirmedAgreements: true,
+      role: hasSetupPayment ? role.name : `${role.name}-pending`
+    });
   }
 
   render () {

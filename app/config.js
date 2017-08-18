@@ -1,4 +1,3 @@
-console.log('envconfig', ENV_CONFIG.firebase.databaseURL);
 export const firebase = {
   apiKey: ENV_CONFIG.firebase.apiKey,
   authDomain: ENV_CONFIG.firebase.authDomain,
@@ -22,7 +21,7 @@ export const reduxFirebase = {
     return ({
       email: user.email || user.providerData[0].email,
       role: 'athlete-pending',
-      status: 'pending',
+      applicationApproved: 'false',
       showLeftNavigation: true
     })
   }

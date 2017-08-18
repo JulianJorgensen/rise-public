@@ -5,7 +5,7 @@ import { firebaseConnect, dataToJS, pathToJS, isLoaded, isEmpty } from 'react-re
 import { reduxFirebase as rfConfig } from 'app/config';
 import { firebase as fbConfig } from 'app/config';
 import { userIsAuthenticated, userHasPermission } from 'utils/router';
-import { isMentor, removePopulatedData, updateAccount } from 'utils/utils';
+import { isMentor, removePopulatedData, updateAccount, activateUser } from 'utils/utils';
 
 import { Tab, Tabs } from 'react-toolbox/lib/tabs';
 import { Elements } from 'react-stripe-elements';
@@ -31,13 +31,15 @@ export default class Payment extends Component {
   }
 
   completePaymentSetup = () => {
+    let { role, hasSubmittedApplication, hasConfirmedAgreements } = this.props.account;
+
     this.setState({
       finished: true
     });
 
-
     updateAccount(this.props.firebase, this.props.auth.uid, {
-      hasSetupPayment: true
+      hasSetupPayment: true,
+      role: hasConfirmedAgreements ? role.name : `${role.name}-pending`
     });
   }
 

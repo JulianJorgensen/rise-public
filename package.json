@@ -13,7 +13,7 @@
     "serve": "node app.js",
     "build:prod": "cross-env yarn run clean && NODE_ENV=production webpack --progress --colors",
     "functions": "NODE_ENV=development firebase serve --only functions",
-    "deploy:stage": "cross-env yarn run clean && NODE_ENV=production webpack --progress --colors && NODE_ENV=staging firebase deploy -P staging",
+    "deploy:stage": "cross-env yarn run clean && NODE_ENV=production webpack --progress --colors && NODE_ENV=staging firebase deploy -P stage",
     "deploy:prod": "cross-env yarn run clean && NODE_ENV=production webpack --progress --colors && NODE_ENV=production firebase deploy -P prod"
   },
   "repository": {
