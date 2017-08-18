@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import { firebaseConnect, dataToJS, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase';
 import { reduxFirebase as rfConfig } from 'app/config';
 import { firebase as fbConfig } from 'app/config';
@@ -16,7 +17,7 @@ import SportsFormAthlete from 'containers/SportsFormAthlete';
 import classes from './index.css';
 
 @userIsAuthenticated
-@userHasPermission('application')
+@userHasPermission('getting-started')
 @firebaseConnect()
 @connect(
   ({ firebase }) => ({
@@ -103,8 +104,13 @@ export default class Application extends Component {
     if (account.applicationApproved) {
       return (
         <div>
-          <h2>Congratulations. You have been approved!</h2>
-          <div>Now, complete the remaining steps to get fully up and running:</div>
+          <h1>Congratulations!</h1>
+          <h2>You have been approved!</h2>
+          <p>What's next?</p>
+          <ul>
+            <li><Link to='/getting-started/agreements'>Fill out the Agreements</Link></li>
+            <li><Link to='/getting-started/payment'>Setup a payment method</Link></li>
+          </ul>
         </div>
       )
     }

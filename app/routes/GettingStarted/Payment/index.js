@@ -5,12 +5,13 @@ import { firebaseConnect, dataToJS, pathToJS, isLoaded, isEmpty } from 'react-re
 import { reduxFirebase as rfConfig } from 'app/config';
 import { firebase as fbConfig } from 'app/config';
 import { userIsAuthenticated, userHasPermission } from 'utils/router';
+import { isMentor, removePopulatedData, updateAccount } from 'utils/utils';
+
 import { Tab, Tabs } from 'react-toolbox/lib/tabs';
-import { isMentor, removePopulatedData } from 'utils/utils';
+import { Elements } from 'react-stripe-elements';
+import { AddCard } from 'containers/Payment';
 
 import BankingForm from 'containers/BankingForm';
-import PaymentForm from 'containers/PaymentForm';
-
 import LoadingSpinner from 'components/LoadingSpinner';
 
 import classes from './index.css';
@@ -29,23 +30,26 @@ export default class Payment extends Component {
     finished: false
   }
 
-  updateFirebase = (newData) => {
-    newData = removePopulatedData(newData);
-    this.props.firebase
-      .update(`${rfConfig.userProfile}/${this.props.auth.uid}`, newData)
-      .catch((err) => {
-        console.error('Error updating account', err) // eslint-disable-line no-console
-      })
+  completePaymentSetup = () => {
+    this.setState({
+      finished: true
+    });
+
+
+    updateAccount(this.props.firebase, this.props.auth.uid, {
+      hasSetupPayment: true
+    });
   }
 
   render () {
     const { account } = this.props;
     let { finished } = this.state;
 
-    if (account.hasConfirmedAgreements || finished) {
+    if (account.hasSetupPayment || finished) {
       return (
         <div>
           <h1>Excellent!</h1>
+          <h2>You've setup payment</h2>
         </div>
       )
     }
@@ -56,8 +60,7 @@ export default class Payment extends Component {
           <BankingForm
             initialValues={account}
             account={account}
-            handleBack={this.prevStep}
-            onSubmit={this.finishSteps}
+            onSubmit={this.completePaymentSetup}
           />
         </div>
       )
@@ -65,11 +68,11 @@ export default class Payment extends Component {
 
     return (
       <div className={classes.container}>
-        <PaymentForm
-          initialValues={account}
-          account={account}
-          onSubmit={this.nextStep}
-        />
+        <Elements>
+          <div>
+            <AddCard onSubmit={this.completePaymentSetup} />
+          </div>
+        </Elements>
       </div>
     )
   }

@@ -1,4 +1,12 @@
 import _ from 'lodash';
+import { reduxFirebase as rfConfig } from 'app/config';
+
+export function updateAccount(firebase, uid, newData) {
+  return firebase.update(`${rfConfig.userProfile}/${uid}`, newData)
+  .catch((err) => {
+    console.error('Error updating account', err);
+  });
+}
 
 export function toObject(arr) {
   let object = {};

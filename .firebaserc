@@ -1,8 +1,8 @@
 {
   "projects": {
-    "dev": "rise-1602c",
-    "stage": "rise-1602c",
+    "dev": "rise-development",
+    "stage": "rise-staging",
     "prod": "rise-1602c",
-    "default": "rise-1602c"
+    "default": "rise-development"
   }
 }

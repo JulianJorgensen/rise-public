@@ -1,3 +1,4 @@
+console.log('envconfig', ENV_CONFIG.firebase.databaseURL);
 export const firebase = {
   apiKey: ENV_CONFIG.firebase.apiKey,
   authDomain: ENV_CONFIG.firebase.authDomain,

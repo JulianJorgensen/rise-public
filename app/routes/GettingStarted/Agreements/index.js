@@ -5,6 +5,7 @@ import { firebaseConnect, dataToJS, pathToJS, isLoaded, isEmpty } from 'react-re
 import { reduxFirebase as rfConfig } from 'app/config';
 import { firebase as fbConfig } from 'app/config';
 import { userIsAuthenticated, userHasPermission } from 'utils/router';
+import { updateAccount } from 'utils/utils';
 
 import AgreementsFormAthlete from 'containers/AgreementsFormAthlete';
 import LoadingSpinner from 'components/LoadingSpinner';
@@ -26,16 +27,9 @@ export default class Agreements extends Component {
   }
 
   confirm = () => {
-    console.log('confirmed!');
-  }
-
-  updateFirebase = (newData) => {
-    newData = removePopulatedData(newData);
-    this.props.firebase
-      .update(`${rfConfig.userProfile}/${this.props.auth.uid}`, newData)
-      .catch((err) => {
-        console.error('Error updating account', err) // eslint-disable-line no-console
-      })
+    updateAccount(this.props.firebase, this.props.auth.uid, {
+      hasConfirmedAgreements: true
+    })
   }
 
   render () {
@@ -46,6 +40,7 @@ export default class Agreements extends Component {
       return (
         <div>
           <h1>Excellent!</h1>
+          <h2>You've confirmed all agreements</h2>
         </div>
       )
     }

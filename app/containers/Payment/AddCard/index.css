@@ -1,0 +1,15 @@
+.ctas{
+  display: flex;
+  justify-content: space-between;
+  margin-top: rem(30);
+}
+
+.cardLabel{
+}
+
+.card{
+  margin-top: rem(10);
+  margin-bottom: rem(10);
+  background-color: gray(95%);
+  padding: rem(20);
+}

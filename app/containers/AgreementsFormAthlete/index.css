@@ -1,3 +1,7 @@
+.container{
+  margin-top: rem(60);
+}
+
 .term{
   margin-bottom: rem(60);
 }

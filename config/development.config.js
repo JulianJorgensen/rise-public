@@ -2,10 +2,10 @@ module.exports = {
   ENV: "development",
   ACUITY_MENTOR_CALL_ID: 346940,
   firebase: {
-    apiKey: 'AIzaSyDpuf3lnAJgGYn46QrZJ2fk9me5lZoy4fA',
-    authDomain: 'rise-1602c.firebaseapp.com',
-    databaseURL: 'https://rise-1602c.firebaseio.com',
-    functionsURL: 'http://localhost:5000/rise-1602c/us-central1',
-    storageBucket: 'rise-1602c.appspot.com'
+    apiKey: 'AIzaSyDSvGn7Z82SdiYzblNLuH1sLumnDK45jDY',
+    authDomain: 'rise-development.firebaseapp.com',
+    databaseURL: 'https://rise-development.firebaseio.com',
+    functionsURL: 'https://us-central1-rise-development.cloudfunctions.net',
+    storageBucket: 'rise-development.appspot.com'
   }
 };

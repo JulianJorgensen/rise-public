@@ -13,7 +13,7 @@ import { Card } from 'react-toolbox/lib/card';
 import LoadingSpinner from 'components/LoadingSpinner';
 import SettingsForm from './components/SettingsForm';
 import MentorBankingForm from './components/MentorBankingForm';
-import PaymentForm from 'containers/PaymentForm';
+import Payment from 'containers/Payment';
 import classes from './index.css';
 
 @userIsAuthenticated
@@ -67,7 +67,7 @@ export default class Settings extends Component {
                 onSubmit={this.updateAccount}
               /> :
               <Elements>
-                <PaymentForm showCards={true} />
+                <Payment showCards={true} />
               </Elements>
             }
           </Tab>

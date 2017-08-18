@@ -9,17 +9,18 @@ import classes from './index.css';
 
 export const AgreementsFormAthlete = ({ handleSubmit, submitting }) => (
   <form className={classes.container} onSubmit={handleSubmit}>
+    <h1>Agreements</h1>
     <div className={classes.term}>
       <div className={classes.termBody}>
         <h5>Services</h5>
         <p>Mentor agrees to provide overall Mentoring and Mindset Development services and Athlete agrees to abide by all policies and procedures as outlined in this agreement as a condition of their participation in Mentorship.</p>
-        <h5>DISCLAIMER</h5>
+        <h5>Disclaimer</h5>
         <p>Athlete understands RISE Athletes (Mentor) is not an employee, agent, lawyer, doctor, manager, therapist, public relations or business manager, registered dietician, or financial analyst, psychotherapist or accountant. Athlete understands their participation in Mind Coaching will not treat or diagnose any disease, illness, or ailment and if they should experience any such issues they should see their registered physician or other practitioner as determined by their own judgment.</p>
       </div>
       <Field
         name='confirmed'
         component={Checkbox}
-        label='I have read and understand all the terms and agreements'
+        label='I have read and understand above terms and agreements'
       />
     </div>
 
@@ -27,15 +28,15 @@ export const AgreementsFormAthlete = ({ handleSubmit, submitting }) => (
       <div className={classes.termBody}>
         <h5>Fees</h5>
         <p><strong>4 months (14 weeks)= $350/month ($1400 total)</strong><br />Solo Session: $150</p>
-        <h5>METHODS OF PAYMENT</h5>
+        <h5>methods of payment</h5>
         <p>RISE Athletes uses Stripe to set up Automatic Monthly Payments Recurring All payment invoices and reminders are sent to the specified email address of Athlete or parent.</p>
-        <h5>REFUNDS</h5>
+        <h5>Refunds</h5>
         <p>Athlete is responsible for full payment of fees for the duration of RISE Athletes. To further clarify, no refunds will be issued for Meetings that have already happened, or for Missed Meetings that were not properly rescheduled, or for Seasons that are not completed after commitment. </p>
       </div>
       <Field
         name='confirmed'
         component={Checkbox}
-        label='I have read and understand all the terms and agreements'
+        label='I have read and understand above terms and agreements'
       />
     </div>
 
@@ -44,34 +45,34 @@ export const AgreementsFormAthlete = ({ handleSubmit, submitting }) => (
         <h5>Meetings</h5>
         <p>1. Mentor and Athlete join the Meeting at the scheduled time.</p>
         <p>2. The Mentor will be unconditionally constructive, loving and acknowledging of what is. Mentor will always try their absolute best to listen to the Athlete’s concerns and to do what is necessary to resolve the problem. Mentor believes in being totally truthful and expects the Athlete to tell the Mentor if the Mentor oversteps.</p>
-        <h5>RE-SCHEDULING</h5>
+        <h5>Re-scheduling</h5>
         <p>It is the Mentor’s responsibility to provide the Athlete with their availability and it is the Athlete’s responsibility to schedule appointments with Mentor. If Athlete needs to reschedule an appointment with Mentor, Athlete must give at least 24 hours advanced notice to Mentor.</p>
       </div>
       <p>By clicking below, the Athlete agrees that there is one allowed missed session, and any further missed sessions without 24 hour notice of cancellation will incur the normal fee of the session scheduled.</p>
       <Field
         name='confirmed'
         component={Checkbox}
-        label='I have read and understand all the terms and agreements'
+        label='I have read and understand above terms and agreements'
       />
     </div>
 
     <div className={classes.term}>
       <div className={classes.termBody}>
-        <h5>EXPECTATIONS</h5>
+        <h5>Expectations</h5>
         <p>1. Please join Meeting at the Scheduled time. Integrity is super important!</p>
         <p>2. Find a quiet place, preferably at home. If you’re in the car, or anywhere with people around, we’ll have to ask you to call us back when you’re ready, or consider it a miss.</p>
         <p>**It is very important for the athlete to be able to give his/her session their full attention, and to be able to speak openly, without having to filter thoughts!</p>
 
-        <h5>OFFICE HOURS</h5>
+        <h5>Office hours</h5>
         <p>Office hours are Monday through Friday from 9 am to 5 pm PST.  If Athlete sends Mentor something via email on Friday, the Mentor will most likely respond Monday.</p>
 
-        <h5>MENTORING WEEKS + OFF-WEEKS</h5>
+        <h5>Mentoring weeks + off-weeks</h5>
         <p>There may be times Mentor has conferences, retreats and other engagements where she’ll need to change the schedule, or may not have regular email access. Mentor will be sure to let you know of those activities ahead of time.</p>
       </div>
       <Field
         name='confirmed'
         component={Checkbox}
-        label='I have read and understand all the terms and agreements'
+        label='I have read and understand above terms and agreements'
       />
     </div>
 
@@ -84,7 +85,7 @@ export const AgreementsFormAthlete = ({ handleSubmit, submitting }) => (
       <Field
         name='confirmed'
         component={Checkbox}
-        label='I have read and understand all the terms and agreements'
+        label='I have read and understand above terms and agreements'
       />
     </div>
 
@@ -96,13 +97,13 @@ export const AgreementsFormAthlete = ({ handleSubmit, submitting }) => (
       <Field
         name='confirmed'
         component={Checkbox}
-        label='I have read and understand all the terms and agreements'
+        label='I have read and understand above terms and agreements'
       />
     </div>
 
     <div className={classes.term}>
       <div className={classes.termBody}>
-        <h5>NON-DISCLOSURE OF MENTORING MATERIALS</h5>
+        <h5>Non-disclosure of mentoring materials</h5>
         <p>RISE Athletes is designed and crafted from original materials that have been provided to Athlete are for Athlete's individual use only and a single-user license. Athlete is not authorized to use any of Mentor’s intellectual property for Athlete's business purposes.</p>
         <p>By signing below, Athlete agrees (1) not to infringe any copyright, patent, trademark, trade secret, or other intellectual property rights, (2) that any Confidential Information shared by the Mentor is confidential and proprietary, and belongs solely and exclusively to the Mentor, (3) Athlete agrees not to disclose such information to any other person or use it in any manner other than in discussion with the Mentor.</p>
         <p>Further, by signing below, Athlete agrees that if Athlete violates, or displays any likelihood of violating, any of Athlete’s agreements contained in this paragraph, the Mentor will be entitled to injunctive relief to prohibit any such violations and to protect against the harm of such violations.</p>
@@ -110,7 +111,7 @@ export const AgreementsFormAthlete = ({ handleSubmit, submitting }) => (
       <Field
         name='confirmed'
         component={Checkbox}
-        label='I have read and understand all the terms and agreements'
+        label='I have read and understand above terms and agreements'
       />
     </div>
 
@@ -123,7 +124,7 @@ export const AgreementsFormAthlete = ({ handleSubmit, submitting }) => (
       <Field
         name='confirmed'
         component={Checkbox}
-        label='I have read and understand all the terms and agreements'
+        label='I have read and understand above terms and agreements'
       />
     </div>
 
