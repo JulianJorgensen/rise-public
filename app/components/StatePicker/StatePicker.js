@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import cn from 'classnames';
-import Dropdown from 'react-toolbox/lib/dropdown';
+import Autocomplete from 'react-toolbox/lib/autocomplete';
 import classes from './StatePicker.css';
 import provinces from 'provinces';
 
@@ -27,10 +27,7 @@ export default class StatePicker extends Component {
     let { input } = this.props;
     provinces.map((province) => {
       if (province.country === country){
-        newDomesticProvinces.push({
-          value: province.name,
-          label: province.name
-        });
+        newDomesticProvinces.push(province.name);
       }
     });
     if (newDomesticProvinces.length > 0){
@@ -64,13 +61,15 @@ export default class StatePicker extends Component {
 
     if (this.state.domesticProvinces.length > 0){
       return (
-        <Dropdown
+        <Autocomplete
           className={_className}
+          direction="down"
+          selectedPosition="none"
+          multiple={false}
           onChange={this.handleChange.bind(this)}
           source={this.state.domesticProvinces}
           value={this.state.selectedProvince}
-          placeholder="State / Province"
-          auto
+          label="State / Province"
         />
       )
     }else{

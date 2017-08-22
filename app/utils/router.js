@@ -1,13 +1,19 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 import { get } from 'lodash';
-import { connectedReduxRedirect } from 'redux-auth-wrapper/history4/redirect';
+import locationHelperBuilder from 'redux-auth-wrapper/history4/locationHelper';
+import { connectedRouterRedirect } from 'redux-auth-wrapper/history4/redirect';
+
 // import { browserHistory } from 'react-router';
 import { DASHBOARD_PATH, GETTING_STARTED_PATH, NOT_AUTHORIZED_PATH } from 'app/constants';
 import { dataToJS, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase';
+import { locationChange } from 'store/location';
 import LoadingSpinner from 'components/LoadingSpinner';
 
 const AUTHED_REDIRECT = 'AUTHED_REDIRECT';
 const UNAUTHED_REDIRECT = 'UNAUTHED_REDIRECT';
+
+const locationHelper = locationHelperBuilder();
 
 /**
  * @description Higher Order Component that redirects to `/login` instead
@@ -16,27 +22,48 @@ const UNAUTHED_REDIRECT = 'UNAUTHED_REDIRECT';
  * @return {Component} wrappedComponent
  */
 
-export const userIsAuthenticated = connectedReduxRedirect({
-  redirectPath: '/dashboard',
+export const userHasBeenSetup = connectedRouterRedirect({
+  authenticatingSelector: ({ firebase }) => {
+    let status = pathToJS(firebase, 'auth') === undefined;
+    return status;
+  },
+  AuthenticatingComponent: LoadingSpinner,
+  redirectPath: '/getting-started',
   allowRedirectBack: false,
   authenticatedSelector: ({ firebase }) => {
     const user = pathToJS(firebase, 'profile');
-    return isLoaded(user);
+    console.log('userapproved? ', user.role.status === 'confirmed');
+    return user.role.status === 'confirmed';
   },
-  authenticatingSelector: ({ firebase }) =>
-    (pathToJS(firebase, 'auth') === undefined) ||
-    (pathToJS(firebase, 'isInitializing') === true),
-  // AuthenticatingComponent: LoadingSpinner,
-  wrapperDisplayName: 'UserIsAuthenticated',
-  redirectAction: newLoc => (dispatch) => {
-    // browserHistory.replace(newLoc)
-    dispatch({
-      type: UNAUTHED_REDIRECT,
-      payload: { message: 'User is not authenticated.' }
-    })
-  }
+  wrapperDisplayName: 'UserIsGettingStarted'
 })
 
+/**
+ * @description Higher Order Component that redirects to `/login` instead
+ * rendering if user is not authenticated (default of redux-auth-wrapper).
+ * @param {Component} componentToWrap - Component to wrap
+ * @return {Component} wrappedComponent
+ */
+
+export const userIsAuthenticated = connectedRouterRedirect({
+  authenticatingSelector: ({ firebase }) => {
+    let status = pathToJS(firebase, 'auth') === undefined;
+    console.log('authenticating!', status);
+    return status;
+  },
+  AuthenticatingComponent: LoadingSpinner,
+  redirectPath: (state, ownProps) => {
+    console.log('redirecting!');
+    return locationHelper.getRedirectQueryParam(ownProps) || '/login';
+  },
+  allowRedirectBack: true,
+  authenticatedSelector: ({ firebase }) => {
+    let status = pathToJS(firebase, 'profile') ? true : false;
+    console.log('authenticatedSelector', status);
+    return status;
+  },
+  wrapperDisplayName: 'UserIsAuthenticated'
+})
 
 /**
  * @description Higher Order Component that redirects to dashboard page or most
@@ -46,9 +73,7 @@ export const userIsAuthenticated = connectedReduxRedirect({
  * @param {Component} componentToWrap - Component to wrap
  * @return {Component} wrappedComponent
  */
-export const userIsNotAuthenticated = connectedReduxRedirect({
-  redirectPath: '/login',
-  allowRedirectBack: false,
+export const userIsNotAuthenticated = connectedRouterRedirect({
   authenticatedSelector: ({ firebase }) => {
     const user = pathToJS(firebase, 'profile');
     return isEmpty(user);
@@ -58,10 +83,8 @@ export const userIsNotAuthenticated = connectedReduxRedirect({
     (pathToJS(firebase, 'isInitializing') === true),
   AuthenticatingComponent: LoadingSpinner,
   wrapperDisplayName: 'UserIsNotAuthenticated',
-  redirectAction: newLoc => (dispatch) => {
-    // browserHistory.replace(newLoc)
-    console.log('user IS authenticated, redirect to : ', newLoc.pathname);
-  }
+  redirectPath: '/dashboard',
+  allowRedirectBack: false
 })
 
 
@@ -73,7 +96,7 @@ export const userIsNotAuthenticated = connectedReduxRedirect({
  * @return {Component} wrappedComponent
  */
 
-export const userHasPermission = permission => connectedReduxRedirect({
+export const userHasPermission = permission => connectedRouterRedirect({
   authenticatedSelector: ({ firebase }) => {
     const account = pathToJS(firebase, 'profile');
     const auth = pathToJS(firebase, 'auth');
@@ -85,13 +108,9 @@ export const userHasPermission = permission => connectedReduxRedirect({
       || (pathToJS(firebase, 'profile') === undefined)
       || (pathToJS(firebase, 'isInitializing') === true),
   // AuthenticatingComponent: LoadingSpinner,
-  redirectAction: newLoc => (dispatch) => {
-    // browserHistory.replace(newLoc);
-    // dispatch({ type: UNAUTHED_REDIRECT });
-  },
+  wrapperDisplayName: 'UserHasPermission',
   redirectPath: '/not-authorized',
-  allowRedirectBack: false,
-  wrapperDisplayName: 'UserHasPermission'
+  allowRedirectBack: false
 });
 
 
@@ -103,7 +122,7 @@ export const userHasPermission = permission => connectedReduxRedirect({
  * @return {Component} wrappedComponent
  */
 
-export const userIsAdmin = connectedReduxRedirect({
+export const userIsAdmin = connectedRouterRedirect({
   authenticatedSelector: ({ firebase }) => {
     const account = pathToJS(firebase, 'profile');
     const auth = pathToJS(firebase, 'auth');
@@ -119,16 +138,13 @@ export const userIsAdmin = connectedReduxRedirect({
       || (pathToJS(firebase, 'profile') === undefined)
       || (pathToJS(firebase, 'isInitializing') === true),
   // AuthenticatingComponent: LoadingSpinner,
-  redirectAction: newLoc => (dispatch) => {
-    // browserHistory.replace(newLoc);
-    // dispatch({ type: UNAUTHED_REDIRECT });
-  },
+  wrapperDisplayName: 'UserIsAdmin',
   redirectPath: '/not-authorized',
-  allowRedirectBack: false,
-  wrapperDisplayName: 'UserIsAdmin'
+  allowRedirectBack: false
 });
 
 export default {
+  userHasBeenSetup,
   userIsAuthenticated,
   userIsNotAuthenticated,
   userHasPermission,

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { firebaseConnect, dataToJS, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase';
@@ -16,6 +17,7 @@ import LoadingSpinner from 'components/LoadingSpinner';
 
 import classes from './index.css';
 
+@withRouter
 @userIsAuthenticated
 @firebaseConnect()
 @connect(
@@ -38,7 +40,7 @@ export default class Payment extends Component {
 
     updateAccount(this.props.firebase, this.props.auth.uid, {
       hasSetupPayment: true,
-      role: hasConfirmedAgreements ? role.name : `${role.name}-pending`
+      role: (hasConfirmedAgreements || isMentor(role)) ? role.name : `${role.name}-pending`
     });
   }
 
@@ -58,6 +60,8 @@ export default class Payment extends Component {
     if(isMentor(account.role)) {
       return (
         <div className={classes.container}>
+          <h2>Setup Payment</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu tellus turpis. Duis tincidunt lorem quis felis feugiat, nec mollis odio tristique. Nam eleifend erat vitae nulla imperdiet luctus.</p>
           <BankingForm
             initialValues={account}
             account={account}
@@ -69,6 +73,8 @@ export default class Payment extends Component {
 
     return (
       <div className={classes.container}>
+        <h2>Setup Payment</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu tellus turpis. Duis tincidunt lorem quis felis feugiat, nec mollis odio tristique. Nam eleifend erat vitae nulla imperdiet luctus.</p>
         <Elements>
           <div>
             <AddCard onSubmit={this.completePaymentSetup} />

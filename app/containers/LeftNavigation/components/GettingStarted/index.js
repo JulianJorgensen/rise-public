@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { userIsAuthenticated } from 'utils/router';
 import { firebaseConnect, pathToJS } from 'react-redux-firebase';
+import { isMentor} from 'utils/utils';
 
 import 'assets/icons/regular/angle-double-right.svg';
 import classes from './index.css';
 
 @withRouter
-@userIsAuthenticated
 @firebaseConnect()
 @connect(
   ({ firebase }) => ({
@@ -39,11 +38,13 @@ export default class GettingStartedNav extends Component {
 
         { applicationApproved ?
           <div className={`${classes.content} ${classes.active}`}>
-            <Link
-              to='/getting-started/agreements'
-              className={`${classes.navItem} ${!applicationApproved ? classes.disabled : ''} ${location.pathname === '/getting-started/agreements' ? classes.navItemActive : ''}`}>
-              <div className={classes.navAnchor}>Agreements</div>
-            </Link>
+            { !isMentor(account.role) ?
+              <Link
+                to='/getting-started/agreements'
+                className={`${classes.navItem} ${!applicationApproved ? classes.disabled : ''} ${location.pathname === '/getting-started/agreements' ? classes.navItemActive : ''}`}>
+                <div className={classes.navAnchor}>Agreements</div>
+              </Link>
+            : '' }
             <Link
               to='/getting-started/payment'
               className={`${classes.navItem} ${!applicationApproved ? classes.disabled : ''} ${location.pathname === '/getting-started/payment' ? classes.navItemActive : ''}`}>

@@ -3,11 +3,11 @@
 }
 
 .label{
-  font-size: 12px;
+  font-size: rem(12);
   margin: 0;
   opacity: 0.26;
   position: relative;
-  bottom: -15px;
+  bottom: rem(-15);
 }
 
 .inputs{
@@ -18,7 +18,10 @@
   }
   & .month,
   & .year{
-    margin-left: 15px;
     width: 40%;
+  }
+  & .day,
+  & .year{
+    margin-left: rem(15);
   }
 }

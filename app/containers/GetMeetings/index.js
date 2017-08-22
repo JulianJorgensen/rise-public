@@ -1,5 +1,6 @@
 import React, { Component, cloneElement, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { firebaseConnect, dataToJS, pathToJS, isEmpty, isLoaded } from 'react-redux-firebase';
 import { firebase as fbConfig } from 'app/config';
 import { userIsAuthenticated, userHasPermission } from 'utils/router';
@@ -8,7 +9,7 @@ import GetAllMeetings from './GetAllMeetings';
 import LoadingSpinner from 'components/LoadingSpinner';
 import { isMentor, isAdmin } from 'utils/utils';
 
-@userIsAuthenticated
+@withRouter
 @firebaseConnect()
 @connect(
   ({ notification, firebase, meetings }) => ({

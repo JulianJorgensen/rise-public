@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import cn from 'classnames';
-import Dropdown from 'react-toolbox/lib/dropdown';
+import Autocomplete from 'react-toolbox/lib/autocomplete';
 import classes from './CountryPicker.css';
 
 export default class CountryPicker extends Component {
@@ -12,7 +12,7 @@ export default class CountryPicker extends Component {
     let {input, handleCountryChange} = this.props;
     let country;
 
-    if (input){
+    if (input.value) {
       country = input.value;
       handleCountryChange(input.value);
     }else{
@@ -22,7 +22,7 @@ export default class CountryPicker extends Component {
     this.setState({country});
   }
 
-  handleChange(value){
+  handleChange(value) {
     let {input, handleCountryChange} = this.props;
     // set container state (parent). This is mainly for updating the provinces
     handleCountryChange(value);
@@ -39,13 +39,15 @@ export default class CountryPicker extends Component {
     const _className = cn(className, classes.default);
 
     return (
-      <Dropdown
+      <Autocomplete
         className={_className}
-        auto
+        direction="down"
+        selectedPosition="none"
+        multiple={false}
+        label={label}
         onChange={this.handleChange.bind(this)}
         source={countries}
         value={this.state.country}
-        placeholder={placeholder}
       />
     );
   }

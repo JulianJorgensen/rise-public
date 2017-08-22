@@ -10,9 +10,6 @@ import Button from 'components/Button';
 import CardItem from './components/CardItem';
 import classes from './index.css';
 
-
-@userIsAuthenticated
-@userHasPermission('settings')
 @firebaseConnect()
 @connect(
   ({ firebase }) => ({

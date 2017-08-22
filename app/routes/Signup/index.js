@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { firebaseConnect, dataToJS, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase';
 import { reduxFirebase as rfConfig } from 'app/config';
 import {Tab, Tabs} from 'react-toolbox/lib/tabs';
-import moment from 'moment-timezone';
 import { LOGIN_PATH } from 'app/constants';
 import { userIsNotAuthenticated } from 'utils/router';
 import AthleteSignupForm from './components/AthleteSignupForm';
@@ -55,8 +54,7 @@ export default class Signup extends Component {
         let { uid } = this.props.auth;
         update(`${rfConfig.userProfile}/${uid}`, {
           uid: uid,
-          role: this.state.role,
-          timezone: moment.tz.guess()
+          role: this.state.role
         });
 
         history.push('/getting-started');

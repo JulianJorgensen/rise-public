@@ -1,22 +1,20 @@
 import React, { Component, PropTypes } from 'react'
 import cn from 'classnames';
 import moment from 'moment-timezone';
-import Dropdown from 'react-toolbox/lib/dropdown';
+import Autocomplete from 'react-toolbox/lib/autocomplete';
 import classes from './index.css';
 
 import timezoneData from './timezones';
-let timezones = Object.entries(timezoneData).map((item) => {
+let timezones = {};
+Object.entries(timezoneData).map((item) => {
   let timezoneName = item[0];
   let timezoneId = item[1];
-  return ({
-    value: timezoneName,
-    label: `${timezoneName} (${moment().tz(timezoneName).format('Z')})`
-  })
+  timezones[timezoneName] = `${timezoneName} (${moment().tz(timezoneName).format('Z')})`;
 });
 
 export default class TimezoneSelector extends Component {
   state = {
-    selectedTimezone: ''
+    selectedTimezone: moment.tz.guess()
   }
 
   handleChange = (value) => {
@@ -34,14 +32,19 @@ export default class TimezoneSelector extends Component {
     let { className, label, required, input } = this.props;
     const _className = cn(className, classes.default);
 
+    console.log('timezone selector - input.value ', input.value);
+    console.log('timezone selector - this.state ', this.state);
+
     return (
-      <Dropdown
+      <Autocomplete
+        direction="down"
+        selectedPosition="none"
+        multiple={false}
         className={_className}
         onChange={this.handleChange.bind(this)}
         source={timezones}
-        value={input.value}
+        value={this.state.selectedTimezone}
         label='Timezone'
-        auto
       />
     )
   }

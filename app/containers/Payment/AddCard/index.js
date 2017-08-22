@@ -9,8 +9,6 @@ import Button from 'components/Button';
 import Address from '../Address';
 import classes from './index.css';
 
-@userIsAuthenticated
-@userHasPermission('settings')
 @firebaseConnect()
 @connect(
   ({ firebase }) => ({

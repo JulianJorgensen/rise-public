@@ -5,14 +5,14 @@ import { firebaseConnect, dataToJS, pathToJS, isEmpty, isLoaded } from 'react-re
 import { Link, withRouter } from 'react-router-dom';
 import moment from 'moment-timezone';
 import { DASHBOARD_PATH } from 'app/constants';
-import { userIsAuthenticated, userHasPermission } from 'utils/router';
+import { userHasBeenSetup, userIsAuthenticated, userHasPermission } from 'utils/router';
 import LoadingSpinner from 'components/LoadingSpinner';
 import Meetings from 'containers/Meetings';
 import classes from './index.css';
 
 @withRouter
 @userIsAuthenticated
-@userHasPermission('dashboard')
+@userHasBeenSetup
 @firebaseConnect()
 @connect( // Map redux state to props
   ({ firebase }) => ({

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { firebaseConnect, dataToJS, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase';
@@ -12,6 +13,7 @@ import LoadingSpinner from 'components/LoadingSpinner';
 
 import classes from './index.css';
 
+@withRouter
 @userIsAuthenticated
 @firebaseConnect()
 @connect(

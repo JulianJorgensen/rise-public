@@ -27,7 +27,7 @@ let months = monthsList.map((month, i) => {
 });
 
 let years = [];
-for( let i = 1940; i <= 2017; i++ ) {
+for( let i = 2015; i >= 1940; i-- ) {
   years.push({
     value: moment(i, 'YYYY').format('YYYY'),
     label: i
@@ -80,17 +80,17 @@ export default class DateOfBirth extends Component {
         <label className={classes.label}>Date of birth</label>
         <div className={classes.inputs}>
           <Dropdown
-            className={classes.day}
-            onChange={this.handleChange.bind(this, 'day')}
-            source={days}
-            value={day}
-            auto
-          />
-          <Dropdown
             className={classes.month}
             onChange={this.handleChange.bind(this, 'month')}
             source={months}
             value={month}
+            auto
+          />
+          <Dropdown
+            className={classes.day}
+            onChange={this.handleChange.bind(this, 'day')}
+            source={days}
+            value={day}
             auto
           />
           <Dropdown

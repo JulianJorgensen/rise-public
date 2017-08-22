@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import { firebaseConnect, dataToJS, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase';
 import { reduxFirebase as rfConfig } from 'app/config';
 import { firebase as fbConfig } from 'app/config';
@@ -16,6 +16,7 @@ import SportsFormAthlete from 'containers/SportsFormAthlete';
 
 import classes from './index.css';
 
+@withRouter
 @userIsAuthenticated
 @firebaseConnect()
 @connect(
@@ -127,7 +128,11 @@ export default class Application extends Component {
 
     return (
       <div className={classes.container}>
-        <h3>Please fill out the application below</h3>
+        <h3>Application</h3>
+
+        { isMentor(account.role) ? <p>You’re about to fill out an application to become a RISE Mentor. We want to learn a bit more about you! We’ll connect with you once you’ve been accepted</p>
+          : <p>You’re about to fill out an application that will be sent for acceptance into RISE Athletes. We want to learn a bit about you, and once you fill out this information, you’ll be paired with a mentor that best fits you! Ready to get started??</p> }
+
         <Tabs index={this.state.step} theme={classes} onChange={this.handleStepChange}>
           <Tab label='1. Personal info' disabled={this.state.step !== 0}>
             <AccountForm

@@ -32,7 +32,7 @@ export default class PreferredContactMethod extends Component {
           {value: 'email', label: 'Email'}
         ]}
         value={this.state.method}
-        placeholder={label}
+        label={label}
         auto
       />
     )

@@ -1,5 +1,6 @@
 import React, { Component, cloneElement, PropTypes } from 'react';
 import axios from 'axios';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { firebaseConnect, dataToJS, pathToJS, isEmpty, isLoaded } from 'react-redux-firebase';
 import { firebase as fbConfig } from 'app/config';
@@ -7,6 +8,7 @@ import moment from 'moment-timezone';
 import { userIsAuthenticated, userHasPermission } from 'utils/router';
 import { sortMeetings } from './utils';
 
+@withRouter
 @firebaseConnect()
 @connect(
   ({ notification, firebase }) => ({

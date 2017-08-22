@@ -15,6 +15,7 @@ import classes from './index.css';
 @connect(
   ({ snackbar, notification, firebase }) => ({
     authError: pathToJS(firebase, 'authError'),
+    account: pathToJS(firebase, 'profile'),
     notification,
     snackbar
   })
@@ -30,16 +31,18 @@ export default class Login extends Component {
   }
 
   handleLogin = loginData => {
-    this.props.firebase.login(loginData).then(() => {
+    this.props.firebase.login(loginData).then((res) => {
       this.props.history.push('/dashboard');
     }).catch((error) => {
       let { authError, dispatch } = this.props;
-
-      dispatch({
-        type: 'SET_SNACKBAR',
-        message: authError.message,
-        style: 'error'
-      });
+      console.log('error logging in', error);
+      if (authError) {
+        dispatch({
+          type: 'SET_SNACKBAR',
+          message: authError.message,
+          style: 'error'
+        });
+      }
     })
   }
 

@@ -12,11 +12,9 @@ import { ACCOUNT_FORM_NAME } from 'app/constants';
 import ProviderDataForm from 'components/ProviderDataForm';
 import classes from './AccountForm.css';
 
-const countries = countryList().getData().map((country) => {
-  return {
-    value: country.code,
-    label: country.name
-  }
+const countries = {};
+countryList().getData().map((country) => {
+  countries[country.code] = country.name
 });
 
 class AccountForm extends Component {
@@ -107,7 +105,7 @@ class AccountForm extends Component {
           handleCountryChange={this.handleCountryChange}
           country={this.state.country}
           countries={countries}
-          placeholder='Country'
+          label='Country'
           required
         />
         <Field

@@ -32,7 +32,7 @@ export default class CompetitionStatus extends Component {
           {value: 'retired', label: 'Retired'}
         ]}
         value={this.state.status}
-        placeholder={label}
+        label={label}
         auto
       />
     )

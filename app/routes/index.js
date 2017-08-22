@@ -35,6 +35,7 @@ import AdminCallLogs from './Admin/CallLogs';
 
 import Recover from './Recover';
 import NotAuthorized from './NotAuthorized';
+import NotFound from './NotFound';
 
 import { Layout } from 'react-toolbox/lib/layout';
 import ReactGA from 'react-ga';
@@ -115,6 +116,8 @@ export default class Index extends React.Component {
               <Route exact path="/admin" component={Admin} />
               <Route path="/admin/users" component={AdminUsers} />
               <Route path="/admin/call-logs" component={AdminCallLogs} />
+              <Route path="/not-authorized" component={NotAuthorized} />
+              <Route path="/not-found" component={NotFound} />
             </Layout>
           </div>
           {ENV_CONFIG.ENV !== 'production' ? <div className={classes.environment}>{ENV_CONFIG.ENV}</div> : ''}

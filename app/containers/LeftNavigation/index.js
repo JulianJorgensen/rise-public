@@ -3,7 +3,6 @@ import { get } from 'lodash';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { UserAuthWrapper } from 'redux-auth-wrapper';
-import { userIsAuthenticated, userHasPermission } from 'utils/router';
 import { firebaseConnect, dataToJS, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase';
 import { DASHBOARD_PATH, ACCOUNT_PATH, LOGIN_PATH, SIGNUP_PATH, ABOUT_PATH } from 'app/constants';
 import NavAccordion from './components/NavAccordion';
@@ -12,7 +11,6 @@ import GettingStarted from './components/GettingStarted';
 import classes from './index.css';
 
 @withRouter
-@userIsAuthenticated
 @firebaseConnect()
 @connect(
   ({ firebase }) => ({

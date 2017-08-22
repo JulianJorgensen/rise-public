@@ -10,7 +10,6 @@ import { userIsAuthenticated, userHasPermission } from 'utils/router';
 import LoadingSpinner from 'components/LoadingSpinner';
 import classes from './index.css';
 
-@userIsAuthenticated
 @firebaseConnect()
 @connect(
   ({ firebase, meetings }) => ({
