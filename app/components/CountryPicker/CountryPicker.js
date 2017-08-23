@@ -44,6 +44,8 @@ export default class CountryPicker extends Component {
         direction="down"
         selectedPosition="none"
         multiple={false}
+        showSuggestionsWhenValueIsSet={true}
+        suggestionMatch='anywhere'
         label={label}
         onChange={this.handleChange.bind(this)}
         source={countries}

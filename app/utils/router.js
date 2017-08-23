@@ -24,16 +24,18 @@ const locationHelper = locationHelperBuilder();
 
 export const userHasBeenSetup = connectedRouterRedirect({
   authenticatingSelector: ({ firebase }) => {
-    let status = pathToJS(firebase, 'auth') === undefined;
+    let auth = pathToJS(firebase, 'auth');
+    let profile = pathToJS(firebase, 'profile');
+    let status = !isLoaded(auth) || !isLoaded(profile);
     return status;
   },
   AuthenticatingComponent: LoadingSpinner,
   redirectPath: '/getting-started',
   allowRedirectBack: false,
   authenticatedSelector: ({ firebase }) => {
-    const user = pathToJS(firebase, 'profile');
-    console.log('userapproved? ', user.role.status === 'confirmed');
-    return user.role.status === 'confirmed';
+    let profile = pathToJS(firebase, 'profile');
+    console.log('userapproved? ', profile.role.status === 'confirmed');
+    return profile.role.status === 'confirmed';
   },
   wrapperDisplayName: 'UserIsGettingStarted'
 })
@@ -47,18 +49,27 @@ export const userHasBeenSetup = connectedRouterRedirect({
 
 export const userIsAuthenticated = connectedRouterRedirect({
   authenticatingSelector: ({ firebase }) => {
-    let status = pathToJS(firebase, 'auth') === undefined;
+    let auth = pathToJS(firebase, 'auth');
+    let profile = pathToJS(firebase, 'profile');
+    let status = !isLoaded(auth) || !isLoaded(profile);
     console.log('authenticating!', status);
     return status;
   },
   AuthenticatingComponent: LoadingSpinner,
   redirectPath: (state, ownProps) => {
-    console.log('redirecting!');
+    console.log('user is NOT authenticated, so redirecting!');
+    console.log('^^^ this ', this);
+    console.log('^^^ state ', state);
+    console.log('^^^ ownProps ', ownProps);
+    console.log('^^^ locationHelper.getRedirectQueryParam(ownProps) ', locationHelper.getRedirectQueryParam(ownProps));
+    console.log('\n\n\n');
     return locationHelper.getRedirectQueryParam(ownProps) || '/login';
   },
   allowRedirectBack: true,
   authenticatedSelector: ({ firebase }) => {
-    let status = pathToJS(firebase, 'profile') ? true : false;
+    let auth = pathToJS(firebase, 'auth');
+    let profile = pathToJS(firebase, 'profile');
+    let status = isLoaded(auth) && !isEmpty(profile);
     console.log('authenticatedSelector', status);
     return status;
   },
@@ -74,16 +85,29 @@ export const userIsAuthenticated = connectedRouterRedirect({
  * @return {Component} wrappedComponent
  */
 export const userIsNotAuthenticated = connectedRouterRedirect({
-  authenticatedSelector: ({ firebase }) => {
-    const user = pathToJS(firebase, 'profile');
-    return isEmpty(user);
+  authenticatingSelector: ({ firebase }) => {
+    let auth = pathToJS(firebase, 'auth');
+    let status = !isLoaded(auth);
+    console.log('authenticating UserIsNotAuthenticated!', status);
+    return status;
   },
-  authenticatingSelector: ({ firebase }) =>
-    (pathToJS(firebase, 'auth') === undefined) ||
-    (pathToJS(firebase, 'isInitializing') === true),
+  authenticatedSelector: ({ firebase }) => {
+    let auth = pathToJS(firebase, 'auth');
+    let status = isEmpty(auth);
+    console.log('authenticatedSelector userIsNotAuthenticated', status);
+    return status;
+  },
   AuthenticatingComponent: LoadingSpinner,
   wrapperDisplayName: 'UserIsNotAuthenticated',
-  redirectPath: '/dashboard',
+  redirectPath: (state, ownProps) => {
+    console.log('user IS authenticated, so redirect!');
+    console.log('^^^ this ', this);
+    console.log('^^^ state ', state);
+    console.log('^^^ ownProps ', ownProps);
+    console.log('^^^ locationHelper.getRedirectQueryParam(ownProps) ', locationHelper.getRedirectQueryParam(ownProps));
+    console.log('\n\n\n');
+    return '/dashboard';
+  },
   allowRedirectBack: false
 })
 

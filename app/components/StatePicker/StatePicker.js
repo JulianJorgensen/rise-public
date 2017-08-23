@@ -66,6 +66,8 @@ export default class StatePicker extends Component {
           direction="down"
           selectedPosition="none"
           multiple={false}
+          showSuggestionsWhenValueIsSet={true}
+          suggestionMatch='anywhere'
           onChange={this.handleChange.bind(this)}
           source={this.state.domesticProvinces}
           value={this.state.selectedProvince}

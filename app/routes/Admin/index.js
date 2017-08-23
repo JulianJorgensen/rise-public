@@ -12,7 +12,7 @@ import classes from './index.css';
 
 @withRouter
 @userIsAuthenticated
-@userHasPermission('admin')
+// @userHasPermission('admin')
 @firebaseConnect()
 @connect( // Map redux state to props
   ({ firebase }) => ({
@@ -21,11 +21,6 @@ import classes from './index.css';
   })
 )
 export default class Admin extends Component {
-  static propTypes = {
-    account: PropTypes.object,
-    firebase: PropTypes.object.isRequired
-  }
-
   render () {
     const { account, history } = this.props;
     const { firstName } = account;

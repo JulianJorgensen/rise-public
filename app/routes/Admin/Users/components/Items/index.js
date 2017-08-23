@@ -6,20 +6,22 @@ import { firebaseConnect, dataToJS, pathToJS, isEmpty, isLoaded } from 'react-re
 import { firebase as fbConfig } from 'app/config';
 import { userIsAuthenticated, userHasPermission } from 'utils/router';
 import moment from 'moment-timezone';
+
 import { Table, TableHead, TableRow, TableCell, Tooltip } from 'react-toolbox/lib';
+import {IconMenu, MenuItem, MenuDivider } from 'react-toolbox/lib/menu';
 import { Dialog } from 'react-toolbox/lib/dialog';
+import Autocomplete from 'react-toolbox/lib/autocomplete';
+
 import LoadingSpinner from 'components/LoadingSpinner';
 import classes from './index.css';
 
-import { getAttendeesFromMeeting } from 'utils/utils';
+import { isMentor, getAttendeesFromMeeting } from 'utils/utils';
 
 const TooltipCell = Tooltip(TableCell);
 
 // icons
 import 'assets/icons/regular/trash.svg';
 
-@userIsAuthenticated
-@userHasPermission('admin')
 @firebaseConnect([
   'users'
 ])
@@ -33,20 +35,16 @@ import 'assets/icons/regular/trash.svg';
 export default class UsersItems extends Component {
   state = {
     userData: null,
-    showModal: false,
-    showDeleteConfirmationModal: false
+    showModal: false
   }
 
   handleRowSelect = selectedRow => {
     this.showUserData(selectedRow);
   };
 
-  showUserData = selectedRow => {
-    let visibleUsers = this.props.data;
-    let userId = visibleUsers[selectedRow];
+  showUserData = (userId) => {
     let { users } = this.props;
     let user = _.find(users, { 'uid': userId });
-
     this.setState({
       showModal: true,
       userData: user
@@ -75,75 +73,134 @@ export default class UsersItems extends Component {
     });
   }
 
-  showDeleteConfirmationModal = () => {
-    this.setState({
-      showModal: false,
-      showDeleteConfirmationModal: true
-    });
-  }
+  pairAthleteWithMentor = () => {
+    let { userData, selectedMentor } = this.state;
+    let athleteUid = userData.uid;
 
-  deleteUser = () => {
-    let { userData } = this.state;
-    console.log('user data', userData);
-
-    axios.get(`${fbConfig.functions}/deleteUser`, {
+    console.log(`paring athlete ${athleteUid} with mentor ${selectedMentor}...`);
+    axios.get(`${fbConfig.functions}/pairAthleteWithMentor`, {
       params: {
-        uid: userData.uid
+        athleteUid: athleteUid,
+        mentorUid: selectedMentor
       }
     })
     .then((response) => {
-      console.log('successfully deleted user ', response);
+      console.log(response);
+      this.setState({
+        showPairModal: false
+      });
     })
     .catch((error) => {
-      console.log('error deleting user ', error);
+      console.log(error);
     });
+  }
+
+  handleMentorChange = (mentor) => {
+    console.log('changing mentor', mentor);
+    this.setState({
+      selectedMentor: mentor
+    })
+  }
+
+  showPairModal = (userId) => {
+    let { users } = this.props;
+    let user = _.find(users, { 'uid': userId });
 
     this.setState({
-      showDeleteConfirmationModal: false
+      userData: user,
+      selectedMentor: user.mentor || '',
+      showPairModal: true
     });
+  }
+
+  deleteUser = (uid) => {
+    let confirmed = confirm(`Are you sure you want to delete the user with UID ${uid}?`);
+
+    if (confirmed) {
+      axios.get(`${fbConfig.functions}/deleteUser`, {
+        params: {
+          uid: uid
+        }
+      })
+      .then((response) => {
+        console.log('successfully deleted user ', response);
+        let userIndex = this.props.data.indexOf(uid);
+        if (userIndex > -1) {
+          this.props.data.splice(userIndex, 1);
+        }
+      })
+      .catch((error) => {
+        console.log('error deleting user ', error);
+      });
+    }
   };
 
   closeModal = () => {
     this.setState({
       showModal: false,
+      showPairModal: false,
       showDeleteConfirmationModal: false
     });
   }
 
+  getAllMentors = () => {
+    let { users } = this.props;
+    let allMentorsArr = _.filter(users, (user) => {
+      return user.role === 'mentor' || user.role === 'admin';
+    });
+
+    let allMentors = {};
+    allMentorsArr.map((mentor) => {
+      allMentors[mentor.uid] = `${mentor.firstName} ${mentor.lastName}`;
+    });
+
+    return allMentors;
+  }
+
   render() {
     let { data, users } = this.props;
-    let { userData, showModal, showDeleteConfirmationModal } = this.state;
+    let { userData, showModal, showPairModal, selectedMentor, showDeleteConfirmationModal } = this.state;
 
     let items = data.map((user, index) => {
       return (
-        <TableRow key={index}>
+        <TableRow key={index} selectable={false}>
           <TooltipCell tooltip="Click to toggle status">
             <div className={classes.applicationStatus} onClick={() => this.toggleApplicationStatus(user)}>{users[user].applicationApproved ? 'Approved' : 'Pending'}</div>
           </TooltipCell>
-          <TableCell><div>{users[user].role}</div></TableCell>
+          <TableCell selectable={false}><div>{users[user].role}</div></TableCell>
           <TableCell><div>{users[user].firstName}</div></TableCell>
           <TableCell><div>{users[user].lastName}</div></TableCell>
           <TableCell><div>{users[user].email}</div></TableCell>
+          <TableCell>
+            <div>
+              <IconMenu icon='more_vert' position='topRight' menuRipple>
+                { users[user].role === 'athlete' || users[user].role === 'athlete-pending' ? <MenuItem icon='compare_arrows' caption='Pair with Mentor' onClick={() => this.showPairModal(user)} /> : <MenuItem icon='compare_arrows' disabled caption='Pair with Athlete' /> }
+                <MenuItem icon='assignment_ind' caption='See details' onClick={() => this.showUserData(user)} />
+                <MenuDivider />
+                <MenuItem icon='delete' caption='Delete' onClick={() => this.deleteUser(user)} />
+              </IconMenu>
+            </div>
+          </TableCell>
         </TableRow>
       )
     })
 
     return (
       <div>
-        <Table onRowSelect={this.handleRowSelect}>
+        <Table selectable={false}>
           <TableHead>
             <TableCell>Status</TableCell>
             <TableCell>Role</TableCell>
             <TableCell>First name</TableCell>
             <TableCell>Last name</TableCell>
             <TableCell>Email</TableCell>
+            <TableCell></TableCell>
           </TableHead>
           {items}
         </Table>
 
         <Dialog
           actions={[
-            { label: "Delete user", onClick: this.showDeleteConfirmationModal },
             { label: "Close", onClick: this.closeModal, primary: true }
           ]}
           active={showModal}
@@ -172,17 +229,28 @@ export default class UsersItems extends Component {
         <Dialog
           actions={[
             { label: "Cancel", onClick: this.closeModal },
-            { label: "Confirm", onClick: this.deleteUser, primary: true }
+            { label: "Pair", onClick: this.pairAthleteWithMentor, primary: true}
           ]}
-          active={showDeleteConfirmationModal}
+          active={showPairModal}
           onEscKeyDown={this.closeModal}
           onOverlayClick={this.closeModal}
-          title='Confirm Delete User'
+          title='Pair Athlete with Mentor'
+          className={classes.pairModal}
         >
-          {userData ?
-            <div>
-              Are you sure you want to delete {userData.firstName} ({userData.email}) entirely?
-            </div> : ''}
+          <div>
+            <Autocomplete
+              direction='down'
+              selectedPosition='none'
+              label='Choose Mentor'
+              showSuggestionsWhenValueIsSet={true}
+              suggestionMatch='anywhere'
+              onChange={this.handleMentorChange}
+              multiple={false}
+              source={this.getAllMentors()}
+              value={selectedMentor}
+              className={classes.mentorList}
+            />
+          </div>
         </Dialog>
       </div>
     )

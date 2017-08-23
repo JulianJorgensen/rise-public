@@ -1,7 +1,7 @@
 import React, { Component, cloneElement, PropTypes } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { firebaseConnect, dataToJS, pathToJS, isEmpty, isLoaded } from 'react-redux-firebase';
 import { firebase as fbConfig } from 'app/config';
 import moment from 'moment-timezone';
@@ -10,6 +10,7 @@ import { getAttendeesFromMeeting } from 'utils/utils';
 import LoadingSpinner from 'components/LoadingSpinner';
 import classes from './index.css';
 
+@withRouter
 @userIsAuthenticated
 @firebaseConnect([
   'users'

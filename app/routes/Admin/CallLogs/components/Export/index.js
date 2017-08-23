@@ -10,8 +10,6 @@ import classes from './index.css';
 import { getAttendeesFromMeeting } from 'utils/utils';
 import {CSVLink, CSVDownload} from 'react-csv';
 
-@userIsAuthenticated
-@userHasPermission('admin')
 @firebaseConnect([
   'users'
 ])

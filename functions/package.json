@@ -6,6 +6,7 @@
     "cors": "^2.8.3",
     "firebase-admin": "^5.1.0",
     "firebase-functions": "^0.6.2",
+    "lodash": "^4.17.4",
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.13",
     "nodemailer": "^4.0.1",

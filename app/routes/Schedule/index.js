@@ -225,9 +225,9 @@ export default class Schedule extends Component {
   render () {
     let { account } = this.props;
     let { selectedAthlete, recurring, selectedDate, selectedTime, showTimesModal, showDatesModal, showConfirmationModal, availableTimes, availableTimesFetched, isConfirmed, isConfirming, location } = this.state;
-    let selectedAthleteAccount = selectedAthlete && account.mentees ? _.find(account.mentees, { 'uid': selectedAthlete }) : '';
+    let selectedAthleteAccount = selectedAthlete && account.athletes ? _.find(account.athletes, { 'uid': selectedAthlete }) : '';
 
-    let assignedAthletes = account.mentees ? account.mentees.map((mentee) => {
+    let assignedAthletes = account.athletes ? account.athletes.map((mentee) => {
       return {
         value: mentee.uid,
         label: `${mentee.firstName ? mentee.firstName : mentee.email} ${mentee.lastName ? mentee.lastName : ''}`
@@ -287,7 +287,7 @@ export default class Schedule extends Component {
       )
     }
 
-    if (isMentor(account.role) && !account.mentees) {
+    if (isMentor(account.role) && !account.athletes) {
       return (
         <div className={classes.container}>
           <h4>You currently don't have any athletes assigned.</h4>

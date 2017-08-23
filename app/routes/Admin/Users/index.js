@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { firebaseConnect, dataToJS, pathToJS } from 'react-redux-firebase';
 import { reduxFirebase as rfConfig } from 'app/config';
@@ -13,6 +14,7 @@ import Items from './components/Items';
 
 const TooltipCell = Tooltip(TableCell);
 
+@withRouter
 @userIsAuthenticated
 @userIsAdmin
 @firebaseConnect([

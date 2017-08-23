@@ -2,20 +2,14 @@
   cursor: pointer;
 }
 
-.delete{
-  background-image: url('assets/icons/regular/trash.svg');
-  width: rem(15);
-  height: rem(15);
-  float: right;
+.pairModal{
+  overflow: visible;
 }
+/*.mentorList{
+  position: relative;
+  z-index: 999;
+  max-height: rem(200);
+}*/
 
 .userData{
-  /*display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  & > div,
-  & > h4{
-    width: 45%;
-    margin: 0 0 rem(20) 0;
-  }*/
 }

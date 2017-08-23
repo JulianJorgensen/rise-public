@@ -1,6 +1,7 @@
 const functions = require('firebase-functions');
 const database = require('./firebaseInit').database;
 const auth = require('./firebaseInit').auth;
+const _ = require('lodash');
 
 module.exports = {
   deleteUser: function(query) {
@@ -50,5 +51,78 @@ module.exports = {
       .catch((error) => {
         throw error(`Error changing application status for user ${uid}, error:`, error);
       });
+  },
+
+  pairAthleteWithMentor: function(query) {
+    let { athleteUid, mentorUid } = query;
+
+    let updateOldMentor = () => {
+      return new Promise((resolve, reject) => {
+        let athleteRef = database.ref(`users/${athleteUid}`);
+
+        athleteRef.once("value", (snapshot) => {
+          let oldMentorUid = snapshot.val().mentor;
+          let oldMentorAthletesRef = database.ref(`users/${oldMentorUid}/athletes`);
+
+          console.log('oldMentorUid', oldMentorUid);
+
+          oldMentorAthletesRef.once("value", (snapshot) => {
+            console.log('oldMentorAthletes', snapshot.val());
+            let updates = {};
+            snapshot.forEach(child => updates[child.key] = null);
+            oldMentorAthletesRef.update(updates).then(() => {
+              resolve(`Deleted refs from the old mentor ${oldMentorUid}`);
+            });
+          }).catch((error) => {
+            reject(error);
+          });
+
+        }).catch((error) => {
+          reject(error);
+        });
+      });
+    };
+
+    let updateAthlete = () => {
+      return new Promise((resolve, reject) => {
+        let athleteRef = database.ref(`users/${athleteUid}`);
+        athleteRef.update({
+          mentor: mentorUid
+        }).then((res) => {
+          resolve(res);
+        }).catch((error) => {
+          reject(error);
+        });
+      });
+    };
+
+
+    let updateMentor = () => {
+      return new Promise((resolve, reject) => {
+        let mentorAthletesRef = database.ref(`users/${mentorUid}/athletes`);
+        mentorAthletesRef.once("value", (snapshot) => {
+          let athletesArr = snapshot.val() ? Object.values(snapshot.val()) : [];
+          let athleteExists = athletesArr.indexOf(athleteUid) !== -1;
+
+          if (!athleteExists) {
+            mentorAthletesRef.update({
+              [athletesArr.length]: athleteUid
+            }).then((res) => {
+              resolve(res);
+            }).catch((error) => {
+              reject(error);
+            });
+          } else {
+            resolve('athlete already added to mentor athletes list!');
+          }
+        }).catch((err) => {
+          reject(err);
+        });
+      });
+    };
+
+    return updateOldMentor()
+      .then(updateAthlete)
+      .then(updateMentor)
   }
 }

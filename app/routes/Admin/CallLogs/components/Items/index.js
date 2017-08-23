@@ -9,8 +9,6 @@ import classes from './index.css';
 
 import { getAttendeesFromMeeting } from 'utils/utils';
 
-@userIsAuthenticated
-@userHasPermission('admin')
 @firebaseConnect([
   'users'
 ])

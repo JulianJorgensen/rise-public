@@ -33,7 +33,7 @@ export default class Meetings extends Component {
 
   render () {
     let { account, meetings, filter } = this.props;
-    let { firstName, timezone, mentor, mentees } = account;
+    let { firstName, timezone, mentor, athletes } = account;
     let userDetailsForm, attendeeUid, meetingAttendee;
     let isMentor = (account.role.name === 'mentor' || account.role.name === 'admin') ? true : false;
 
@@ -77,7 +77,7 @@ export default class Meetings extends Component {
 
             if (isMentor) {
               attendeeUid = _.find(userDetailsForm.values, { 'name': 'uid' }).value;
-              meetingAttendee = _.find(mentees, { 'uid':  attendeeUid });
+              meetingAttendee = _.find(athletes, { 'uid':  attendeeUid });
             }else{
               // meetingAttendee = _.find(userDetailsForm.values, { 'name': 'mentorUid' });
               meetingAttendee = mentor;

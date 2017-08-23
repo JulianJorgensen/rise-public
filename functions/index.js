@@ -10,6 +10,8 @@ exports.adminAlertEmail = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     adminAlertEmail.send(request.body).then(() => {
       response.status(200).send('success');
+    }).catch((err) => {
+      response.status(500).send(err);
     });
   });
 });
@@ -19,6 +21,8 @@ exports.createStripeCustomer = functions.https.onRequest((request, response) => 
   cors(request, response, () => {
     stripe.createCustomer(request.query).then((res) => {
       response.status(200).send(res);
+    }).catch((err) => {
+      response.status(500).send(err);
     });
   });
 });
@@ -28,6 +32,8 @@ exports.getCards = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     stripe.getCards(request.query).then((res) => {
       response.status(200).send(res);
+    }).catch((err) => {
+      response.status(500).send(err);
     });
   });
 });
@@ -37,6 +43,8 @@ exports.deleteCard = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     stripe.deleteCard(request.query).then((res) => {
       response.status(200).send(res);
+    }).catch((err) => {
+      response.status(500).send(err);
     });
   });
 });
@@ -46,6 +54,8 @@ exports.createCharge = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     stripe.createCharge(request.query).then((res) => {
       response.status(200).send(res);
+    }).catch((err) => {
+      response.status(500).send(err);
     });
   });
 });
@@ -55,6 +65,8 @@ exports.createSubscription = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     stripe.createSubscription(request.query).then((res) => {
       response.status(200).send(res);
+    }).catch((err) => {
+      response.status(500).send(err);
     });
   });
 });
@@ -64,6 +76,8 @@ exports.getMeetingsByUid = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     acuity.getAppointmentsByUid(request.query).then((res) => {
       response.status(200).send(res);
+    }).catch((err) => {
+      response.status(500).send(err);
     });
   });
 });
@@ -73,6 +87,8 @@ exports.getMeetingsByMentorUid = functions.https.onRequest((request, response) =
   cors(request, response, () => {
     acuity.getAppointmentsByMentorUid(request.query).then((res) => {
       response.status(200).send(res);
+    }).catch((err) => {
+      response.status(500).send(err);
     });
   });
 });
@@ -91,6 +107,8 @@ exports.getAvailableDates = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     acuity.getAvailableDates(request.query).then((res) => {
       response.status(200).send(res);
+    }).catch((err) => {
+      response.status(500).send(err);
     });
   });
 });
@@ -100,6 +118,8 @@ exports.getAvailableTimes = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     acuity.getAvailableTimes(request.query).then((res) => {
       response.status(200).send(res);
+    }).catch((err) => {
+      response.status(500).send(err);
     });
   });
 });
@@ -109,6 +129,8 @@ exports.createAppointment = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     acuity.createAppointment(request.query).then((res) => {
       response.status(200).send(res);
+    }).catch((err) => {
+      response.status(500).send(err);
     });
   });
 });
@@ -118,6 +140,8 @@ exports.createRecurringAppointments = functions.https.onRequest((request, respon
   cors(request, response, () => {
     acuity.createRecurringAppointments(request.query).then((res) => {
       response.status(200).send(res);
+    }).catch((err) => {
+      response.status(500).send(err);
     });
   });
 });
@@ -128,6 +152,8 @@ exports.deleteUser = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     admin.deleteUser(request.query).then((res) => {
       response.status(200).send(res);
+    }).catch((err) => {
+      response.status(500).send(err);
     });
   });
 });
@@ -137,6 +163,19 @@ exports.changeApplicationStatus = functions.https.onRequest((request, response) 
   cors(request, response, () => {
     admin.changeApplicationStatus(request.query).then((res) => {
       response.status(200).send(res);
+    }).catch((err) => {
+      response.status(500).send(err);
+    });
+  });
+});
+
+// Admin Function: pair and athlete with a mentor
+exports.pairAthleteWithMentor = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    admin.pairAthleteWithMentor(request.query).then((res) => {
+      response.status(200).send(res);
+    }).catch((err) => {
+      response.status(500).send(err);
     });
   });
 });
