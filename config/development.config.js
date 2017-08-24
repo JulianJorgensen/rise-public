@@ -1,6 +1,7 @@
 module.exports = {
   ENV: "development",
   ACUITY_MENTOR_CALL_ID: 346940,
+  RECURRING_WEEKS: 14,
   firebase: {
     apiKey: 'AIzaSyDSvGn7Z82SdiYzblNLuH1sLumnDK45jDY',
     authDomain: 'rise-development.firebaseapp.com',

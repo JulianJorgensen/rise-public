@@ -12,6 +12,7 @@ let acuity = Acuity.basic({
 // field id in acuity (for unique user id to identify a users appointments etc)
 let uidFieldId = 3274695;
 let mentorUidFieldId = 3376419;
+let completedFieldId = 3497316;
 
 module.exports = {
   getAppointmentsByUid: function(query) {
@@ -130,5 +131,59 @@ module.exports = {
       .catch((err) => {
         return 'There was an error creating recurring appointments...'
       });
+  },
+
+  toggleAppointment: function(query) {
+    return new Promise(function(resolve, reject) {
+      let { id, status } = query;
+
+      let options = {
+        method: 'PUT',
+        body: {
+          fields: [
+            {id: completedFieldId, value: status }
+          ]
+        }
+      };
+      acuity.request(`/appointments/${id}`, options, function (err, res, appointment) {
+        if (err) return console.error(err);
+        resolve(appointment);
+      });
+    });
+  },
+
+  cancelAppointment: function(query) {
+    return new Promise(function(resolve, reject) {
+      let { id, note } = query;
+
+      let options = {
+        method: 'PUT',
+        body: {
+          cancelNote: note
+        }
+      };
+      acuity.request(`/appointments/${id}/cancel`, options, function (err, res, appointment) {
+        if (err) return console.error(err);
+        resolve(appointment);
+      });
+    });
+  },
+
+  rescheduleAppointment: function(query) {
+    return new Promise(function(resolve, reject) {
+      let { id, datetime } = query;
+
+      let options = {
+        method: 'PUT',
+        body: {
+          // datetime : '2016-04-01T09:00'
+        }
+      };
+      acuity.request(`/appointments/${id}/reschedule`, options, function (err, res, appointment) {
+        if (err) return console.error(err);
+        resolve(appointment);
+      });
+    });
   }
+
 };

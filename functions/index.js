@@ -146,6 +146,17 @@ exports.createRecurringAppointments = functions.https.onRequest((request, respon
   });
 });
 
+// Function: toggle appointment status
+exports.toggleAppointment = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    acuity.toggleAppointment(request.query).then((res) => {
+      response.status(200).send(res);
+    }).catch((err) => {
+      response.status(500).send(err);
+    });
+  });
+});
+
 
 // Admin Function: delete users
 exports.deleteUser = functions.https.onRequest((request, response) => {
@@ -173,6 +184,28 @@ exports.changeApplicationStatus = functions.https.onRequest((request, response) 
 exports.pairAthleteWithMentor = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     admin.pairAthleteWithMentor(request.query).then((res) => {
+      response.status(200).send(res);
+    }).catch((err) => {
+      response.status(500).send(err);
+    });
+  });
+});
+
+// Function: cancel appointment
+exports.cancelAppointment = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    acuity.cancelAppointment(request.query).then((res) => {
+      response.status(200).send(res);
+    }).catch((err) => {
+      response.status(500).send(err);
+    });
+  });
+});
+
+// Function: reschedule appointment
+exports.rescheduleAppointment = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    acuity.rescheduleAppointment(request.query).then((res) => {
       response.status(200).send(res);
     }).catch((err) => {
       response.status(500).send(err);

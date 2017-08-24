@@ -50,14 +50,14 @@ export function getAttendeesFromMeeting(meeting, users) {
   }
 
   // get the form on acuity with all the user details
-  let userDetailsForm = _.find(meeting, { 'forms': {'name': 'User Details' }});
+  let appMetaForm = _.find(meeting, { 'forms': {'name': 'App Meta' }});
 
   // get the athlete
-  let athleteUid = _.find(userDetailsForm, {'values':{'name': 'uid'}});
+  let athleteUid = _.find(appMetaForm, {'values':{'name': 'uid'}});
   athlete = athleteUid ? _.find(users, { 'uid':  athleteUid }).value : defaultAthlete;
 
   // get the mentor
-  let mentorUid = _.find(userDetailsForm, {'values':{'name': 'mentorUid'}});
+  let mentorUid = _.find(appMetaForm, {'values':{'name': 'mentorUid'}});
   mentor = mentorUid ? _.find(users, { 'uid':  mentorUid }).value : defaultMentor;
 
   return {

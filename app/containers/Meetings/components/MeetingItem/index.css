@@ -1,0 +1,6 @@
+.completed{
+  & .itemText{
+    text-decoration: line-through;
+    color: gray(60%);
+  }
+}

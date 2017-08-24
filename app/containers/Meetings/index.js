@@ -1,30 +1,24 @@
-import React, { Component, cloneElement, PropTypes } from 'react';
-import axios from 'axios';
-import _ from 'lodash';
+import React, { Component } from 'react';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { firebaseConnect, dataToJS, pathToJS, isEmpty, isLoaded } from 'react-redux-firebase';
-import { firebase as fbConfig } from 'app/config';
-import moment from 'moment-timezone';
+import { firebaseConnect, pathToJS } from 'react-redux-firebase';
 import { userIsAuthenticated, userHasPermission } from 'utils/router';
+
+import { List, ListItem, ListSubHeader } from 'react-toolbox/lib/list';
+
+import MeetingItem from './components/MeetingItem';
+
 import LoadingSpinner from 'components/LoadingSpinner';
 import classes from './index.css';
 
+@withRouter
 @firebaseConnect()
 @connect(
-  ({ firebase, meetings }) => ({
-    account: pathToJS(firebase, 'profile'),
-    auth: pathToJS(firebase, 'auth'),
-    auth: pathToJS(firebase, 'auth'),
+  ({ meetings }) => ({
     meetings
   })
 )
 export default class Meetings extends Component {
-  static propTypes = {
-    account: PropTypes.object,
-    firebase: PropTypes.object.isRequired
-  }
-
   state = {
     upcomingMeetings: [],
     completedMeetings: [],
@@ -32,10 +26,7 @@ export default class Meetings extends Component {
   }
 
   render () {
-    let { account, meetings, filter } = this.props;
-    let { firstName, timezone, mentor, athletes } = account;
-    let userDetailsForm, attendeeUid, meetingAttendee;
-    let isMentor = (account.role.name === 'mentor' || account.role.name === 'admin') ? true : false;
+    let { meetings, filter } = this.props;
 
     if (!meetings.upcoming && !meetings.completed) {
       return (
@@ -49,21 +40,19 @@ export default class Meetings extends Component {
       if(completed.length > 0) {
         return (
           <div className={classes.completed}>
-            <h3>Completed Meetings</h3>
-            {completed.map((meeting, index) => {
-              return (
-                <div key={index} className={classes.logItem}>
-                  <h5 className={classes.title}>{meeting.type} with {mentor.firstName}</h5>
-                  <date className={classes.date}>{moment(meeting.datetime).tz(timezone).format('MMMM Do YYYY h:mma z (Z)')}</date>
-                  <div className={classes.description}>{meeting.type}</div>
-                </div>
-              )
-            })}
+            <List selectable ripple>
+              <ListSubHeader caption='Past Meetings' />
+              {completed.map((meeting, index) => {
+                return (
+                  <MeetingItem
+                    key={index}
+                    meeting={meeting}
+                    filter={filter}
+                  />
+                )
+              })}
+            </List>
           </div>
-        )
-      }else{
-        return (
-          <div></div>
         )
       }
     }
@@ -71,36 +60,36 @@ export default class Meetings extends Component {
     if (upcoming.length > 0) {
       return (
         <div>
-          <h3>Upcoming Meetings</h3>
-          {upcoming.map((meeting, index) => {
-            userDetailsForm = _.find(meeting.forms, { 'name': 'User Details' });
-
-            if (isMentor) {
-              attendeeUid = _.find(userDetailsForm.values, { 'name': 'uid' }).value;
-              meetingAttendee = _.find(athletes, { 'uid':  attendeeUid });
-            }else{
-              // meetingAttendee = _.find(userDetailsForm.values, { 'name': 'mentorUid' });
-              meetingAttendee = mentor;
-            }
-
-            return (
-              <div key={index} className={classes.logItem}>
-                <h5 className={classes.title}>{meeting.type} with {meetingAttendee.firstName}</h5>
-                <date className={classes.date}>{moment(meeting.datetime).tz(timezone).format('MMMM Do YYYY h:mma z (Z)')}</date>
-                <div className={classes.description}>{meeting.type}</div>
-                <div><a href={`https://zoom.us/j/${meeting.location.split(' ')[3]}`} target="new">Join now</a></div>
-              </div>
-            )
-          })}
+          <List selectable ripple>
+            <ListSubHeader caption='Upcoming Meetings' />
+            {upcoming.map((meeting, index) => {
+              return (
+                <MeetingItem
+                  key={index}
+                  meeting={meeting}
+                />
+              )
+            })}
+          </List>
         </div>
       )
     }else{
       return (
         <div>
-          <h3>Upcoming Meetings</h3>
-          <div>You don't have any upcoming meetings. <Link to='/schedule'>Schedule one now</Link></div>
+          <List selectable ripple>
+            <ListSubHeader caption='Upcoming Meetings' />
+            <ListItem
+              caption='You dont have any upcoming meetings.'
+              legend='Schedule one now'
+              onClick={() => this.props.history.push('/schedule')}
+            />
+          </List>
         </div>
       )
     }
+
+    return (
+      <div></div>
+    )
   }
 }
