@@ -74,6 +74,13 @@ export default class Index extends React.Component {
     }
   }
 
+  handleLogout = () => {
+    this.props.dispatch({ type: 'CLOSE_NOTIFICATION' });
+    this.props.firebase.logout();
+    this.props.history.push('/');
+    return null;
+  }
+
   onRouteChanged() {
     // log page view to Google Analytics
     // logPageView(location);
@@ -116,6 +123,7 @@ export default class Index extends React.Component {
               <Route exact path="/admin" component={Admin} />
               <Route path="/admin/users" component={AdminUsers} />
               <Route path="/admin/call-logs" component={AdminCallLogs} />
+              <Route path="/logout" render={this.handleLogout} />
               <Route path="/not-authorized" component={NotAuthorized} />
               <Route path="/not-found" component={NotFound} />
             </Layout>

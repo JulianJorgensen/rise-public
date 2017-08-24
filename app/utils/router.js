@@ -44,28 +44,14 @@ export const userIsAuthenticated = connectedRouterRedirect({
  * @return {Component} wrappedComponent
  */
 export const userIsNotAuthenticated = connectedRouterRedirect({
-  authenticatingSelector: ({ firebase }) => {
-    let auth = pathToJS(firebase, 'auth');
-    let status = !isLoaded(auth);
-    console.log('authenticating UserIsNotAuthenticated!', status);
-    return status;
-  },
-  authenticatedSelector: ({ firebase }) => {
-    let auth = pathToJS(firebase, 'auth');
-    let status = isEmpty(auth);
-    console.log('authenticatedSelector userIsNotAuthenticated', status);
-    return status;
-  },
+  authenticatingSelector: ({ firebase }) => pathToJS(firebase, 'auth') === undefined,
   AuthenticatingComponent: LoadingSpinner,
+  authenticatedSelector: ({ firebase }) => pathToJS(firebase, 'auth') === null,
   wrapperDisplayName: 'UserIsNotAuthenticated',
   redirectPath: (state, ownProps) => {
-    console.log('user IS authenticated, so redirect!');
-    console.log('^^^ this ', this);
-    console.log('^^^ state ', state);
-    console.log('^^^ ownProps ', ownProps);
-    console.log('^^^ locationHelper.getRedirectQueryParam(ownProps) ', locationHelper.getRedirectQueryParam(ownProps));
+    console.log('user IS authenticated, so redirect! to dashboard');
     console.log('\n\n\n');
-    return '/dashboard';
+    return locationHelper.getRedirectQueryParam(ownProps) || '/dashboard';
   },
   allowRedirectBack: false
 })

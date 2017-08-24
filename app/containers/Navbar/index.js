@@ -36,12 +36,6 @@ export default class Navbar extends Component {
     notification: PropTypes.object,
   }
 
-  handleLogout = () => {
-    this.props.dispatch({ type: 'CLOSE_NOTIFICATION' });
-    this.props.firebase.logout();
-    this.props.history.push('/');
-  }
-
   handleToggleLeftNavigation = () => {
     this.props.firebase
       .update(`${rfConfig.userProfile}/${this.props.auth.uid}`, {showLeftNavigation: !this.props.account.showLeftNavigation})
@@ -85,7 +79,7 @@ export default class Navbar extends Component {
           />
           <MenuItem
             caption='Sign out'
-            onClick={this.handleLogout}
+            onClick={() => history.push('/logout')}
           />
         </IconMenu>
       </div>

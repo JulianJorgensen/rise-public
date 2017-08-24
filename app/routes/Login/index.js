@@ -10,7 +10,7 @@ import LoginForm from './components/LoginForm';
 import classes from './index.css';
 
 @withRouter
-// @userIsNotAuthenticated
+@userIsNotAuthenticated
 @firebaseConnect()
 @connect(
   ({ snackbar, notification, firebase }) => ({
@@ -32,7 +32,7 @@ export default class Login extends Component {
 
   handleLogin = loginData => {
     this.props.firebase.login(loginData).then((res) => {
-      this.props.history.push('/dashboard');
+      // this.props.history.push('/dashboard');
     }).catch((error) => {
       let { authError, dispatch } = this.props;
       console.log('error logging in', error);
