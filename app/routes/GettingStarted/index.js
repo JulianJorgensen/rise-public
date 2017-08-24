@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { firebaseConnect, dataToJS, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase';
 import { reduxFirebase as rfConfig } from 'app/config';
@@ -10,6 +11,7 @@ import Button from 'components/Button';
 import LoadingSpinner from 'components/LoadingSpinner';
 import classes from './index.css';
 
+@withRouter
 @userIsAuthenticated
 @firebaseConnect()
 @connect(

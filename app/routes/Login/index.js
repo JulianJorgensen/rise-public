@@ -10,7 +10,7 @@ import LoginForm from './components/LoginForm';
 import classes from './index.css';
 
 @withRouter
-@userIsNotAuthenticated
+// @userIsNotAuthenticated
 @firebaseConnect()
 @connect(
   ({ snackbar, notification, firebase }) => ({

@@ -22,57 +22,16 @@ const locationHelper = locationHelperBuilder();
  * @return {Component} wrappedComponent
  */
 
-export const userHasBeenSetup = connectedRouterRedirect({
-  authenticatingSelector: ({ firebase }) => {
-    let auth = pathToJS(firebase, 'auth');
-    let profile = pathToJS(firebase, 'profile');
-    let status = !isLoaded(auth) || !isLoaded(profile);
-    return status;
-  },
-  AuthenticatingComponent: LoadingSpinner,
-  redirectPath: '/getting-started',
-  allowRedirectBack: false,
-  authenticatedSelector: ({ firebase }) => {
-    let profile = pathToJS(firebase, 'profile');
-    console.log('userapproved? ', profile.role.status === 'confirmed');
-    return profile.role.status === 'confirmed';
-  },
-  wrapperDisplayName: 'UserIsGettingStarted'
-})
-
-/**
- * @description Higher Order Component that redirects to `/login` instead
- * rendering if user is not authenticated (default of redux-auth-wrapper).
- * @param {Component} componentToWrap - Component to wrap
- * @return {Component} wrappedComponent
- */
-
 export const userIsAuthenticated = connectedRouterRedirect({
-  authenticatingSelector: ({ firebase }) => {
-    let auth = pathToJS(firebase, 'auth');
-    let profile = pathToJS(firebase, 'profile');
-    let status = !isLoaded(auth) || !isLoaded(profile);
-    console.log('authenticating!', status);
-    return status;
-  },
+  authenticatingSelector: ({ firebase }) => pathToJS(firebase, 'auth'),
   AuthenticatingComponent: LoadingSpinner,
   redirectPath: (state, ownProps) => {
-    console.log('user is NOT authenticated, so redirecting!');
-    console.log('^^^ this ', this);
-    console.log('^^^ state ', state);
-    console.log('^^^ ownProps ', ownProps);
-    console.log('^^^ locationHelper.getRedirectQueryParam(ownProps) ', locationHelper.getRedirectQueryParam(ownProps));
-    console.log('\n\n\n');
+    console.log('user is NOT authenticated, so redirecting to /login!');
+    console.log('\n\n');
     return locationHelper.getRedirectQueryParam(ownProps) || '/login';
   },
   allowRedirectBack: true,
-  authenticatedSelector: ({ firebase }) => {
-    let auth = pathToJS(firebase, 'auth');
-    let profile = pathToJS(firebase, 'profile');
-    let status = isLoaded(auth) && !isEmpty(profile);
-    console.log('authenticatedSelector', status);
-    return status;
-  },
+  authenticatedSelector: ({ firebase }) => pathToJS(firebase, 'auth') && pathToJS(firebase, 'profile'),
   wrapperDisplayName: 'UserIsAuthenticated'
 })
 
@@ -168,7 +127,6 @@ export const userIsAdmin = connectedRouterRedirect({
 });
 
 export default {
-  userHasBeenSetup,
   userIsAuthenticated,
   userIsNotAuthenticated,
   userHasPermission,
