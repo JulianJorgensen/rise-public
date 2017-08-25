@@ -1,0 +1,6 @@
+.times{
+  margin-bottom: rem(20);
+  & .time{
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,25 @@
+@import "../../../../../../styles/variables.css";
+
+.container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header{
+  color: var(--success);
+}
+
+.confirmationDetails{
+  text-align: center;
+  & .time{
+    background-color: gray(98%);
+    padding: rem(30);
+    font-size: rem(30);
+    margin-bottom: rem(15);
+  }
+}
+
+.button.confirmButton:not([disabled]) {
+  @apply --success-theme;
+}

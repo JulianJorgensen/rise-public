@@ -1,0 +1,17 @@
+.container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.scheduleForm{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
+  max-width: rem(450);
+  & .dateTimeFields{
+    display: flex;
+    justify-content: space-between;
+  }
+}
