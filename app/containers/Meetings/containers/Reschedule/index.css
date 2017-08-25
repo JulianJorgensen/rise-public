@@ -1,0 +1,11 @@
+.container{
+
+}
+
+.scheduleForm{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
+  max-width: rem(450);
+}

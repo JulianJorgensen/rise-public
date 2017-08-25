@@ -52,6 +52,7 @@ export function fetchAvailableTimes(date, acuityCalendarId, timezone) {
         // to get a value that is either negative, positive, or zero.
         return new Date(a.time) - new Date(b.time);
       });
+
       resolve(availableTimes);
     })
     .catch((error) => {
@@ -62,7 +63,7 @@ export function fetchAvailableTimes(date, acuityCalendarId, timezone) {
 
 
 
-export function confirmMeeting(selectedAthlete, date, time, account, recurring, dispatch) {
+export function confirmMeeting(selectedAthlete, dateTime, account, recurring, dispatch) {
   return new Promise((resolve, reject) => {
     let acuityCalendarId = isMentor(account.role) ? account.acuityCalendarId : account.mentor.acuityCalendarId;
 
@@ -72,7 +73,7 @@ export function confirmMeeting(selectedAthlete, date, time, account, recurring, 
     if (recurring){
       // add the formatted date for each week (formatted for acuity)
       for (let i=0; i < RECURRING_WEEKS; i++) {
-        recurringDates.push(moment(selectedDate).add(i, 'weeks').format('YYYY-MM-DD') + moment(selectedTime).tz(account.timezone).format('THH:mmZ'));
+        recurringDates.push(moment(selectedDateTime).add(i, 'weeks').tz(account.timezone).format('YYYY-MM-DDTHH:mmZ'));
       }
 
       recurringDates = recurringDates.join(',');
@@ -83,7 +84,7 @@ export function confirmMeeting(selectedAthlete, date, time, account, recurring, 
     // ======================
     axios.get(`${fbConfig.functions}/${recurring ? 'createRecurringAppointments' : 'createAppointment'}`, {
       params: {
-        datetime: `${moment(date).format('YYYY-MM-DD')}${moment(time).tz(account.timezone).format('THH:mmZ')}`,
+        datetime: `${moment(dateTime).tz(account.timezone).format('YYYY-MM-DDTHH:mmZ')}`,
         appointmentTypeID: ACUITY_MENTOR_CALL_ID,
         calendarID: acuityCalendarId,
         firstName: account.firstName,
@@ -116,6 +117,29 @@ export function confirmMeeting(selectedAthlete, date, time, account, recurring, 
     })
     .catch((error) => {
       console.log(`Error confirming appointment`, error);
+    });
+  });
+};
+
+
+export function rescheduleMeeting(id, dateTime, timezone) {
+  return new Promise((resolve, reject) => {
+    console.log('===reschedulign to', dateTime);
+    console.log('formatted', moment(dateTime).tz(timezone).format('YYYY-MM-DDTHH:mmZ'));
+    console.log('timezone', timezone);
+    axios.get(`${fbConfig.functions}/rescheduleAppointment`, {
+      params: {
+        id: id,
+        datetime: dateTime,
+        timezone: timezone
+      }
+    })
+    .then((response) => {
+      let confirmation = response.data;
+      resolve(confirmation);
+    })
+    .catch((error) => {
+      reject('Error rescheduling meeting', error);
     });
   });
 };

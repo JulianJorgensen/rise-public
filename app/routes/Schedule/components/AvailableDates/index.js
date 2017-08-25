@@ -19,6 +19,7 @@ import classes from './index.css';
 )
 export default class AvailableDates extends Component {
   state = {
+    active: false,
     dates: [],
     fetched: false
   }
@@ -28,17 +29,29 @@ export default class AvailableDates extends Component {
     utils.fetchAvailableDates(month, mentor.acuityCalendarId, timezone).then((availableDates) => {
       this.setState({ availableDates: availableDates });
     });
-  }
+  };
+
+  handleOnChange = (selectedDate) => {
+    // set date in local state
+    this.setState({
+      selectedDate
+    });
+
+    // set date in parent state
+    this.props.onSetDate(selectedDate);
+  };
 
   render() {
     let props = this.props;
+    let { selectedDate } = this.state;
     return (
       <DatePicker
-        active={props.showDatesModal}
-        onDismiss={props.onDatesDismiss}
-        label={props.recurring ? 'Start Date' : 'Date'}
-        onChange={props.onDateChange}
-        value={props.selectedDate}
+        active={props.show}
+        onDismiss={this.handleClose}
+        label={props.label ? props.label : 'Date'}
+        onChange={this.handleOnChange}
+        value={selectedDate}
+        onClick={props.handleShowTimes}
         // minDate={today}
         // maxDate={today.add(MAX_MONTHS_IN_ADVANCE, 'M')}
         autoOk={true}

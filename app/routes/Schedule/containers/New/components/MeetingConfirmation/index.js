@@ -9,7 +9,7 @@ import _ from 'lodash';
 import { isMentor, isAdmin } from 'utils/utils';
 
 import * as utils from '../../../../utils/utils';
-import TimezoneSelector from '../../../../components/TimezoneSelector';
+import TimezoneSelector from 'components/TimezoneSelector';
 
 import { Dialog } from 'react-toolbox/lib';
 import LoadingSpinner from 'components/LoadingSpinner';
@@ -29,7 +29,7 @@ export default class MeetingConfirmation extends Component {
   }
 
   confirmMeeting = () => {
-    let { account, selectedAthlete, recurring, selectedDate, selectedTime, onConfirm, dispatch } = this.props;
+    let { account, selectedAthlete, recurring, selectedDateTime, onConfirm, dispatch } = this.props;
 
     this.setState({
       isConfirming: true
@@ -37,8 +37,7 @@ export default class MeetingConfirmation extends Component {
 
     utils.confirmMeeting(
       selectedAthlete,
-      selectedDate,
-      selectedTime,
+      selectedDateTime,
       account,
       recurring,
       dispatch
@@ -53,7 +52,7 @@ export default class MeetingConfirmation extends Component {
   }
 
   render() {
-    let { isConfirmed, showConfirmation, recurring, account, selectedAthlete, selectedDate, selectedTime, reset } = this.props;
+    let { isConfirmed, showConfirmation, recurring, account, selectedAthlete, selectedDateTime, reset } = this.props;
     let { isConfirming, location } = this.state;
     let selectedAthleteAccount = selectedAthlete && account.athletes ? _.find(account.athletes, { 'uid': selectedAthlete }) : '';
     let firstName = isMentor(account.role) ? selectedAthleteAccount.firstName : account.mentor.firstName;
@@ -65,7 +64,7 @@ export default class MeetingConfirmation extends Component {
           <p>You're now scheduled for {recurring ? 'recurring sessions' : 'a session'} with {firstName} {recurring ? 'starting on' : 'on'}:</p>
           <div className={classes.confirmationDetails}>
             <div className={classes.time}>
-              <div className={classes.time}><strong>{moment(selectedDate).format('MMMM Do YYYY')}</strong> at <strong>{moment(selectedTime).format('h:mma')}</strong></div>
+              <div className={classes.time}><strong>{moment(selectedDateTime).format('MMMM Do YYYY')}</strong> at <strong>{moment(selectedDateTime).format('h:mma')}</strong></div>
             </div>
           </div>
           <Button
@@ -94,7 +93,7 @@ export default class MeetingConfirmation extends Component {
         title={`Confirm your session with ${selectedAthlete ? selectedAthleteAccount.firstName : account.mentor.firstName}`}
       >
         <div className={classes.confirmationDetails}>
-          <div className={classes.time}><strong>{moment(selectedDate).format('MMMM Do YYYY')}</strong> at <strong>{moment(selectedTime).format('h:mma')}</strong></div>
+          <div className={classes.time}><strong>{moment(selectedDateTime).format('MMMM Do YYYY')}</strong> at <strong>{moment(selectedDateTime).format('h:mma')}</strong></div>
           <TimezoneSelector />
         </div>
       </Dialog>

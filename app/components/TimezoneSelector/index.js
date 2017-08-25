@@ -19,7 +19,9 @@ export default class TimezoneSelector extends Component {
 
   handleChange = (value) => {
     this.setState({selectedTimezone: value}, () => {
-      this.updateReduxForm();
+      if (this.props.input) {
+        this.updateReduxForm();
+      }
     });
   };
 
@@ -31,9 +33,6 @@ export default class TimezoneSelector extends Component {
   render() {
     let { className, label, required, input } = this.props;
     const _className = cn(className, classes.default);
-
-    console.log('timezone selector - input.value ', input.value);
-    console.log('timezone selector - this.state ', this.state);
 
     return (
       <Autocomplete

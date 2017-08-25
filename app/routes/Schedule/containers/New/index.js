@@ -11,16 +11,12 @@ import ChooseType from './components/ChooseType';
 import MeetingConfirmation from './components/MeetingConfirmation';
 import ScheduleForm from './components/ScheduleForm';
 
-import * as utils from '../../utils/utils';
-
 const defaultState = {
-  selectedAthlete: null,
   recurring: null,
+  selectedAthlete: null,
   selectedDate: '',
-  showDatesModal: false,
-  showAvailableTimes: false,
+  selectedDateTime: '',
   showConfirmation: false,
-  selectedTime: '',
   isConfirmed: false
 };
 
@@ -41,56 +37,28 @@ export default class ScheduleNew extends Component {
     });
   }
 
+  handleSetDateTime = (dateTime) => {
+    this.setState({
+      selectedDateTime: dateTime
+    });
+  };
+
+  handleSetDate = (date) => {
+    this.setState({
+      selectedDate: date
+    });
+  };
+
   handleRecurring = (value) => {
     this.setState({
       recurring: value
     });
   }
 
-  handleDateChange = (selectedDate) => {
-    this.setState({
-      selectedDate
-    }, () => {
-      this.setState({
-        showAvailableTimes: true,
-        showDatesModal: false,
-        availableTimes: [],
-        availableTimesFetched: false,
-        selectedTime: ''
-      });
-    });
-  };
-
-  handleTimeChange = (selectedTime) => {
-    this.setState({
-      selectedTime
-    });
-  };
-
   handleConfirmation = (event) => {
     event.preventDefault();
     this.setState({
       showConfirmation: true
-    });
-  };
-
-  handleHideConfirmationModal = () => {
-    this.setState({
-      showConfirmation: false
-    });
-  };
-
-  handleShowDates = () => {
-    this.setState({
-      showDatesModal: true,
-      showAvailableTimes: false
-    });
-  };
-
-  handleShowTimes = () => {
-    this.setState({
-      showDatesModal: false,
-      showAvailableTimes: true
     });
   };
 
@@ -100,7 +68,7 @@ export default class ScheduleNew extends Component {
 
   render () {
     let { account } = this.props;
-    let { selectedAthlete, recurring, selectedDate, selectedTime, showAvailableTimes, showDatesModal, showConfirmation, isConfirmed } = this.state;
+    let { selectedAthlete, recurring, selectedDate, selectedDateTime, showAvailableTimes, showDatesModal, showConfirmation, isConfirmed } = this.state;
     let selectedAthleteAccount = selectedAthlete && account.athletes ? _.find(account.athletes, { 'uid': selectedAthlete }) : '';
     let hasChosenType = recurring !== null;
 
@@ -148,31 +116,19 @@ export default class ScheduleNew extends Component {
             show={!isConfirmed}
             account={account}
             onSubmit={this.handleConfirmation}
+            recurring={recurring}
+            handleRecurring={this.handleRecurring}
             handleSelectedAthlete={this.handleSelectedAthlete}
             assignedAthletes={assignedAthletes}
             selectedAthlete={this.state.selectedAthlete}
             selectedAthleteAccount={selectedAthleteAccount}
-            showDatesModal={showDatesModal}
-            onDatesDismiss={() => this.setState({showDatesModal: false})}
-            onDateChange={this.handleDateChange}
-            recurring={recurring}
             selectedDate={selectedDate}
-            onTimeClick={this.handleShowTimes}
-            handleRecurring={this.handleRecurring}
-            showAvailableTimes={showAvailableTimes}
-            handleCloseAvailableTimes={this.handleShowDates}
-            selectedTime={selectedTime}
-            handleSelectTime={(time) => {
-              this.setState({
-                selectedTime: time,
-                showAvailableTimes: false
-              })
-            }}
+            onSetDate={this.handleSetDate}
+            onSetDateTime={this.handleSetDateTime}
           />
 
           <MeetingConfirmation
-            selectedDate={selectedDate}
-            selectedTime={selectedTime}
+            selectedDateTime={selectedDateTime}
             recurring={recurring}
             selectedAthlete={selectedAthlete}
             isConfirmed={isConfirmed}

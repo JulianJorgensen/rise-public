@@ -176,7 +176,7 @@ module.exports = {
       let options = {
         method: 'PUT',
         body: {
-          // datetime : '2016-04-01T09:00'
+          datetime
         }
       };
       acuity.request(`/appointments/${id}/reschedule`, options, function (err, res, appointment) {

@@ -5,9 +5,8 @@ import { isMentor, isAdmin } from 'utils/utils';
 
 import { Checkbox } from 'react-toolbox/lib';
 import AssignAthlete from '../AssignAthlete';
-import AvailableTimes from '../../../../components/AvailableTimes';
-import AvailableDates from '../../../../components/AvailableDates';
-import TimezoneSelector from '../../../../components/TimezoneSelector';
+import ChooseDateTime from '../../../../components/ChooseDateTime';
+import TimezoneSelector from 'components/TimezoneSelector';
 import LoadingSpinner from 'components/LoadingSpinner';
 
 import Button from 'components/Button';
@@ -37,18 +36,11 @@ const ScheduleForm = ({ ...props }) => {
             selectedAthlete={props.selectedAthlete}
           /> : '' }
 
-        <div className={classes.dateTimeFields}>
-          <AvailableDates {...props} />
-
-          <AvailableTimes
-            date={props.selectedDate}
-            time={props.selectedTime}
-            show={props.showAvailableTimes}
-            handleClose={props.handleCloseAvailableTimes}
-            onSelect={props.handleSelectTime}
-            onTimeClick={props.selectedDate ? props.onTimeClick : props.handleCloseAvailableTimes}
-          />
-        </div>
+        <ChooseDateTime
+          onSetDateTime={props.onSetDateTime}
+          onSetTime={props.onSetTime}
+          recurring={props.recurring}
+        />
 
         <TimezoneSelector changeable />
 

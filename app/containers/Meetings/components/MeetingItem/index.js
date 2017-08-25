@@ -38,7 +38,11 @@ export default class MeetingItem extends Component {
       }
     })
     .then(() => {
-      console.log('settinv completed to true');
+      this.props.dispatch({
+        type: 'SET_SNACKBAR',
+        message: `Your meeting is now marked as ${status ? 'complete' : 'pending'}!`,
+        style: 'warning'
+      });
     }).catch((err) => {
       console.log('error toggling meeting: ', err);
     });
@@ -56,7 +60,11 @@ export default class MeetingItem extends Component {
       }
     })
     .then((res) => {
-      console.log('cancelled meeting', res);
+      this.props.dispatch({
+        type: 'SET_SNACKBAR',
+        message: 'Your meeting was successfully cancelled!',
+        style: 'warning'
+      });
     }).catch((err) => {
       console.log('error toggling meeting: ', err);
     });
@@ -64,25 +72,6 @@ export default class MeetingItem extends Component {
     // set as complete in local state
     this.setState({
       completed: true
-    });
-  };
-
-  rescheduleMeeting = (id) => {
-
-  };
-
-  confirmRescheduledMeeting = (status) => {
-    axios.get(`${fbConfig.functions}/rescheduleAppointment`, {
-      params: {
-        // datetime: `${moment(selectedDate).format('YYYY-MM-DD')}${moment(selectedTime).tz(account.timezone).format('THH:mmZ')}`,
-        // id: ,
-        // notes:
-      }
-    })
-    .then((response) => {
-      let confirmation = response.data;
-    }).catch((err) => {
-      console.log('error rescheduling: ', err);
     });
   };
 
@@ -97,7 +86,7 @@ export default class MeetingItem extends Component {
   }
 
   render() {
-    let { account, filter } = this.props;
+    let { account, filter, key } = this.props;
     let { meeting, completed } = this.state;
     let { timezone, athletes } = account;
     let attendeeUid, meetingAttendee;
@@ -121,7 +110,7 @@ export default class MeetingItem extends Component {
           <MenuItem
             icon='schedule'
             caption='Reschedule'
-            onClick={() => this.rescheduleMeeting(meeting.id)}
+            onClick={() => this.props.onReschedule(meeting.id)}
           />
           <MenuDivider />
           <MenuItem
@@ -144,7 +133,7 @@ export default class MeetingItem extends Component {
     }
 
     return (
-      <div>
+      <div key={key}>
         <ListItem
           avatar='https://dl.dropboxusercontent.com/u/2247264/assets/m.jpg'
           caption={`${meeting.type} with ${meetingAttendee.firstName}`}

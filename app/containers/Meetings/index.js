@@ -8,6 +8,8 @@ import { List, ListItem, ListSubHeader } from 'react-toolbox/lib/list';
 
 import MeetingItem from './components/MeetingItem';
 
+import Reschedule from './containers/Reschedule';
+
 import LoadingSpinner from 'components/LoadingSpinner';
 import classes from './index.css';
 
@@ -22,8 +24,21 @@ export default class Meetings extends Component {
   state = {
     upcomingMeetings: [],
     completedMeetings: [],
-    sorted: false
+    sorted: false,
+    rescheduleMeetingId: ''
   }
+
+  handleReschedule = (rescheduleMeetingId) => {
+    this.setState({
+      rescheduleMeetingId
+    });
+  };
+
+  handleCloseRescheduling = () => {
+    this.setState({
+      rescheduleMeetingId: ''
+    });
+  };
 
   render () {
     let { meetings, filter } = this.props;
@@ -67,10 +82,15 @@ export default class Meetings extends Component {
                 <MeetingItem
                   key={index}
                   meeting={meeting}
+                  onReschedule={this.handleReschedule}
                 />
               )
             })}
           </List>
+          <Reschedule
+            id={this.state.rescheduleMeetingId}
+            handleClose={this.handleCloseRescheduling}
+          />
         </div>
       )
     }else{

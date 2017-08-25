@@ -8,7 +8,7 @@ import { isMentor, isAdmin } from 'utils/utils';
 
 import * as utils from '../../utils/utils';
 
-import TimezoneSelector from '../TimezoneSelector';
+import TimezoneSelector from 'components/TimezoneSelector';
 
 import classes from './index.css';
 
@@ -46,7 +46,7 @@ export default class AvailableTimes extends Component {
   }
 
   render() {
-    let { show, date, time, handleClose, onSelect, onTimeClick} = this.props;
+    let { show, date, dateTime, handleClose, onSelect, onInputClick} = this.props;
     let { times, fetched } = this.state;
 
     let renderAvailableTimes = () => {
@@ -55,12 +55,13 @@ export default class AvailableTimes extends Component {
           <div>
             <div className={classes.times}>
               {times.map((item, index) => {
+                let dateTime = item.time;
                 return (
                   <Chip
                     key={index}
                     className={classes.time}
-                    onClick={() => onSelect(item.time)}
-                  >{moment(item.time).format('h:mma')}</Chip>
+                    onClick={() => onSelect(dateTime)}
+                  >{moment(dateTime).format('h:mma')}</Chip>
                 )
               })}
             </div>
@@ -80,8 +81,8 @@ export default class AvailableTimes extends Component {
           type='text'
           label='Time'
           name='time'
-          value={time ? moment(time).format('h:mma') : ''}
-          onClick={onTimeClick}
+          value={dateTime ? moment(dateTime).format('h:mma') : ''}
+          onClick={onInputClick}
           required
         />
 
