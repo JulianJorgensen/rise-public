@@ -10,7 +10,7 @@ import classes from './index.css';
 
 @withRouter
 @userIsAuthenticated
-@userHasPermission('logs')
+//@userHasPermission('logs')
 @firebaseConnect()
 @connect( // Map redux state to props
   ({ firebase }) => ({

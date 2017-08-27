@@ -30,42 +30,6 @@ export function isAdmin(role) {
   return false;
 }
 
-export function getAttendeesFromMeeting(meeting, users) {
-  let athlete, mentor;
-
-  let defaultAthlete = {
-    firstName: meeting.firstName,
-    lastName: meeting.lastName
-  }
-  let defaultMentor = {
-    firstName: meeting.calendar.split(' ')[0],
-    lastName: meeting.calendar.split(' ')[1]
-  }
-
-  if (!meeting.forms.length > 0){
-    return {
-      athlete: defaultAthlete,
-      mentor: defaultMentor
-    }
-  }
-
-  // get the form on acuity with all the user details
-  let appMetaForm = _.find(meeting, { 'forms': {'name': 'App Meta' }});
-
-  // get the athlete
-  let athleteUid = _.find(appMetaForm, {'values':{'name': 'uid'}});
-  athlete = athleteUid ? _.find(users, { 'uid':  athleteUid }).value : defaultAthlete;
-
-  // get the mentor
-  let mentorUid = _.find(appMetaForm, {'values':{'name': 'mentorUid'}});
-  mentor = mentorUid ? _.find(users, { 'uid':  mentorUid }).value : defaultMentor;
-
-  return {
-    athlete,
-    mentor
-  }
-}
-
 export function removePopulatedData(data) {
   let filteredData = Object.entries(data).filter(([key, value]) => {
     return typeof value !== 'object' && typeof value !== 'undefined';

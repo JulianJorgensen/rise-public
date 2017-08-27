@@ -15,7 +15,8 @@ import Autocomplete from 'react-toolbox/lib/autocomplete';
 import LoadingSpinner from 'components/LoadingSpinner';
 import classes from './index.css';
 
-import { isMentor, getAttendeesFromMeeting } from 'utils/utils';
+import { isMentor } from 'utils/utils';
+import { getAttendeesFromMeeting } from 'utils/meetings';
 
 const TooltipCell = Tooltip(TableCell);
 
@@ -35,7 +36,8 @@ import 'assets/icons/regular/trash.svg';
 export default class UsersItems extends Component {
   state = {
     userData: null,
-    showModal: false
+    showModal: false,
+    showPairModal: false
   }
 
   handleRowSelect = selectedRow => {
@@ -167,7 +169,7 @@ export default class UsersItems extends Component {
           <TooltipCell tooltip="Click to toggle status">
             <div className={classes.applicationStatus} onClick={() => this.toggleApplicationStatus(user)}>{users[user].applicationApproved ? 'Approved' : 'Pending'}</div>
           </TooltipCell>
-          <TableCell selectable={false}><div>{users[user].role}</div></TableCell>
+          <TableCell><div>{users[user].role}</div></TableCell>
           <TableCell><div>{users[user].firstName}</div></TableCell>
           <TableCell><div>{users[user].lastName}</div></TableCell>
           <TableCell><div>{users[user].email}</div></TableCell>
@@ -189,12 +191,12 @@ export default class UsersItems extends Component {
       <div>
         <Table selectable={false}>
           <TableHead>
-            <TableCell>Status</TableCell>
-            <TableCell>Role</TableCell>
-            <TableCell>First name</TableCell>
-            <TableCell>Last name</TableCell>
-            <TableCell>Email</TableCell>
-            <TableCell></TableCell>
+            <TableCell><div>Status</div></TableCell>
+            <TableCell><div>Role</div></TableCell>
+            <TableCell><div>First name</div></TableCell>
+            <TableCell><div>Last name</div></TableCell>
+            <TableCell><div>Email</div></TableCell>
+            <TableCell><div> </div></TableCell>
           </TableHead>
           {items}
         </Table>

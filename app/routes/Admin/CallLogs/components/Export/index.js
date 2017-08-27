@@ -7,7 +7,7 @@ import { Table, TableHead, TableRow, TableCell } from 'react-toolbox/lib/table';
 import Button from 'components/Button';
 import LoadingSpinner from 'components/LoadingSpinner';
 import classes from './index.css';
-import { getAttendeesFromMeeting } from 'utils/utils';
+import { getAttendeesFromMeeting } from 'utils/meetings';
 import {CSVLink, CSVDownload} from 'react-csv';
 
 @firebaseConnect([

@@ -11,7 +11,7 @@ import classes from './index.css';
 const TooltipCell = Tooltip(TableCell);
 
 @userIsAuthenticated
-@userHasPermission('my-athletes')
+//@userHasPermission('my-athletes')
 @firebaseConnect()
 @connect(
   ({ firebase }) => ({
@@ -24,11 +24,19 @@ export default class MyAthletes extends Component {
     athletes: null
   };
 
-  componentWillMount() {
-    this.setState({ athletes: this.props.account.athletes });
+  componentWillReceiveProps(props) {
+    if(props.account) {
+      this.setState({ athletes: props.account.athletes });
+    }
   }
 
   render () {
+    let { account } = this.props;
+
+    if(!account) {
+      return <LoadingSpinner />
+    }
+
     const { athletes } = this.state;
 
     if (!athletes) {

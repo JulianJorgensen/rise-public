@@ -9,23 +9,23 @@ import LoadingSpinner from 'components/LoadingSpinner';
 import classes from './index.css';
 
 @userIsAuthenticated
-@userHasPermission('meetings')
+//@userHasPermission('meetings')
 @firebaseConnect()
 @connect(
   ({ firebase }) => ({
     auth: pathToJS(firebase, 'auth'),
-    account: dataToJS(firebase, 'profile')
+    account: pathToJS(firebase, 'profile')
   })
 )
 export default class MyMeetings extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-    }
-  }
-
   render () {
+    let { account } = this.props;
+
+    console.log('account from mhymeeting', account);
+    if(!account) {
+      return <LoadingSpinner />
+    }
+
     return (
       <div className={classes.container}>
         <Meetings />

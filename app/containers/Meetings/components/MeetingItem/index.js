@@ -5,7 +5,8 @@ import { firebase as fbConfig } from 'app/config';
 import axios from 'axios';
 import _ from 'lodash';
 import moment from 'moment-timezone';
-import { isMentor } from 'utils/utils';
+
+import { isMentor, isAdmin } from 'utils/utils';
 
 import { IconMenu, MenuItem, MenuDivider } from 'react-toolbox/lib/menu';
 import { ListItem, ListDivider, ListCheckbox } from 'react-toolbox/lib/list';
@@ -78,26 +79,19 @@ export default class MeetingItem extends Component {
   componentWillMount() {
     let { meeting } = this.props;
     let appMetaForm = _.find(meeting.forms, { 'name': 'App Meta' });
+    let appMetaFormCompleted = appMetaForm ? _.find(appMetaForm.values, { 'name': 'completed' }) : null;
+    console.log('appMetaForm', appMetaForm);
 
     this.setState({
       meeting: meeting,
-      completed: _.find(appMetaForm.values, { 'name': 'completed' }).value === 'yes' ? true : false
+      completed: appMetaFormCompleted ? appMetaFormCompleted.value === 'yes' ? true : false : false
     })
   }
 
   render() {
-    let { account, filter, key } = this.props;
+    let { account, filter, attendees } = this.props;
     let { meeting, completed } = this.state;
     let { timezone, athletes } = account;
-    let attendeeUid, meetingAttendee;
-    let appMetaForm = _.find(meeting.forms, { 'name': 'App Meta' });
-
-    if (isMentor(account.role)) {
-      attendeeUid = _.find(appMetaForm.values, { 'name': 'uid' }).value;
-      meetingAttendee = _.find(athletes, { 'uid':  attendeeUid });
-    }else{
-      meetingAttendee = mentor;
-    }
 
     let upcomingNavItems = () => {
       return (
@@ -132,17 +126,27 @@ export default class MeetingItem extends Component {
       )
     }
 
+    let getHeadline = () => {
+      if (isAdmin(account.role)) {
+        return `${attendees.mentor.firstName} and ${attendees.athlete.firstName}`
+      }else if (isMentor(account.role)){
+        return `You and ${attendees.athlete.firstName}`
+      }else{
+        return `You and ${attendees.mentor.firstName}`
+      }
+    }
+
     return (
-      <div key={key}>
+      <div>
         <ListItem
-          avatar='https://dl.dropboxusercontent.com/u/2247264/assets/m.jpg'
-          caption={`${meeting.type} with ${meetingAttendee.firstName}`}
+          avatar='images/User.png'
+          caption={getHeadline()}
           legend={moment(meeting.datetime).tz(timezone).format('MMMM Do YYYY h:mma')}
           theme={classes}
           className={completed ? classes.completed : ''}
           selectable={false}
           rightActions={[
-            <IconMenu icon='more_vert' position='topLeft' menuRipple>
+            <IconMenu key={0} icon='more_vert' position='topLeft' menuRipple>
               {filter === 'completed' ? completedNavItems() : upcomingNavItems()}
             </IconMenu>
           ]}

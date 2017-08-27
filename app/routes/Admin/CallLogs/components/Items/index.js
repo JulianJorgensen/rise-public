@@ -7,7 +7,7 @@ import { Table, TableHead, TableRow, TableCell } from 'react-toolbox/lib/table';
 import LoadingSpinner from 'components/LoadingSpinner';
 import classes from './index.css';
 
-import { getAttendeesFromMeeting } from 'utils/utils';
+import { getAttendeesFromMeeting } from 'utils/meetings';
 
 @firebaseConnect([
   'users'
@@ -15,7 +15,6 @@ import { getAttendeesFromMeeting } from 'utils/utils';
 @connect(
   ({ firebase }) => ({
     account: pathToJS(firebase, 'profile'),
-    auth: pathToJS(firebase, 'auth'),
     users: dataToJS(firebase, 'users')
   })
 )
@@ -28,7 +27,7 @@ export default class CallLogsItems extends Component {
     let items = data.map((meeting, index) => {
       attendees = getAttendeesFromMeeting(meeting, users);
       return (
-        <TableRow key={index}>
+        <TableRow key={index} selectable={false}>
           <TableCell><div>{meeting.type}</div></TableCell>
           <TableCell><div>{moment(meeting.datetime).tz(timezone).format('MMMM Do YYYY h:mma z (Z)')}</div></TableCell>
           <TableCell><div>{attendees.mentor.firstName}</div></TableCell>
@@ -39,8 +38,8 @@ export default class CallLogsItems extends Component {
 
     return (
       <div>
-        <Table>
-          <TableHead>
+        <Table selectable={false}>
+          <TableHead selectable={false}>
             <TableCell>Type</TableCell>
             <TableCell>Date</TableCell>
             <TableCell>Mentor</TableCell>

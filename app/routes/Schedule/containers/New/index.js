@@ -11,6 +11,8 @@ import ChooseType from './components/ChooseType';
 import MeetingConfirmation from './components/MeetingConfirmation';
 import ScheduleForm from './components/ScheduleForm';
 
+import LoadingSpinner from 'components/LoadingSpinner';
+
 const defaultState = {
   recurring: null,
   selectedAthlete: null,
@@ -21,10 +23,11 @@ const defaultState = {
 };
 
 @userIsAuthenticated
-@userHasPermission('schedule')
+//@userHasPermission('schedule')
 @firebaseConnect()
 @connect(
   ({ firebase }) => ({
+    auth: pathToJS(firebase, 'auth'),
     account: pathToJS(firebase, 'profile')
   })
 )
@@ -68,6 +71,11 @@ export default class ScheduleNew extends Component {
 
   render () {
     let { account } = this.props;
+
+    if(!account) {
+      return <LoadingSpinner />
+    }
+
     let { selectedAthlete, recurring, selectedDate, selectedDateTime, showAvailableTimes, showDatesModal, showConfirmation, isConfirmed } = this.state;
     let selectedAthleteAccount = selectedAthlete && account.athletes ? _.find(account.athletes, { 'uid': selectedAthlete }) : '';
     let hasChosenType = recurring !== null;

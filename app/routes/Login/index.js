@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import GoogleButton from 'react-google-button';
 import { connect } from 'react-redux';
@@ -21,15 +21,6 @@ import classes from './index.css';
   })
 )
 export default class Login extends Component {
-  static propTypes = {
-    firebase: PropTypes.shape({
-      login: PropTypes.func.isRequired
-    }),
-    authError: PropTypes.shape({
-      message: PropTypes.string
-    })
-  }
-
   handleLogin = loginData => {
     this.props.firebase.login(loginData).then((res) => {
       // this.props.history.push('/dashboard');

@@ -4,12 +4,12 @@ import { connect } from 'react-redux';
 import { firebaseConnect, dataToJS, pathToJS, isEmpty, isLoaded } from 'react-redux-firebase';
 import { firebase as fbConfig } from 'app/config';
 import DocumentMeta from 'react-document-meta';
+import { userIsAuthenticated, userIsNotAuthenticated } from 'utils/router';
 
 import TopNotification from 'components/TopNotification';
 import Snackbar from 'components/Snackbar';
 import LeftNavigation from 'containers/LeftNavigation';
 import Navbar from '../containers/Navbar';
-import GetMeetings from 'containers/GetMeetings';
 
 import Home from './Home';
 import About from './About';
@@ -37,6 +37,8 @@ import Recover from './Recover';
 import NotAuthorized from './NotAuthorized';
 import NotFound from './NotFound';
 
+
+
 import { Layout } from 'react-toolbox/lib/layout';
 import ReactGA from 'react-ga';
 // ReactGA.initialize('UA-6241825-9'); // initialize Google Analytics
@@ -58,9 +60,9 @@ const meta = {
 @withRouter
 @firebaseConnect()
 @connect(
-  ({ notification, firebase }) => ({
-    account: pathToJS(firebase, 'profile'),
-    notification
+  ({ notification, meetings }) => ({
+    notification,
+    meetings
   })
 )
 export default class Index extends React.Component {
@@ -90,11 +92,10 @@ export default class Index extends React.Component {
   }
 
   render() {
-    let { account, notification } = this.props;
+    let { notification } = this.props;
 
     return (
       <div className={classes.container}>
-        <GetMeetings />
         <TopNotification />
         <Snackbar />
         <div className={`${classes.content} ${notification ? notification.show ? classes.withNotification : '' : ''}`}>

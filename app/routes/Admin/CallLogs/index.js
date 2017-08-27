@@ -18,7 +18,7 @@ import DateRange from './components/DateRange';
 
 @withRouter
 @userIsAuthenticated
-@userHasPermission('admin')
+//@userHasPermission('admin')
 @firebaseConnect()
 @connect( // Map redux state to props
   ({ firebase }) => ({
@@ -33,12 +33,17 @@ export default class AdminCallLogs extends Component {
     offset: 0,
     itemsPerPage: 10,
     pageCount: 0,
+    fetched: false,
     allMeetingsFetched: false,
     startDate: null,
     endDate: moment.tz().toDate()
   }
 
   fetchPastMeetings(limit) {
+    this.setState({
+      fetched: true
+    });
+
     let { timezone } = this.props.account;
     let now = moment.tz().format('YYYY-MM-DDTHH:MM:SSz');
     let twoYearsAgo = moment.tz().subtract(2, 'Y').format('YYYY-MM-DDTHH:MM:SSz');
@@ -55,12 +60,16 @@ export default class AdminCallLogs extends Component {
       let meetings = response.data;
 
       this.setState({
-        fetched: true,
-        allMeetingsFetched: limit === 'preview' ? false : true,
-        meetings
+        meetings,
+        allMeetingsFetched: limit === 'preview' ? false : true
       }, () => {
         this.filterMeetings();
       });
+
+      // fetch all meetings
+      if (!this.state.allMeetingsFetched) {
+        this.fetchPastMeetings();
+      }
     })
     .catch((error) => {
       console.log(`Error getting all meetings`, error);
@@ -68,6 +77,7 @@ export default class AdminCallLogs extends Component {
   }
 
   handlePageClick = (data) => {
+    console.log('admin call log handlePageClick ');
     let selected = data.selected;
     let offset = Math.ceil(selected * this.state.itemsPerPage);
 
@@ -77,12 +87,14 @@ export default class AdminCallLogs extends Component {
   }
 
   handleDateChange = (type, value) => {
+    console.log('admin call log handleDateChange ');
     this.setState({[type]: value}, () => {
       this.filterMeetings();
     });
   }
 
   filterMeetings = () => {
+    console.log('admin call log filterMeetings ');
     let { meetings, allMeetingsFetched, startDate, endDate, offset, itemsPerPage } = this.state;
 
     let meetingsDateFiltered = allMeetingsFetched ? meetings.filter((meeting) => {
@@ -100,16 +112,22 @@ export default class AdminCallLogs extends Component {
     });
   }
 
-  componentWillMount() {
-    this.fetchPastMeetings('preview');
-  }
-
   componentDidMount() {
-    this.fetchPastMeetings();
+    setTimeout(() => {
+      if (this.props.account) {
+        this.fetchPastMeetings('preview');
+      }
+    }, 2000);
   }
 
   render () {
+    let { fetched } = this.state;
     let { account, history } = this.props;
+
+    if(!account || !fetched) {
+      return <LoadingSpinner />
+    }
+
     let { meetings, meetingsFiltered, meetingsVisible, itemsPerPage, offset, pageCount, allMeetingsFetched, startDate, endDate } = this.state;
 
     if (!meetingsFiltered) {

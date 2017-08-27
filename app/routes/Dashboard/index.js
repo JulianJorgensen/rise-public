@@ -27,6 +27,11 @@ export default class Dashboard extends Component {
 
   render () {
     const { account, history } = this.props;
+
+    if(!account) {
+      return <LoadingSpinner />
+    }
+
     const { firstName, timezone, mentor } = account;
 
     return (

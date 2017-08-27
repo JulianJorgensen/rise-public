@@ -13,6 +13,7 @@ import InstagramFeed from 'containers/InstagramFeed/InstagramFeed';
 import 'assets/icons/regular/trophy.svg';
 
 @withRouter
+@userIsNotAuthenticated
 export default class Home extends React.Component {
   constructor() {
     super();

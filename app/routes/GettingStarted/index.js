@@ -24,6 +24,10 @@ export default class GettingStarted extends Component {
   render () {
     const { account } = this.props;
 
+    if(!account) {
+      return <LoadingSpinner />
+    }
+
     return(
       <div className={classes.container}>
         <h2>Hello! Welcome to RISE.</h2>

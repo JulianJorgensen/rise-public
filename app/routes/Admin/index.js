@@ -7,7 +7,7 @@ import moment from 'moment-timezone';
 import { DASHBOARD_PATH } from 'app/constants';
 import { userIsAuthenticated, userHasPermission } from 'utils/router';
 import LoadingSpinner from 'components/LoadingSpinner';
-import AllMeetings from 'containers/AllMeetings';
+import { AllMeetings } from 'containers/Meetings';
 import classes from './index.css';
 
 @withRouter
@@ -23,6 +23,11 @@ import classes from './index.css';
 export default class Admin extends Component {
   render () {
     const { account, history } = this.props;
+
+    if(!account) {
+      return <LoadingSpinner />
+    }
+
     const { firstName } = account;
 
     return (
@@ -34,10 +39,17 @@ export default class Admin extends Component {
         <div className={classes.logs}>
           <div className={classes.logsInner}>
             <div className={classes.logsCompleted}>
-              <AllMeetings filter="completed" limit={5} />
+              <AllMeetings
+                filter="completed"
+                limit={5}
+                showAllUsers={true}
+              />
             </div>
             <div className={classes.logsUpcoming}>
-              <AllMeetings limit={5} />
+              <AllMeetings
+                limit={5}
+                showAllUsers={true}
+              />
             </div>
           </div>
         </div>

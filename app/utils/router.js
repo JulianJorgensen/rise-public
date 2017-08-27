@@ -23,17 +23,27 @@ const locationHelper = locationHelperBuilder();
  */
 
 export const userIsAuthenticated = connectedRouterRedirect({
-  authenticatingSelector: ({ firebase }) => pathToJS(firebase, 'auth'),
-  AuthenticatingComponent: LoadingSpinner,
-  redirectPath: (state, ownProps) => {
-    console.log('user is NOT authenticated, so redirecting to /login!');
-    console.log('\n\n');
-    return locationHelper.getRedirectQueryParam(ownProps) || '/login';
+  authenticatingSelector: ({ firebase }) => {
+    let status = pathToJS(firebase, 'auth') === undefined;
+    // console.log('\n\n===userIsAuthenticated');
+    // console.log('authenticatingSelector', status);
+    // console.log('auth', pathToJS(firebase, 'auth'));
+    // console.log('profile', pathToJS(firebase, 'profile'));
+    return status;
   },
+  AuthenticatingComponent: LoadingSpinner,
+  authenticatedSelector: ({ firebase }) => {
+    let status = pathToJS(firebase, 'auth') !== null && pathToJS(firebase, 'auth') !== undefined;
+    // console.log('\nauthenticatedSelector', status);
+    // console.log('auth', pathToJS(firebase, 'auth'));
+    // console.log('profile', pathToJS(firebase, 'profile'));
+    return status;
+  },
+  redirectPath: (state, ownProps) => locationHelper.getRedirectQueryParam(ownProps) || '/login',
   allowRedirectBack: true,
-  authenticatedSelector: ({ firebase }) => pathToJS(firebase, 'auth') && pathToJS(firebase, 'profile'),
   wrapperDisplayName: 'UserIsAuthenticated'
 })
+
 
 /**
  * @description Higher Order Component that redirects to dashboard page or most
@@ -43,19 +53,24 @@ export const userIsAuthenticated = connectedRouterRedirect({
  * @param {Component} componentToWrap - Component to wrap
  * @return {Component} wrappedComponent
  */
-export const userIsNotAuthenticated = connectedRouterRedirect({
-  authenticatingSelector: ({ firebase }) => pathToJS(firebase, 'auth') === undefined,
-  AuthenticatingComponent: LoadingSpinner,
-  authenticatedSelector: ({ firebase }) => pathToJS(firebase, 'auth') === null,
-  wrapperDisplayName: 'UserIsNotAuthenticated',
-  redirectPath: (state, ownProps) => {
-    console.log('user IS authenticated, so redirect! to dashboard');
-    console.log('\n\n\n');
-    return locationHelper.getRedirectQueryParam(ownProps) || '/dashboard';
-  },
-  allowRedirectBack: false
-})
-
+ export const userIsNotAuthenticated = connectedRouterRedirect({
+   wrapperDisplayName: 'UserIsNotAuthenticated',
+   allowRedirectBack: false,
+   authenticatedSelector: ({ firebase }) => {
+     let status = pathToJS(firebase, 'auth') === null;
+    //  console.log('\nauthenticatedSelector', status);
+    //  console.log('auth', pathToJS(firebase, 'auth'));
+     return status;
+   },
+   authenticatingSelector: ({ firebase }) => {
+     let isFirebaseInitializing = pathToJS(firebase, 'auth') === undefined;
+    //  console.log('\n\n===userIsNotAuthenticated')
+    //  console.log('firebase auth', pathToJS(firebase, 'auth'));
+    //  console.log('authenticatingSelector', isFirebaseInitializing);
+     return isFirebaseInitializing;
+   },
+   redirectPath: (state, ownProps) => locationHelper.getRedirectQueryParam(ownProps) || '/dashboard'
+ })
 
 /**
  * @description Higher Order Component that redirects to the homepage if
@@ -65,22 +80,22 @@ export const userIsNotAuthenticated = connectedRouterRedirect({
  * @return {Component} wrappedComponent
  */
 
-export const userHasPermission = permission => connectedRouterRedirect({
-  authenticatedSelector: ({ firebase }) => {
-    const account = pathToJS(firebase, 'profile');
-    const auth = pathToJS(firebase, 'auth');
-    return (!isEmpty(account) && isLoaded(account) && get(account, `role.${permission}`, false));
-  },
-  // predicate: auth => get(auth, `user.role.${permission}`, false),
-  authenticatingSelector: ({ firebase }) =>
-      (pathToJS(firebase, 'auth') === undefined)
-      || (pathToJS(firebase, 'profile') === undefined)
-      || (pathToJS(firebase, 'isInitializing') === true),
-  // AuthenticatingComponent: LoadingSpinner,
-  wrapperDisplayName: 'UserHasPermission',
-  redirectPath: '/not-authorized',
-  allowRedirectBack: false
-});
+// export const userHasPermission = permission => connectedRouterRedirect({
+//   authenticatedSelector: ({ firebase }) => {
+//     const account = pathToJS(firebase, 'profile');
+//     const auth = pathToJS(firebase, 'auth');
+//     return (!isEmpty(account) && isLoaded(account) && get(account, `role.${permission}`, false));
+//   },
+//   // predicate: auth => get(auth, `user.role.${permission}`, false),
+//   authenticatingSelector: ({ firebase }) =>
+//       (pathToJS(firebase, 'auth') === undefined)
+//       || (pathToJS(firebase, 'profile') === undefined)
+//       || (pathToJS(firebase, 'isInitializing') === true),
+//   // AuthenticatingComponent: LoadingSpinner,
+//   wrapperDisplayName: 'UserHasPermission',
+//   redirectPath: '/not-authorized',
+//   allowRedirectBack: false
+// });
 
 
 /**
@@ -115,6 +130,6 @@ export const userIsAdmin = connectedRouterRedirect({
 export default {
   userIsAuthenticated,
   userIsNotAuthenticated,
-  userHasPermission,
+  // userHasPermission,
   userIsAdmin
 }

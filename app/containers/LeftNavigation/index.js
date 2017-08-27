@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { get } from 'lodash';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -19,11 +19,6 @@ import classes from './index.css';
   })
 )
 export default class LefNavigation extends Component {
-  static propTypes = {
-    account: PropTypes.object,
-    firebase: PropTypes.object.isRequired
-  }
-
   render () {
     let { account, accountRaw, location, activePath } = this.props;
     let accountExists = isLoaded(account) && !isEmpty(account);

@@ -22,15 +22,11 @@ const TooltipCell = Tooltip(TableCell);
 ])
 @connect(
   ({ firebase }) => ({
-    users: dataToJS(firebase, 'users')
+    users: dataToJS(firebase, 'users'),
+    account: pathToJS(firebase, 'profile')
   })
 )
 export default class Users extends Component {
-  static propTypes = {
-    users: PropTypes.object,
-    firebase: PropTypes.object
-  }
-
   state = {
     selected: '',
     users: [],
@@ -51,7 +47,7 @@ export default class Users extends Component {
     });
   }
 
-  componentWillUpdate() {
+  setUsers = () => {
     let { itemsPerPage, offset, usersVisible, users } = this.state;
     let usersObj = this.props.users;
 
@@ -63,12 +59,19 @@ export default class Users extends Component {
         pageCount: users.length / itemsPerPage
       });
     }
+  };
+
+  componentWillMount() {
+    setTimeout(() => {
+      this.setUsers();
+    }, 300);
   }
 
   render () {
     let { pageCount, usersVisible } = this.state;
+    let { account } = this.props;
 
-    if(usersVisible.length <= 0){
+    if(!account || usersVisible.length <= 0) {
       return (
         <LoadingSpinner />
       )
