@@ -14,12 +14,14 @@
 
 .header{
   font-size: rem(100);
+  line-height: rem(100);
   color: var(--blue);
   margin: 0;
   font-weight: 400;
 }
 .subheader{
   font-size: rem(48);
+  line-height: rem(48);
   margin: rem(15) 0;
   color: gray(40%);
   font-weight: 400;
@@ -66,18 +68,25 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
     color: white;
   }
 
-  & .ctaButton{
+  & .ctaButtonWrapper{
     margin: 0 rem(30);
     width: rem(305);
+  }
+  & .ctaButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
   }
 }
 
 .notificationBar{
   background-color: var(--blue);
-  color: gray(60%);
+  color: white;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -93,6 +102,7 @@
 
   & .header{
     font-size: rem(80);
+    line-height: rem(80);
   }
 
   & .disclaimer{
@@ -103,6 +113,7 @@
 }
 
 .testimonials{
+  margin-bottom: rem(60);
   & .testimonial{
     text-align: center;
     color: gray(30%);
@@ -114,7 +125,7 @@
 }
 
 .about{
-  background-image: url('/images/placeholders/homepage-about.jpg');
+  background-image: url('/images/RISE-Hero-2.jpg');
   background-position: center right;
   background-repeat: no-repeat;
   background-size: contain;
@@ -158,6 +169,7 @@
 
       justify-content: center;
       flex-direction: column;
+      text-align: center;
 
       & .name{
         font-size: 1.6em;
@@ -170,12 +182,9 @@
         margin-bottom: rem(5);
       }
     }
-
-    &:hover{
-      & .overlay{
-        display: flex;
-      }
-    }
+  }
+  & .slide:hover .overlay{
+    display: flex;
   }
 }
 
@@ -189,12 +198,6 @@
     width: rem(300);
     text-align: center;
     color: gray(50%);
-
-    & .icon{
-      width: rem(60);
-      height: rem(60);
-      background-image: url('assets/icons/regular/trophy.svg');
-    }
 
     & .title{
       font-size: rem(24);
@@ -218,7 +221,7 @@
   }
 }
 
-.sectionSocial{
+.footer{
   background-color: var(--darkBlue);
   height: rem(800);
   width: 100%;
@@ -227,4 +230,15 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  & .email{
+    margin: rem(30) 0;
+    & a:hover{
+      color: white;
+    }
+  }
+
+  & .copyright{
+    color: white;
+  }
 }

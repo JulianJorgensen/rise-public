@@ -8,7 +8,6 @@ import classes from './EmailForm.css';
 
 export const EmailForm = ({ account, handleSubmit, submitting, pristine, valid }) => (
   <form className={classes.container} onSubmit={handleSubmit}>
-    <h4>Reset password</h4>
     <Field
       name='email'
       component={TextField}

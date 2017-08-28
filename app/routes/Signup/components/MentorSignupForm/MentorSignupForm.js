@@ -9,7 +9,6 @@ import classes from './MentorSignupForm.css';
 const MentorSignupForm = ({ handleSubmit, submitting }) => {
   return (
     <form className={classes.container} onSubmit={handleSubmit}>
-      <h4>Mentor</h4>
       <Field
         name='email'
         type='text'

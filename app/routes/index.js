@@ -110,6 +110,7 @@ export default class Index extends React.Component {
               <Route path="/pricing" component={Pricing} />
               <Route path="/login" component={Login} />
               <Route path="/signup" component={Signup} />
+              <Route path="/forgot" component={Recover} />
               <Route exact path="/getting-started" component={GettingStarted} />
               <Route path="/getting-started/application" component={Application} />
               <Route path="/getting-started/agreements" component={Agreements} />

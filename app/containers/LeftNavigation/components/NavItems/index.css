@@ -1,23 +1,20 @@
-.dashboard:before{
-  background-image: url('assets/icons/regular/home.svg?fill=white');
+.icon{
 }
 
-.meetings:before{
-  background-image: url('assets/icons/regular/calendar.svg?fill=white');
+.dashboard{
 }
 
-.exercise:before{
-  background-image: url('assets/icons/regular/file.svg?fill=white');
+.meetings{
 }
 
-.schedule:before{
-  background-image: url('assets/icons/regular/calendar-plus.svg?fill=white');
+.exercise{
 }
 
-.myAthletes:before{
-  background-image: url('assets/icons/regular/users.svg?fill=white');
+.schedule{
 }
 
-.admin:before{
-  background-image: url('assets/icons/regular/cog.svg?fill=white');
+.myAthletes{
+}
+
+.admin{
 }

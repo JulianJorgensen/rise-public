@@ -12,9 +12,9 @@ import Navigation from 'react-toolbox/lib/navigation';
 import Logo from 'components/Logo/Logo';
 
 // icons
-import 'assets/icons/regular/calendar.svg';
-import 'assets/icons/regular/bars.svg';
-import 'assets/icons/regular/chevron-down.svg';
+import CalendarIcon from '-!svg-react-loader?name=Icon!assets/icons/regular/calendar.svg';
+import BarsIcon from '-!svg-react-loader?name=Icon!assets/icons/regular/bars.svg';
+import ChevronDownIcon from '-!svg-react-loader?name=Icon!assets/icons/regular/chevron-down.svg';
 
 // classes
 import classes from './index.css';
@@ -60,13 +60,13 @@ export default class Navbar extends Component {
 
     const rightMenu = accountExists ? (
       <div className={classes.rightNav}>
-        <Link to='/video' className={classes.rightNavVideo}>
-          <div className={classes.videoIcon} />
+        <Link to='/meetings' className={classes.rightNavMeetings}>
+          <CalendarIcon className={classes.meetingsIcon} />
           {numberOfUpcomingAppointments > 0 ? <div className={classes.numberOfNotifications}>{numberOfUpcomingAppointments}</div> : ''}
         </Link>
-        <div className={classes.rightNavName}>Hello {account.firstName}!</div>
+        <div className={classes.rightNavName}>{account.firstName ? `Hey ${account.firstName}!` : ''}</div>
         <Avatar className={classes.rightNavAvatar} image='/images/User.png' cover />
-        <IconMenu className={classes.rightNavMenu} icon={<div className={classes.rightNavIcon} />} position='topRight' menuRipple>
+        <IconMenu className={classes.rightNavMenu} icon={<div className={classes.icon}><ChevronDownIcon className={classes.rightNavIcon} /></div>} position='topRight' menuRipple>
           <MenuItem
             caption='Profile'
             onClick={() => history.push('/dashboard/profile')}
@@ -85,18 +85,10 @@ export default class Navbar extends Component {
       </div>
     ) : ctaMenu
 
-    const mainMenu = !accountExists ? (
-      <div className={classes.nav}>
-        <Link to={CONST.ABOUT_PATH}>About</Link>
-        <Link to={CONST.FEATURES_PATH}>Features</Link>
-        <Link to={CONST.PRICING_PATH}>Pricing</Link>
-      </div>
-    ) : ''
-
     const toggle = accountExists ? (
       <div className={classes.toggle} onClick={() => {
         this.handleToggleLeftNavigation()
-      }}><div className={classes.icon} /></div>
+      }}><BarsIcon className={classes.icon} /></div>
     ) : ''
 
     return (
@@ -104,7 +96,6 @@ export default class Navbar extends Component {
         <div className={classes.leftNav}>
           {toggle}
           <Link to={accountExists ? `${CONST.DASHBOARD_PATH}` : '/'} className={classes.logo}><Logo width="80" /></Link>
-          {mainMenu}
         </div>
 
         {rightMenu}

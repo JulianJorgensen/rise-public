@@ -2,18 +2,18 @@ import React from 'react';
 import classes from './index.css';
 
 // icons
-import 'assets/icons/regular/angle-double-right.svg';
-import 'assets/icons/regular/home.svg';
-import 'assets/icons/regular/calendar.svg';
-import 'assets/icons/regular/file.svg';
-import 'assets/icons/regular/calendar-plus.svg';
-import 'assets/icons/regular/users.svg';
-import 'assets/icons/regular/cog.svg';
+import HomeIcon from '-!svg-react-loader?name=Icon!assets/icons/regular/home.svg';
+import AngleDoubleRightIcon from '-!svg-react-loader?name=Icon!assets/icons/regular/angle-double-right.svg';
+import CalendarIcon from '-!svg-react-loader?name=Icon!assets/icons/regular/calendar.svg';
+import CalendarPlusIcon from '-!svg-react-loader?name=Icon!assets/icons/regular/calendar-plus.svg';
+import UsersIcon from '-!svg-react-loader?name=Icon!assets/icons/regular/users.svg';
+import CogIcon from '-!svg-react-loader?name=Icon!assets/icons/regular/cog.svg';
 
 export const navItems = [
   {
     url: '/dashboard',
     anchor: 'Dashboard',
+    icon: <HomeIcon />,
     className: classes.dashboard,
     children: [
       {
@@ -45,14 +45,15 @@ export const navItems = [
   // },
   {
     url: '/meetings',
+    icon: <CalendarIcon />,
     anchor: 'Meetings',
     className: classes.meetings,
-    children: [
-      {
-        url: '/meetings/logs',
-        anchor: 'Call logs'
-      }
-    ]
+    // children: [
+    //   {
+    //     url: '/meetings/logs',
+    //     anchor: 'Call logs'
+    //   }
+    // ]
   },
   // {
   //   url: '/library',
@@ -73,6 +74,7 @@ export const navItems = [
   // },
   {
     url: '/schedule',
+    icon: <CalendarPlusIcon />,
     anchor: 'Schedule',
     className: classes.schedule
   },
@@ -100,6 +102,7 @@ export const navItems = [
   // },
   {
     url: '/my-athletes',
+    icon: <UsersIcon />,
     anchor: 'My Athletes',
     className: classes.myAthletes,
     showOnlyFor: [
@@ -109,6 +112,7 @@ export const navItems = [
   },
   {
     url: '/admin',
+    icon: <CogIcon />,
     anchor: 'Admin',
     className: classes.admin,
     showOnlyFor: [

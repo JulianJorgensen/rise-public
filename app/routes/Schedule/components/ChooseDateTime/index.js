@@ -34,9 +34,6 @@ export default class ChooseDateTime extends Component {
         selectedDateTime: ''
       });
     });
-
-    // set parent state
-    this.props.onSetDate(selectedDate);
   };
 
   handleSelectDateTime = (selectedDateTime) => {

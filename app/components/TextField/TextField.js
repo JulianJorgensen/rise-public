@@ -12,6 +12,7 @@ export const TextField = ({ className, type, required, label, meta: { touched, e
       label={label}
       type={type}
       required={required}
+      theme={classes}
       {...input}
       {...custom}
     />

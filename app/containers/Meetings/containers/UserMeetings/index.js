@@ -71,10 +71,11 @@ export default class UserMeetings extends Component {
     }
 
     let { upcoming, completed } = meetings;
-    let users = Object.assign(account.athletes, {mentor: account.mentor}, {account: account});
+    let users = Object.assign(account.athletes || {}, {mentor: account.mentor || {}}, {account: account});
     console.log('users from UserMeetings', users);
 
     if (filter === 'completed') {
+      console.log('filter is completed', filter);
       if(completed.length > 0) {
         if (limit) {
           completed = completed.slice(0, limit);
@@ -97,6 +98,8 @@ export default class UserMeetings extends Component {
             </List>
           </div>
         )
+      }else{
+        return (<div></div>)
       }
     }
 

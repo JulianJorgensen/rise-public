@@ -8,7 +8,7 @@ import autoprefixer from 'autoprefixer';
 import PostCSS from './postcss.config';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import CompressionPlugin from 'compression-webpack-plugin';
-import SpriteLoaderPlugin from 'svg-sprite-loader/plugin';
+// import SpriteLoaderPlugin from 'svg-sprite-loader/plugin';
 
 // define environment constants
 const NODE_ENV = (process.env.NODE_ENV || 'development');
@@ -89,20 +89,28 @@ const BASE_CONFIG = {
         loader: 'file-loader?name=fonts/[name].[ext]'
       },
       {
-        test: /\.svg$/,
-        include: path.resolve(__dirname, 'app/assets/icons'),
-        use: [
-          {
-            loader: 'svg-sprite-loader',
-            options: {
-              extract: true,
-              spriteFilename: 'icons/sprite.svg'
-            }
-          },
-          'svg-fill-loader',
-          'svgo-loader'
-        ]
+          test: /\.svg$/,
+          exclude: /node_modules/,
+          loader: 'svg-react-loader',
+          query: {
+            classIdPrefix: '[name]-[hash:8]__'
+          }
       }
+      // {
+      //   test: /\.svg$/,
+      //   include: path.resolve(__dirname, 'app/assets/icons'),
+      //   use: [
+      //     {
+      //       loader: 'svg-sprite-loader',
+      //       options: {
+      //         extract: true,
+      //         spriteFilename: 'icons/sprite.svg'
+      //       }
+      //     },
+      //     'svg-fill-loader',
+      //     'svgo-loader'
+      //   ]
+      // }
     ]
   },
   plugins: [
@@ -111,6 +119,11 @@ const BASE_CONFIG = {
         context: 'app',
         from: 'assets/images',
         to: 'images'
+      },
+      {
+        context: 'app',
+        from: 'assets/pdfs',
+        to: 'pdfs'
       }
     ]),
     new webpack.DefinePlugin({
@@ -129,7 +142,7 @@ const BASE_CONFIG = {
       debug: true
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/), // reduce moment package size
-    new SpriteLoaderPlugin()
+    // new SpriteLoaderPlugin()
   ],
   devtool: `${IS_PRODUCTION ? 'inline' : 'cheap-eval'}-source-map`,
   resolve: {

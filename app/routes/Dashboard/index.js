@@ -10,6 +10,8 @@ import LoadingSpinner from 'components/LoadingSpinner';
 import Meetings from 'containers/Meetings';
 import classes from './index.css';
 
+import CalendarIcon from '-!svg-react-loader?name=Icon!assets/icons/regular/calendar.svg';
+
 @withRouter
 @userIsAuthenticated
 @firebaseConnect()
@@ -20,11 +22,6 @@ import classes from './index.css';
   })
 )
 export default class Dashboard extends Component {
-  static propTypes = {
-    account: PropTypes.object,
-    firebase: PropTypes.object.isRequired
-  }
-
   render () {
     const { account, history } = this.props;
 
@@ -56,19 +53,19 @@ export default class Dashboard extends Component {
               className={classes.action}
               onClick={() => history.push('/schedule')}
             >
-              <div className={classes.icon} />
+              <CalendarIcon className={classes.icon} />
             </div>
             <div
               className={classes.action}
               onClick={() => history.push('/profile')}
             >
-              <div className={classes.icon} />
+              <CalendarIcon className={classes.icon} />
             </div>
             <div
               className={classes.action}
               onClick={() => history.push('/settings')}
             >
-              <div className={classes.icon} />
+              <CalendarIcon className={classes.icon} />
             </div>
           </div>
         </div>

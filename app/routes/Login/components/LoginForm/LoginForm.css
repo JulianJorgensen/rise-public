@@ -6,9 +6,5 @@
 }
 
 .options {
-}
-.remember {
-  padding: rem(20) 0;
-}
-.recover {
+  padding-top: rem(30);
 }

@@ -9,6 +9,8 @@
   padding-right: rem(30);
   background-color: gray(95%);
   text-decoration: none;
+  font-family: 'Poppins';
+  font-weight: bold;
 }
 
 .button.hollow:not([disabled]) {

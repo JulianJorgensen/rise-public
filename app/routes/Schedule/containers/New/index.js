@@ -16,7 +16,6 @@ import LoadingSpinner from 'components/LoadingSpinner';
 const defaultState = {
   recurring: null,
   selectedAthlete: null,
-  selectedDate: '',
   selectedDateTime: '',
   showConfirmation: false,
   isConfirmed: false
@@ -46,12 +45,6 @@ export default class ScheduleNew extends Component {
     });
   };
 
-  handleSetDate = (date) => {
-    this.setState({
-      selectedDate: date
-    });
-  };
-
   handleRecurring = (value) => {
     this.setState({
       recurring: value
@@ -76,7 +69,7 @@ export default class ScheduleNew extends Component {
       return <LoadingSpinner />
     }
 
-    let { selectedAthlete, recurring, selectedDate, selectedDateTime, showAvailableTimes, showDatesModal, showConfirmation, isConfirmed } = this.state;
+    let { selectedAthlete, recurring, selectedDateTime, showAvailableTimes, showDatesModal, showConfirmation, isConfirmed } = this.state;
     let selectedAthleteAccount = selectedAthlete && account.athletes ? _.find(account.athletes, { 'uid': selectedAthlete }) : '';
     let hasChosenType = recurring !== null;
 
@@ -130,8 +123,6 @@ export default class ScheduleNew extends Component {
             assignedAthletes={assignedAthletes}
             selectedAthlete={this.state.selectedAthlete}
             selectedAthleteAccount={selectedAthleteAccount}
-            selectedDate={selectedDate}
-            onSetDate={this.handleSetDate}
             onSetDateTime={this.handleSetDateTime}
           />
 

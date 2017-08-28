@@ -34,12 +34,16 @@
 }
 
 .navAnchor{
-  &:before{
-    content: '';
-    display: inline-block;
+  color: white;
+  display: flex;
+  align-items: center;
+
+  & .icon{
     width: rem(20);
-    height: rem(20);
-    margin-right: rem(5);
+    margin-right: rem(10);
+    & path{
+      fill: white;
+    }
   }
 }
 

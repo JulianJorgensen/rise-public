@@ -28,36 +28,25 @@ export default class Signup extends Component {
     role: 'athlete-pending'
   }
 
-  static propTypes = {
-    auth: PropTypes.shape({
-      uid: PropTypes.string
-    }),
-    firebase: PropTypes.object,
-    authError: PropTypes.object
-  }
-
   handleSignup = ({ email, password }) => {
     const { firebase, history, authError, dispatch } = this.props;
     const { createUser, update } = firebase;
 
-    if (isLoaded(authError) && !isEmpty(authError)) {
-      dispatch({
-        type: 'SET_SNACKBAR',
-        message: authError.message,
-        style: 'error'
-      });
-      return false;
-    }
-
-    return createUser({ email, password })
+    createUser({ email, password })
       .then((newUser) => {
         let { uid } = this.props.auth;
         update(`${rfConfig.userProfile}/${uid}`, {
           uid: uid,
           role: this.state.role
         });
-
         history.push('/getting-started');
+      }).catch((error) => {
+        dispatch({
+          type: 'SET_SNACKBAR',
+          message: error.message || 'There was an error creating your user.',
+          style: 'error'
+        });
+        return false;
       });
   }
 
@@ -69,7 +58,20 @@ export default class Signup extends Component {
   };
 
   providerLogin = (provider) => {
-    return this.props.firebase.login({ provider })
+    const { firebase, history } = this.props;
+    const { update } = firebase;
+
+    this.props.firebase.login({
+      provider: provider,
+      type: 'popup'
+    }).then((providerCreds) => {
+      let { uid } = providerCreds.user;
+      update(`${rfConfig.userProfile}/${uid}`, {
+        uid: uid,
+        role: this.state.role
+      });
+      history.push('/getting-started');
+    });
   }
 
   render () {
@@ -77,6 +79,7 @@ export default class Signup extends Component {
 
     return (
       <div className={classes.wrapper}>
+        <h2>Join Now</h2>
         <Tabs theme={classes} index={this.state.roleIndex} onChange={this.handleRoleChange} inverse>
           <Tab label='Athlete'>
             <AthleteSignupForm onSubmit={this.handleSignup} />

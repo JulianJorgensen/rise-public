@@ -51,7 +51,7 @@ export default class LefNavigation extends Component {
                 classNameActive={classes.active}
                 href={navGroup.url && !navGroupDisabled ? navGroup.url : null}
               >
-                <div className={`${classes.navAnchor} ${navGroup.className}`}>{navGroup.anchor}</div>
+                <div className={`${classes.navAnchor} ${navGroup.className}`}><div className={classes.icon}>{navGroup.icon}</div> {navGroup.anchor}</div>
               </div>
               <div
                 className={classes.navItemsGroupContent}

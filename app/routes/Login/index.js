@@ -38,13 +38,18 @@ export default class Login extends Component {
   }
 
   providerLogin = (provider) =>
-    this.handleLogin({ provider })
+    this.handleLogin({
+      provider: provider,
+      type: 'popup'
+    })
 
   render () {
     const { authError, firebase } = this.props
 
     return (
       <div className={classes.wrapper}>
+        <h2>Sign In</h2>
+
         <Card className={classes.panel}>
           <LoginForm onSubmit={this.handleLogin} />
         </Card>
