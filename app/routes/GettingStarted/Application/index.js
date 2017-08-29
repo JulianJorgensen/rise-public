@@ -7,7 +7,7 @@ import { reduxFirebase as rfConfig } from 'app/config';
 import { firebase as fbConfig } from 'app/config';
 import { userIsAuthenticated } from 'utils/router';
 import { Tab, Tabs } from 'react-toolbox/lib/tabs';
-import { isMentor, removePopulatedData } from 'utils/utils';
+import { isAthlete, isMentor, removePopulatedData } from 'utils/utils';
 
 import LoadingSpinner from 'components/LoadingSpinner';
 import AccountForm from 'containers/AccountForm/AccountForm';
@@ -101,7 +101,9 @@ export default class Application extends Component {
     const { account } = this.props;
     let { finished } = this.state;
 
-    console.log('account: ', account);
+    if (!account) {
+      return <LoadingSpinner />
+    }
 
     if (account.applicationApproved) {
       return (
@@ -110,7 +112,7 @@ export default class Application extends Component {
           <h2>You have been approved!</h2>
           <p>What's next?</p>
           <ul>
-            <li><Link to='/getting-started/agreements'>Fill out the Agreements</Link></li>
+            {isAthlete(account.role) ? <li><Link to='/getting-started/agreements'>Fill out the Agreements</Link></li> : ''}
             <li><Link to='/getting-started/payment'>Setup a payment method</Link></li>
           </ul>
         </div>

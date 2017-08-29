@@ -3750,6 +3750,10 @@ inquirer@^0.12.0:
     strip-ansi "^3.0.0"
     through "^2.3.6"
 
+instafeed.js@1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/instafeed.js/-/instafeed.js-1.4.1.tgz#c29d7914563c11722b36cd921a91de2521f9cdaa"
+
 interpret@^1.0.0:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.0.3.tgz#cbc35c62eeee73f19ab7b10a801511401afc0f90"
@@ -6465,6 +6469,14 @@ react-ga@^2.2.0:
 react-google-button@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/react-google-button/-/react-google-button-0.1.0.tgz#dc586526f2bfd5c502088d91f338b9b437b85cd5"
+
+react-instafeed@^0.3.4:
+  version "0.3.4"
+  resolved "https://registry.yarnpkg.com/react-instafeed/-/react-instafeed-0.3.4.tgz#14a84278066cd27cfbce36845b9260f3fcb1d5c4"
+  dependencies:
+    instafeed.js "1.4.1"
+    prop-types "^15.5.10"
+    react "^15.5.4"
 
 react-motion@^0.5.0:
   version "0.5.0"

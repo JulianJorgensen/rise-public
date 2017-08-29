@@ -90,11 +90,11 @@ export default class MeetingConfirmation extends Component {
         active={showConfirmation}
         onEscKeyDown={this.handleHideConfirmationModal}
         onOverlayClick={this.handleHideConfirmationModal}
-        title={`Confirm your session with ${selectedAthlete ? selectedAthleteAccount.firstName : account.mentor.firstName}`}
+        title={`Confirm your session with ${isMentor(account.role) ? selectedAthleteAccount ? selectedAthleteAccount.firstName : 'your athlete' : account.mentor.firstName}`}
       >
         <div className={classes.confirmationDetails}>
           <div className={classes.time}><strong>{moment(selectedDateTime).format('MMMM Do YYYY')}</strong> at <strong>{moment(selectedDateTime).format('h:mma')}</strong></div>
-          <TimezoneSelector />
+          {/* <TimezoneSelector /> */}
         </div>
       </Dialog>
     )

@@ -9,6 +9,7 @@ import Button from 'components/Button';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import styles from './index.css';
 import InstagramFeed from 'containers/InstagramFeed/InstagramFeed';
+import NewsletterSignup from 'containers/NewsletterSignup';
 
 import 'assets/icons/regular/trophy.svg';
 
@@ -176,7 +177,7 @@ export default class Home extends React.Component {
               <Col xs={12} md={8}>
                 <h2 className={styles.header}>Good v. Great</h2>
                 <h3 className={styles.subheader}>The difference between GOOD and GREAT begins in your MIND.</h3>
-                <Button label="Subscribe to our Newsletter" flat hollow />
+                <NewsletterSignup />
                 <small className={styles.disclaimer}>Sign up to receive awesome events, giveaways & tips from our mentors! Don't worry, we'll keep your info private!</small>
               </Col>
               <Col xs={12} md={4}>

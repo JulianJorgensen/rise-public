@@ -1,4 +1,5 @@
 .feed{
+  margin-top: rem(200);
   position: relative;
   display: flex;
   justify-content: space-around;

@@ -58,3 +58,9 @@
 @custom-media --medium-and-up (width >= 500px);
 @custom-media --large-and-up (width >= 1200px);
 @custom-media --xlarge-and-up (width >= 1400px);
+
+
+@custom-selector :--headings h1, h2, h3, h4, h5, h6;
+@custom-selector :--inputs input, textarea, radio, select, label;
+@custom-selector :--any-link a, a:focus, a:active, a:visited;
+@custom-selector :--any-link-hover a:hover, a:focus:hover, a:visited:hover, a:active:hover;

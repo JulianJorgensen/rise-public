@@ -47,6 +47,7 @@ export function fetchAvailableTimes(date, acuityCalendarId, timezone) {
     })
     .then((response) => {
       let availableTimes = response.data;
+      console.log('availabletimes', availableTimes);
       availableTimes.sort((a,b) => {
         // Turn your strings into dates, and then subtract them
         // to get a value that is either negative, positive, or zero.
@@ -56,6 +57,7 @@ export function fetchAvailableTimes(date, acuityCalendarId, timezone) {
       resolve(availableTimes);
     })
     .catch((error) => {
+      console.log('error', error);
       reject(`Error getting available times for date: ${date}`, error);
     });
   });

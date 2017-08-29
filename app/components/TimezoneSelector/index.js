@@ -19,6 +19,7 @@ export default class TimezoneSelector extends Component {
 
   handleChange = (value) => {
     this.setState({selectedTimezone: value}, () => {
+      console.log('timezoneselector props', this.props);
       if (this.props.input) {
         this.updateReduxForm();
       }
@@ -27,8 +28,15 @@ export default class TimezoneSelector extends Component {
 
   updateReduxForm = () => {
     let { input } = this.props;
+    console.log('updating redux form', this.state.selectedTimezone);
     input.onChange(this.state.selectedTimezone);
   };
+
+  componentDidMount() {
+    let { input } = this.props;
+    console.log('timezone mounting', this.state.selectedTimezone);
+    input.onChange(this.state.selectedTimezone);
+  }
 
   render() {
     let { className, label, required, input } = this.props;

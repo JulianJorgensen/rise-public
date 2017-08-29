@@ -1,8 +1,3 @@
-@custom-selector :--headings h1, h2, h3, h4, h5, h6;
-@custom-selector :--inputs input, textarea, radio, select, label;
-@custom-selector :--any-link a, a:focus, a:active, a:visited;
-@custom-selector :--any-link-hover a:hover, a:focus:hover, a:visited:hover, a:active:hover;
-
 :root {
   --h1: rem(50);
   --h2: rem(30);

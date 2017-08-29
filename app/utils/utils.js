@@ -23,6 +23,13 @@ export function isMentor(role) {
   return false;
 }
 
+export function isAthlete(role) {
+  if (role.name === 'athlete') {
+    return true;
+  }
+  return false;
+}
+
 export function isAdmin(role) {
   if (role.name === 'admin') {
     return true;
