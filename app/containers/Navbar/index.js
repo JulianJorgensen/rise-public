@@ -30,12 +30,6 @@ import classes from './index.css';
   })
 )
 export default class Navbar extends Component {
-  static propTypes = {
-    account: PropTypes.object,
-    firebase: PropTypes.object.isRequired,
-    notification: PropTypes.object,
-  }
-
   handleToggleLeftNavigation = () => {
     this.props.firebase
       .update(`${rfConfig.userProfile}/${this.props.auth.uid}`, {showLeftNavigation: !this.props.account.showLeftNavigation})

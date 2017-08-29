@@ -112,7 +112,6 @@ export default class ScheduleNew extends Component {
     if (hasChosenType) {
       return (
         <div className={classes.container}>
-
           <ScheduleForm
             show={!isConfirmed}
             account={account}

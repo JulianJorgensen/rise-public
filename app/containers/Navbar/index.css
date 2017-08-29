@@ -50,9 +50,8 @@
     display: flex;
     align-items: center;
     color: white !important;
-    font-weight: bold;
+    font-weight: medium;
     padding: 0 rem(30);
-    
   }
 }
 .join{

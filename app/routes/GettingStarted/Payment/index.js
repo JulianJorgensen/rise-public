@@ -48,6 +48,10 @@ export default class Payment extends Component {
     const { account } = this.props;
     let { finished } = this.state;
 
+    if (!account) {
+      return <LoadingSpinner />
+    }
+
     if (account.hasSetupPayment || finished) {
       return (
         <div>
@@ -60,8 +64,7 @@ export default class Payment extends Component {
     if(isMentor(account.role)) {
       return (
         <div className={classes.container}>
-          <h2>Setup Payment</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu tellus turpis. Duis tincidunt lorem quis felis feugiat, nec mollis odio tristique. Nam eleifend erat vitae nulla imperdiet luctus.</p>
+          <h2>We need your payment info!</h2>
           <BankingForm
             initialValues={account}
             account={account}
@@ -73,8 +76,9 @@ export default class Payment extends Component {
 
     return (
       <div className={classes.container}>
-        <h2>Setup Payment</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu tellus turpis. Duis tincidunt lorem quis felis feugiat, nec mollis odio tristique. Nam eleifend erat vitae nulla imperdiet luctus.</p>
+        <h2>We need your payment info!</h2>
+        <p>Step 1 : We care about your privacy & security which is why we work with Stripe! Enter your CC info & it will get automatically store in Stripe.</p>
+        <p>Step 2 : Schedule your 1st call with your mentor & you will get charged after your initial call!</p>
         <Elements>
           <div>
             <AddCard onSubmit={this.completePaymentSetup} />

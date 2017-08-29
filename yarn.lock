@@ -6495,6 +6495,10 @@ react-paginate@^4.4.3:
     react "^15.0.0"
     react-addons-create-fragment "^15.0.0"
 
+react-parallax@^1.4.4:
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/react-parallax/-/react-parallax-1.4.4.tgz#4772042ca8bab2c0535e67c56a516a4e2abb34f0"
+
 react-redux-firebase@^1.4.4:
   version "1.4.4"
   resolved "https://registry.yarnpkg.com/react-redux-firebase/-/react-redux-firebase-1.4.4.tgz#9566d2ad5fde3eb4e2d900effb8d5e6d18f35b72"

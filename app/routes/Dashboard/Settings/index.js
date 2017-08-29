@@ -21,7 +21,6 @@ import classes from './index.css';
 @firebaseConnect()
 @connect(
   ({ firebase }) => ({
-    auth: pathToJS(firebase, 'auth'),
     account: pathToJS(firebase, 'profile')
   })
 )
@@ -36,46 +35,54 @@ export default class Settings extends Component {
 
   updateAccount = (newData) => {
     newData = removePopulatedData(newData);
-    updateAccount(this.props.firebase, this.props.auth.uid, newData);
+    updateAccount(this.props.firebase, this.props.account.uid, newData);
   }
 
   render () {
     const { account } = this.props;
 
+    if (!account) {
+      return <LoadingSpinner />
+    }
+
     return (
-      <div className={classes.container}>
-        <Tabs index={this.state.tab} theme={classes} onChange={this.handleTabChange}>
-          <Tab label='General'>
-            {isMentor(account.role) ?
-              <SettingsFormMentor
-                initialValues={account}
-                account={account}
-                onSubmit={this.updateAccount}
-              /> :
-              <SettingsFormAthlete
-                initialValues={account}
-                account={account}
-                onSubmit={this.updateAccount}
-              />
-            }
-          </Tab>
-          <Tab label='Payment'>
-            {isMentor(account.role) ?
-              <MentorBankingForm
-                initialValues={account}
-                account={account}
-                onSubmit={this.updateAccount}
-                submitLabel='Change Stripe Email'
-              /> :
-              <Elements>
-                <div>
-                  <ExistingCards />
-                  <AddCard onSubmit={this.completePaymentSetup} />
-                </div>
-              </Elements>
-            }
-          </Tab>
-        </Tabs>
+      <div>
+        {/* <h2>Your account settings!</h2>
+        <p>Access your username, change your password, and set up payment info here!</p> */}
+        <div className={classes.container}>
+          <Tabs index={this.state.tab} theme={classes} onChange={this.handleTabChange}>
+            <Tab label='General'>
+              {isMentor(account.role) ?
+                <SettingsFormMentor
+                  initialValues={account}
+                  account={account}
+                  onSubmit={this.updateAccount}
+                /> :
+                <SettingsFormAthlete
+                  initialValues={account}
+                  account={account}
+                  onSubmit={this.updateAccount}
+                />
+              }
+            </Tab>
+            <Tab label='Payment'>
+              {isMentor(account.role) ?
+                <MentorBankingForm
+                  initialValues={account}
+                  account={account}
+                  onSubmit={this.updateAccount}
+                  submitLabel='Change Stripe Email'
+                /> :
+                <Elements>
+                  <div>
+                    <ExistingCards />
+                    <AddCard onSubmit={this.completePaymentSetup} />
+                  </div>
+                </Elements>
+              }
+            </Tab>
+          </Tabs>
+        </div>
       </div>
     )
   }

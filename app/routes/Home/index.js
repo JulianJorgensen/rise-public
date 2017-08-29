@@ -11,7 +11,7 @@ import styles from './index.css';
 import InstagramFeed from 'containers/InstagramFeed/InstagramFeed';
 import NewsletterSignup from 'containers/NewsletterSignup';
 
-import 'assets/icons/regular/trophy.svg';
+import { Parallax } from 'react-parallax';
 
 @withRouter
 @userIsNotAuthenticated
@@ -44,7 +44,7 @@ export default class Home extends React.Component {
 
     return (
       <div className={styles.wrapper}>
-        <div className={styles.ctaMarquee} style={{backgroundImage: 'url(/images/RISE-Hero-1.jpg)'}}>
+        <Parallax className={styles.ctaMarquee} bgImage="/images/RISE-Hero-1.jpg" strength={400}>
           <h1 className={styles.header}>RISE Athletes</h1>
           <h2 className={styles.subheader}>Develop the Olympic mindset</h2>
           <div className={styles.ctas}>
@@ -52,7 +52,7 @@ export default class Home extends React.Component {
             <span>OR</span>
             <Button className={styles.ctaButtonWrapper} href="/login" flat hollow white><div className={styles.ctaButton}>Sign In</div></Button>
           </div>
-        </div>
+        </Parallax>
 
         <div className={styles.container}>
           <Slider className={styles.slider} {...settings}>
@@ -177,11 +177,9 @@ export default class Home extends React.Component {
               <Col xs={12} md={8}>
                 <h2 className={styles.header}>Good v. Great</h2>
                 <h3 className={styles.subheader}>The difference between GOOD and GREAT begins in your MIND.</h3>
+                <p>Join our mentoring program and work with an Olympian through weekly one-on-one video meetings. RISE mentors provide athletes with tangible tools and mental skills to excel in sport and life.</p>
                 <NewsletterSignup />
                 <small className={styles.disclaimer}>Sign up to receive awesome events, giveaways & tips from our mentors! Don't worry, we'll keep your info private!</small>
-              </Col>
-              <Col xs={12} md={4}>
-                <p>Join our mentoring program and work with an Olympian through weekly one-on-one video meetings. RISE mentors provide athletes with tangible tools and mental skills to excel in sport and life.</p>
               </Col>
             </Row>
           </Grid>
@@ -201,7 +199,7 @@ export default class Home extends React.Component {
                 <div className={styles.title}>Athlete</div>
               </Col>
               <Col xs={12} md={4} className={styles.testimonial}>
-                <p>In life, in sport, there is only so much you can self-teach and when you have reached the end of your knowledge, that's when a mentor steps in. I love providing support, encouragement, and experience to help my athletes accomplish their goals and RISE up to meet their maximum potential! Having been in their shoes, it is easy to relate to their needs and that makes it all the more fulfilling for both of us.</p>
+                <p>In life, in sport, there is only so much you can self-teach and when you have reached the end of your knowledge, that's when a mentor steps in. I love providing support, encouragement, and experience to help my athletes accomplish their goals and RISE up to meet their maximum potential!</p>
                 <author>Kristy</author>
                 <div className={styles.title}>Mentor</div>
               </Col>
@@ -216,8 +214,8 @@ export default class Home extends React.Component {
 
         <div className={styles.about}>
           <div className={styles.container}>
-            <h2 className={styles.header}>Your Founders</h2>
-            <h3 className={styles.subheader}>Rebecca Soni & Caroline Burckle</h3>
+            <h3 className={styles.header}>Your Founders</h3>
+            <h3 className={styles.subheader}>Rebecca Soni &<br />Caroline Burckle</h3>
             <p className={styles.content}>Reb & Caro’s friendship goes back even further than sharing an apartment in the Olympic Village in Beijing 2008. Fast forward 7 years and they officially established their own business in 2015, RISE Athletes. Their goal: to create a community for cultivating, creating and discussing things that would uplift them, their peers, and the next generation of athletes. RISE has come a long way, and we are excited to share this adventure with you!</p>
           </div>
         </div>
@@ -241,10 +239,8 @@ export default class Home extends React.Component {
           </Grid>
         </div>
 
-        <div
-          className={styles.ctaMarquee}
-          style={{backgroundImage: 'url(/images/RISE-Hero-3.jpg)', position: 'relative', marginBottom: '-100px'}}
-        >
+
+        <Parallax className={styles.ctaMarquee} style={{position: 'relative', marginBottom: '-100px'}} bgImage="/images/RISE-Hero-3.jpg" strength={400}>
           <h1 className={styles.header}>Be Mentored<br />By The Best</h1>
           <h2 className={styles.subheader}>Develop your Olympic Mindset,<br />with your Olympic Mentor.</h2>
           <div className={styles.ctas}>
@@ -252,7 +248,7 @@ export default class Home extends React.Component {
             <span>OR</span>
             <Button className={styles.ctaButtonWrapper} href="/login" flat hollow white><div className={styles.ctaButton}>Sign In</div></Button>
           </div>
-        </div>
+        </Parallax>
 
         <section className={styles.footer}>
           <InstagramFeed />

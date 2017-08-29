@@ -1,3 +1,9 @@
+@import "../../styles/variables.css";
+
+.navigation{
+  background-color: var(--blue) !important;
+}
+
 .tab{
   background-color: gray(98%);
 }

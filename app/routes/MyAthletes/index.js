@@ -15,7 +15,6 @@ const TooltipCell = Tooltip(TableCell);
 @firebaseConnect()
 @connect(
   ({ firebase }) => ({
-    auth: pathToJS(firebase, 'auth'),
     account: pathToJS(firebase, 'profile')
   })
 )
@@ -24,12 +23,6 @@ export default class MyAthletes extends Component {
     athletes: null
   };
 
-  componentWillReceiveProps(props) {
-    if(props.account) {
-      this.setState({ athletes: props.account.athletes });
-    }
-  }
-
   render () {
     let { account } = this.props;
 
@@ -37,9 +30,7 @@ export default class MyAthletes extends Component {
       return <LoadingSpinner />
     }
 
-    const { athletes } = this.state;
-
-    if (!athletes) {
+    if (!account.athletes) {
       return (
         <div className={classes.container}>
           <h4>You currently don't have any athletes assigned.</h4>
@@ -47,26 +38,22 @@ export default class MyAthletes extends Component {
       )
     }
 
-    console.log('athletes: ', athletes);
-
     return (
       <div>
-        <h2>Athletes</h2>
+        <h2>My Athletes</h2>
+        <p>Here is the list of all the atheletes you are currently assigned to mentor. Want to know their story? View their profile.</p>
+
         <Table multiSelectable={false} selectable={false} style={{ marginTop: 10 }}>
           <TableHead>
-            <TooltipCell tooltip="This is a custom name the athlete choose">
-              Displayname
-            </TooltipCell>
             <TableCell>First name</TableCell>
             <TableCell>Last name</TableCell>
             <TableCell>Email</TableCell>
           </TableHead>
-          {athletes.map((item, idx) => (
+          {account.athletes.map((athlete, idx) => (
             <TableRow key={idx} selectable={false}>
-              <TableCell><div>{item.displayName}</div></TableCell>
-              <TableCell><div>{item.firstName}</div></TableCell>
-              <TableCell><div>{item.lastName}</div></TableCell>
-              <TableCell><div>{item.email}</div></TableCell>
+              <TableCell><div>{athlete.firstName}</div></TableCell>
+              <TableCell><div>{athlete.lastName}</div></TableCell>
+              <TableCell><div>{athlete.email}</div></TableCell>
             </TableRow>
           ))}
         </Table>

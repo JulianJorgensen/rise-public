@@ -21,13 +21,18 @@ export default class MyMeetings extends Component {
   render () {
     let { account } = this.props;
 
-    console.log('account from mhymeeting', account);
     if(!account) {
       return <LoadingSpinner />
     }
 
     return (
       <div className={classes.container}>
+        <div>
+          <h2>Access your call!</h2>
+          <p>Step 1 : Click on the meeting link to access the Zoom video room for your call!</p>
+          <p>Step 2 : Join the Zoom call to chat with your athlete/mentor!</p>
+        </div>
+
         <Meetings />
       </div>
     )

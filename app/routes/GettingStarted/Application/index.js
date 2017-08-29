@@ -130,7 +130,8 @@ export default class Application extends Component {
 
     return (
       <div className={classes.container}>
-        <h3>Application</h3>
+        <h2>Great things await you!</h2>
+        <p>Step 1 : Let's get the agreement out the way! Complete our forms before chatting with your mentor!<br />Step 2: Submit & start talking to your mentor by scheduling your next calls in the "Schedule" tab!</p>
 
         { isMentor(account.role) ? <p>You’re about to fill out an application to become a RISE Mentor. We want to learn a bit more about you! We’ll connect with you once you’ve been accepted</p>
           : <p>You’re about to fill out an application that will be sent for acceptance into RISE Athletes. We want to learn a bit about you, and once you fill out this information, you’ll be paired with a mentor that best fits you! Ready to get started??</p> }

@@ -33,13 +33,13 @@ export default class Profile extends Component {
 
     return (
       <Card className={classes.container}>
-        <div className={classes.avatarContainer}>
+        {/* <div className={classes.avatarContainer}>
           <Avatar
             className={classes.avatar}
             image={account && account.avatarUrl || '/images/User.png'}
             cover
           />
-        </div>
+        </div> */}
         <div className={classes.meta}>
           <ProfileForm
             initialValues={account}

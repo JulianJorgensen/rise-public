@@ -12,8 +12,6 @@
 
         display: block;
 
-        width: 20px;
-        height: 20px;
         padding: 0;
         transform: translate(0, -50%);
 
@@ -49,7 +47,7 @@
     & .slick-prev:before,
     & .slick-next:before
     {
-        font-family: 'FontAwesome';
+        font-family: 'Material Icons';
         font-size: rem(50);
         line-height: 1;
 
@@ -75,11 +73,11 @@
     }
     & .slick-prev:before
     {
-        content: '\f104';
+        content: 'chevron_left';
     }
     & [dir='rtl'] .slick-prev:before
     {
-        content: '\f104';
+        content: 'chevron_left';
     }
 
     & .slick-next
@@ -93,11 +91,11 @@
     }
     & .slick-next:before
     {
-        content: '\f105';
+        content: 'chevron_right';
     }
     & [dir='rtl'] .slick-next:before
     {
-        content: '\f105';
+        content: 'chevron_right';
     }
 
     /* Dots */

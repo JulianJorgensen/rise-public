@@ -8,7 +8,8 @@ import classes from './ProfileForm.css';
 
 export const AccountForm = ({ account, handleSubmit, submitting }) => (
   <form className={classes.container} onSubmit={handleSubmit}>
-    <h4>Profile</h4>
+    <h2>You're awesome!</h2>
+    <p>We want to know all about you! Use this profile space to edit your personal bio & more!</p>
     <Field
       name='firstName'
       component={TextField}

@@ -21,6 +21,7 @@
   & body {
     font-size: rem(16);
     line-height: rem(20);
+    -webkit-font-smoothing: antialiased;    
   }
 
   & :--any-link{

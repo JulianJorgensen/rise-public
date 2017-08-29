@@ -2,6 +2,7 @@
   composes: container from "../../../styles/layout.css";
   padding: rem(20);
   display: flex;
+  max-width: rem(600);
   flex-direction: row;
   justify-content: center;
   align-items: center;
