@@ -44,7 +44,7 @@ export default class AvailableTimes extends Component {
   }
 
   render() {
-    let { show, date, dateTime, handleClose, onSelect, onInputClick} = this.props;
+    let { show, date, dateTime, handleClose, onSelect, onInputClick, account } = this.props;
     let { times, fetched } = this.state;
 
     let renderAvailableTimes = () => {
@@ -59,7 +59,7 @@ export default class AvailableTimes extends Component {
                     key={index}
                     className={classes.time}
                     onClick={() => onSelect(dateTime)}
-                  >{moment(dateTime).format('h:mma')}</Chip>
+                  >{moment(dateTime).tz(account.timezone).format('h:mma')}</Chip>
                 )
               })}
             </div>
@@ -78,7 +78,7 @@ export default class AvailableTimes extends Component {
           type='text'
           label='Time'
           name='time'
-          value={dateTime ? moment(dateTime).format('h:mma') : ''}
+          value={dateTime ? moment(dateTime).tz(account.timezone).format('h:mma') : ''}
           onClick={onInputClick}
           required
         />

@@ -14,11 +14,11 @@ Object.entries(timezoneData).map((item) => {
 
 export default class TimezoneSelector extends Component {
   state = {
-    selectedTimezone: moment.tz.guess()
+    timezone: moment.tz.guess()
   }
 
   handleChange = (value) => {
-    this.setState({selectedTimezone: value}, () => {
+    this.setState({timezone: value}, () => {
       console.log('timezoneselector props', this.props);
       if (this.props.input) {
         this.updateReduxForm();
@@ -28,14 +28,23 @@ export default class TimezoneSelector extends Component {
 
   updateReduxForm = () => {
     let { input } = this.props;
-    console.log('updating redux form', this.state.selectedTimezone);
-    input.onChange(this.state.selectedTimezone);
+    console.log('updating redux form', this.state.timezone);
+    input.onChange(this.state.timezone);
   };
+
+  componentWillMount() {
+    let { input } = this.props;
+
+    if (input.value) {
+      let timezone = input.value;
+      this.setState({timezone});
+    }
+  }
 
   componentDidMount() {
     let { input } = this.props;
-    console.log('timezone mounting', this.state.selectedTimezone);
-    input.onChange(this.state.selectedTimezone);
+    console.log('timezone mounting', this.state.timezone);
+    input.onChange(this.state.timezone);
   }
 
   render() {
@@ -52,7 +61,7 @@ export default class TimezoneSelector extends Component {
         className={_className}
         onChange={this.handleChange.bind(this)}
         source={timezones}
-        value={this.state.selectedTimezone}
+        value={this.state.timezone}
         label='Timezone'
       />
     )
