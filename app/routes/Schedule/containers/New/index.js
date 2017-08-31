@@ -58,6 +58,12 @@ export default class ScheduleNew extends Component {
     });
   };
 
+  handleHideConfirmation = () => {
+    this.setState({
+      showConfirmation: false
+    });
+  }
+
   handleReset = () => {
     this.setState(defaultState);
   };
@@ -117,7 +123,7 @@ export default class ScheduleNew extends Component {
             account={account}
             onSubmit={this.handleConfirmation}
             recurring={recurring}
-            handleRecurring={this.handleRecurring}
+            handleRecurring={(value) => this.handleRecurring(value)}
             handleSelectedAthlete={this.handleSelectedAthlete}
             assignedAthletes={assignedAthletes}
             selectedAthlete={this.state.selectedAthlete}
@@ -131,6 +137,7 @@ export default class ScheduleNew extends Component {
             selectedAthlete={selectedAthlete}
             isConfirmed={isConfirmed}
             showConfirmation={showConfirmation}
+            handleHideConfirmation={this.handleHideConfirmation}
             reset={this.handleReset}
             onConfirm={() => {
               this.setState({

@@ -32,16 +32,24 @@
     max-width: 100%;
     & .action{
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       background-color: gray(90%);
-      padding: rem(50);
+      padding: rem(20);
       border: 1px solid gray(60%);
+      text-align: center;
+      width: calc(33.33% - 20px);
+      cursor: pointer;
+      transition: all 0.2s;
+      &:hover{
+        background-color: gray(85%);
+      }
       & .icon{
-        cursor: pointer;
         background-image: url('assets/icons/regular/calendar-plus.svg');
         width: rem(30);
         height: rem(30);
+        margin-bottom: rem(15);
       }
     }
   }

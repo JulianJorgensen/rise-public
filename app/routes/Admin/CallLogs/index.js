@@ -33,27 +33,23 @@ export default class AdminCallLogs extends Component {
     offset: 0,
     itemsPerPage: 10,
     pageCount: 0,
-    fetched: false,
     allMeetingsFetched: false,
     startDate: null,
     endDate: moment.tz().toDate()
   }
 
-  fetchPastMeetings(limit) {
-    this.setState({
-      fetched: true
-    });
-
+  fetchPastMeetings() {
     let { timezone } = this.props.account;
-    let now = moment.tz().format('YYYY-MM-DDTHH:MM:SSz');
-    let twoYearsAgo = moment.tz().subtract(2, 'Y').format('YYYY-MM-DDTHH:MM:SSz');
+    let now = moment().format('YYYY-MM-DDTHH:MM:SSz');
+    let twoYearsAgo = moment().subtract(2, 'Y').format('YYYY-MM-DDTHH:MM:SSz');
 
+    console.log('getting all meeting=====');
     axios.get(`${fbConfig.functions}/getAllMeetings`, {
       params: {
         appointmentTypeID: ENV_CONFIG.ACUITY_MENTOR_CALL_ID,
         minDate: twoYearsAgo,
         maxDate: now,
-        max: limit === 'preview' ? 60 : 9999
+        max: 9999
       }
     })
     .then((response) => {
@@ -61,15 +57,10 @@ export default class AdminCallLogs extends Component {
 
       this.setState({
         meetings,
-        allMeetingsFetched: limit === 'preview' ? false : true
+        allMeetingsFetched: true
       }, () => {
         this.filterMeetings();
       });
-
-      // fetch all meetings
-      if (!this.state.allMeetingsFetched) {
-        this.fetchPastMeetings();
-      }
     })
     .catch((error) => {
       console.log(`Error getting all meetings`, error);
@@ -115,20 +106,20 @@ export default class AdminCallLogs extends Component {
   componentDidMount() {
     setTimeout(() => {
       if (this.props.account) {
-        this.fetchPastMeetings('preview');
+        this.fetchPastMeetings();
       }
-    }, 2000);
+    }, 1000);
   }
 
   render () {
-    let { fetched } = this.state;
+    let { allMeetingsFetched } = this.state;
     let { account, history } = this.props;
 
-    if(!account || !fetched) {
+    if(!account || !allMeetingsFetched) {
       return <LoadingSpinner />
     }
 
-    let { meetings, meetingsFiltered, meetingsVisible, itemsPerPage, offset, pageCount, allMeetingsFetched, startDate, endDate } = this.state;
+    let { meetings, meetingsFiltered, meetingsVisible, itemsPerPage, offset, pageCount, startDate, endDate } = this.state;
 
     if (!meetingsFiltered) {
       return (

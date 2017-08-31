@@ -13,3 +13,13 @@
 .bar:before, .bar:after{
   background-color: var(--blue);
 }
+
+.label{
+  color: gray(20%);
+}
+
+.hint{
+  font-size: rem(16);
+  line-height: rem(20);
+  color: gray(60%);
+}

@@ -6,8 +6,8 @@ import { isMentor, isAdmin } from 'utils/utils';
 import { Checkbox } from 'react-toolbox/lib';
 import AssignAthlete from '../AssignAthlete';
 import ChooseDateTime from '../../../../components/ChooseDateTime';
-import TimezoneSelector from 'components/TimezoneSelector';
 import LoadingSpinner from 'components/LoadingSpinner';
+import TimezoneDisplay from 'components/TimezoneDisplay';
 
 import Button from 'components/Button';
 
@@ -42,18 +42,19 @@ const ScheduleForm = ({ ...props }) => {
           recurring={props.recurring}
         />
 
-        <TimezoneSelector changeable />
-
         <Checkbox
           label="Recurring"
           checked={props.recurring}
           onChange={props.handleRecurring}
+          className={classes.recurringCheckbox}
         />
 
         <Button
           type="submit"
           label={`Schedule session${props.recurring ? 's' : ''}`}
         />
+
+        <TimezoneDisplay />
       </form>
     </div>
   )

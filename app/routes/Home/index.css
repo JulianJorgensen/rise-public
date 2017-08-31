@@ -6,6 +6,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 
 .container{
@@ -24,6 +25,14 @@
   line-height: rem(48);
   margin: rem(15) 0;
   color: gray(40%);
+  font-weight: 400;
+}
+
+.mentorHeader{
+  font-size: rem(50);
+  line-height: rem(50);
+  color: var(--blue);
+  margin-top: rem(30);
   font-weight: 400;
 }
 
@@ -117,6 +126,9 @@
   & .testimonial{
     text-align: center;
     color: gray(30%);
+    & .body{
+      height: rem(200);
+    }
     & author{
       color: var(--blue);
       font-size: 1.4em;
@@ -204,10 +216,16 @@
   margin: rem(60) 0;
 
   & .feature{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
     width: rem(300);
     text-align: center;
     color: gray(50%);
-
+    & .icon{
+      width: rem(50);
+      height: rem(50);
+    }
     & .title{
       font-size: rem(24);
       color: var(--blue);
@@ -232,9 +250,10 @@
 
 .footer{
   background-image: linear-gradient(to bottom right, color(var(--blue) tint(20%)), var(--darkBlue));
-  width: 100%;
+  overflow: hidden;
   padding-bottom: rem(150);
   margin-top: rem(-150);
+  width: 100%;
 
   display: flex;
   flex-direction: column;

@@ -47,6 +47,8 @@ export default class TimezoneSelector extends Component {
         direction="down"
         selectedPosition="none"
         multiple={false}
+        showSuggestionsWhenValueIsSet={true}
+        suggestionMatch='anywhere'
         className={_className}
         onChange={this.handleChange.bind(this)}
         source={timezones}

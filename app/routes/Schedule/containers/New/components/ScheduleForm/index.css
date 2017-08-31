@@ -11,3 +11,7 @@
   align-self: center;
   max-width: rem(450);
 }
+
+.recurringCheckbox{
+  margin: rem(20) 0;
+}

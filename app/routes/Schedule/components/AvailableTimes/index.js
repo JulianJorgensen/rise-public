@@ -8,8 +8,6 @@ import { isMentor, isAdmin } from 'utils/utils';
 
 import * as utils from '../../utils/utils';
 
-import TimezoneSelector from 'components/TimezoneSelector';
-
 import classes from './index.css';
 
 @firebaseConnect()
@@ -65,7 +63,6 @@ export default class AvailableTimes extends Component {
                 )
               })}
             </div>
-            <TimezoneSelector changeable />
           </div>
         )
       }else{

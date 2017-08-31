@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import Button from 'components/Button';
 import TextField from 'components/TextField';
+import TimezoneSelector from 'components/TimezoneSelector';
 import { SETTINGS_FORM_NAME } from 'app/constants';
 import ProviderDataForm from '../ProviderDataForm';
 import classes from './index.css';
@@ -28,6 +29,11 @@ export const SettingsFormMentor = ({ account, handleSubmit, submitting }) => (
       name='phone'
       component={TextField}
       label='Phone'
+    />
+    <Field
+      name='timezone'
+      component={TimezoneSelector}
+      label='Timezone'
     />
     <Field
       name='acuityCalendarId'

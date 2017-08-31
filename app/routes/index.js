@@ -25,7 +25,6 @@ import Signup from './Signup';
 import Dashboard from './Dashboard';
 import Profile from './Dashboard/Profile';
 import GettingStarted from './GettingStarted';
-import Application from './GettingStarted/Application';
 import Agreements from './GettingStarted/Agreements';
 import Payment from './GettingStarted/Payment';
 
@@ -112,7 +111,6 @@ export default class Index extends React.Component {
               <Route path="/signup" component={Signup} />
               <Route path="/forgot" component={Recover} />
               <Route exact path="/getting-started" component={GettingStarted} />
-              <Route path="/getting-started/application" component={Application} />
               <Route path="/getting-started/agreements" component={Agreements} />
               <Route path="/getting-started/payment" component={Payment} />
               <Route exact path="/dashboard" component={Dashboard} />

@@ -1,0 +1,8 @@
+.container{
+  margin: rem(20) 0;
+  text-align: center;
+  & p{
+    margin: 0;
+    font-style: italic;
+  }
+}

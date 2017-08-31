@@ -11,19 +11,19 @@ export const SportsFormAthlete = ({ account, handleBack, handleSubmit, submitLab
   <form className={classes.container} onSubmit={handleSubmit}>
     <Field
       name='why-olympian-mentor'
-      component={Tooltip(TextField)}
+      component={TextField}
       label='Why do you seek a Mentor?'
-      tooltip='Why do you feel that having an Olympian Mentor will propel you to the next level?'
+      hint='Why do you feel that having an Olympian Mentor will propel you to the next level?'
       multiline
       rows={3}
     />
     <Field
       name='current-challenges'
-      component={Tooltip(TextField)}
+      component={TextField}
       label='Current Challenges'
       multiline
       rows={3}
-      tooltip='ex: Performance Anxiety, Low Confidence, Low Motivation, Expectation Control, Pressure, Fear of Failure'
+      hint='ex: Performance Anxiety, Low Confidence, Low Motivation, Expectation Control, Pressure, Fear of Failure'
     />
     <Field
       name='achievements'
@@ -41,9 +41,9 @@ export const SportsFormAthlete = ({ account, handleBack, handleSubmit, submitLab
     />
     <Field
       name='favorite-activities'
-      component={Tooltip(TextField)}
+      component={TextField}
       label='Favorite Activities outside of sport'
-      tooltip='What are your favorite activites and/or extracurriculars outside of sport?'
+      hint='What are your favorite activites and/or extracurriculars outside of sport?'
       multiline={true}
       rows={3}
     />

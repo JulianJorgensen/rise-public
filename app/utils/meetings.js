@@ -48,7 +48,6 @@ export function setUpcomingMeetingNotification(meetings, dispatch) {
 
 
 export const fetchAllMeetings = (account, dispatch) => {
-  console.log('fetching all meetings....');
   return axios.get(`${fbConfig.functions}/getAllMeetings`, {
     params: {
       appointmentTypeID: ENV_CONFIG.ACUITY_MENTOR_CALL_ID,
@@ -62,8 +61,6 @@ export const fetchAllMeetings = (account, dispatch) => {
 
     // sort meetings
     let meetingsSorted = sortMeetings(meetings, account.timezone);
-
-    console.log('completed: ', meetingsSorted.completedMeetings);
 
     dispatch({
       type: 'SET_ALL_MEETINGS',
@@ -131,18 +128,49 @@ export function getAttendeesFromMeeting(meeting, users) {
   }
 
   // get the form on acuity with all the user details
-  let appMetaForm = _.find(meeting, { 'forms': {'name': 'App Meta' }});
+  let appMetaForm = _.find(meeting.forms, { 'name': 'App Meta' });
+
+  if (!appMetaForm) {
+    return {
+      athlete,
+      mentor
+    }
+  }
 
   // get the athlete
-  let athleteUid = _.find(appMetaForm, {'values': {'name': 'uid'}});
-  athlete = athleteUid ? _.find(users, { 'uid':  athleteUid }).value : defaultAthlete;
+  let athleteUid = _.find(appMetaForm.values, {'name': 'uid'});
+  let athleteObj = _.find(users, { 'uid':  athleteUid });
+  athlete = athleteObj ? athleteObj.value : defaultAthlete;
 
   // get the mentor
-  let mentorUid = _.find(appMetaForm, {'values': {'name': 'mentorUid'}});
-  mentor = mentorUid ? _.find(users, { 'uid':  mentorUid }).value : defaultMentor;
+  let mentorUid = _.find(appMetaForm.values, {'name': 'mentorUid'});
+  let mentorObj = _.find(users, { 'uid':  mentorUid });
+  mentor = mentorObj ? mentorObj.value : defaultMentor;
 
   return {
     athlete,
     mentor
   }
+}
+
+
+export function checkIfMeetingIsCompleted(meeting) {
+  let appMetaForm = _.find(meeting.forms, { 'name': 'App Meta' });
+
+  if (!appMetaForm) {
+    return false;
+  }
+
+  if (!appMetaForm.values) {
+    return false;
+  }
+
+  let appMetaFormCompleted = _.find(appMetaForm.values, { 'name': 'completed' });
+
+  if (!appMetaFormCompleted) {
+    return false;
+  }
+
+  let isCompleted = appMetaFormCompleted.value === 'yes' ? true : false;
+  return isCompleted;
 }

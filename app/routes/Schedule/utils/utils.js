@@ -64,8 +64,7 @@ export function fetchAvailableTimes(date, acuityCalendarId, timezone) {
 };
 
 
-
-export function confirmMeeting(selectedAthlete, dateTime, account, recurring, dispatch) {
+export function confirmMeeting(selectedAthlete, dateTime, account, acuityAccount, recurring, dispatch) {
   return new Promise((resolve, reject) => {
     let acuityCalendarId = isMentor(account.role) ? account.acuityCalendarId : account.mentor.acuityCalendarId;
 
@@ -75,7 +74,7 @@ export function confirmMeeting(selectedAthlete, dateTime, account, recurring, di
     if (recurring){
       // add the formatted date for each week (formatted for acuity)
       for (let i=0; i < RECURRING_WEEKS; i++) {
-        recurringDates.push(moment(selectedDateTime).add(i, 'weeks').tz(account.timezone).format('YYYY-MM-DDTHH:mmZ'));
+        recurringDates.push(moment(dateTime).add(i, 'weeks').format('YYYY-MM-DDTHH:mmZ'));
       }
 
       recurringDates = recurringDates.join(',');
@@ -86,15 +85,15 @@ export function confirmMeeting(selectedAthlete, dateTime, account, recurring, di
     // ======================
     axios.get(`${fbConfig.functions}/${recurring ? 'createRecurringAppointments' : 'createAppointment'}`, {
       params: {
-        datetime: `${moment(dateTime).tz(account.timezone).format('YYYY-MM-DDTHH:mmZ')}`,
+        datetime: `${moment(dateTime).format('YYYY-MM-DDTHH:mmZ')}`,
         appointmentTypeID: ACUITY_MENTOR_CALL_ID,
         calendarID: acuityCalendarId,
-        firstName: account.firstName,
-        lastName: account.lastName,
-        email: account.email,
-        phone: account.phone,
+        firstName: acuityAccount.firstName,
+        lastName: acuityAccount.lastName,
+        email: acuityAccount.email || 'not specified',
+        phone: acuityAccount.phone || 'not specified',
         uid: selectedAthlete ? selectedAthlete : account.uid,
-        mentorUid: isMentor(account.role) ? account.uid : account.mentor.uid,
+        mentorUid: selectedAthlete ? account.uid : account.mentor.uid,
         recurringDates: recurring ? recurringDates : null
       }
     })

@@ -80,7 +80,6 @@ export default class MeetingItem extends Component {
     let { meeting } = this.props;
     let appMetaForm = _.find(meeting.forms, { 'name': 'App Meta' });
     let appMetaFormCompleted = appMetaForm ? _.find(appMetaForm.values, { 'name': 'completed' }) : null;
-    console.log('appMetaForm', appMetaForm);
 
     this.setState({
       meeting: meeting,
@@ -89,7 +88,7 @@ export default class MeetingItem extends Component {
   }
 
   render() {
-    let { account, filter, attendees } = this.props;
+    let { account, filter, attendees, admin } = this.props;
     let { meeting, completed } = this.state;
     let { timezone, athletes } = account;
 
@@ -127,7 +126,7 @@ export default class MeetingItem extends Component {
     }
 
     let getHeadline = () => {
-      if (isAdmin(account.role)) {
+      if (admin){
         return `${attendees.mentor.firstName} and ${attendees.athlete.firstName}`
       }else if (isMentor(account.role)){
         return `You and ${attendees.athlete.firstName}`

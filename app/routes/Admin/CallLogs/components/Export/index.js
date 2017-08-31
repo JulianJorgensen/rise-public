@@ -39,8 +39,8 @@ export default class ExportCallLogs extends Component {
         meeting.timezone,
         meeting.dateCreated,
         meeting.email,
-        `${attendees.athlete.firstName} ${attendees.athlete.lastName}`,
-        `${attendees.mentor.firstName} ${attendees.mentor.lastName}`,
+        attendees.athlete ? `${attendees.athlete.firstName} ${attendees.athlete.lastName}` : '',
+        attendees.mentor ? `${attendees.mentor.firstName} ${attendees.mentor.lastName}` : '',
         meeting.type
       ]);
     });

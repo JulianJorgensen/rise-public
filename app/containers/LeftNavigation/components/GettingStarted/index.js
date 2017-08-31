@@ -19,7 +19,6 @@ export default class GettingStartedNav extends Component {
   render() {
     let { location, account } = this.props;
     let { applicationApproved } = account;
-    console.log(location);
     return (
       <div>
         <Link
@@ -28,14 +27,6 @@ export default class GettingStartedNav extends Component {
         >
           <div className={classes.navAnchor}>Getting Started</div>
         </Link>
-        <div className={`${classes.content} ${classes.active}`}>
-          <Link
-            to='/getting-started/application'
-            className={`${classes.navItem} ${location.pathname === '/getting-started/application' ? classes.navItemActive : ''}`}>
-            <div className={classes.navAnchor}>Application</div>
-          </Link>
-        </div>
-
         { applicationApproved ?
           <div className={`${classes.content} ${classes.active}`}>
             { !isMentor(account.role) ?

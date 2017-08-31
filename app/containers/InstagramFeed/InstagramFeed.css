@@ -2,8 +2,9 @@
   margin-top: rem(200);
   position: relative;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   padding-bottom: rem(140);
+  width: 100%;
   &:after{
     content: '';
     position: absolute;
@@ -13,10 +14,26 @@
     width: rem(1);
     height: rem(60);
   }
+}
 
-  & .item{
-    & img{
-      width: 100%;
-    }
+.feedrow{
+  width: 100%;
+  justify-content: space-between;
+}
+
+.item{
+  position: relative;
+  width: calc(25% - 20px);
+  height: rem(300);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  & .link{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
   }
 }

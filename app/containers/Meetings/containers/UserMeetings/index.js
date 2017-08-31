@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { firebaseConnect, pathToJS } from 'react-redux-firebase';
+import { firebaseConnect, pathToJS, dataToJS } from 'react-redux-firebase';
 import { userIsAuthenticated, userHasPermission } from 'utils/router';
 
 import { List, ListItem, ListSubHeader } from 'react-toolbox/lib/list';
@@ -15,10 +15,13 @@ import LoadingSpinner from 'components/LoadingSpinner';
 import classes from './index.css';
 
 @withRouter
-@firebaseConnect()
+@firebaseConnect([
+  'users'
+])
 @connect(
   ({ firebase, meetings }) => ({
     account: pathToJS(firebase, 'profile'),
+    users: dataToJS(firebase, 'users'),
     meetings
   })
 )
@@ -61,7 +64,7 @@ export default class UserMeetings extends Component {
   // }
 
   render () {
-    let { meetings, filter, showAllUsers, account, limit } = this.props;
+    let { meetings, filter, showAllUsers, account, limit, users } = this.props;
     let attendees;
 
     if (!account || (!meetings.upcoming && !meetings.completed)) {
@@ -71,8 +74,7 @@ export default class UserMeetings extends Component {
     }
 
     let { upcoming, completed } = meetings;
-    let users = Object.assign(account.athletes || {}, {mentor: account.mentor || {}}, {account: account});
-    console.log('users from UserMeetings', users);
+    // let users = Object.assign(account.athletes || {}, {mentor: account.mentor || {}}, {account: account});
 
     if (filter === 'completed') {
       console.log('filter is completed', filter);
@@ -85,6 +87,7 @@ export default class UserMeetings extends Component {
             <List selectable ripple>
               <ListSubHeader caption='Past Meetings' />
               {completed.map((meeting, index) => {
+                console.log('completed meeting', meeting);
                 attendees = getAttendeesFromMeeting(meeting, users);
                 return (
                   <MeetingItem

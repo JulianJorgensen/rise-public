@@ -10,7 +10,9 @@ import LoadingSpinner from 'components/LoadingSpinner';
 import Meetings from 'containers/Meetings';
 import classes from './index.css';
 
-import CalendarIcon from '-!svg-react-loader?name=Icon!assets/icons/regular/calendar.svg';
+import MeetingIcon from '-!svg-react-loader?name=Icon!assets/icons/regular/phone.svg';
+import SettingsIcon from '-!svg-react-loader?name=Icon!assets/icons/regular/cogs.svg';
+import ProfileIcon from '-!svg-react-loader?name=Icon!assets/icons/regular/address-card.svg';
 
 @withRouter
 @userIsAuthenticated
@@ -47,25 +49,28 @@ export default class Dashboard extends Component {
           </div>
         </div>
         <div className={classes.actionsContainer}>
-          <h2>would you like to</h2>
+          <h2>Would you like to</h2>
           <div className={classes.actions}>
             <div
               className={classes.action}
               onClick={() => history.push('/schedule')}
             >
-              <CalendarIcon className={classes.icon} />
+              <MeetingIcon className={classes.icon} />
+              Schedule Your Next Call
             </div>
             <div
               className={classes.action}
-              onClick={() => history.push('/profile')}
+              onClick={() => history.push('/dashboard/settings')}
             >
-              <CalendarIcon className={classes.icon} />
+              <SettingsIcon className={classes.icon} />
+              Settings
             </div>
             <div
               className={classes.action}
-              onClick={() => history.push('/settings')}
+              onClick={() => history.push('/dashboard/profile')}
             >
-              <CalendarIcon className={classes.icon} />
+              <ProfileIcon className={classes.icon} />
+              Profile
             </div>
           </div>
         </div>

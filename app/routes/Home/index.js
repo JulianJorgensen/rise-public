@@ -13,6 +13,10 @@ import NewsletterSignup from 'containers/NewsletterSignup';
 
 import { Parallax } from 'react-parallax';
 
+import MentoringIcon from '-!svg-react-loader?name=Icon!assets/icons/regular/phone.svg';
+import SupportIcon from '-!svg-react-loader?name=Icon!assets/icons/regular/phone.svg';
+import AllInclusiveIcon from '-!svg-react-loader?name=Icon!assets/icons/regular/phone.svg';
+
 @withRouter
 @userIsNotAuthenticated
 export default class Home extends React.Component {
@@ -55,6 +59,7 @@ export default class Home extends React.Component {
         </Parallax>
 
         <div className={styles.container}>
+          <h2 className={styles.mentorHeader}>Be Your Best with a RISE Mentor!</h2>
           <Slider className={styles.slider} {...settings}>
             <div>
               <div className={styles.slide} style={{backgroundImage: 'url(/images/mentors/Adam_Mania.jpeg)'}}>
@@ -186,26 +191,6 @@ export default class Home extends React.Component {
         </div>
 
         <div className={styles.container}>
-          <Grid fluid>
-            <Row className={styles.testimonials}>
-              <Col xs={12} md={4} className={styles.testimonial}>
-                <p>I think that working with Caroline has helped her to see how much she has accomplished in her short life and what great things that she has yet to achieve in her future. She has gotten Avery to see the value of herself as a person, teammate, etc.</p>
-                <author>Stacy</author>
-                <div className={styles.title}>Parent</div>
-              </Col>
-              <Col xs={12} md={4} className={styles.testimonial}>
-                <p>I realize now that I don’t need to train harder, I need to train smarter. Rebecca taught me to focus on what I do well and make that even better. I now face competition with excited energy rather just hoping I do well.</p>
-                <author>Annie</author>
-                <div className={styles.title}>Athlete</div>
-              </Col>
-              <Col xs={12} md={4} className={styles.testimonial}>
-                <p>In life, in sport, there is only so much you can self-teach and when you have reached the end of your knowledge, that's when a mentor steps in. I love providing support, encouragement, and experience to help my athletes accomplish their goals and RISE up to meet their maximum potential!</p>
-                <author>Kristy</author>
-                <div className={styles.title}>Mentor</div>
-              </Col>
-            </Row>
-          </Grid>
-
           <div className={styles.notificationBar}>
             <p>Parents & Athletes! Our Mentor Guide is waiting for you.</p>
             <Button className={styles.cta} href="pdfs/Rise_eBook.pdf" target="_new" label="Grab The E-Book" flat hollow white />
@@ -224,16 +209,39 @@ export default class Home extends React.Component {
           <Grid fluid>
             <Row className={styles.features}>
               <Col xs={12} md={4} className={styles.feature}>
+                <div className={styles.icon}><MentoringIcon /></div>
                 <h3 className={styles.title}>Mentoring</h3>
                 <p>Weekly face-to-face video meetings with your very own Olympic Mentor.</p>
               </Col>
               <Col xs={12} md={4} className={styles.feature}>
+                <div className={styles.icon}><SupportIcon /></div>
                 <h3 className={styles.title}>Support</h3>
                 <p>You get an accountability partner to reinforce positive habits, cultivate a positive mindset for performance, and overcome obstacles in sport and life. </p>
               </Col>
               <Col xs={12} md={4} className={styles.feature}>
+                <div className={styles.icon}><AllInclusiveIcon /></div>
                 <h3 className={styles.title}>All Inclusive Platform</h3>
                 <p>Our program allows you to access your video meetings and materials, schedule and connect with your mentor, and arrange easy payments of $350 per month. Piece of cake.</p>
+              </Col>
+            </Row>
+          </Grid>
+
+          <Grid fluid>
+            <Row className={styles.testimonials}>
+              <Col xs={12} md={4} className={styles.testimonial}>
+                <div className={styles.body}>I think that working with Caroline has helped her to see how much she has accomplished in her short life and what great things that she has yet to achieve in her future. She has gotten Avery to see the value of herself as a person, teammate, etc.</div>
+                <author>Stacy</author>
+                <div className={styles.title}>Parent</div>
+              </Col>
+              <Col xs={12} md={4} className={styles.testimonial}>
+                <div className={styles.body}>I realize now that I don’t need to train harder, I need to train smarter. Rebecca taught me to focus on what I do well and make that even better. I now face competition with excited energy rather just hoping I do well.</div>
+                <author>Annie</author>
+                <div className={styles.title}>Athlete</div>
+              </Col>
+              <Col xs={12} md={4} className={styles.testimonial}>
+                <div className={styles.body}>In life, in sport, there is only so much you can self-teach and when you have reached the end of your knowledge, that's when a mentor steps in. I love providing support, encouragement, and experience to help my athletes accomplish their goals and RISE up to meet their maximum potential!</div>
+                <author>Kristy</author>
+                <div className={styles.title}>Mentor</div>
               </Col>
             </Row>
           </Grid>

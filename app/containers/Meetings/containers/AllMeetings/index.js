@@ -21,7 +21,6 @@ import classes from './index.css';
 @connect(
   ({ firebase, meetings }) => ({
     account: pathToJS(firebase, 'profile'),
-    auth: pathToJS(firebase, 'auth'),
     users: dataToJS(firebase, 'users'),
     meetings
   })
@@ -96,6 +95,7 @@ export default class AllMeetings extends Component {
                     meeting={meeting}
                     filter={filter}
                     attendees={attendees}
+                    admin={true}
                   />
                 )
               })}
@@ -121,6 +121,7 @@ export default class AllMeetings extends Component {
                   meeting={meeting}
                   onReschedule={this.handleReschedule}
                   attendees={attendees}
+                  admin={true}
                 />
               )
             })}
