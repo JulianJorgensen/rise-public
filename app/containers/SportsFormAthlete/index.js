@@ -10,6 +10,11 @@ import classes from './index.css';
 export const SportsFormAthlete = ({ account, handleBack, handleSubmit, submitLabel, submitting }) => (
   <form className={classes.container} onSubmit={handleSubmit}>
     <Field
+      name='what-sport-do-you-play'
+      component={TextField}
+      label='What Sport do you play?'
+    />
+    <Field
       name='why-olympian-mentor'
       component={TextField}
       label='Why do you seek a Mentor?'
@@ -53,11 +58,12 @@ export const SportsFormAthlete = ({ account, handleBack, handleSubmit, submitLab
       label='Do you have a preference of mentors?'
     />
     <div className={classes.ctas}>
-      <Button
-        label='Back'
-        type='button'
-        onClick={handleBack}
-      />
+      { handleBack ?
+        <Button
+          label='Back'
+          type='button'
+          onClick={handleBack}
+        /> : '' }
       <Button
         primary
         label={submitLabel || 'Next'}

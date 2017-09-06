@@ -130,11 +130,20 @@ export default class Application extends Component {
 
     return (
       <div className={classes.container}>
-        <h2>Great things await you!</h2>
-        <p>Step 1 : Let's get the agreement out the way! Complete our forms before chatting with your mentor!<br />Step 2: Submit & start talking to your mentor by scheduling your next calls in the "Schedule" tab!</p>
-
-        { isMentor(account.role) ? <p>You’re about to fill out an application to become a RISE Mentor. We want to learn a bit more about you! We’ll connect with you once you’ve been accepted</p>
-          : <p>You’re about to fill out an application that will be sent for acceptance into RISE Athletes. We want to learn a bit about you, and once you fill out this information, you’ll be paired with a mentor that best fits you! Ready to get started??</p> }
+        { isMentor(account.role) ?
+          <p>You’re about to fill out an application to become a RISE Mentor. We want to learn a bit more about you! We’ll connect with you once you’ve been accepted</p>
+          :
+          <div>
+            <p>You’re about to fill out an application that will be sent for acceptance into RISE Athletes. We want to learn a bit about you, and once you fill out this information, you’ll be paired with a mentor that best fits you.</p>
+            <p>What to expect: Once accepted, you’ll set up your account here. Once all is completed, you will: </p>
+            <ul>
+              <li>have full access to the platform</li>
+              <li>be paired with your mentor </li>
+              <li>begin scheduling your meetings! </li>
+            </ul>
+            <p>Let’s get started! Take your time with answering these questions. They’ll help us find you the best mentor for you. </p>
+          </div>
+        }
 
         <Tabs index={this.state.step} theme={classes} onChange={this.handleStepChange}>
           <Tab label='1. Personal info' disabled={this.state.step !== 0}>

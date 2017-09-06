@@ -42,8 +42,8 @@ export default class DateOfBirth extends Component {
   }
 
   componentWillMount() {
-    let {input} = this.props;
-    if (input){
+    let { input } = this.props;
+    if (input.value) {
       let birthday = moment(input.value, 'DD-MM-YYYY');
       this.setState({
         day: birthday.format('DD'),
@@ -65,10 +65,11 @@ export default class DateOfBirth extends Component {
   }
 
   updateReduxForm = () => {
-    let {day, month, year} = this.state;
-    let {input} = this.props;
+    let { day, month, year } = this.state;
+    let { input } = this.props;
+    let birthDayParsed = `${day}-${month}-${year}`;
 
-    input.onChange(`${day}-${month}-${year}`);
+    input.onChange(birthDayParsed);
   };
 
   render() {

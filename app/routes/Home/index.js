@@ -13,9 +13,9 @@ import NewsletterSignup from 'containers/NewsletterSignup';
 
 import { Parallax } from 'react-parallax';
 
-import MentoringIcon from '-!svg-react-loader?name=Icon!assets/icons/regular/phone.svg';
-import SupportIcon from '-!svg-react-loader?name=Icon!assets/icons/regular/phone.svg';
-import AllInclusiveIcon from '-!svg-react-loader?name=Icon!assets/icons/regular/phone.svg';
+import MentoringIcon from '-!svg-react-loader?name=Icon!assets/icons/regular/laptop.svg';
+import SupportIcon from '-!svg-react-loader?name=Icon!assets/icons/regular/heart.svg';
+import AllInclusiveIcon from '-!svg-react-loader?name=Icon!assets/icons/regular/globe.svg';
 
 @withRouter
 @userIsNotAuthenticated
@@ -30,7 +30,7 @@ export default class Home extends React.Component {
       infinite: true,
       speed: 500,
       slidesToShow: 3,
-      slidesToScroll: 1,
+      slidesToScroll: 3,
       draggable: false,
       responsive: [
         {
@@ -59,8 +59,32 @@ export default class Home extends React.Component {
         </Parallax>
 
         <div className={styles.container}>
-          <h2 className={styles.mentorHeader}>Be Your Best with a RISE Mentor!</h2>
+          <h2 className={styles.mentorHeader}>Be Your Best with a RISE Mentor</h2>
           <Slider className={styles.slider} {...settings}>
+            <div>
+              <div className={styles.slide} style={{backgroundImage: 'url(/images/mentors/Elizabeth_Beisel.jpg)'}}>
+                <div className={styles.overlay}>
+                  <div className={styles.name}>Elizabeth Beisel</div>
+                  <div className={styles.tags}>Swimming, 2008, 2012, 2016, USA</div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div className={styles.slide} style={{backgroundImage: 'url(/images/mentors/Ian_Crocker.jpeg)'}}>
+                <div className={styles.overlay}>
+                  <div className={styles.name}>Ian Crocker</div>
+                  <div className={styles.tags}>Swimming, 2000, 2004, 2008, USA</div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div className={styles.slide} style={{backgroundImage: 'url(/images/mentors/Bridget_Sloan.jpeg)'}}>
+                <div className={styles.overlay}>
+                  <div className={styles.name}>Bridget Sloan</div>
+                  <div className={styles.tags}>Gymnastics, 2008, USA</div>
+                </div>
+              </div>
+            </div>
             <div>
               <div className={styles.slide} style={{backgroundImage: 'url(/images/mentors/Adam_Mania.jpeg)'}}>
                 <div className={styles.overlay}>
@@ -78,14 +102,6 @@ export default class Home extends React.Component {
               </div>
             </div>
             <div>
-              <div className={styles.slide} style={{backgroundImage: 'url(/images/mentors/Bridget_Sloan.jpeg)'}}>
-                <div className={styles.overlay}>
-                  <div className={styles.name}>Bridget Sloan</div>
-                  <div className={styles.tags}>Gymnastics, 2008, USA</div>
-                </div>
-              </div>
-            </div>
-            <div>
               <div className={styles.slide} style={{backgroundImage: 'url(/images/mentors/Caroline_Burckle.jpeg)'}}>
                 <div className={styles.overlay}>
                   <div className={styles.name}>Caroline Burckle</div>
@@ -94,26 +110,10 @@ export default class Home extends React.Component {
               </div>
             </div>
             <div>
-              <div className={styles.slide} style={{backgroundImage: 'url(/images/mentors/Elizabeth_Beisel.jpg)'}}>
-                <div className={styles.overlay}>
-                  <div className={styles.name}>Elizabeth Beisel</div>
-                  <div className={styles.tags}>Swimming, 2008, 2012, 2016, USA</div>
-                </div>
-              </div>
-            </div>
-            <div>
               <div className={styles.slide} style={{backgroundImage: 'url(/images/mentors/Heather_Petri.jpg)'}}>
                 <div className={styles.overlay}>
                   <div className={styles.name}>Heather Petri</div>
                   <div className={styles.tags}>Water Polo, 2000, 2004, 2008, 2012, USA</div>
-                </div>
-              </div>
-            </div>
-            <div>
-              <div className={styles.slide} style={{backgroundImage: 'url(/images/mentors/Ian_Crocker.jpeg)'}}>
-                <div className={styles.overlay}>
-                  <div className={styles.name}>Ian Crocker</div>
-                  <div className={styles.tags}>Swimming, 2000, 2004, 2008, USA</div>
                 </div>
               </div>
             </div>
@@ -211,7 +211,7 @@ export default class Home extends React.Component {
               <Col xs={12} md={4} className={styles.feature}>
                 <div className={styles.icon}><MentoringIcon /></div>
                 <h3 className={styles.title}>Mentoring</h3>
-                <p>Weekly face-to-face video meetings with your very own Olympic Mentor.</p>
+                <p>Weekly face-to-face video meetings with your very own Olympic Mentor. Each round of mentoring is 14 weeks, followed by a 2-week rest and recovery period to soak up all the goodness.</p>
               </Col>
               <Col xs={12} md={4} className={styles.feature}>
                 <div className={styles.icon}><SupportIcon /></div>

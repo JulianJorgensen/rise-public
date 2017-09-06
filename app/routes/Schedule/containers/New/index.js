@@ -90,7 +90,9 @@ export default class ScheduleNew extends Component {
     if (account.role.name === 'athlete' && !account.mentor) {
       return (
         <div className={classes.container}>
-          <h4>You currently don't have a mentor assigned.</h4>
+          <h4>You haven’t been assigned a RISE Mentor yet!</h4>
+          <p>Please check back soon, as you will be paired up within 1-2 days of signing up.</p>
+          <p>#RISEon</p>
         </div>
       )
     }

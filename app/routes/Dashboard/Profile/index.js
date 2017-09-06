@@ -4,50 +4,86 @@ import { firebaseConnect, dataToJS, pathToJS, isLoaded, isEmpty } from 'react-re
 import { reduxFirebase as rfConfig } from 'app/config';
 import { userIsAuthenticated, userHasPermission } from 'utils/router'
 
-import { removePopulatedData, updateAccount } from 'utils/utils';
+import { removePopulatedData, updateAccount, isMentor } from 'utils/utils';
 
 import { Card } from 'react-toolbox/lib/card';
-import Avatar from 'react-toolbox/lib/avatar';
+import { Tab, Tabs } from 'react-toolbox/lib/tabs';
+
 import LoadingSpinner from 'components/LoadingSpinner';
-import ProfileForm from './components/ProfileForm/ProfileForm';
+import AccountForm from 'containers/AccountForm/AccountForm';
+import SportsFormMentor from 'containers/SportsFormMentor';
+import SportsFormAthlete from 'containers/SportsFormAthlete';
+
+import Snackbar from 'components/Snackbar';
 import classes from './index.css';
 
 @userIsAuthenticated
 @firebaseConnect()
 @connect(
   ({ firebase }) => ({
-    auth: pathToJS(firebase, 'auth'),
     account: pathToJS(firebase, 'profile')
   })
 )
 export default class Profile extends Component {
-  state = { modalOpen: false }
-
-  updateAccount = (newData) => {
-    newData = removePopulatedData(newData);
-    updateAccount(this.props.firebase, this.props.auth.uid, newData);
+  state = {
+    modalOpen: false,
+    index: 0
   }
+
+  handleSubmit = (newData) => {
+    newData = removePopulatedData(newData);
+    console.log('new data', newData);
+    updateAccount(this.props.firebase, this.props.account.uid, newData).then(() => {
+      this.props.dispatch({
+        type: 'SET_SNACKBAR',
+        message: 'Account successfully updated'
+      });
+    });
+  }
+
+  handleTabChange = (index) => {
+    this.setState({index});
+  };
 
   render () {
     const { account } = this.props;
 
+    if (!account) {
+      return <LoadingSpinner />
+    }
+
     return (
-      <Card className={classes.container}>
-        {/* <div className={classes.avatarContainer}>
-          <Avatar
-            className={classes.avatar}
-            image={account && account.avatarUrl || '/images/User.png'}
-            cover
-          />
-        </div> */}
-        <div className={classes.meta}>
-          <ProfileForm
-            initialValues={account}
-            account={account}
-            onSubmit={this.updateAccount}
-          />
-        </div>
-      </Card>
+      <div className={classes.container}>
+        <h2>You're awesome!</h2>
+        <p>We want to know all about you! Use this profile space to edit your personal bio & more!</p>
+        <Tabs index={this.state.index} onChange={this.handleTabChange}>
+          <Tab label='Personal info'>
+            <AccountForm
+              initialValues={account}
+              account={account}
+              onSubmit={this.handleSubmit}
+              submitLabel='Update'
+            />
+          </Tab>
+          <Tab label='Sport info'>
+            {isMentor(account.role) ?
+              <SportsFormMentor
+                initialValues={account}
+                account={account}
+                onSubmit={this.handleSubmit}
+                submitLabel='Update'
+              /> :
+              <SportsFormAthlete
+                initialValues={account}
+                account={account}
+                handleBack={this.prevStep}
+                onSubmit={this.handleSubmit}
+                submitLabel='Update'
+              />
+            }
+          </Tab>
+        </Tabs>
+      </div>
     )
   }
 }

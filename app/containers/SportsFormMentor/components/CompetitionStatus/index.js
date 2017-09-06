@@ -19,6 +19,14 @@ export default class CompetitionStatus extends Component {
     input.onChange(this.state.status);
   };
 
+  componentWillMount() {
+    let { input } = this.props
+    if (input.value) {
+      let status = input.value;
+      this.setState({status});
+    }
+  }
+
   render() {
     let { className, label, required } = this.props;
     const _className = cn(className, classes.default);

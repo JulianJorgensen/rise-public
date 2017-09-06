@@ -46,11 +46,12 @@ export const SportsFormMentor = ({ account, handleBack, handleSubmit, submitLabe
       label='Best way for my athletes to connect with me'
     />
     <div className={classes.ctas}>
-      <Button
-        label='Back'
-        type='button'
-        onClick={handleBack}
-      />
+      { handleBack ?
+        <Button
+          label='Back'
+          type='button'
+          onClick={handleBack}
+        /> : '' }
       <Button
         primary
         label={submitLabel || 'Next'}

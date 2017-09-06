@@ -16,8 +16,16 @@ export default class PreferredContactMethod extends Component {
 
   updateReduxForm = () => {
     let {input} = this.props;
-    input.onChange(this.state.status);
+    input.onChange(this.state.method);
   };
+
+  componentWillMount() {
+    let { input } = this.props
+    if (input.value) {
+      let method = input.value;
+      this.setState({method});
+    }
+  }
 
   render() {
     let { className, label, required } = this.props;

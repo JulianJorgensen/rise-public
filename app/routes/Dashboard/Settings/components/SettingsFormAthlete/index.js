@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import Button from 'components/Button';
 import TextField from 'components/TextField';
+import TimezoneSelector from 'components/TimezoneSelector';
 import { SETTINGS_FORM_NAME } from 'app/constants';
 import ProviderDataForm from '../ProviderDataForm';
 import classes from './index.css';
@@ -20,14 +21,14 @@ export const SettingsForm = ({ account, handleSubmit, submitting }) => (
       label='Email'
     />
     <Field
-      name='address'
-      component={TextField}
-      label='Address'
-    />
-    <Field
       name='phone'
       component={TextField}
       label='Phone'
+    />
+    <Field
+      name='timezone'
+      component={TimezoneSelector}
+      label='Timezone'
     />
     <Button
       primary

@@ -10,6 +10,7 @@ import { updateAccount } from 'utils/utils';
 
 import AgreementsFormAthlete from 'containers/AgreementsFormAthlete';
 import LoadingSpinner from 'components/LoadingSpinner';
+import Button from 'components/Button';
 
 import classes from './index.css';
 
@@ -44,11 +45,15 @@ export default class Agreements extends Component {
     const { account } = this.props;
     let { finished } = this.state;
 
+    if (!account) {
+      return <LoadingSpinner />
+    }
+
     if (account.hasConfirmedAgreements || finished) {
       return (
-        <div>
-          <h1>Excellent!</h1>
-          <h2>You've confirmed all agreements</h2>
+        <div className={classes.container}>
+          <h2>Excellent! You've agreed to our terms and conditions.</h2>
+          {account.hasSetupPayment ? <h2>You now have full access to your RISE Dashboard. Go ahead, click around and get to know the site a bit.</h2> : <Button label='Next' href='/getting-started/payment' />}
         </div>
       )
     }

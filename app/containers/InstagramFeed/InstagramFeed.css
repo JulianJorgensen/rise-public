@@ -4,7 +4,7 @@
   display: flex;
   justify-content: space-between;
   padding-bottom: rem(140);
-  width: 100%;
+  width: calc(100% - 140px);
   &:after{
     content: '';
     position: absolute;
@@ -14,11 +14,10 @@
     width: rem(1);
     height: rem(60);
   }
-}
 
-.feedrow{
-  width: 100%;
-  justify-content: space-between;
+  & div:first-child{
+    display: none;
+  }
 }
 
 .item{

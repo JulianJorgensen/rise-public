@@ -143,7 +143,7 @@ class AccountForm extends Component {
         <div className={classes.ctas}>
           <Button
             primary
-            label='Next'
+            label={this.props.submitLabel || 'Next'}
             type='submit'
           />
         </div>

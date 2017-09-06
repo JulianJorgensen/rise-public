@@ -21,11 +21,6 @@ export const SettingsFormMentor = ({ account, handleSubmit, submitting }) => (
       label='Email'
     />
     <Field
-      name='address'
-      component={TextField}
-      label='Address'
-    />
-    <Field
       name='phone'
       component={TextField}
       label='Phone'

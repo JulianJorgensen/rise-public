@@ -54,9 +54,11 @@ export default class Payment extends Component {
 
     if (account.hasSetupPayment || finished) {
       return (
-        <div>
-          <h1>Excellent!</h1>
-          <h2>You've setup payment</h2>
+        <div className={classes.container}>
+          {account.hasConfirmedAgreements ?
+            <div><h1>Great! You're in!</h1><h2>You now have full access to your RISE Dashboard. Go ahead, click around and get to know the site a bit.</h2></div>
+            :
+            <div><h1>Great! You've submitted payment details</h1><p>Now <Link to='/getting-started/agreements'>fill out the agreements</Link>.</p></div>}
         </div>
       )
     }
@@ -64,7 +66,16 @@ export default class Payment extends Component {
     if(isMentor(account.role)) {
       return (
         <div className={classes.container}>
-          <h2>We need your payment info!</h2>
+          <h2>First things first, let’s setup your payment details.</h2>
+          <p>RISE will be paying you for your mentorship services based on the number of athletes you are mentoring each season. </p>
+
+          <p>We use Stripe to simplify the process.</p>
+          <ul>
+            <li>Please go to www.STRIPE.com</li>
+            <li>Create an account</li>
+            <li>Be sure to activate your account by adding all of your personal and banking information</li>
+          </ul>
+
           <BankingForm
             initialValues={account}
             account={account}
@@ -76,9 +87,11 @@ export default class Payment extends Component {
 
     return (
       <div className={classes.container}>
-        <h2>We need your payment info!</h2>
-        <p>Step 1 : We care about your privacy & security which is why we work with Stripe! Enter your CC info & it will get automatically store in Stripe.</p>
-        <p>Step 2 : Schedule your 1st call with your mentor & you will get charged after your initial call!</p>
+        <h2>Let’s get your payment info set up. </h2>
+        <p>We care about your privacy and settings which is why we work with Stripe. Your info will automatically be stored in Stripe, not on our site.</p>
+        <p>In order to get started with RISE Athletes, we will help you create a Stripe Account. RISE Athletes charges $350/month for 4 months.</p>
+        <p>NOTE: Your account will be charged monthly from when you schedule your first meeting with your RISE Mentor.</p>
+
         <Elements>
           <div>
             <AddCard onSubmit={this.completePaymentSetup} />

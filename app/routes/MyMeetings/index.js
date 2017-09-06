@@ -4,6 +4,8 @@ import { firebaseConnect, dataToJS, pathToJS } from 'react-redux-firebase';
 import { reduxFirebase as rfConfig } from 'app/config';
 import { userIsAuthenticated, userHasPermission } from 'utils/router'
 
+import { isMentor } from 'utils/utils';
+
 import Meetings from 'containers/Meetings';
 import LoadingSpinner from 'components/LoadingSpinner';
 import classes from './index.css';
@@ -28,9 +30,9 @@ export default class MyMeetings extends Component {
     return (
       <div className={classes.container}>
         <div>
-          <h2>Access your call!</h2>
+          <h2>Your upcoming Meetings are below.</h2>
           <p>Step 1 : Click on the meeting link to access the Zoom video room for your call!</p>
-          <p>Step 2 : Join the Zoom call to chat with your athlete/mentor!</p>
+          <p>Step 2 : Join the Zoom call to chat with your {isMentor(account.role) ? 'athlete' : 'mentor'}!</p>
         </div>
 
         <Meetings />
