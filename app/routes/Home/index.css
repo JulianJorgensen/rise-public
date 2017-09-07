@@ -11,6 +11,7 @@
 
 .container{
   composes: container from "../../styles/layout.css";
+  width: rem(1200);
 }
 
 .header{
@@ -45,7 +46,8 @@
   text-align: center;
 
   @media (--large-and-up) {
-    width: calc(100% - 140px);
+    width: rem(1140);
+    max-width: 100%;
 
     & .ctas{
       flex-direction: row;
@@ -160,7 +162,7 @@
     }
 
     & .content{
-      width: 40%;
+      width: 50%;
       color: gray(20%);
     }
   }
@@ -271,4 +273,8 @@
   & .copyright{
     color: white;
   }
+}
+
+.grid{
+  padding: 0 !important;
 }

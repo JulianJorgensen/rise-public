@@ -1,24 +1,16 @@
 import React from 'react';
 import Instafeed from 'react-instafeed';
-import { Card, CardMedia } from 'react-toolbox/lib/card';
 import styles from './InstagramFeed.css';
 
-class InstagramFeed extends React.Component {
-  constructor() {
-    super();
-  }
-
+export default class InstagramFeed extends React.Component {
   render() {
-    const instafeedTarget = 'instafeed';
-
     return (
-        <div className={styles.feed} id={instafeedTarget}>
+        <div className={styles.feed} id='instafeed'>
           <Instafeed
             limit='4'
-            ref='instafeed'
+            target='instafeed'
             resolution='standard_resolution'
             sortBy='most-recent'
-            target={instafeedTarget}
             template={`<div class=${styles.item} style="background-image: url({{image}});"><a class=${styles.link} href={{link}} target="_new"></a></div>`}
             userId='2234856285'
             clientId='023dfe5661274e1bae8b1a0ec3dc7f1d'
@@ -28,6 +20,3 @@ class InstagramFeed extends React.Component {
     )
   }
 }
-
-
-module.exports = InstagramFeed;

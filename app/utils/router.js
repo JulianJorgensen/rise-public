@@ -53,6 +53,36 @@ export const userIsAuthenticated = connectedRouterRedirect({
  * @param {Component} componentToWrap - Component to wrap
  * @return {Component} wrappedComponent
  */
+ export const userIsNotPending = connectedRouterRedirect({
+   wrapperDisplayName: 'UserIsNotPending',
+   allowRedirectBack: false,
+   authenticatedSelector: ({ firebase }) => {
+     let account = pathToJS(firebase, 'profile');
+     console.log('account from userisnotpending', account);
+     let status = account !== undefined && account !== null && account.hasConfirmedAgreements && account.hasSetupPayment;
+    //  console.log('\nauthenticatedSelector', status);
+    //  console.log('auth', pathToJS(firebase, 'auth'));
+     return status;
+   },
+   authenticatingSelector: ({ firebase }) => {
+     let isFirebaseInitializing = pathToJS(firebase, 'profile') === undefined || pathToJS(firebase, 'profile') === null;
+    console.log('authenticating: ', pathToJS(firebase, 'profile'));
+    //  console.log('\n\n===userIsNotAuthenticated')
+    //  console.log('firebase auth', pathToJS(firebase, 'auth'));
+    //  console.log('authenticatingSelector', isFirebaseInitializing);
+     return isFirebaseInitializing;
+   },
+   redirectPath: ({ firebase }, ownProps) => locationHelper.getRedirectQueryParam(ownProps) || '/getting-started'
+ })
+
+/**
+ * @description Higher Order Component that redirects to dashboard page or most
+ * recent route instead rendering if user is not authenticated. This is useful
+ * routes that should not be displayed if a user is logged in, such as the
+ * login route.
+ * @param {Component} componentToWrap - Component to wrap
+ * @return {Component} wrappedComponent
+ */
  export const userIsNotAuthenticated = connectedRouterRedirect({
    wrapperDisplayName: 'UserIsNotAuthenticated',
    allowRedirectBack: false,
@@ -69,7 +99,7 @@ export const userIsAuthenticated = connectedRouterRedirect({
     //  console.log('authenticatingSelector', isFirebaseInitializing);
      return isFirebaseInitializing;
    },
-   redirectPath: (state, ownProps) => locationHelper.getRedirectQueryParam(ownProps) || '/dashboard'
+   redirectPath: ({ firebase }, ownProps) => locationHelper.getRedirectQueryParam(ownProps) || '/dashboard'
  })
 
 /**
@@ -128,6 +158,7 @@ export const userIsAdmin = connectedRouterRedirect({
 });
 
 export default {
+  userIsNotPending,
   userIsAuthenticated,
   userIsNotAuthenticated,
   // userHasPermission,

@@ -10,6 +10,7 @@ import { Tab, Tabs } from 'react-toolbox/lib/tabs';
 import { isAthlete, isMentor, removePopulatedData } from 'utils/utils';
 
 import LoadingSpinner from 'components/LoadingSpinner';
+import Button from 'components/Button';
 import AccountForm from 'containers/AccountForm/AccountForm';
 import SportsFormMentor from 'containers/SportsFormMentor';
 import SportsFormAthlete from 'containers/SportsFormAthlete';
@@ -106,22 +107,29 @@ export default class Application extends Component {
     }
 
     if (account.applicationApproved) {
-      return (
-        <div>
-          <h1>Congratulations!</h1>
-          <h2>You have been approved!</h2>
-          <p>What's next?</p>
-          <ul>
-            {isAthlete(account.role) ? <li><Link to='/getting-started/agreements'>Fill out the Agreements</Link></li> : ''}
-            <li><Link to='/getting-started/payment'>Setup a payment method</Link></li>
-          </ul>
-        </div>
-      )
+      if (isAthlete(account.role)) {
+        return (
+          <div className={classes.container}>
+            <h2>Congratulations! You’ve been accepted as a RISE Athlete!</h2>
+            <p>Let’s go through some of the nitty gritty details. Be sure to read through carefully WITH A PARENT/GUARDIAN and check the box to agree with each section.</p>
+            <Button href='/getting-started/agreements' label='Fill out the agreements' />
+          </div>
+        )
+      }
+
+      if (isMentor(account.role)) {
+        return (
+          <div className={classes.container}>
+            <h2>Congratulations! You’ve been accepted as a RISE Athlete!</h2>
+            <Button href='/getting-started/payment'>Setup a payment method</Button>
+          </div>
+        )
+      }
     }
 
     if (account.hasSubmittedApplication || finished) {
       return (
-        <div>
+        <div className={classes.container}>
           <h1>Great job!</h1>
           <h2>We will review your application as soon as possible.</h2>
         </div>

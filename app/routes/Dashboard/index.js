@@ -5,7 +5,7 @@ import { firebaseConnect, dataToJS, pathToJS, isEmpty, isLoaded } from 'react-re
 import { Link, withRouter } from 'react-router-dom';
 import moment from 'moment-timezone';
 import { DASHBOARD_PATH } from 'app/constants';
-import { userIsAuthenticated, userHasPermission } from 'utils/router';
+import { userIsAuthenticated, userHasPermission, userIsNotPending } from 'utils/router';
 import LoadingSpinner from 'components/LoadingSpinner';
 import Meetings from 'containers/Meetings';
 import classes from './index.css';
@@ -23,6 +23,7 @@ import ProfileIcon from '-!svg-react-loader?name=Icon!assets/icons/regular/addre
     auth: pathToJS(firebase, 'auth')
   })
 )
+@userIsNotPending
 export default class Dashboard extends Component {
   render () {
     const { account, history } = this.props;

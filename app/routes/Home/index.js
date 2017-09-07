@@ -177,7 +177,7 @@ export default class Home extends React.Component {
         </div>
 
         <div className={styles.container}>
-          <Grid fluid>
+          <Grid fluid className={styles.grid}>
             <Row className={styles.newsletter}>
               <Col xs={12} md={8}>
                 <h2 className={styles.header}>Good v. Great</h2>
@@ -206,7 +206,7 @@ export default class Home extends React.Component {
         </div>
 
         <div className={styles.container}>
-          <Grid fluid>
+          <Grid fluid className={styles.grid}>
             <Row className={styles.features}>
               <Col xs={12} md={4} className={styles.feature}>
                 <div className={styles.icon}><MentoringIcon /></div>
@@ -226,7 +226,7 @@ export default class Home extends React.Component {
             </Row>
           </Grid>
 
-          <Grid fluid>
+          <Grid fluid className={styles.grid}>
             <Row className={styles.testimonials}>
               <Col xs={12} md={4} className={styles.testimonial}>
                 <div className={styles.body}>I think that working with Caroline has helped her to see how much she has accomplished in her short life and what great things that she has yet to achieve in her future. She has gotten Avery to see the value of herself as a person, teammate, etc.</div>
