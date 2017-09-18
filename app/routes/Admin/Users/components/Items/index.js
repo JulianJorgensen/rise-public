@@ -61,6 +61,7 @@ export default class UsersItems extends Component {
       return false;
     }
 
+    console.log('changing application status');
     axios.get(`${fbConfig.functions}/changeApplicationStatus`, {
       params: {
         uid: uid,
@@ -163,12 +164,24 @@ export default class UsersItems extends Component {
     let { data, users } = this.props;
     let { userData, showModal, showPairModal, selectedMentor, showDeleteConfirmationModal } = this.state;
 
+    let renderApplicationStatus = (user) => {
+      if (!users[user].hasSubmittedApplication) {
+        return (
+          <TableCell><div>Not yet submitted</div></TableCell>          
+        )
+      }
+
+      return (
+        <TooltipCell tooltip="Click to toggle status">
+          <div className={classes.applicationStatus} onClick={() => this.toggleApplicationStatus(user)}>{users[user].applicationApproved ? 'Approved' : 'Pending'}</div>
+        </TooltipCell>
+      )
+    };
+
     let items = data.map((user, index) => {
       return (
         <TableRow key={index} selectable={false}>
-          <TooltipCell tooltip="Click to toggle status">
-            <div className={classes.applicationStatus} onClick={() => this.toggleApplicationStatus(user)}>{users[user].applicationApproved ? 'Approved' : 'Pending'}</div>
-          </TooltipCell>
+          {renderApplicationStatus(user)}
           <TableCell><div>{users[user].role}</div></TableCell>
           <TableCell><div>{users[user].firstName}</div></TableCell>
           <TableCell><div>{users[user].lastName}</div></TableCell>

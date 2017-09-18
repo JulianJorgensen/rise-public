@@ -48,15 +48,19 @@ export default class Home extends React.Component {
 
     return (
       <div className={styles.wrapper}>
-        <Parallax className={styles.ctaMarquee} bgImage="/images/RISE-Hero-1.jpg" strength={400}>
-          <h1 className={styles.header}>RISE Athletes</h1>
-          <h2 className={styles.subheader}>Develop the Olympic mindset</h2>
-          <div className={styles.ctas}>
-            <Button className={styles.ctaButtonWrapper} href="/signup" flat hollow white><div className={styles.ctaButton}>Schedule a free trial</div></Button>
-            <span>OR</span>
-            <Button className={styles.ctaButtonWrapper} href="/login" flat hollow white><div className={styles.ctaButton}>Sign In</div></Button>
-          </div>
-        </Parallax>
+        <div className={styles.landingMarquee}>
+          <Parallax className={styles.ctaMarquee} bgImage="/images/RISE-Hero-1.jpg" strength={400}>
+            <div className={styles.inner}>
+              <h1 className={styles.header}>RISE Athletes</h1>
+              <h2 className={styles.subheader}>Develop the Olympic mindset</h2>
+              <div className={styles.ctas}>
+                <Button className={styles.ctaButtonWrapper} href="/signup" flat hollow white><div className={styles.ctaButton}>Schedule a free trial</div></Button>
+                <span>OR</span>
+                <Button className={styles.ctaButtonWrapper} href="/login" flat hollow white><div className={styles.ctaButton}>Sign In</div></Button>
+              </div>
+            </div>
+          </Parallax>
+        </div>
 
         <div className={styles.container}>
           <h2 className={styles.mentorHeader}>Be Your Best with a RISE Mentor</h2>
@@ -267,4 +271,6 @@ export default class Home extends React.Component {
       </div>
     )
   }
+
+
 }
