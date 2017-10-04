@@ -17,42 +17,74 @@ import classes from './index.css';
   })
 )
 class AddCard extends React.Component {
+  state = {
+    submitting: false
+  };
+
   handleSubmit = (ev) => {
     // We don't want to let default form submission happen here, which would refresh the page.
     ev.preventDefault();
+    this.setState({
+      submitting: true
+    });
 
     let { uid, email, firstName, lastName, stripeCustomerId } = this.props.account;
 
     if (stripeCustomerId) {
       // add new card
-    }else{
-      // create new customer
-    }
+      this.props.stripe.createToken({
+        name: `${firstName} ${lastName}`
+      }).then(({ token }) => {
+        console.log('Received Stripe token:', token);
 
-    this.props.stripe.createToken({
-      name: `${firstName} ${lastName}`
-    }).then(({token}) => {
-      console.log('Received Stripe token:', token);
+        axios.get(`${fbConfig.functions}/addCard`, {
+            params: {
+              stripeToken: token.id,
+              stripeCustomerId: stripeCustomerId
+            }
+          })
+          .then((res) => {
+            console.log('stripe response: ', res);
+            this.props.triggerUpdate();
+            this.setState({
+              submitting: false
+            });
+          });
 
-      axios.get(`${fbConfig.functions}/createStripeCustomer`, {
-        params: {
-          stripeToken: token.id,
-          email: email,
-          uid: uid
+        // trigger the parent form submit
+        if (this.props.onSubmit) {
+          this.props.onSubmit();
         }
-      })
-      .then((res) => {
-        console.log('stripe response: ', res);
       });
 
-      // trigger the parent form submit
-      if (this.props.onSubmit) {
-        this.props.onSubmit();
-      }
-    });
+    } else {
+      // create new customer
+      this.props.stripe.createToken({
+        name: `${firstName} ${lastName}`
+      }).then(({ token }) => {
+        console.log('Received Stripe token:', token);
+
+        axios.get(`${fbConfig.functions}/createStripeCustomer`, {
+            params: {
+              stripeToken: token.id,
+              email: email,
+              uid: uid
+            }
+          })
+          .then((res) => {
+            console.log('stripe response: ', res);
+          });
+
+        // trigger the parent form submit
+        if (this.props.onSubmit) {
+          this.props.onSubmit();
+        }
+      });
+    }
   }
 
   render() {
+    let { submitting } = this.state;
     let { submitLabel } = this.props;
     return (
       <form onSubmit={this.handleSubmit}>
@@ -68,7 +100,8 @@ class AddCard extends React.Component {
         <div className={classes.ctas}>
           <Button
             primary
-            label={submitLabel ? submitLabel : 'Add card'}
+            label={submitLabel ? submitLabel : submitting ? 'Adding card' : 'Add card'}
+            disabled={submitting ? true : false}
             type='submit'
           />
         </div>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { SubmissionError } from 'redux-form';
 import axios from 'axios';
 import { firebaseConnect, dataToJS, pathToJS, isLoaded, isEmpty } from 'react-redux-firebase';
 import { reduxFirebase as rfConfig } from 'app/config';
@@ -41,7 +42,7 @@ export default class Agreements extends Component {
     });
   }
 
-  render () {
+  render() {
     const { account } = this.props;
     let { finished } = this.state;
 
@@ -61,9 +62,7 @@ export default class Agreements extends Component {
     return (
       <div className={classes.container}>
         <AgreementsFormAthlete
-          initialValues={account}
           onSubmit={this.confirm}
-          submitLabel='CLICK TO CONFIRM AND ACCEPT'
         />
       </div>
     )

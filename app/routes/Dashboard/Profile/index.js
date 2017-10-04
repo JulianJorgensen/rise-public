@@ -42,10 +42,10 @@ export default class Profile extends Component {
   }
 
   handleTabChange = (index) => {
-    this.setState({index});
+    this.setState({ index });
   };
 
-  render () {
+  render() {
     const { account } = this.props;
 
     if (!account) {
@@ -65,23 +65,17 @@ export default class Profile extends Component {
               submitLabel='Update'
             />
           </Tab>
-          <Tab label='Sport info'>
-            {isMentor(account.role) ?
+          {isMentor(account.role) ?
+            <Tab label='Sport info'>
               <SportsFormMentor
                 initialValues={account}
                 account={account}
                 onSubmit={this.handleSubmit}
                 submitLabel='Update'
-              /> :
-              <SportsFormAthlete
-                initialValues={account}
-                account={account}
-                handleBack={this.prevStep}
-                onSubmit={this.handleSubmit}
-                submitLabel='Update'
               />
-            }
-          </Tab>
+            </Tab>
+            : ''
+          }
         </Tabs>
       </div>
     )

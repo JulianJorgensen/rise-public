@@ -33,20 +33,20 @@ export default class MeetingItem extends Component {
   toggleMeeting = (id, status) => {
     console.log('toggling meeting');
     axios.get(`${fbConfig.functions}/toggleAppointment`, {
-      params: {
-        id,
-        status: status
-      }
-    })
-    .then(() => {
-      this.props.dispatch({
-        type: 'SET_SNACKBAR',
-        message: `Your meeting is now marked as ${status ? 'complete' : 'pending'}!`,
-        style: 'warning'
+        params: {
+          id,
+          status: status
+        }
+      })
+      .then(() => {
+        this.props.dispatch({
+          type: 'SET_SNACKBAR',
+          message: `Your meeting is now marked as ${status ? 'complete' : 'pending'}!`,
+          style: 'warning'
+        });
+      }).catch((err) => {
+        console.log('error toggling meeting: ', err);
       });
-    }).catch((err) => {
-      console.log('error toggling meeting: ', err);
-    });
 
     // set completed in local state (so user doesnt have to refresh browser)
     this.setState({
@@ -56,19 +56,19 @@ export default class MeetingItem extends Component {
 
   cancelMeeting = (id) => {
     axios.get(`${fbConfig.functions}/cancelAppointment`, {
-      params: {
-        id
-      }
-    })
-    .then((res) => {
-      this.props.dispatch({
-        type: 'SET_SNACKBAR',
-        message: 'Your meeting was successfully cancelled!',
-        style: 'warning'
+        params: {
+          id
+        }
+      })
+      .then((res) => {
+        this.props.dispatch({
+          type: 'SET_SNACKBAR',
+          message: 'Your meeting was successfully cancelled!',
+          style: 'warning'
+        });
+      }).catch((err) => {
+        console.log('error toggling meeting: ', err);
       });
-    }).catch((err) => {
-      console.log('error toggling meeting: ', err);
-    });
 
     // set as complete in local state
     this.setState({
@@ -93,6 +93,15 @@ export default class MeetingItem extends Component {
     let { timezone, athletes } = account;
 
     let upcomingNavItems = () => {
+      let isReschedulable = true;
+      let meetingTime = moment(meeting.datetime);
+      let now = moment();
+      let hoursTillMeetingStart = moment.duration(meetingTime.diff(now)).asHours();
+      console.log('hoursTillMeetingStart', hoursTillMeetingStart);
+      if (hoursTillMeetingStart < 24) {
+        isReschedulable = false;
+      }
+
       return (
         <div>
           <MenuItem
@@ -103,6 +112,7 @@ export default class MeetingItem extends Component {
           <MenuItem
             icon='schedule'
             caption='Reschedule'
+            disabled={!isReschedulable}
             onClick={() => this.props.onReschedule(meeting.id)}
           />
           <MenuDivider />
@@ -126,11 +136,11 @@ export default class MeetingItem extends Component {
     }
 
     let getHeadline = () => {
-      if (admin){
+      if (admin) {
         return `${attendees.mentor.firstName} and ${attendees.athlete.firstName}`
-      }else if (isMentor(account.role)){
+      } else if (isMentor(account.role)) {
         return `You and ${attendees.athlete.firstName}`
-      }else{
+      } else {
         return `You and ${attendees.mentor.firstName}`
       }
     }

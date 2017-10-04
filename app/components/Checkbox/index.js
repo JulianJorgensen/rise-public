@@ -4,12 +4,12 @@ import { Checkbox as RTCheckbox } from 'react-toolbox/lib/checkbox';
 import classes from './index.css';
 
 export default class Checkbox extends Component {
-  state = {checked: false}
+  state = { checked: false }
 
   componentWillMount() {
-    let {input} = this.props;
-    if (input){
-      this.setState({checked: input.value ? input.value : false});
+    let { input } = this.props;
+    if (input) {
+      this.setState({ checked: input.value ? input.value : false });
     }
   }
 
@@ -17,10 +17,10 @@ export default class Checkbox extends Component {
     let { input } = this.props;
 
     // set local state
-    this.setState({checked});
+    this.setState({ checked });
 
     // update redux form state
-    if(input) input.onChange(checked);
+    if (input) input.onChange(checked);
   }
 
   render() {
@@ -30,7 +30,7 @@ export default class Checkbox extends Component {
         checked={this.state.checked}
         label={label}
         onChange={this.handleChange.bind(this)}
-        required
+        required={required}
       />
     )
   }

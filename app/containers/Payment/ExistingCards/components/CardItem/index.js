@@ -19,24 +19,24 @@ class CardItem extends React.Component {
     });
 
     axios.get(`${fbConfig.functions}/deleteCard`, {
-      params: {
-        stripeCustomerId: stripeCustomerId,
-        cardId: id
-      }
-    })
-    .then((res) => {
-      console.log('deleted card: ', res);
-      this.setState({
-        deleted: true
+        params: {
+          stripeCustomerId: stripeCustomerId,
+          cardId: id
+        }
+      })
+      .then((res) => {
+        console.log('deleted card: ', res);
+        this.setState({
+          deleted: true
+        });
       });
-    });
   }
 
   render() {
     let { deleted, deleting } = this.state;
     let { last4, name, exp_month, exp_year, id } = this.props;
 
-    if (deleted){
+    if (deleted) {
       return <div></div>
     }
 
@@ -48,7 +48,7 @@ class CardItem extends React.Component {
         />
         <CardText>{name}</CardText>
         <CardActions>
-          <Button icon='delete' label="Delete" disabled={deleting ? true : false} onClick={() => this.deleteCard.bind(this)} />
+          {/*<Button icon='delete' label="Delete" disabled={deleting ? true : false} onClick={() => this.deleteCard.bind(this)} />*/}
         </CardActions>
       </Card>
     );

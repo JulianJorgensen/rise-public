@@ -8,11 +8,14 @@ module.exports = {
   createCustomer: function(query) {
     let { stripeToken, email, uid } = query;
     let userRef = database.ref("users").child(uid);
+    console.log('creating stripe customer', email);
+    console.log('stripe token', stripeToken);
 
     return stripe.customers.create({
       email: email,
       source: stripeToken,
     }).then(function(customer) {
+      console.log('created customer', customer);
       // Save the customer ID and other info in Firebase
       userRef.update({
         "stripeCustomerId": customer.id
@@ -39,6 +42,17 @@ module.exports = {
     });
   },
 
+  addCard: function(query) {
+    let { stripeCustomerId, stripeToken } = query;
+    return new Promise(function(resolve, reject) {
+      stripe.customers.createSource(stripeCustomerId, {
+        source: stripeToken
+      }, function(err, confirmation) {
+        resolve(confirmation);
+      });
+    });
+  },
+
   createCharge: function(query) {
     let { amount, currency, stripeCustomerId, description } = query;
 
@@ -55,11 +69,9 @@ module.exports = {
 
     return stripe.subscriptions.create({
       customer: stripeCustomerId,
-      items: [
-        {
-          plan: plan // eg. "RiseMonthly"
-        }
-      ]
+      items: [{
+        plan: plan // eg. "RiseMonthly"
+      }]
     });
   }
 };

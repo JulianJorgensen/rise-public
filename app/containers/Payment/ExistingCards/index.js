@@ -27,22 +27,30 @@ class ExistingCards extends React.Component {
     let { stripeCustomerId } = account;
 
     axios.get(`${fbConfig.functions}/getCards`, {
-      params: {
-        stripeCustomerId: stripeCustomerId
-      }
-    })
-    .then((res) => {
-      console.log('response: ', res);
-      let cards = res.data.data;
+        params: {
+          stripeCustomerId: stripeCustomerId
+        }
+      })
+      .then((res) => {
+        console.log('response: ', res);
+        let cards = res.data.data;
 
-      this.setState({
-        fetchedCards: true,
-        cards
+        this.setState({
+          fetchedCards: true,
+          cards
+        });
       });
-    });
   }
 
   componentWillMount() {
+    this.getCards();
+  }
+
+  componentWillReceiveProps(props) {
+    console.log('existing cards receiving props', props);
+    this.setState({
+      fetchedCards: false
+    });
     this.getCards();
   }
 

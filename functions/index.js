@@ -3,7 +3,7 @@ const adminAlertEmail = require('./emails/adminAlert');
 const acuity = require('./acuity');
 const stripe = require('./stripe');
 const admin = require('./admin');
-const cors = require('cors')({origin: true});
+const cors = require('cors')({ origin: true });
 
 // Function: send admin alert email
 exports.adminAlertEmail = functions.https.onRequest((request, response) => {
@@ -20,6 +20,17 @@ exports.adminAlertEmail = functions.https.onRequest((request, response) => {
 exports.createStripeCustomer = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     stripe.createCustomer(request.query).then((res) => {
+      response.status(200).send(res);
+    }).catch((err) => {
+      response.status(500).send(err);
+    });
+  });
+});
+
+// Function: add card
+exports.addCard = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    stripe.addCard(request.query).then((res) => {
       response.status(200).send(res);
     }).catch((err) => {
       response.status(500).send(err);

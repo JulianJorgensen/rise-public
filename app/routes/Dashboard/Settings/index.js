@@ -30,7 +30,7 @@ export default class Settings extends Component {
   }
 
   handleTabChange = (tab) => {
-    this.setState({tab});
+    this.setState({ tab });
   };
 
   updateAccount = (newData) => {
@@ -38,7 +38,13 @@ export default class Settings extends Component {
     updateAccount(this.props.firebase, this.props.account.uid, newData);
   }
 
-  render () {
+  triggerUpdate = () => {
+    this.setState({
+      updated: true
+    });
+  }
+
+  render() {
     const { account } = this.props;
 
     if (!account) {
@@ -75,8 +81,8 @@ export default class Settings extends Component {
                 /> :
                 <Elements>
                   <div>
-                    <ExistingCards />
-                    <AddCard onSubmit={this.completePaymentSetup} />
+                    <ExistingCards updated={this.state.updated} />
+                    <AddCard onSubmit={this.completePaymentSetup} triggerUpdate={this.triggerUpdate} />
                   </div>
                 </Elements>
               }
