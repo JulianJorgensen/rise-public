@@ -23,7 +23,6 @@ import ProfileIcon from '-!svg-react-loader?name=Icon!assets/icons/regular/addre
     auth: pathToJS(firebase, 'auth')
   })
 )
-@userIsNotPending
 export default class Dashboard extends Component {
   render () {
     const { account, history } = this.props;

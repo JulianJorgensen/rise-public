@@ -63,6 +63,7 @@
     "react-redux": "^4.4.5",
     "react-redux-firebase": "^1.4.4",
     "react-router-dom": "^4.1.2",
+    "react-router-hash-link": "^1.1.1",
     "react-slick": "^0.14.11",
     "react-stripe-elements": "^0.0.5",
     "react-tap-event-plugin": "1.0.0",

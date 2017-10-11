@@ -96,7 +96,6 @@ module.exports = {
       });
     };
 
-
     let updateMentor = () => {
       return new Promise((resolve, reject) => {
         let mentorAthletesRef = database.ref(`users/${mentorUid}/athletes`);

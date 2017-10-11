@@ -1,3 +1,4 @@
+
 @import "../../styles/variables.css";
 
 .wrapper{
@@ -124,6 +125,7 @@
 .newsletter{
   align-items: center;
   color: gray(30%);
+  width: 70%;
 
   & .header{
     font-size: rem(80);
@@ -138,12 +140,15 @@
 }
 
 .testimonials{
+  display: flex;
+  justify-content: space-between;
   margin-bottom: rem(60);
   & .testimonial{
+    width: calc(33.3% - rem(20));
     text-align: center;
     color: gray(30%);
     & .body{
-      height: rem(200);
+      height: rem(150);
     }
     & author{
       color: var(--blue);
@@ -153,10 +158,6 @@
 }
 
 .about{
-  background-image: url('/images/RISE-Hero-2.jpg');
-  background-position: right -100px center;
-  background-repeat: no-repeat;
-  background-size: contain;
   width: 100%;
   height: rem(600);
   display: flex;
@@ -164,20 +165,47 @@
   margin: rem(60) 0;
 
   & .container{
-    background-color: transparent;
-    background-image: linear-gradient(to right, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+    position: relative;
     height: inherit;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    &:before{
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      top: 0;
+      right: 0;
+      content: '';
+      z-index: 1;
+      background-image: linear-gradient(to right, rgba(255, 255, 255, 1) 30%, rgba(255, 255, 255, 0) 70%);
+    }
+    &:after{
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      top: 0;
+      right: 0;
+      content: '';
+      background-image: url('/images/RISE-Hero-2.jpg');
+      background-position: right center;
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-color: transparent;  
+    }
 
     & .header{
       font-size: rem(80);
     }
-
     & .content{
       width: 50%;
       color: gray(20%);
+    }
+    & .subheader,
+    & .header,
+    & .content{
+      position: relative;
+      z-index: 2;  
     }
   }
 }
@@ -237,7 +265,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    width: rem(300);
+    width: calc(33.3% - rem(20));
     text-align: center;
     & .icon{
       width: rem(50);
@@ -277,8 +305,13 @@
   justify-content: center;
   align-items: center;
 
+  & .followUsCta{
+    margin-bottom: rem(15);
+    width: rem(250);
+  }
+
   & .email{
-    margin: rem(30) 0;
+    margin: rem(15) 0 rem(30);
     & a:hover{
       color: white;
     }

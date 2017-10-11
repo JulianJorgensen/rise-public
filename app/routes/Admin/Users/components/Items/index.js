@@ -61,7 +61,6 @@ export default class UsersItems extends Component {
       return false;
     }
 
-    console.log('changing application status');
     axios.get(`${fbConfig.functions}/changeApplicationStatus`, {
       params: {
         uid: uid,
@@ -70,6 +69,24 @@ export default class UsersItems extends Component {
     })
     .then((response) => {
       console.log('successfully toggled user status ', response);
+      if (!user.applicationApproved) {
+        if(confirm('Send welcome email?')){
+          // send welcome email to user
+          axios.post(`${fbConfig.functions}/sendEmail`, {
+            toName: user.firstName,
+            toEmail: user.email,
+            subject: `Congratulations ${user.firstName}!`,
+            title: `You have been approved!`,
+            message: 'Go to RISE-Athletes.com to login to your account.'
+          })
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log('Error sending welcome email: ', error);
+          });          
+        }
+      }
     })
     .catch((error) => {
       console.log('error toggling user status ', error);

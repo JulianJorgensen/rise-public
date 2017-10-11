@@ -27,15 +27,13 @@ export default class GettingStartedNav extends Component {
         >
           <div className={classes.navAnchor}>Getting Started</div>
         </Link>
-        { applicationApproved ?
+        { applicationApproved && !isMentor(account.role) ?
           <div className={`${classes.content} ${classes.active}`}>
-            { !isMentor(account.role) ?
-              <Link
-                to='/getting-started/agreements'
-                className={`${classes.navItem} ${!applicationApproved ? classes.disabled : ''} ${location.pathname === '/getting-started/agreements' ? classes.navItemActive : ''}`}>
-                <div className={classes.navAnchor}>Agreements</div>
-              </Link>
-            : '' }
+            <Link
+              to='/getting-started/agreements'
+              className={`${classes.navItem} ${!applicationApproved ? classes.disabled : ''} ${location.pathname === '/getting-started/agreements' ? classes.navItemActive : ''}`}>
+              <div className={classes.navAnchor}>Agreements</div>
+            </Link>
             <Link
               to='/getting-started/payment'
               className={`${classes.navItem} ${!applicationApproved ? classes.disabled : ''} ${location.pathname === '/getting-started/payment' ? classes.navItemActive : ''}`}>

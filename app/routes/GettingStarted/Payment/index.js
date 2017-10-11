@@ -63,31 +63,9 @@ export default class Payment extends Component {
       )
     }
 
-    if (isMentor(account.role)) {
-      return (
-        <div className={classes.container}>
-          <h2>First things first, let’s setup your payment details.</h2>
-          <p>RISE will be paying you for your mentorship services based on the number of athletes you are mentoring each season. </p>
-
-          <p>We use Stripe to simplify the process.</p>
-          <ul>
-            <li>Please go to www.STRIPE.com</li>
-            <li>Create an account</li>
-            <li>Be sure to activate your account by adding all of your personal and banking information</li>
-          </ul>
-
-          <BankingForm
-            initialValues={account}
-            account={account}
-            onSubmit={this.completePaymentSetup}
-          />
-        </div>
-      )
-    }
-
     return (
       <div className={classes.container}>
-        <h2>Let’s get your payment info set up. </h2>
+        <h2>Let’s get your payment info set up.</h2>
         <p>We care about your privacy and settings which is why we work with Stripe. Your info will automatically be stored in Stripe, not on our site.</p>
         <p>In order to get started with RISE Athletes, we will help you create a Stripe Account. RISE Athletes charges $350/month for 4 months.</p>
         <p>NOTE: Your account will be charged monthly from when you schedule your first meeting with your RISE Mentor.</p>

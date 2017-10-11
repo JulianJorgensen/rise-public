@@ -7,7 +7,7 @@ import { reduxFirebase as rfConfig } from 'app/config';
 import { firebase as fbConfig } from 'app/config';
 import { userIsAuthenticated } from 'utils/router';
 import { Tab, Tabs } from 'react-toolbox/lib/tabs';
-import { isAthlete, isMentor, removePopulatedData } from 'utils/utils';
+import { updateAccount, isAthlete, isMentor, removePopulatedData } from 'utils/utils';
 
 import LoadingSpinner from 'components/LoadingSpinner';
 import Button from 'components/Button';
@@ -81,7 +81,7 @@ export default class Application extends Component {
       uid: this.props.auth.uid,
       role: role.name
     });
-
+    
     // send notification email to admin
     axios.post(`${fbConfig.functions}/adminAlertEmail`, {
       message: `We have a new ${role.name} application to review!`,
@@ -94,8 +94,35 @@ export default class Application extends Component {
       console.log('Error sending admin alert email: ', error);
     });
 
+    let { account } = this.props;
+
+    // send confirmation email to user
+    axios.post(`${fbConfig.functions}/sendEmail`, {
+      toName: account.firstName,
+      toEmail: account.email,
+      subject: `Thank you ${account.firstName}!`,
+      title: `We are reviewing your application.`,
+      message: 'You will be notified once your application has been approved.'
+    })
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log('Error sending application confirmation email: ', error);
+    });
+
     // scroll to top
     window.scrollTo(0, 0);
+  }
+
+  mentorConfirm = () => {
+    let { role, hasSubmittedApplication } = this.props.account;
+  
+    updateAccount(this.props.firebase, this.props.auth.uid, {
+      role: role.name
+    });
+
+    this.props.history.push('/dashboard');
   }
 
   render () {
@@ -121,7 +148,7 @@ export default class Application extends Component {
         return (
           <div className={classes.container}>
             <h2>Congratulations! You’ve been accepted as a RISE Athlete!</h2>
-            <Button href='/getting-started/payment'>Setup a payment method</Button>
+            <Button primary onClick={this.mentorConfirm}>Begin now</Button>
           </div>
         )
       }

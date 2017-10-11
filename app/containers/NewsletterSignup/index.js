@@ -31,7 +31,7 @@ export default class NewsletterSignup extends React.Component {
 
     return (
       <div>
-        <Button label="Subscribe to our Newsletter" flat hollow onClick={this.showModal} />
+        <Button label="Subscribe to our Newsletter" flat primary hollow onClick={this.showModal} />
 
         <Dialog
           active={showModal ? true : false}
@@ -58,6 +58,7 @@ export default class NewsletterSignup extends React.Component {
                 <Button
                   type="submit"
                   label="subscribe"
+                  onClick={() => this.setState({showModal: false})}
                 />
               </div>
             </form>

@@ -71,22 +71,16 @@ export default class Settings extends Component {
                 />
               }
             </Tab>
-            <Tab label='Payment'>
-              {isMentor(account.role) ?
-                <MentorBankingForm
-                  initialValues={account}
-                  account={account}
-                  onSubmit={this.updateAccount}
-                  submitLabel='Change Stripe Email'
-                /> :
+            {!isMentor(account.role) ?
+              <Tab label='Payment'>
                 <Elements>
                   <div>
                     <ExistingCards updated={this.state.updated} />
                     <AddCard onSubmit={this.completePaymentSetup} triggerUpdate={this.triggerUpdate} />
                   </div>
                 </Elements>
-              }
-            </Tab>
+              </Tab>
+            : '' }
           </Tabs>
         </div>
       </div>

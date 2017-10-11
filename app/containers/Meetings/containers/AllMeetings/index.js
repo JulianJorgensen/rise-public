@@ -48,9 +48,7 @@ export default class AllMeetings extends Component {
   componentWillMount() {
     let { account, dispatch } = this.props;
     setTimeout(() => {
-      console.log('acc from all meetings', account);
       if (account) {
-        console.log('about to fetch all meetings');
         fetchAllMeetings(account, dispatch);
       }
     }, 1000);
@@ -60,8 +58,6 @@ export default class AllMeetings extends Component {
     let { meetings, filter, showAllUsers, users, limit } = this.props;
     let attendees;
 
-    console.log('users from all meetings', users);
-
     if (!meetings.all || !users) {
       return (
         <LoadingSpinner />
@@ -69,14 +65,12 @@ export default class AllMeetings extends Component {
     }
 
     if (!meetings.all.completed || !meetings.all.upcoming) {
-      console.log('all meeting', meetings);
       return (
         <LoadingSpinner />
       )
     }
 
     let { upcoming, completed } = this.props.meetings.all;
-    console.log('users from AllMeetings', users);
 
     if (filter === 'completed') {
       if(completed.length > 0) {
