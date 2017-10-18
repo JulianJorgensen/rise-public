@@ -56,9 +56,9 @@ export default class Payment extends Component {
       return (
         <div className={classes.container}>
           {account.hasConfirmedAgreements ?
-            <div><h1>Great! Your payment details have been updated!</h1><h2>You now have full access to your RISE Dashboard. Go ahead, click around and get to know the site a bit.</h2></div>
+            <div><h2>Great! Your payment details have been updated!</h2><h3>You now have full access to your RISE Dashboard. Go ahead, click around and get to know the site a bit.</h3></div>
             :
-            <div><h1>Great! You've submitted payment details</h1><p>Now <Link to='/getting-started/agreements'>fill out the agreements</Link>.</p></div>}
+            <div><h2>Great! You've submitted payment details</h2><p>Now <Link to='/getting-started/agreements'>fill out the agreements</Link>.</p></div>}
         </div>
       )
     }

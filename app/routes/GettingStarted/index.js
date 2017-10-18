@@ -101,8 +101,7 @@ export default class Application extends Component {
       toName: account.firstName,
       toEmail: account.email,
       subject: `Thank you ${account.firstName}!`,
-      title: `We are reviewing your application.`,
-      message: 'You will be notified once your application has been approved.'
+      template: 'applicationConfirmation.pug'
     })
     .then((response) => {
       console.log(response);

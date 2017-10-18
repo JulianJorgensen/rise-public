@@ -3,6 +3,6 @@
  * This babel funcitonality is actually controlled within config/index.js
  **/
 {
-  "plugins": ["transform-runtime", "lodash", "transform-decorators-legacy", "transform-object-rest-spread"],
+  "plugins": ["transform-runtime", "lodash", "transform-decorators-legacy", "transform-object-rest-spread", "es6-promise"],
   "presets": ["es2015", "react", "stage-0"]
 }

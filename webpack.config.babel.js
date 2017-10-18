@@ -1,4 +1,5 @@
 import webpack from 'webpack';
+import "babel-polyfill";
 import path from 'path';
 import Merge from 'webpack-merge';
 import StatsPlugin from 'stats-webpack-plugin';
@@ -27,15 +28,19 @@ const VENDOR_LIBS = [
   'react-toolbox'
 ];
 
+const ROOT_PATH = path.resolve(__dirname);
+const APP_PATH = path.resolve(ROOT_PATH, 'app/app');
+const BUILD_PATH = path.resolve(ROOT_PATH, 'public');
+
 // Webpack config for both production and development environments
 // ====================
 const BASE_CONFIG = {
   entry: {
-    bundle: path.resolve(__dirname, 'app/app'),
+    bundle: ['babel-polyfill', 'whatwg-fetch', APP_PATH],
     vendor: VENDOR_LIBS
   },
   output: {
-    path: path.join(__dirname, 'public'),
+    path: BUILD_PATH,
     publicPath: '/'
   },
   module: {
@@ -67,18 +72,30 @@ const BASE_CONFIG = {
         })
       },
       {
-        test: /\.(gif|png|jpe?g)$/i,
+        test: /\.(gif|png|jpg|jpe?g)$/i,
         loaders: [
           'file-loader',
           {
             loader: 'image-webpack-loader',
-            query: {
-              progressive: true,
-              optimizationLevel: 7,
-              interlaced: false,
+            options: {
+              bypassOnDebug: true,
+              gifsicle: {
+                interlaced: false,
+              },
+              optipng: {
+                optimizationLevel: 7,
+              },
               pngquant: {
-                quality: '65-90',
+                quality: '65-80',
                 speed: 4
+              },
+              mozjpeg: {
+                progressive: true,
+                quality: 65
+              },
+              // Specifying webp here will create a WEBP version of your JPG/PNG images
+              webp: {
+                quality: 75
               }
             }
           }
@@ -96,30 +113,10 @@ const BASE_CONFIG = {
             classIdPrefix: '[name]-[hash:8]__'
           }
       }
-      // {
-      //   test: /\.svg$/,
-      //   include: path.resolve(__dirname, 'app/assets/icons'),
-      //   use: [
-      //     {
-      //       loader: 'svg-sprite-loader',
-      //       options: {
-      //         extract: true,
-      //         spriteFilename: 'icons/sprite.svg'
-      //       }
-      //     },
-      //     'svg-fill-loader',
-      //     'svgo-loader'
-      //   ]
-      // }
     ]
   },
   plugins: [
     new CopyWebpackPlugin([
-      {
-        context: 'app',
-        from: 'assets/images',
-        to: 'images'
-      },
       {
         context: 'app',
         from: 'assets/pdfs',
@@ -148,6 +145,7 @@ const BASE_CONFIG = {
   resolve: {
     alias: {
       assets: path.resolve(__dirname, 'app/assets/'),
+      images: path.resolve(__dirname, 'app/assets/images/'),
       app: path.resolve(__dirname, 'app/'),
       components: path.resolve(__dirname, 'app/components/'),
       containers: path.resolve(__dirname, 'app/containers/'),

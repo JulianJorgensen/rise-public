@@ -147,7 +147,7 @@ export default class MeetingItem extends Component {
     return (
       <div>
         <ListItem
-          avatar='images/User.png'
+          // avatar='images/User.png'
           caption={getHeadline()}
           legend={moment(meeting.datetime).tz(timezone).format('MMMM Do YYYY h:mma')}
           theme={classes}

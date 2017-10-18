@@ -17,6 +17,23 @@ import MentoringIcon from '-!svg-react-loader?name=Icon!assets/icons/regular/lap
 import SupportIcon from '-!svg-react-loader?name=Icon!assets/icons/regular/heart.svg';
 import AllInclusiveIcon from '-!svg-react-loader?name=Icon!assets/icons/regular/globe.svg';
 
+import heroImage from 'images/RISE-Hero-1.jpg';
+import heroImageBottom from 'images/RISE-Hero-3.jpg';
+import mentorImage1 from 'images/mentors/Elizabeth_Beisel.jpg';
+import mentorImage2 from 'images/mentors/Heather_Petri.jpg';
+import mentorImage3 from 'images/mentors/Ian_Crocker.jpg';
+import mentorImage4 from 'images/mentors/Bridget_Sloan.jpg';
+import mentorImage5 from 'images/mentors/Adam_Mania.jpg';
+import mentorImage6 from 'images/mentors/Breeja_Larson.jpg';
+import mentorImage7 from 'images/mentors/Caroline_Burckle.jpg';
+import mentorImage8 from 'images/mentors/Jean_Basson.jpg';
+import mentorImage9 from 'images/mentors/Kami_Craig.jpg';
+import mentorImage10 from 'images/mentors/Kate_Ziegler.jpg';
+import mentorImage11 from 'images/mentors/Kathleen_Hersey.jpg';
+import mentorImage12 from 'images/mentors/Kim_Vandenberg.jpg';
+import mentorImage13 from 'images/mentors/Kristy_Kowal.jpg';
+import mentorImage14 from 'images/mentors/Rebecca_Soni.jpg';
+
 @withRouter
 @userIsNotAuthenticated
 export default class Home extends React.Component {
@@ -32,6 +49,7 @@ export default class Home extends React.Component {
       slidesToShow: 3,
       slidesToScroll: 3,
       draggable: false,
+      lazyLoad: true,
       responsive: [
         {
           breakpoint: 768,
@@ -49,7 +67,7 @@ export default class Home extends React.Component {
     return (
       <div className={styles.wrapper}>
         <div className={styles.landingMarquee}>
-          <Parallax className={styles.ctaMarquee} bgImage="/images/RISE-Hero-1.jpg" strength={400}>
+          <Parallax className={styles.ctaMarquee} bgImage={heroImage} strength={300}>
             <div className={styles.inner}>
               <h1 className={styles.header}>RISE Athletes</h1>
               <h2 className={styles.subheader}>Develop the Olympic mindset</h2>
@@ -66,7 +84,7 @@ export default class Home extends React.Component {
           <h2 className={styles.mentorHeader}>Be Your Best with a RISE Mentor</h2>
           <Slider className={styles.slider} {...settings}>
             <div>
-              <div className={styles.slide} style={{backgroundImage: 'url(/images/mentors/Elizabeth_Beisel.jpg)'}}>
+              <div className={styles.slide} style={{backgroundImage: `url(${mentorImage1})`}}>
                 <div className={styles.overlay}>
                   <div className={styles.name}>Elizabeth Beisel</div>
                   <div className={styles.tags}>Swimming, 2008, 2012, 2016, USA</div>
@@ -74,7 +92,7 @@ export default class Home extends React.Component {
               </div>
             </div>
             <div>
-              <div className={styles.slide} style={{backgroundImage: 'url(/images/mentors/Heather_Petri.jpg)'}}>
+              <div className={styles.slide} style={{backgroundImage: `url(${mentorImage2})`}}>
                 <div className={styles.overlay}>
                   <div className={styles.name}>Heather Petri</div>
                   <div className={styles.tags}>Water Polo, 2000, 2004, 2008, 2012, USA</div>
@@ -82,7 +100,7 @@ export default class Home extends React.Component {
               </div>
             </div>
             <div>
-              <div className={styles.slide} style={{backgroundImage: 'url(/images/mentors/Ian_Crocker.jpeg)'}}>
+              <div className={styles.slide} style={{backgroundImage: `url(${mentorImage3})`}}>
                 <div className={styles.overlay}>
                   <div className={styles.name}>Ian Crocker</div>
                   <div className={styles.tags}>Swimming, 2000, 2004, 2008, USA</div>
@@ -90,7 +108,7 @@ export default class Home extends React.Component {
               </div>
             </div>
             <div>
-              <div className={styles.slide} style={{backgroundImage: 'url(/images/mentors/Bridget_Sloan.jpeg)'}}>
+              <div className={styles.slide} style={{backgroundImage: `url(${mentorImage4})`}}>
                 <div className={styles.overlay}>
                   <div className={styles.name}>Bridget Sloan</div>
                   <div className={styles.tags}>Gymnastics, 2008, USA</div>
@@ -98,7 +116,7 @@ export default class Home extends React.Component {
               </div>
             </div>
             <div>
-              <div className={styles.slide} style={{backgroundImage: 'url(/images/mentors/Adam_Mania.jpeg)'}}>
+              <div className={styles.slide} style={{backgroundImage: `url(${mentorImage5})`}}>
                 <div className={styles.overlay}>
                   <div className={styles.name}>Adam Mania</div>
                   <div className={styles.tags}>Swimming, 2004, Poland</div>
@@ -106,7 +124,7 @@ export default class Home extends React.Component {
               </div>
             </div>
             <div>
-              <div className={styles.slide} style={{backgroundImage: 'url(/images/mentors/Breeja_Larson.jpg)'}}>
+              <div className={styles.slide} style={{backgroundImage: `url(${mentorImage6})`}}>
                 <div className={styles.overlay}>
                   <div className={styles.name}>Breeja Larson</div>
                   <div className={styles.tags}>Swimming, 2012, USA</div>
@@ -114,7 +132,7 @@ export default class Home extends React.Component {
               </div>
             </div>
             <div>
-              <div className={styles.slide} style={{backgroundImage: 'url(/images/mentors/Caroline_Burckle.jpeg)'}}>
+              <div className={styles.slide} style={{backgroundImage: `url(${mentorImage7})`}}>
                 <div className={styles.overlay}>
                   <div className={styles.name}>Caroline Burckle</div>
                   <div className={styles.tags}>Swimming, 2008, USA</div>
@@ -122,7 +140,7 @@ export default class Home extends React.Component {
               </div>
             </div>
             <div>
-              <div className={styles.slide} style={{backgroundImage: 'url(/images/mentors/Jean_Basson.jpeg)'}}>
+              <div className={styles.slide} style={{backgroundImage: `url(${mentorImage8})`}}>
                 <div className={styles.overlay}>
                   <div className={styles.name}>Jean Basson</div>
                   <div className={styles.tags}>Swimming, 2008, 2012, South Africa</div>
@@ -130,7 +148,7 @@ export default class Home extends React.Component {
               </div>
             </div>
             <div>
-              <div className={styles.slide} style={{backgroundImage: 'url(/images/mentors/Kami_Craig.jpeg)'}}>
+              <div className={styles.slide} style={{backgroundImage: `url(${mentorImage9})`}}>
                 <div className={styles.overlay}>
                   <div className={styles.name}>Kami Craig</div>
                   <div className={styles.tags}>Water Polo, 2008, 2012, 2016, USA</div>
@@ -138,7 +156,7 @@ export default class Home extends React.Component {
               </div>
             </div>
             <div>
-              <div className={styles.slide} style={{backgroundImage: 'url(/images/mentors/Kate_Ziegler.jpeg)'}}>
+              <div className={styles.slide} style={{backgroundImage: `url(${mentorImage10})`}}>
                 <div className={styles.overlay}>
                   <div className={styles.name}>Kate Ziegler</div>
                   <div className={styles.tags}>Swimming, 2008, 2012, USA</div>
@@ -146,7 +164,7 @@ export default class Home extends React.Component {
               </div>
             </div>
             <div>
-              <div className={styles.slide} style={{backgroundImage: 'url(/images/mentors/Kathleen_Hersey.jpg)'}}>
+              <div className={styles.slide} style={{backgroundImage: `url(${mentorImage11})`}}>
                 <div className={styles.overlay}>
                   <div className={styles.name}>Kathleen Hersey</div>
                   <div className={styles.tags}>Swimming, 2008, 2012, USA</div>
@@ -154,7 +172,7 @@ export default class Home extends React.Component {
               </div>
             </div>
             <div>
-              <div className={styles.slide} style={{backgroundImage: 'url(/images/mentors/Kim_Vandenberg.jpg)'}}>
+              <div className={styles.slide} style={{backgroundImage: `url(${mentorImage12})`}}>
                 <div className={styles.overlay}>
                   <div className={styles.name}>Kim Vandenberg</div>
                   <div className={styles.tags}>Swimming, 2008, USA</div>
@@ -162,7 +180,7 @@ export default class Home extends React.Component {
               </div>
             </div>
             <div>
-              <div className={styles.slide} style={{backgroundImage: 'url(/images/mentors/Kristy_Kowal.jpeg)'}}>
+              <div className={styles.slide} style={{backgroundImage: `url(${mentorImage13})`}}>
                 <div className={styles.overlay}>
                   <div className={styles.name}>Kristy Kowal</div>
                   <div className={styles.tags}>Swimming, 2000, USA</div>
@@ -170,7 +188,7 @@ export default class Home extends React.Component {
               </div>
             </div>
             <div>
-              <div className={styles.slide} style={{backgroundImage: 'url(/images/mentors/Rebecca_Soni.jpeg)'}}>
+              <div className={styles.slide} style={{backgroundImage: `url(${mentorImage14})`}}>
                 <div className={styles.overlay}>
                   <div className={styles.name}>Rebecca Soni</div>
                   <div className={styles.tags}>Swimming, 2008, 2012, USA</div>
@@ -246,19 +264,21 @@ export default class Home extends React.Component {
         </div>
 
 
-        <Parallax className={styles.ctaMarquee} style={{position: 'relative', marginBottom: '-100px'}} bgImage="/images/RISE-Hero-3.jpg" strength={400}>
-          <h1 className={styles.header}>Be Mentored<br />By The Best</h1>
-          <h2 className={styles.subheader}>Develop your Olympic Mindset,<br />with your Olympic Mentor.</h2>
-          <div className={styles.ctas}>
-            <Button className={styles.ctaButtonWrapper} href="#what-we-do" flat hollow white><div className={styles.ctaButton}>What we do</div></Button>
-            <span>OR</span>
-            <Button className={styles.ctaButtonWrapper} href="/login" flat hollow white><div className={styles.ctaButton}>Sign In</div></Button>
+        <Parallax className={styles.ctaMarquee} style={{position: 'relative', marginBottom: '-100px'}} bgImage={heroImageBottom} strength={400}>
+          <div className={styles.inner}>     
+            <h1 className={styles.header}>Be Mentored<br />By The Best</h1>
+            <h2 className={styles.subheader}>Develop your Olympic Mindset,<br />with your Olympic Mentor.</h2>
+            <div className={styles.ctas}>
+              <Button className={styles.ctaButtonWrapper} href="#what-we-do" flat hollow white><div className={styles.ctaButton}>What we do</div></Button>
+              <span>OR</span>
+              <Button className={styles.ctaButtonWrapper} href="/login" flat hollow white><div className={styles.ctaButton}>Sign In</div></Button>
+            </div>
           </div>
         </Parallax>
 
         <section className={styles.footer}>
           <InstagramFeed />
-          <Button label="Follow us on Instagram" href="https://www.instagram.com/theriselife/" target="_new" flat hollow white className={styles.followUsCta} />
+          <Button label="Follow us on Instagram" href="https://www.instagram.com/riseathletes/" target="_new" flat hollow white className={styles.followUsCta} />
           <Button label="Follow us on Facebook" href="https://www.facebook.com/RISEathletes/" target="_new" flat hollow white className={styles.followUsCta} />
           <div className={styles.email}><a href="mailto:info@riseathletes.com">info@riseathletes.com</a></div>
           <div className={styles.copyright}>COPYRIGHT {(new Date()).getFullYear()} RISE ELITE</div>

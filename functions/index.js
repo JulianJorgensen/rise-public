@@ -1,6 +1,6 @@
 const functions = require('firebase-functions');
 const adminAlertEmail = require('./emails/adminAlert');
-const sendEmail = require('./emails/defaultEmail');
+const sendEmail = require('./emails/email');
 const acuity = require('./acuity');
 const stripe = require('./stripe');
 const admin = require('./admin');

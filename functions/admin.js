@@ -41,16 +41,20 @@ module.exports = {
   changeApplicationStatus: function(query) {
     let { uid, newStatus, newRole } = query;
     let userRef = database.ref(`users/${uid}`);
+    console.log('chaning status');
 
-    return userRef.update({
-      applicationApproved: (newStatus === 'true')
-    })
-      .then(() => {
-        return `Successfully changed application status for user ${uid} to ${newStatus}`;
+    return new Promise((resolve, reject) => {
+      userRef.update({
+        applicationApproved: (newStatus === 'true')
       })
-      .catch((error) => {
-        throw error(`Error changing application status for user ${uid}, error:`, error);
-      });
+        .then(() => {
+          console.log('changed status!!;;');
+          resolve(`Successfully changed application status for user ${uid} to ${newStatus}`);
+        })
+        .catch((error) => {
+          reject(`Error changing application status for user ${uid}, error:`, error);
+        });  
+    });
   },
 
   pairAthleteWithMentor: function(query) {

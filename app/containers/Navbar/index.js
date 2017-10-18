@@ -59,7 +59,6 @@ export default class Navbar extends Component {
           {numberOfUpcomingAppointments > 0 ? <div className={classes.numberOfNotifications}>{numberOfUpcomingAppointments}</div> : ''}
         </Link>
         <div className={classes.rightNavName}>{account.firstName ? `Hey ${account.firstName}!` : ''}</div>
-        <Avatar className={classes.rightNavAvatar} image='/images/User.png' cover />
         <IconMenu className={classes.rightNavMenu} icon={<div className={classes.icon}><ChevronDownIcon className={classes.rightNavIcon} /></div>} position='topRight' menuRipple>
           <MenuItem
             caption='Profile'

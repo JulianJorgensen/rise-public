@@ -51,12 +51,16 @@
 }
 
 .ctaMarquee{
-  background-position: center center;
+  /* background-position: center center; */
   background-repeat: no-repeat;
-  background-size: cover;
-  height: rem(600);
-  width: 100%;
+  /* background-size: cover; */
+  width: rem(1200);
   text-align: center;
+
+  &,
+  & .inner{
+    height: rem(600);
+  }
 
   @media (--large-and-up) {
     width: rem(1140);
@@ -69,6 +73,11 @@
     & .inner{
       position: relative;
       z-index: 2;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
       & .header{
         font-size: rem(134);
         line-height: rem(100);
@@ -76,10 +85,10 @@
     }
   }
 
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
 
   & .header{
     color: white;
@@ -187,7 +196,7 @@
       top: 0;
       right: 0;
       content: '';
-      background-image: url('/images/RISE-Hero-2.jpg');
+      background-image: url(assets/images/RISE-Hero-2.jpg);
       background-position: right center;
       background-repeat: no-repeat;
       background-size: contain;
@@ -276,6 +285,9 @@
       color: var(--blue);
       font-weight: 400;
     }
+    & p{
+      margin-bottom: 0;
+    }
 
     & .cta{
       position: relative;
@@ -312,9 +324,10 @@
 
   & .email{
     margin: rem(15) 0 rem(30);
-    & a:hover{
-      color: white;
-    }
+  }
+
+  & a{
+    color: white;
   }
 
   & .copyright{

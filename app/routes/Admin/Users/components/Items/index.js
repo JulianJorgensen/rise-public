@@ -15,6 +15,8 @@ import Autocomplete from 'react-toolbox/lib/autocomplete';
 import LoadingSpinner from 'components/LoadingSpinner';
 import classes from './index.css';
 
+import Status from './components/Status';
+
 import { isMentor } from 'utils/utils';
 import { getAttendeesFromMeeting } from 'utils/meetings';
 
@@ -52,68 +54,6 @@ export default class UsersItems extends Component {
       userData: user
     });
   };
-
-  toggleApplicationStatus = (uid) => {
-    let { users } = this.props;
-    let user = users[uid];
-
-    if (user.role === 'admin'){
-      return false;
-    }
-
-    axios.get(`${fbConfig.functions}/changeApplicationStatus`, {
-      params: {
-        uid: uid,
-        newStatus: !user.applicationApproved
-      }
-    })
-    .then((response) => {
-      console.log('successfully toggled user status ', response);
-      if (!user.applicationApproved) {
-        if(confirm('Send welcome email?')){
-          // send welcome email to user
-          axios.post(`${fbConfig.functions}/sendEmail`, {
-            toName: user.firstName,
-            toEmail: user.email,
-            subject: `Congratulations ${user.firstName}!`,
-            title: `You have been approved!`,
-            message: 'Go to RISE-Athletes.com to login to your account.'
-          })
-          .then((response) => {
-            console.log(response);
-          })
-          .catch((error) => {
-            console.log('Error sending welcome email: ', error);
-          });          
-        }
-      }
-    })
-    .catch((error) => {
-      console.log('error toggling user status ', error);
-    });
-  }
-
-  pairAthleteWithMentor = () => {
-    let { userData, selectedMentor } = this.state;
-    let athleteUid = userData.uid;
-
-    console.log(`paring athlete ${athleteUid} with mentor ${selectedMentor}...`);
-    axios.get(`${fbConfig.functions}/pairAthleteWithMentor`, {
-      params: {
-        athleteUid: athleteUid,
-        mentorUid: selectedMentor
-      }
-    })
-    .then((response) => {
-      console.log(response);
-      this.setState({
-        showPairModal: false
-      });
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  }
 
   handleMentorChange = (mentor) => {
     console.log('changing mentor', mentor);
@@ -181,24 +121,10 @@ export default class UsersItems extends Component {
     let { data, users } = this.props;
     let { userData, showModal, showPairModal, selectedMentor, showDeleteConfirmationModal } = this.state;
 
-    let renderApplicationStatus = (user) => {
-      if (!users[user].hasSubmittedApplication) {
-        return (
-          <TableCell><div>Not yet submitted</div></TableCell>          
-        )
-      }
-
-      return (
-        <TooltipCell tooltip="Click to toggle status">
-          <div className={classes.applicationStatus} onClick={() => this.toggleApplicationStatus(user)}>{users[user].applicationApproved ? 'Approved' : 'Pending'}</div>
-        </TooltipCell>
-      )
-    };
-
     let items = data.map((user, index) => {
       return (
         <TableRow key={index} selectable={false}>
-          {renderApplicationStatus(user)}
+          <Status user={users[user]} />
           <TableCell><div>{users[user].role}</div></TableCell>
           <TableCell><div>{users[user].firstName}</div></TableCell>
           <TableCell><div>{users[user].lastName}</div></TableCell>

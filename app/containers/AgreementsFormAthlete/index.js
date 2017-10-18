@@ -30,7 +30,7 @@ export default class AgreementsFormAthlete extends React.Component {
   render() {
     return (
       <form className={classes.container} onSubmit={this.handleSubmit.bind(this)}>
-      <h1>Agreements</h1>
+      <h2>Agreements</h2>
       <div className={classes.term}>
         <div className={classes.termBody}>
           <h5>Services</h5>

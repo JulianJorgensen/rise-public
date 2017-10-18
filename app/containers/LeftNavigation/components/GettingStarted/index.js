@@ -37,7 +37,7 @@ export default class GettingStartedNav extends Component {
             <Link
               to='/getting-started/payment'
               className={`${classes.navItem} ${!applicationApproved ? classes.disabled : ''} ${location.pathname === '/getting-started/payment' ? classes.navItemActive : ''}`}>
-              <div className={classes.navAnchor}>Setup Payment</div>
+              <div className={classes.navAnchor}>Set Up Payment</div>
             </Link>
           </div>
         : ''}
