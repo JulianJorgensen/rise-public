@@ -55,6 +55,33 @@ export default class UsersItems extends Component {
     });
   };
 
+  pairAthleteWithMentor = () => {
+    let { userData, selectedMentor } = this.state;
+    let athleteUid = userData.uid;
+
+    this.setState({
+      pairing: true
+    });
+
+    console.log(`paring athlete ${athleteUid} with mentor ${selectedMentor}...`);
+    axios.get(`${fbConfig.functions}/pairAthleteWithMentor`, {
+      params: {
+        athleteUid: athleteUid,
+        mentorUid: selectedMentor
+      }
+    })
+    .then((response) => {
+      console.log(response);
+      this.setState({
+        showPairModal: false,
+        pairing: false,
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
+
   handleMentorChange = (mentor) => {
     console.log('changing mentor', mentor);
     this.setState({
@@ -187,7 +214,7 @@ export default class UsersItems extends Component {
         <Dialog
           actions={[
             { label: "Cancel", onClick: this.closeModal },
-            { label: "Pair", onClick: this.pairAthleteWithMentor, primary: true}
+            { label: "Pair", onClick: this.pairAthleteWithMentor, disabled: this.state.pairing, primary: true}
           ]}
           active={showPairModal}
           onEscKeyDown={this.closeModal}
