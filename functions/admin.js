@@ -65,13 +65,11 @@ module.exports = {
         let athleteRef = database.ref(`users/${athleteUid}`);
 
         athleteRef.once("value", (snapshot) => {
-          let athleteId = snapshot.val().uid;
           let oldMentorUid = snapshot.val().mentor;
           let oldMentorAthletesRef = database.ref(`users/${oldMentorUid}/athletes`);
-          oldMentorAthletesRef.orderByValue().equalTo(athleteId).once("value", (athleteSnapshot) => {
+          oldMentorAthletesRef.orderByValue().equalTo(athleteUid).once("value", (athleteSnapshot) => {
             athleteSnapshot.forEach((data) => {
               oldMentorAthletesRef.child(data.key).remove();
-              resolve();
             });
           }).then(() => {
             resolve();
@@ -98,21 +96,16 @@ module.exports = {
     let updateMentor = () => {
       return new Promise((resolve, reject) => {
         let mentorAthletesRef = database.ref(`users/${mentorUid}/athletes`);
-        mentorAthletesRef.once("value", (snapshot) => {
-          let athletesArr = snapshot.val() ? Object.values(snapshot.val()) : [];
-          let athleteExists = athletesArr.indexOf(athleteUid) !== -1;
+        mentorAthletesRef.orderByValue().equalTo(athleteUid).once("value", (snapshot) => {
+          if (snapshot.val()) resolve();
 
-          if (!athleteExists) {
-            mentorAthletesRef.update({
-              [athleteUid]: athleteUid
-            }).then((res) => {
-              resolve(res);
-            }).catch((error) => {
-              reject(error);
-            });
-          } else {
-            resolve('athlete already added to mentor athletes list!');
-          }
+          mentorAthletesRef.update({
+            [athleteUid]: athleteUid
+          }).then((res) => {
+            resolve(res);
+          }).catch((error) => {
+            reject(error);
+          });
         }).catch((err) => {
           reject(err);
         });
