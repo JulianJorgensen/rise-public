@@ -65,22 +65,17 @@ module.exports = {
         let athleteRef = database.ref(`users/${athleteUid}`);
 
         athleteRef.once("value", (snapshot) => {
+          let athleteId = snapshot.val().uid;
           let oldMentorUid = snapshot.val().mentor;
           let oldMentorAthletesRef = database.ref(`users/${oldMentorUid}/athletes`);
-
-          console.log('oldMentorUid', oldMentorUid);
-
-          oldMentorAthletesRef.once("value", (snapshot) => {
-            console.log('oldMentorAthletes', snapshot.val());
-            let updates = {};
-            snapshot.forEach(child => updates[child.key] = null);
-            oldMentorAthletesRef.update(updates).then(() => {
-              resolve(`Deleted refs from the old mentor ${oldMentorUid}`);
+          oldMentorAthletesRef.orderByValue().equalTo(athleteId).once("value", (athleteSnapshot) => {
+            athleteSnapshot.forEach((data) => {
+              oldMentorAthletesRef.child(data.key).remove();
+              resolve();
             });
-          }).catch((error) => {
-            reject(error);
+          }).then(() => {
+            resolve();
           });
-
         }).catch((error) => {
           reject(error);
         });
@@ -109,7 +104,7 @@ module.exports = {
 
           if (!athleteExists) {
             mentorAthletesRef.update({
-              [athletesArr.length]: athleteUid
+              [athleteUid]: athleteUid
             }).then((res) => {
               resolve(res);
             }).catch((error) => {

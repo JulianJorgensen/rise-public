@@ -119,6 +119,11 @@ const BASE_CONFIG = {
     new CopyWebpackPlugin([
       {
         context: 'app',
+        from: 'assets/images',
+        to: 'images'
+      },
+      {
+        context: 'app',
         from: 'assets/pdfs',
         to: 'pdfs'
       }
