@@ -78,8 +78,9 @@ export default class ScheduleNew extends Component {
     let { selectedAthlete, recurring, selectedDateTime, showAvailableTimes, showDatesModal, showConfirmation, isConfirmed } = this.state;
     let selectedAthleteAccount = selectedAthlete && account.athletes ? _.find(account.athletes, { 'uid': selectedAthlete }) : '';
     let hasChosenType = recurring !== null;
+    let athletesArr = Object.keys(account.athletes).map((k) => account.athletes[k]);
 
-    let assignedAthletes = account.athletes ? account.athletes.map((mentee) => {
+    let assignedAthletes = athletesArr ? athletesArr.map((mentee) => {
       return {
         value: mentee.uid,
         label: `${mentee.firstName ? mentee.firstName : mentee.email} ${mentee.lastName ? mentee.lastName : ''}`

@@ -49,7 +49,7 @@ export default class MyAthletes extends Component {
             <TableCell>Last name</TableCell>
             <TableCell>Email</TableCell>
           </TableHead>
-          {account.athletes.map((athlete, idx) => (
+          {Object.keys(account.athletes).map((k) => account.athletes[k]).map((athlete, idx) => (
             <TableRow key={idx} selectable={false}>
               <TableCell><div>{athlete.firstName}</div></TableCell>
               <TableCell><div>{athlete.lastName}</div></TableCell>
