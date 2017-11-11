@@ -28,8 +28,6 @@ let send = function(body) {
     let {message, userData} = body;
     let {uid, firstName, lastName, email, role} = userData;
 
-    console.log('sending to: ', adminEmails);
-
     let mailOptions = {
       from: {name: 'RISE Robot', address: 'no-reply@rise-athletes.com'},
       to: adminEmails,
