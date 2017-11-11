@@ -114,16 +114,6 @@ export default class Application extends Component {
     window.scrollTo(0, 0);
   }
 
-  mentorConfirm = () => {
-    let { role, hasSubmittedApplication } = this.props.account;
-  
-    updateAccount(this.props.firebase, this.props.auth.uid, {
-      role: role.name
-    });
-
-    this.props.history.push('/dashboard');
-  }
-
   render () {
     const { account } = this.props;
     let { finished } = this.state;
@@ -139,15 +129,6 @@ export default class Application extends Component {
             <h2>Congratulations! You’ve been accepted as a RISE Athlete!</h2>
             <p>Let’s go through some of the nitty gritty details. Be sure to read through carefully WITH A PARENT/GUARDIAN and check the box to agree with each section.</p>
             <Button href='/getting-started/agreements' label='Fill out the agreements' />
-          </div>
-        )
-      }
-
-      if (isMentor(account.role)) {
-        return (
-          <div className={classes.container}>
-            <h2>Congratulations! You’ve been accepted as a RISE Athlete!</h2>
-            <Button primary onClick={this.mentorConfirm}>Begin now</Button>
           </div>
         )
       }

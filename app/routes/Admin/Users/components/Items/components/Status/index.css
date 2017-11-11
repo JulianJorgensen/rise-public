@@ -1,3 +1,13 @@
 .applicationStatus{
   cursor: pointer;
 }
+.approved{
+  color: green;
+  & svg{
+    height: rem(15);
+    width: rem(15);
+    & path{
+      fill: green;
+    }
+  }
+}

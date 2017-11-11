@@ -5,15 +5,22 @@ import { firebase as fbConfig } from 'app/config';
 import { TableCell, Tooltip } from 'react-toolbox/lib';
 
 import LoadingSpinner from 'components/LoadingSpinner';
+import CheckMark from 'assets/icons/regular/check.svg';
 import classes from './index.css';
 
 const TooltipCell = Tooltip(TableCell);
 
 export default class UsersItemsStatus extends Component {
-  state = {}
+  state = {};
+
+  componentWillMount() {
+    this.setState({
+      user: this.props.user,
+    })
+  }
 
   toggleApplicationStatus = () => {
-    let { user } = this.props;
+    let { user } = this.state;
 
     if (user.role === 'admin'){
       return false;
@@ -23,18 +30,32 @@ export default class UsersItemsStatus extends Component {
       changingApplicationStatus: true
     });
 
+    let newRole;
+    if (!user.applicationApproved && user.role === 'mentor-pending') {
+      newRole = 'mentor';
+    }else{
+      newRole = user.role;
+    }
+
     axios.get(`${fbConfig.functions}/changeApplicationStatus`, {
       params: {
         uid: user.uid,
-        newStatus: !user.applicationApproved
+        newStatus: !user.applicationApproved,
+        newRole,
       }
     })
-    .then((response) => {
-      console.log('successfully toggled user status ', response);
-      this.setState({
-        changingApplicationStatus: false
-      });
+    .then(({ data: { message, newStatus } }) => {
 
+      let updatedUser = {
+        ...user,
+        applicationApproved: !user.applicationApproved,
+      };
+
+      this.setState({
+        changingApplicationStatus: false,
+        user: updatedUser,
+      });
+      
       if (!user.applicationApproved) {
         if(confirm('Send welcome email?')){
           // send welcome email to user
@@ -59,7 +80,7 @@ export default class UsersItemsStatus extends Component {
   }
 
   render() {
-    let { user } = this.props;
+    let { user } = this.state;
     if (!user.hasSubmittedApplication) {
       return (
         <TableCell><div>Not yet submitted</div></TableCell>          
@@ -74,7 +95,7 @@ export default class UsersItemsStatus extends Component {
 
     return (
       <TooltipCell tooltip="Click to toggle status">
-        <div className={classes.applicationStatus} onClick={() => this.toggleApplicationStatus()}>{user.applicationApproved ? 'Approved' : 'Pending'}</div>
+        <div className={classes.applicationStatus} onClick={() => this.toggleApplicationStatus()}>{user.applicationApproved ? <span className={classes.approved}><CheckMark /> Approved</span> : 'Pending'}</div>
       </TooltipCell>
     )
   }

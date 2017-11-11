@@ -23,7 +23,7 @@ const TooltipCell = Tooltip(TableCell);
 @connect(
   ({ firebase }) => ({
     users: dataToJS(firebase, 'users'),
-    account: pathToJS(firebase, 'profile')
+    account: pathToJS(firebase, 'profile'),
   })
 )
 export default class Users extends Component {
@@ -35,6 +35,17 @@ export default class Users extends Component {
     itemsPerPage: 10,
     pageCount: 0
   };
+
+  sortBy = (array, val) => {
+    array.sort((a, b) => {
+      if (!a[val] || !b[val]) return 0;
+      let objA=a[val].toLowerCase(), objB=b[val].toLowerCase();
+      if (objA < objB) return -1;
+      if (objA > objB) return 1;
+      return 0;
+    });
+    return array;
+  }
 
   handlePageClick = (data) => {
     let { users, itemsPerPage } = this.state;
@@ -48,27 +59,32 @@ export default class Users extends Component {
   }
 
   setUsers = () => {
-    let { itemsPerPage, offset, usersVisible, users } = this.state;
     let usersObj = this.props.users;
+    if (!usersObj) {
+      setTimeout(() => {
+        this.setUsers();
+      }, 200);
+      return false;
+    }
+    let { itemsPerPage, offset, usersVisible, users } = this.state;
+    if (usersVisible.length <= 0) {
+      let users = Object.values(usersObj);
+      let sortedUsers = this.sortBy(users, 'firstName');
 
-    if (usersObj && usersVisible.length <= 0) {
-      let users = Object.keys(usersObj);
       this.setState({
-        users: users,
+        users: sortedUsers,
         usersVisible: users.slice(offset, itemsPerPage+offset),
-        pageCount: users.length / itemsPerPage
+        pageCount: users.length / itemsPerPage,
       });
     }
   };
 
   componentWillMount() {
-    setTimeout(() => {
-      this.setUsers();
-    }, 300);
+    this.setUsers();
   }
 
   render () {
-    let { pageCount, usersVisible } = this.state;
+    let { pageCount, usersVisible, users } = this.state;
     let { account } = this.props;
 
     if(!account || usersVisible.length <= 0) {
@@ -80,7 +96,7 @@ export default class Users extends Component {
     return (
       <div className={classes.container}>
         <h2>All users</h2>
-        <Items data={usersVisible} />
+        <Items users={users} data={usersVisible} />
 
         <ReactPaginate previousLabel={"previous"}
                        nextLabel={"next"}

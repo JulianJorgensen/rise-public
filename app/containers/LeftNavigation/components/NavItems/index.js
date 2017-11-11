@@ -46,7 +46,7 @@ export const navItems = [
   {
     url: '/meetings',
     icon: <CalendarIcon />,
-    anchor: 'Meetings',
+    anchor: 'My Meetings',
     className: classes.meetings,
     // children: [
     //   {
@@ -75,7 +75,7 @@ export const navItems = [
   {
     url: '/schedule',
     icon: <CalendarPlusIcon />,
-    anchor: 'Schedule',
+    anchor: 'Schedule a meeting',
     className: classes.schedule
   },
   // {

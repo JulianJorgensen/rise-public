@@ -25,14 +25,10 @@ const TooltipCell = Tooltip(TableCell);
 // icons
 import 'assets/icons/regular/trash.svg';
 
-@firebaseConnect([
-  'users'
-])
 @connect(
   ({ firebase }) => ({
     account: pathToJS(firebase, 'profile'),
     auth: pathToJS(firebase, 'auth'),
-    users: dataToJS(firebase, 'users')
   })
 )
 export default class UsersItems extends Component {
@@ -46,9 +42,7 @@ export default class UsersItems extends Component {
     this.showUserData(selectedRow);
   };
 
-  showUserData = (userId) => {
-    let { users } = this.props;
-    let user = _.find(users, { 'uid': userId });
+  showUserData = (user) => {
     this.setState({
       showModal: true,
       userData: user
@@ -89,10 +83,7 @@ export default class UsersItems extends Component {
     })
   }
 
-  showPairModal = (userId) => {
-    let { users } = this.props;
-    let user = _.find(users, { 'uid': userId });
-
+  showPairModal = (user) => {
     this.setState({
       userData: user,
       selectedMentor: user.mentor || '',
@@ -100,7 +91,7 @@ export default class UsersItems extends Component {
     });
   }
 
-  deleteUser = (uid) => {
+  deleteUser = ({ uid }) => {
     let confirmed = confirm(`Are you sure you want to delete the user with UID ${uid}?`);
 
     if (confirmed) {
@@ -145,21 +136,21 @@ export default class UsersItems extends Component {
   }
 
   render() {
-    let { data, users } = this.props;
+    let { data } = this.props;
     let { userData, showModal, showPairModal, selectedMentor, showDeleteConfirmationModal } = this.state;
 
     let items = data.map((user, index) => {
       return (
         <TableRow key={index} selectable={false}>
-          <Status user={users[user]} />
-          <TableCell><div>{users[user].role}</div></TableCell>
-          <TableCell><div>{users[user].firstName}</div></TableCell>
-          <TableCell><div>{users[user].lastName}</div></TableCell>
-          <TableCell><div>{users[user].email}</div></TableCell>
+          <Status user={user} />
+          <TableCell><div>{user.role}</div></TableCell>
+          <TableCell><div>{user.firstName}</div></TableCell>
+          <TableCell><div>{user.lastName}</div></TableCell>
+          <TableCell><div>{user.email}</div></TableCell>
           <TableCell>
             <div>
               <IconMenu icon='more_vert' position='topRight' menuRipple>
-                { users[user].role === 'athlete' || users[user].role === 'athlete-pending' ? <MenuItem icon='compare_arrows' caption='Pair with Mentor' onClick={() => this.showPairModal(user)} /> : <MenuItem icon='compare_arrows' disabled caption='Pair with Athlete' /> }
+                { user.role === 'athlete' || user.role === 'athlete-pending' ? <MenuItem icon='compare_arrows' caption='Pair with Mentor' onClick={() => this.showPairModal(user)} /> : <MenuItem icon='compare_arrows' disabled caption='Pair with Athlete' /> }
                 <MenuItem icon='assignment_ind' caption='See details' onClick={() => this.showUserData(user)} />
                 <MenuDivider />
                 <MenuItem icon='delete' caption='Delete' onClick={() => this.deleteUser(user)} />
