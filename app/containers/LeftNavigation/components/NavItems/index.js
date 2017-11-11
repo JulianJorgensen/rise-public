@@ -75,7 +75,7 @@ export const navItems = [
   {
     url: '/schedule',
     icon: <CalendarPlusIcon />,
-    anchor: 'Schedule a meeting',
+    anchor: 'Schedule A Meeting',
     className: classes.schedule
   },
   // {
