@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { firebaseConnect, pathToJS } from 'react-redux-firebase';
 import moment from 'moment-timezone';
-import { Chip, Dialog, Input, List, ListItem} from 'react-toolbox/lib';
+import { Chip, Input, List, ListItem} from 'react-toolbox/lib';
+import Dialog from 'components/Dialog';
 import LoadingSpinner from 'components/LoadingSpinner';
 import { isMentor, isAdmin } from 'utils/utils';
 

@@ -11,7 +11,7 @@ import { isMentor, isAdmin } from 'utils/utils';
 
 import * as utils from '../../../../utils/utils';
 
-import { Dialog } from 'react-toolbox/lib';
+import Dialog from 'components/Dialog';
 import TimezoneDisplay from 'components/TimezoneDisplay';
 import LoadingSpinner from 'components/LoadingSpinner';
 import Button from 'components/Button';

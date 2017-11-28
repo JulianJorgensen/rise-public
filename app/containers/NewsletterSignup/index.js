@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from 'components/Button';
-import { Dialog } from 'react-toolbox/lib/dialog';
+import Dialog from 'components/Dialog';
 import Input from 'react-toolbox/lib/input';
 import classes from './index.css';
 

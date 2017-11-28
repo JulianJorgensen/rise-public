@@ -10,7 +10,8 @@ import { isMentor, isAdmin } from 'utils/utils';
 
 import { IconMenu, MenuItem, MenuDivider } from 'react-toolbox/lib/menu';
 import { ListItem, ListDivider, ListCheckbox } from 'react-toolbox/lib/list';
-import { DatePicker, Dialog } from 'react-toolbox/lib';
+import { DatePicker } from 'react-toolbox/lib';
+import Dialog from 'components/Dialog';
 
 import classes from './index.css';
 

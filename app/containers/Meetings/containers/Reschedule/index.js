@@ -7,7 +7,7 @@ import { userIsAuthenticated, userHasPermission } from 'utils/router';
 import ChooseDateTime from 'routes/schedule/components/ChooseDateTime';
 import * as utils from 'routes/schedule/utils/utils';
 
-import { Dialog } from 'react-toolbox/lib';
+import Dialog from 'components/Dialog';
 
 import Button from 'components/Button';
 import LoadingSpinner from 'components/LoadingSpinner';

@@ -9,7 +9,7 @@ import moment from 'moment-timezone';
 
 import { Table, TableHead, TableRow, TableCell, Tooltip } from 'react-toolbox/lib';
 import {IconMenu, MenuItem, MenuDivider } from 'react-toolbox/lib/menu';
-import { Dialog } from 'react-toolbox/lib/dialog';
+import Dialog from 'components/Dialog';
 import Autocomplete from 'react-toolbox/lib/autocomplete';
 
 import LoadingSpinner from 'components/LoadingSpinner';

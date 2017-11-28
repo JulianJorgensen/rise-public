@@ -35,6 +35,7 @@ class AddCard extends React.Component {
       this.props.stripe.createToken({
         name: `${firstName} ${lastName}`
       }).then(({ token }) => {
+        console.log('Customer exists, adding new card');
         console.log('Received Stripe token:', token);
 
         axios.get(`${fbConfig.functions}/addCard`, {
@@ -62,6 +63,7 @@ class AddCard extends React.Component {
       this.props.stripe.createToken({
         name: `${firstName} ${lastName}`
       }).then(({ token }) => {
+        console.log('creating new customer');
         console.log('Received Stripe token:', token);
 
         axios.get(`${fbConfig.functions}/createStripeCustomer`, {
