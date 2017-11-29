@@ -21,7 +21,7 @@ store.subscribe(() => {
 
 ReactDOM.render(
   <Provider store={store}>
-    <StripeProvider apiKey="pk_test_345deUBDGNEne9ppIn8k38IY">
+    <StripeProvider apiKey="pk_live_YFoNx3keKp6d6unDR9SjFs2r">
       <Router>
         <Main />
       </Router>
