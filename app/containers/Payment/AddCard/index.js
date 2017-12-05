@@ -46,12 +46,11 @@ class AddCard extends React.Component {
             this.setState({
               submitting: false
             });
+            // trigger the parent form submit
+            if (this.props.onSubmit) {
+              this.props.onSubmit();
+            }
           });
-
-        // trigger the parent form submit
-        if (this.props.onSubmit) {
-          this.props.onSubmit();
-        }
       });
 
     } else {
@@ -63,16 +62,22 @@ class AddCard extends React.Component {
             params: {
               stripeToken: token.id,
               email: email,
-              uid: uid
+              uid: uid,
             }
           })
           .then((res) => {
-          });
+            // I needed to use setTimeout otherwise the card wouldn't show up without reload.
+            setTimeout(() => {
+              this.setState({
+                submitting: false,
+              });
 
-        // trigger the parent form submit
-        if (this.props.onSubmit) {
-          this.props.onSubmit();
-        }
+              // trigger the parent form submit
+              if (this.props.onSubmit) {
+                this.props.onSubmit();
+              }
+            }, 200);
+          });
       });
     }
   }

@@ -76,7 +76,7 @@ export default class Settings extends Component {
                 <Elements>
                   <div>
                     <ExistingCards updated={this.state.updated} />
-                    <AddCard onSubmit={this.completePaymentSetup} triggerUpdate={this.triggerUpdate} />
+                    <AddCard onSubmit={this.triggerUpdate} />
                   </div>
                 </Elements>
               </Tab>
