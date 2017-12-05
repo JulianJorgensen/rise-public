@@ -117,9 +117,6 @@ module.exports = {
         };
         acuity.request('/appointments', options, function (err, res, appointment) {
           if (err) reject(err);
-          console.log('res data: ', res.data);
-          console.log('res body: ', res.body);
-          resolve(`Appointment created on ${datetime}`);
         });
       });
     });

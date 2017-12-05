@@ -25,7 +25,6 @@ class CardItem extends React.Component {
         }
       })
       .then((res) => {
-        console.log('deleted card: ', res);
         this.setState({
           deleted: true
         });

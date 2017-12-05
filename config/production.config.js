@@ -12,5 +12,6 @@ module.exports = {
   adminEmails: [
     {name: 'Julian Jorgensen', address: 'me@julianjorgensen.com'},
     {name: 'RISE Admin', address: 'rise@riseeliteathletes.com'},
-  ]
+  ],
+  stripePublicKey: 'pk_live_YFoNx3keKp6d6unDR9SjFs2r',
 };

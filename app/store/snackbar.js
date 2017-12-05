@@ -13,7 +13,6 @@ const initialState = {
 export default function snackbarReducer (state = initialState, action) {
   switch (action.type) {
     case 'SET_SNACKBAR':
-      console.log('setting snackbar: ', action);
       return {
         ...state,
         show: true,

@@ -45,7 +45,6 @@ export default class Reschedule extends Component {
     let { id, account, dispatch } = this.props;
 
     utils.rescheduleMeeting(id, selectedDateTime, account.timezone).then((confirmation) => {
-        console.log('reschedule confirmed!', confirmation);
         this.props.handleClose();
         dispatch({
           type: 'SET_SNACKBAR',

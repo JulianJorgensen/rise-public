@@ -77,7 +77,6 @@ export default class UserMeetings extends Component {
     // let users = Object.assign(account.athletes || {}, {mentor: account.mentor || {}}, {account: account});
 
     if (filter === 'completed') {
-      console.log('filter is completed', filter);
       if(completed.length > 0) {
         if (limit) {
           completed = completed.slice(0, limit);
@@ -87,7 +86,6 @@ export default class UserMeetings extends Component {
             <List selectable ripple>
               <ListSubHeader caption='Past Meetings' />
               {completed.map((meeting, index) => {
-                console.log('completed meeting', meeting);
                 attendees = getAttendeesFromMeeting(meeting, users);
                 return (
                   <MeetingItem

@@ -47,7 +47,6 @@ export function fetchAvailableTimes(date, acuityCalendarId, timezone) {
     })
     .then((response) => {
       let availableTimes = response.data;
-      console.log('availabletimes', availableTimes);
       availableTimes.sort((a,b) => {
         // Turn your strings into dates, and then subtract them
         // to get a value that is either negative, positive, or zero.
@@ -125,9 +124,6 @@ export function confirmMeeting(selectedAthlete, dateTime, account, acuityAccount
 
 export function rescheduleMeeting(id, dateTime, timezone) {
   return new Promise((resolve, reject) => {
-    console.log('===reschedulign to', dateTime);
-    console.log('formatted', moment(dateTime).tz(timezone).format('YYYY-MM-DDTHH:mmZ'));
-    console.log('timezone', timezone);
     axios.get(`${fbConfig.functions}/rescheduleAppointment`, {
       params: {
         id: id,

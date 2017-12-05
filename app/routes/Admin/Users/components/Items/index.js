@@ -57,7 +57,6 @@ export default class UsersItems extends Component {
       pairing: true
     });
 
-    console.log(`paring athlete ${athleteUid} with mentor ${selectedMentor}...`);
     axios.get(`${fbConfig.functions}/pairAthleteWithMentor`, {
       params: {
         athleteUid: athleteUid,
@@ -65,7 +64,6 @@ export default class UsersItems extends Component {
       }
     })
     .then((response) => {
-      console.log(response);
       this.setState({
         showPairModal: false,
         pairing: false,
@@ -77,7 +75,6 @@ export default class UsersItems extends Component {
   }
 
   handleMentorChange = (mentor) => {
-    console.log('changing mentor', mentor);
     this.setState({
       selectedMentor: mentor
     })
@@ -101,7 +98,6 @@ export default class UsersItems extends Component {
         }
       })
       .then((response) => {
-        console.log('successfully deleted user ', response);
         let userIndex = this.props.data.indexOf(uid);
         if (userIndex > -1) {
           this.props.data.splice(userIndex, 1);

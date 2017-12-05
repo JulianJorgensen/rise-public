@@ -32,7 +32,6 @@ export default class MeetingItem extends Component {
   };
 
   toggleMeeting = (id, status) => {
-    console.log('toggling meeting');
     axios.get(`${fbConfig.functions}/toggleAppointment`, {
         params: {
           id,

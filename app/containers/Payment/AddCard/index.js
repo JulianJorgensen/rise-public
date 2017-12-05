@@ -35,9 +35,6 @@ class AddCard extends React.Component {
       this.props.stripe.createToken({
         name: `${firstName} ${lastName}`
       }).then(({ token }) => {
-        console.log('Customer exists, adding new card');
-        console.log('Received Stripe token:', token);
-
         axios.get(`${fbConfig.functions}/addCard`, {
             params: {
               stripeToken: token.id,
@@ -45,7 +42,6 @@ class AddCard extends React.Component {
             }
           })
           .then((res) => {
-            console.log('stripe response: ', res);
             this.props.triggerUpdate();
             this.setState({
               submitting: false
@@ -63,9 +59,6 @@ class AddCard extends React.Component {
       this.props.stripe.createToken({
         name: `${firstName} ${lastName}`
       }).then(({ token }) => {
-        console.log('creating new customer');
-        console.log('Received Stripe token:', token);
-
         axios.get(`${fbConfig.functions}/createStripeCustomer`, {
             params: {
               stripeToken: token.id,
@@ -74,7 +67,6 @@ class AddCard extends React.Component {
             }
           })
           .then((res) => {
-            console.log('stripe response: ', res);
           });
 
         // trigger the parent form submit

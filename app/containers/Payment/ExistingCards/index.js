@@ -32,7 +32,6 @@ class ExistingCards extends React.Component {
         }
       })
       .then((res) => {
-        console.log('response: ', res);
         let cards = res.data.data;
 
         this.setState({
@@ -47,7 +46,6 @@ class ExistingCards extends React.Component {
   }
 
   componentWillReceiveProps(props) {
-    console.log('existing cards receiving props', props);
     this.setState({
       fetchedCards: false
     });

@@ -75,7 +75,6 @@ export const fetchAllMeetings = (account, dispatch) => {
 
 
 export const fetchMeetings = (account, dispatch) => {
-  console.log('fetching meetings, with acount', account);
   let { uid, timezone } = account;
 
   return axios.get(`${fbConfig.functions}/${isMentor(account.role) ? 'getMeetingsByMentorUid' : 'getMeetingsByUid'}`, {

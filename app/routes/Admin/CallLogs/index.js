@@ -43,7 +43,6 @@ export default class AdminCallLogs extends Component {
     let now = moment().format('YYYY-MM-DDTHH:MM:SSz');
     let twoYearsAgo = moment().subtract(2, 'Y').format('YYYY-MM-DDTHH:MM:SSz');
 
-    console.log('getting all meeting=====');
     axios.get(`${fbConfig.functions}/getAllMeetings`, {
       params: {
         appointmentTypeID: ENV_CONFIG.ACUITY_MENTOR_CALL_ID,
@@ -68,7 +67,6 @@ export default class AdminCallLogs extends Component {
   }
 
   handlePageClick = (data) => {
-    console.log('admin call log handlePageClick ');
     let selected = data.selected;
     let offset = Math.ceil(selected * this.state.itemsPerPage);
 
@@ -78,14 +76,12 @@ export default class AdminCallLogs extends Component {
   }
 
   handleDateChange = (type, value) => {
-    console.log('admin call log handleDateChange ');
     this.setState({[type]: value}, () => {
       this.filterMeetings();
     });
   }
 
   filterMeetings = () => {
-    console.log('admin call log filterMeetings ');
     let { meetings, allMeetingsFetched, startDate, endDate, offset, itemsPerPage } = this.state;
 
     let meetingsDateFiltered = allMeetingsFetched ? meetings.filter((meeting) => {

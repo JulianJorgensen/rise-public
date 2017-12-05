@@ -12,13 +12,11 @@ export default class AgreementsFormAthlete extends React.Component {
   }
 
   handleChange = (field, value) => {
-    console.log('set state', field);
     this.setState({ ...this.state, [field]: value });
   };
 
   handleSubmit(ev) {
     ev.preventDefault();
-    console.log('submitting', this.state);
     let { term1, term2, term3, term4, term5, term6, term7, term8 } = this.state;
     if (!term1 || !term2 || !term3 || !term4 || !term5 || !term6 || !term7 || !term8) {
       this.setState({ error: 'Looks like you missed a section, please make sure you’ve read and agreed with all the boxes.' });

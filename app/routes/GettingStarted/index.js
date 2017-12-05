@@ -104,10 +104,8 @@ export default class Application extends Component {
       template: 'applicationConfirmation.pug'
     })
     .then((response) => {
-      console.log(response);
     })
     .catch((error) => {
-      console.log('Error sending application confirmation email: ', error);
     });
 
     // scroll to top

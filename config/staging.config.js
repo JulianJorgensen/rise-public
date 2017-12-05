@@ -14,5 +14,6 @@ module.exports = {
     {name: 'RISE Admin', address: 'rise@riseeliteathletes.com'},
     {name: 'Rebecca Soni', address: 'soniswim@gmail.com'},
     {name: 'Julia Kozlov', address: 'busklub@gmail.com'}
-  ]
+  ],
+  stripePublicKey: 'pk_test_345deUBDGNEne9ppIn8k38IY',
 };

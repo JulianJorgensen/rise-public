@@ -8,5 +8,6 @@ module.exports = {
     databaseURL: 'https://rise-development.firebaseio.com',
     functionsURL: 'http://localhost:5000/rise-development/us-central1',
     storageBucket: 'rise-development.appspot.com'
-  }
+  },
+  stripePublicKey: 'pk_test_345deUBDGNEne9ppIn8k38IY',
 };

@@ -32,7 +32,6 @@ export default class Profile extends Component {
 
   handleSubmit = (newData) => {
     newData = removePopulatedData(newData);
-    console.log('new data', newData);
     updateAccount(this.props.firebase, this.props.account.uid, newData).then(() => {
       this.props.dispatch({
         type: 'SET_SNACKBAR',
