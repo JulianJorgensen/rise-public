@@ -19,6 +19,7 @@ import AllInclusiveIcon from '-!svg-react-loader?name=Icon!assets/icons/regular/
 
 import heroImage from 'images/RISE-Hero-1.jpg';
 import heroImageBottom from 'images/RISE-Hero-3.jpg';
+import aboutBg from 'images/RISE-Hero-2.jpg';
 import mentorImage1 from 'images/mentors/Elizabeth_Beisel.jpg';
 import mentorImage2 from 'images/mentors/Heather_Petri.jpg';
 import mentorImage3 from 'images/mentors/Ian_Crocker.jpg';
@@ -43,7 +44,7 @@ export default class Home extends React.Component {
 
   render() {
     let settings = {
-      dots: true,
+      dots: false,
       infinite: true,
       speed: 500,
       slidesToShow: 3,
@@ -55,6 +56,7 @@ export default class Home extends React.Component {
         {
           breakpoint: 768,
           settings: {
+            dots: true,
             arrows: false,
             centerMode: true,
             centerPadding: '0',
@@ -65,6 +67,31 @@ export default class Home extends React.Component {
         }
       ]
     };
+
+    let testimonialsSettings = {
+      dots: true,
+      arrows: false,
+      infinite: false,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      draggable: false,
+      lazyLoad: false,
+      autoplay: false,
+      centerPadding: 0,
+      responsive: [
+        {
+          breakpoint: 768,
+          settings: {
+            centerMode: true,
+            draggable: true,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+          }
+        }
+      ]
+    };
+
 
     return (
       <div className={styles.wrapper}>
@@ -238,30 +265,33 @@ export default class Home extends React.Component {
         </div>
 
         <div className={styles.about}>
-          <div className={styles.container}>
+          <div className={`${styles.container} ${styles.aboutContainer}`}>
             <h3 className={styles.header}>Your Founders</h3>
             <h3 className={styles.subheader}>Rebecca Soni &<br />Caroline Burckle</h3>
-            <p className={styles.content}>Reb & Caro’s friendship goes back even further than sharing an apartment in the Olympic Village in Beijing 2008. Fast forward 7 years and they officially established their own business in 2015, RISE Athletes. Their goal: to create a community for cultivating, creating and discussing things that would uplift them, their peers, and the next generation of athletes. RISE has come a long way, and we are excited to share this adventure with you!</p>
+            <p className={styles.aboutContent}>Reb & Caro’s friendship goes back even further than sharing an apartment in the Olympic Village in Beijing 2008. Fast forward 7 years and they officially established their own business in 2015, RISE Athletes. Their goal: to create a community for cultivating, creating and discussing things that would uplift them, their peers, and the next generation of athletes. RISE has come a long way, and we are excited to share this adventure with you!</p>
+            <div className={styles.aboutBg} style={{backgroundImage: `url(${aboutBg})`}}></div>
           </div>
         </div>
 
         <div className={styles.container}>
           <div className={styles.testimonials}>
-            <div className={styles.testimonial}>
-              <div className={styles.body}>I think that working with Caroline has helped her to see how much she has accomplished in her short life and what great things that she has yet to achieve in her future. She has gotten Avery to see the value of herself as a person, teammate, etc.</div>
-              <author>Stacy</author>
-              <div className={styles.title}>Parent</div>
-            </div>
-            <div className={styles.testimonial}>
-              <div className={styles.body}>I realize now that I don’t need to train harder, I need to train smarter. Rebecca taught me to focus on what I do well and make that even better. I now face competition with excited energy rather just hoping I do well.</div>
-              <author>Annie</author>
-              <div className={styles.title}>Athlete</div>
-            </div>
-            <div className={styles.testimonial}>
-              <div className={styles.body}>In life, in sport, there is only so much you can self-teach and when you have reached the end of your knowledge, that's when a mentor steps in. I love providing support, encouragement, and experience to help my athletes accomplish their goals and RISE up to meet their maximum potential!</div>
-              <author>Kristy</author>
-              <div className={styles.title}>Mentor</div>
-            </div>
+            <Slider {...testimonialsSettings}>
+              <div className={styles.testimonial}>
+                <div className={styles.body}>I think that working with Caroline has helped her to see how much she has accomplished in her short life and what great things that she has yet to achieve in her future. She has gotten Avery to see the value of herself as a person, teammate, etc.</div>
+                <author>Stacy</author>
+                <div className={styles.title}>Parent</div>
+              </div>
+              <div className={styles.testimonial}>
+                <div className={styles.body}>I realize now that I don’t need to train harder, I need to train smarter. Rebecca taught me to focus on what I do well and make that even better. I now face competition with excited energy rather just hoping I do well.</div>
+                <author>Annie</author>
+                <div className={styles.title}>Athlete</div>
+              </div>
+              <div className={styles.testimonial}>
+                <div className={styles.body}>In life, in sport, there is only so much you can self-teach and when you have reached the end of your knowledge, that's when a mentor steps in. I love providing support, encouragement, and experience to help my athletes accomplish their goals and RISE up to meet their maximum potential!</div>
+                <author>Kristy</author>
+                <div className={styles.title}>Mentor</div>
+              </div>
+            </Slider>
           </div>
         </div>
 

@@ -1,3 +1,5 @@
+@import "../variables.css";
+
 /* Slider */
 /* Arrows */
 
@@ -125,22 +127,28 @@
 
         display: inline-block;
 
-        width: 20px;
-        height: 20px;
+        width: rem(12);
+        height: rem(12);
+
         margin: 0 5px;
         padding: 0;
 
         cursor: pointer;
+        @media (--large-and-up){
+            width: rem(20);
+            height: rem(20);                
+        }
     }
     & .slick-dots li button
     {
+        border-radius: 50%;
         font-size: 0;
         line-height: 0;
 
         display: block;
 
-        width: 20px;
-        height: 20px;
+        width: rem(12);
+        height: rem(12);
         padding: 5px;
 
         cursor: pointer;
@@ -148,7 +156,12 @@
         color: transparent;
         border: 0;
         outline: none;
-        background: transparent;
+        background: gray(20%);
+        opacity: 0.5;
+        @media (--large-and-up){
+            width: rem(20);
+            height: rem(20);                
+        }
     }
     & .slick-dots li button:hover,
     & .slick-dots li button:focus
@@ -181,9 +194,8 @@
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
     }
-    & .slick-dots li.slick-active button:before
+    & .slick-dots li.slick-active button
     {
-        opacity: .75;
-        color: black;
+        opacity: 1;
     }
 }

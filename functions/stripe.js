@@ -15,6 +15,7 @@ module.exports = {
         source: stripeToken,
       }).then(function(customer) {
         // Save the customer ID and other info in Firebase
+        console.log('creating customer');
         userRef.update({
           "stripeCustomerId": customer.id
         });
@@ -51,6 +52,7 @@ module.exports = {
       stripe.customers.createSource(stripeCustomerId, {
         source: stripeToken
       }, function(err, confirmation) {
+        console.log('adding card');
         resolve(confirmation);
       });
     });

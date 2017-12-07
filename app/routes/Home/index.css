@@ -21,8 +21,8 @@
 }
 
 .header{
-  font-size: rem(40);
-  line-height: rem(40);
+  font-size: rem(50);
+  line-height: rem(50);
   color: var(--blue);
   margin: 0;
   font-weight: 400;
@@ -32,8 +32,8 @@
   }
 }
 .subheader{
-  font-size: rem(24);
-  line-height: rem(24);
+  font-size: rem(20);
+  line-height: rem(26);
   margin: rem(15) 0;
   color: gray(40%);
   font-weight: 400;
@@ -78,6 +78,7 @@
 
   @media (--large-and-up) {
     width: rem(1200);
+    margin: 0 auto;
     & .ctas{
       flex-direction: row;
     }
@@ -115,7 +116,10 @@
 
   & .subheader{
     color: white;
-    margin: rem(30) 0 rem(55);
+    margin: rem(10) 0 rem(40);
+    @media (--large-and-up) {
+      margin: rem(30) 0 rem(55);
+    }      
   }
 
   & .ctas{
@@ -127,8 +131,11 @@
   }
 
   & .ctaButtonWrapper{
-    margin: 0 rem(30);
+    margin: rem(15) rem(30);
     width: rem(305);
+    @media (--large-and-up) {
+      margin: 0 rem(30);      
+    }
   }
   & .ctaButton {
     display: flex;
@@ -145,8 +152,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: rem(20);
+  padding: rem(30) rem(15) rem(40);
   @media (--large-and-up) {
+    padding: rem(20);
     flex-direction: row;
     & .cta{
       margin-left: rem(40);
@@ -158,8 +166,10 @@
   align-items: center;
   color: gray(30%);
   width: 100%;
+  padding: 0 rem(15);
   @media (--large-and-up) {
     width: 70%;    
+    padding: 0;
   }
 
   & .header{
@@ -182,92 +192,112 @@
 }
 
 .testimonials{
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: rem(60);
-  & .testimonial{
-    width: calc(33.3% - rem(20));
-    text-align: center;
-    color: gray(30%);
-    & .body{
-      height: rem(150);
-    }
-    & author{
-      color: var(--blue);
-      font-size: 1.4em;
-    }
+  margin: 0 auto rem(60);
+  width: calc(100% - rem(60));
+  max-width: rem(450);
+  @media (--large-and-up) {
+    width: rem(450);      
   }
 }
+.testimonial{
+  text-align: center;
+  color: gray(30%);
+  & .body{
+    margin: 0 auto rem(30);
+  }
+  & author{
+    color: var(--blue);
+    font-size: 1.4em;
+  }
+}
+
 
 .about{
   width: 100%;
   display: flex;
   justify-content: center;
   margin: 0;
+}
+.aboutContainer{
+  position: relative;
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   @media (--large-and-up) {
     height: rem(600);
     margin: rem(60) 0;
-  }    
-  & .container{
+  }
+  & .header{
+    font-size: rem(40);
+    margin-top: rem(250);
+    @media (--medium-and-up) {
+      margin-top: rem(350);
+    }      
+    @media (--large-and-up) {
+      margin-top: 0;
+      font-size: rem(80);
+    }
+  }
+  & .subheader,
+  & .header{
     position: relative;
-    height: inherit;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    &:before{
-      position: absolute;
-      height: 100%;
-      width: 100%;
-      top: 0;
-      right: 0;
-      content: '';
-      z-index: 1;
-      background-image: linear-gradient(0, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 90%);
-      @media (--large-and-up) {
-        background-image: linear-gradient(to right, rgba(255, 255, 255, 1) 30%, rgba(255, 255, 255, 0) 70%);
-      }        
-    }
-    &:after{
-      position: absolute;
-      height: 100%;
-      width: 100%;
-      top: 0;
-      right: 0;
-      content: '';
-      background-image: url(assets/images/RISE-Hero-2.jpg);
-      background-position: center top;
-      background-repeat: no-repeat;
-      background-size: 140%;
-      background-color: transparent;  
-      @media (--large-and-up) {
-        background-position: right center;
-        background-size: contain;
-      }        
-    }
+    z-index: 2;  
+  }
+}
 
-    & .header{
-      font-size: rem(40);
-      @media (--large-and-up) {        
-        font-size: rem(80);
-      }
+.aboutContent{
+  color: gray(20%);
+  padding: 0 rem(15);
+  position: relative;
+  z-index: 2;  
+  @media (--large-and-up) {
+    padding: 0;
+    width: 50%;
+  }
+}
+.aboutBg{
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-color: transparent;  
+  background-position: center top;
+  background-size: 200%;
+  @media (--medium-and-up) {    
+    background-size: 150%;
+  }
+  @media (--large-and-up) {
+    background-position: right center;
+    background-size: contain;
+  }
+  &:before{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    right: 0;
+    content: '';
+    z-index: 1;
+    background-image: linear-gradient(0, rgba(255, 255, 255, 1) 40%, rgba(255, 255, 255, 0) 90%);
+    @media (--medium-and-up) {
+      background-image: linear-gradient(0, rgba(255, 255, 255, 1) 30%, rgba(255, 255, 255, 0) 70%);
     }
-    & .content{
-      color: gray(20%);
-      @media (--large-and-up) {
-        width: 50%;        
-      }        
-    }
-    & .subheader,
-    & .header,
-    & .content{
-      position: relative;
-      z-index: 2;  
+    @media (--large-and-up) {
+      background-image: linear-gradient(to right, rgba(255, 255, 255, 1) 30%, rgba(255, 255, 255, 0) 50%);
     }
   }
 }
 
 .slider{
-  width: 100%;
+  width: calc(100% - rem(30));
+  margin: 0 auto rem(30);
+  @media (--large-and-up) {
+    width: 100%;
+    margin: 0;
+  }
 
   & .slide{
     position: relative;
@@ -318,7 +348,7 @@
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
-  margin: rem(30) 0;
+  margin: 0;
   background-color: gray(95%);
   padding: rem(30);
   @media (--large-and-up){
@@ -333,7 +363,9 @@
     flex-direction: column;
     width: 100%;
     text-align: center;
+    margin-bottom: rem(40);
     @media (--large-and-up){
+      margin-bottom: 0;
       width: calc(33.3% - rem(20));
     }
     & .icon{
@@ -342,8 +374,12 @@
     }
     & .title{
       font-size: rem(24);
+      margin: rem(5) 0;
       color: var(--blue);
       font-weight: 400;
+      @media (--large-and-up){
+        margin: rem(15) 0;
+      }
     }
     & p{
       margin-bottom: 0;

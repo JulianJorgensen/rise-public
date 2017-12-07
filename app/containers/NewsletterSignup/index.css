@@ -1,4 +1,13 @@
+@import "../../styles/variables.css";
+
 .antiBot{
   position: absolute;
   left: -5000px;
+}
+
+.button {
+  margin: 0 auto;
+  @media (--large-and-up){
+    margin: 0;
+  }
 }

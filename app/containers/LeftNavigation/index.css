@@ -1,7 +1,7 @@
 @import "../../styles/variables.css";
 
 .container{
-  width: 300px;
+  width: rem(300) !important;
   position: relative;
   background-color: gray(80%);
   &.collapsed{

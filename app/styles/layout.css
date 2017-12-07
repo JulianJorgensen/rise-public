@@ -1,3 +1,5 @@
+@import "variables.css";
+
 :global {
   & body{
     margin: 0;
@@ -20,6 +22,9 @@
   align-self: center;
   width: rem(1000);
   max-width: 100%;
-  padding: 30px;
+  padding: rem(15) 0;
   background-color: white;
+  @media (--large-and-up){
+    padding: rem(30);
+  }
 }

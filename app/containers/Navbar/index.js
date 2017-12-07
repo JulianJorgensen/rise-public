@@ -30,6 +30,8 @@ import classes from './index.css';
   })
 )
 export default class Navbar extends Component {
+  state = {};
+
   handleToggleLeftNavigation = () => {
     this.props.firebase
       .update(`${rfConfig.userProfile}/${this.props.auth.uid}`, {showLeftNavigation: !this.props.account.showLeftNavigation})
@@ -39,16 +41,28 @@ export default class Navbar extends Component {
       })
   }
 
+  toggleMobileNav = () => {
+    this.setState({
+      showMobileNav: !this.state.showMobileNav,
+    });
+  }
+
   render () {
     const { account, history, notification, meetings, withNotification } = this.props;
+    const { showMobileNav } = this.state;
     const accountExists = isLoaded(account) && !isEmpty(account);
 
     let numberOfUpcomingAppointments = meetings ? meetings.upcoming ? meetings.upcoming.length : 0 : 0;
 
     const ctaMenu = (
       <div className={classes.navCta}>
-        <Link to='/signup' className={classes.join}>Join now</Link>
-        <Link to='/login' className={classes.signin}>Sign In</Link>
+        <div className={classes.navDesktop}>
+          <Link to='/signup' className={classes.join}>Join now</Link>
+          <Link to='/login' className={classes.signin}>Sign In</Link>
+        </div>
+        <div className={classes.navMobile}>
+          <a href="#" onClick={this.toggleMobileNav}><BarsIcon className={classes.icon} /></a>
+        </div>
       </div>
     )
 
@@ -85,14 +99,20 @@ export default class Navbar extends Component {
     ) : ''
 
     return (
-      <header className={`${classes.header} ${account ? account.showLeftNavigation ? classes.withLeftNav : '' : ''} ${withNotification ? classes.withNotification : ''}`}>
-        <div className={classes.leftNav}>
-          {toggle}
-          <Link to={accountExists ? `${CONST.DASHBOARD_PATH}` : '/'} className={classes.logo}><Logo width="80" /></Link>
-        </div>
+      <div>
+        <header className={`${classes.header} ${showMobileNav ? classes.showMobileNav : null} ${account ? account.showLeftNavigation ? classes.withLeftNav : '' : ''} ${withNotification ? classes.withNotification : ''}`}>
+          <div className={classes.leftNav}>
+            {toggle}
+            <Link to={accountExists ? `${CONST.DASHBOARD_PATH}` : '/'} className={classes.logo}><Logo width="80" /></Link>
+          </div>
 
-        {rightMenu}
-      </header>
+          {rightMenu}
+        </header>
+        <div className={`${classes.mobileNavItems} ${showMobileNav ? classes.show : null}`}>
+          <Link to='/signup' className={classes.join}>Join now</Link>
+          <Link to='/login' className={classes.signin}>Sign In</Link>
+        </div>
+      </div>
     )
   }
 }
