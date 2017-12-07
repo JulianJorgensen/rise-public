@@ -1,19 +1,33 @@
+@import "../../styles/variables.css";
+
 .feed{
   margin-top: rem(200);
   position: relative;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
+  align-items: center;
   padding-bottom: rem(140);
-  width: rem(1140);
   max-width: 100%;
+  width: rem(300);
+
+  @media (--medium-and-up) {
+    width: rem(500);
+  }
+    
+  @media (--large-and-up) {
+    width: rem(1140);
+    flex-wrap: nowrap;
+  }
+
   &:after{
     content: '';
     position: absolute;
     left: 50%;
-    bottom: rem(30);
+    bottom: rem(40);
     background-color: white;
     width: rem(1);
-    height: rem(60);
+    height: rem(70);
   }
 
   & div{
@@ -30,11 +44,22 @@
 
 .item{
   position: relative;
-  width: calc(25% - 20px);
-  height: rem(300);
+  width: rem(145);
+  height: rem(145);
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
+  margin-bottom: rem(10);
+  @media (--medium-and-up) {
+    width: rem(245);
+    height: rem(245);
+  }
+  @media (--large-and-up) {
+    max-width: 100%;
+    width: calc(25% - 20px);
+    height: rem(300);
+    margin-bottom: 0;
+  }
 
   & .link{
     position: absolute;

@@ -50,15 +50,17 @@ export default class Home extends React.Component {
       slidesToScroll: 3,
       draggable: false,
       lazyLoad: true,
+      centerPadding: '40px',
       responsive: [
         {
           breakpoint: 768,
           settings: {
             arrows: false,
             centerMode: true,
-            centerPadding: '40px',
+            centerPadding: '0',
             draggable: true,
-            slidesToShow: 1
+            slidesToShow: 1,
+            slidesToScroll: 1,
           }
         }
       ]
