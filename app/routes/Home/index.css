@@ -44,15 +44,15 @@
 }
 
 .mentorHeader{
-  font-size: rem(24);
-  line-height: rem(24);
+  font-size: rem(50);
+  line-height: rem(50);
   margin-top: rem(20);
   color: var(--blue);
   font-weight: 400;
   @media (--large-and-up) {
     margin-top: rem(30);
-    font-size: rem(50);
-    line-height: rem(50);
+    font-size: rem(90);
+    line-height: rem(90);
   }    
 }
 
@@ -93,7 +93,7 @@
       flex-direction: column;
       & .header{
         font-size: rem(134);
-        line-height: rem(100);
+        line-height: rem(120);
       }
     }
   }
@@ -194,6 +194,11 @@
   }
 }
 
+.testimonialsHeader{
+  composes: header;
+  margin-bottom: rem(20);
+  text-align: center;
+}
 .testimonials{
   margin: 0 auto rem(60);
   width: calc(100% - rem(60));

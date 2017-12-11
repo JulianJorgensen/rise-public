@@ -110,7 +110,7 @@ export default class Home extends React.Component {
         </div>
 
         <div className={styles.container}>
-          <h2 className={styles.mentorHeader}>Be Your Best with a RISE Mentor</h2>
+          <h2 className={styles.mentorHeader}>We Are Your RISE Mentors</h2>
           <Slider className={styles.slider} {...settings}>
             <div>
               <div className={styles.slide} style={{backgroundImage: `url(${mentorImage1})`}}>
@@ -229,9 +229,9 @@ export default class Home extends React.Component {
 
         <div className={styles.container}>
           <div className={styles.newsletter}>
-            <h2 className={styles.header}>Good v. Great</h2>
-            <h3 className={styles.subheader}>The difference between GOOD and GREAT begins in your MIND.</h3>
-            <p>Join our mentoring program and work with an Olympian through weekly one-on-one video meetings. RISE mentors provide athletes with tangible tools and mental skills to excel in sport and life.</p>
+            <h2 className={styles.header}>Be Your Best</h2>
+            <h3 className={styles.subheader}>Join Team RISE</h3>
+            <p>Whether you’re just starting out in sports or are looking to get to that next level, now’s your time to take action. You have the opportunity to work one-on-one with an Olympian Mentor and gather the confidence, knowledge and accountability to achieve success in sport and life. We believe in you… do you?</p>
             <NewsletterSignup />
             <small className={styles.disclaimer}>Sign up to receive awesome events, giveaways & tips from our mentors! Don't worry, we'll keep your info private!</small>
           </div>
@@ -274,6 +274,7 @@ export default class Home extends React.Component {
         </div>
 
         <div className={styles.container}>
+          <h3 className={styles.testimonialsHeader}>Some Praise</h3>
           <div className={styles.testimonials}>
             <Slider {...testimonialsSettings}>
               <div className={styles.testimonial}>
