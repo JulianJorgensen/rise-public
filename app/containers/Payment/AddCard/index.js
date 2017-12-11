@@ -63,6 +63,7 @@ class AddCard extends React.Component {
               stripeToken: token.id,
               email: email,
               uid: uid,
+              name: `${firstName} ${lastName}`,
             }
           })
           .then((res) => {

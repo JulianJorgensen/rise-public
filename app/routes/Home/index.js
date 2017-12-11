@@ -299,7 +299,7 @@ export default class Home extends React.Component {
         <Parallax className={styles.ctaMarquee} style={{position: 'relative', marginBottom: '-100px'}} bgImage={heroImageBottom} strength={400}>
           <div className={styles.inner}>     
             <h1 className={styles.header}>Be Mentored<br />By The Best</h1>
-            <h2 className={styles.subheader}>Develop your Olympic Mindset,<br />with your Olympic Mentor.</h2>
+            <h2 className={styles.subheader}>Develop the Olympic Mindset,<br />with your Olympic Mentor.</h2>
             <div className={styles.ctas}>
               <Button className={styles.ctaButtonWrapper} href="#what-we-do" flat hollow white><div className={styles.ctaButton}>What we do</div></Button>
               <span>OR</span>
@@ -312,7 +312,7 @@ export default class Home extends React.Component {
           <InstagramFeed />
           <Button label="Follow us on Instagram" href="https://www.instagram.com/riseathletes/" target="_new" flat hollow white className={styles.followUsCta} />
           <Button label="Follow us on Facebook" href="https://www.facebook.com/RISEathletes/" target="_new" flat hollow white className={styles.followUsCta} />
-          <div className={styles.email}><a href="mailto:info@riseathletes.com">info@riseathletes.com</a></div>
+          <div className={styles.email}><a href="mailto:rise@rise-athletes.com">rise@rise-athletes.com</a></div>
           <div className={styles.copyright}>COPYRIGHT {(new Date()).getFullYear()} RISE ELITE</div>
         </section>
       </div>

@@ -88,6 +88,8 @@ export default class Index extends React.Component {
 
     // scroll to top when changing page
     window.scrollTo(0, 0);
+
+    this.props.dispatch({ type: 'CLOSE_MOBILE_NAV' });
   }
 
   render() {

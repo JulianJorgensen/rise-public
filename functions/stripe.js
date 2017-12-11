@@ -6,13 +6,14 @@ const stripe = require('stripe')(stripeSecretKey);
 
 module.exports = {
   createCustomer: function(query) {
-    let { stripeToken, email, uid } = query;
+    let { stripeToken, email, uid, name } = query;
     let userRef = database.ref("users").child(uid);
 
-    return new Promise(function(resolve, reject) {      
+    return new Promise(function(resolve, reject) {
       stripe.customers.create({
         email: email,
         source: stripeToken,
+        description: name,
       }).then(function(customer) {
         // Save the customer ID and other info in Firebase
         console.log('creating customer');
@@ -52,7 +53,6 @@ module.exports = {
       stripe.customers.createSource(stripeCustomerId, {
         source: stripeToken
       }, function(err, confirmation) {
-        console.log('adding card');
         resolve(confirmation);
       });
     });

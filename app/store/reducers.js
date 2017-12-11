@@ -4,6 +4,7 @@ import { reducer as form } from 'redux-form';
 import notification from './notification';
 import snackbar from './snackbar';
 import meetings from './meetings';
+import site from './site';
 
 export const makeRootReducer = (asyncReducers) => {
   return combineReducers({
@@ -13,6 +14,7 @@ export const makeRootReducer = (asyncReducers) => {
     notification,
     snackbar,
     meetings,
+    site,
     ...asyncReducers
   })
 }

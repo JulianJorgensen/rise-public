@@ -22,11 +22,12 @@ import classes from './index.css';
 @withRouter
 @firebaseConnect()
 @connect(
-  ({ meetings, notification, firebase }) => ({
+  ({ meetings, notification, firebase, site }) => ({
     auth: pathToJS(firebase, 'auth'),
     account: pathToJS(firebase, 'profile'),
     notification,
-    meetings
+    meetings,
+    site,
   })
 )
 export default class Navbar extends Component {
@@ -42,14 +43,15 @@ export default class Navbar extends Component {
   }
 
   toggleMobileNav = () => {
-    this.setState({
-      showMobileNav: !this.state.showMobileNav,
+    console.log('togg');
+    this.props.dispatch({
+      type: 'TOGGLE_MOBILE_NAV',
     });
   }
 
   render () {
-    const { account, history, notification, meetings, withNotification } = this.props;
-    const { showMobileNav } = this.state;
+    const { account, history, notification, meetings, withNotification, site } = this.props;
+    const { showMobileNav } = site;
     const accountExists = isLoaded(account) && !isEmpty(account);
 
     let numberOfUpcomingAppointments = meetings ? meetings.upcoming ? meetings.upcoming.length : 0 : 0;
@@ -61,7 +63,7 @@ export default class Navbar extends Component {
           <Link to='/login' className={classes.signin}>Sign In</Link>
         </div>
         <div className={classes.navMobile}>
-          <a href="#" onClick={this.toggleMobileNav}><BarsIcon className={classes.icon} /></a>
+          <a onClick={this.toggleMobileNav}><BarsIcon className={classes.icon} /></a>
         </div>
       </div>
     )
