@@ -136,8 +136,9 @@ export default class UsersItems extends Component {
     let { userData, showModal, showPairModal, selectedMentor, showDeleteConfirmationModal } = this.state;
 
     let items = data.map((user, index) => {
+      console.log('user from items', user);
       return (
-        <TableRow key={index} selectable={false}>
+        <TableRow key={user.uid} selectable={false}>
           <Status user={user} />
           <TableCell><div>{user.role}</div></TableCell>
           <TableCell><div>{user.firstName}</div></TableCell>

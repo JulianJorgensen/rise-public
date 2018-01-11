@@ -68,7 +68,7 @@ export default class AvailableTimes extends Component {
         )
       }else{
         return (
-          <div>Sorry, there are no more available times for this day.</div>
+          <div>Sorry, there are no available times for this day.</div>
         )
       }
     }

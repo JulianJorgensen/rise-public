@@ -55,7 +55,7 @@ export default class UsersItemsStatus extends Component {
         changingApplicationStatus: false,
         user: updatedUser,
       });
-      
+
       if (!user.applicationApproved) {
         if(confirm('Send welcome email?')){
           // send welcome email to user
@@ -81,6 +81,7 @@ export default class UsersItemsStatus extends Component {
 
   render() {
     let { user } = this.state;
+    console.log('user from status', user);
     if (!user.hasSubmittedApplication) {
       return (
         <TableCell><div>Not yet submitted</div></TableCell>          
