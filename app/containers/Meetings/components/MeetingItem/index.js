@@ -97,7 +97,7 @@ export default class MeetingItem extends Component {
       let meetingTime = moment(meeting.datetime);
       let now = moment();
       let hoursTillMeetingStart = moment.duration(meetingTime.diff(now)).asHours();
-      if (hoursTillMeetingStart < 24) {
+      if (hoursTillMeetingStart < 0) {
         isReschedulable = false;
       }
 

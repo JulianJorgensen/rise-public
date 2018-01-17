@@ -8,7 +8,8 @@ let threeMonthsAgo = moment.tz().subtract(3, 'M').format('YYYY-MM-DDTHH:MM:SSz')
 let inThreeMonths = moment.tz().add(3, 'M').format('YYYY-MM-DDTHH:MM:SSz');
 
 export function sortMeetings(meetings, timezone) {
-  let now = moment(new Date()).tz(timezone);
+  let deadlineBufferMinutes = 30;
+  let now = moment(new Date()).tz(timezone).add(deadlineBufferMinutes, 'minutes');
   let upcomingMeetings = [];
   let completedMeetings = [];
 
