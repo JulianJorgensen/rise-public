@@ -18,7 +18,7 @@ export default class TimezoneDisplay extends Component {
       <div className={classes.container}>
         <small>
           <p>All times are in {account.timezone} ({moment().tz(account.timezone).format('z Z')})</p>
-          <p><Link to='/dashboard/settings'>To change your timezone to Settings.</Link></p>
+          <p><Link to='/dashboard/settings'>Change your timezone in Settings.</Link></p>
         </small>
       </div>
     )
